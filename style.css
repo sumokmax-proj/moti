@@ -1,0 +1,244 @@
+:root {
+  --bg-gradient: linear-gradient(160deg, #6b73ff 0%, #9b6bff 50%, #ff6bcb 100%);
+  --card-bg: rgba(255, 255, 255, 0.12);
+  --text-color: #ffffff;
+  --author-color: rgba(255, 255, 255, 0.8);
+  --btn-bg: rgba(255, 255, 255, 0.18);
+  --btn-bg-active: rgba(255, 255, 255, 0.32);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+    "Noto Sans KR", Roboto, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 4px 8px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+#main-view {
+  justify-content: space-between;
+  padding: 24px 0 32px;
+  gap: 24px;
+}
+
+.quote-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.quote-card.fade {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.quote-text {
+  font-size: 22px;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+}
+
+.quote-author {
+  font-size: 15px;
+  color: var(--author-color);
+  margin: 0;
+}
+
+.quote-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--text-color);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+.icon-btn.active {
+  background: var(--btn-bg-active);
+  color: #ff5c8a;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #6b3fd6;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+#favorites-view {
+  padding: 12px 0 32px;
+}
+
+.favorites-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.favorites-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.favorites-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.favorite-item {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.favorite-item-text {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.favorite-item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.favorite-item-author {
+  font-size: 13px;
+  color: var(--author-color);
+  margin: 0;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--author-color);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.favorites-empty {
+  color: var(--author-color);
+  text-align: center;
+  margin-top: 40px;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.toast.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (min-width: 600px) {
+  .app {
+    padding-top: 32px;
+  }
+
+  .quote-text {
+    font-size: 24px;
+  }
+}

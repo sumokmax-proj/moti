@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>motimoti</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1 class="logo">motimoti</h1>
+      <button id="favorites-nav-btn" class="icon-btn" aria-label="즐겨찾기 목록 열기">★</button>
+    </header>
+
+    <main id="main-view" class="view">
+      <section class="quote-card" id="quote-card">
+        <p class="quote-text" id="quote-text"></p>
+        <p class="quote-author" id="quote-author"></p>
+
+        <div class="quote-actions">
+          <button id="favorite-btn" class="icon-btn" aria-label="즐겨찾기">♡</button>
+          <button id="share-btn" class="icon-btn" aria-label="공유하기">⤴</button>
+        </div>
+      </section>
+
+      <button id="next-btn" class="primary-btn">다음 명언</button>
+    </main>
+
+    <section id="favorites-view" class="view hidden">
+      <div class="favorites-header">
+        <button id="back-btn" class="icon-btn" aria-label="메인으로 돌아가기">←</button>
+        <h2>즐겨찾기</h2>
+      </div>
+      <ul id="favorites-list" class="favorites-list"></ul>
+      <p id="favorites-empty" class="favorites-empty hidden">아직 저장한 명언이 없어요.</p>
+    </section>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="quotes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
