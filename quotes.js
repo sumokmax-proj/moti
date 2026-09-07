@@ -4,22 +4,36 @@
 //
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
-//            27,28,29,31,32,33,34,35,36,38,39,40
-// 다음 id: 56
+//            27,28,29,31,32,33,34,35,36,38,39,40,49
+// 다음 id: 66
 //
 // 한국어 text는 반드시 original에서 번역한다. 원문의 주장(주어/서술어/한정 조건)을
 // 바꾸는 의역은 금지한다.
+//
+// ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
+// [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 그리고 신규 56~65 전부
+// [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
+//     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
+//     55(Harper's Monthly 1932, 165권 987호 406쪽)
+// [C] 1차 출처가 실재하나 해당 사이트가 이 환경에서 열리지 않아,
+//     열리는 대체 페이지로 문구만 대조한 항목: 6, 41, 42, 52
+//     (news.stanford.edu·db.itkc.or.kr·heritage.go.kr 미개방, beethoven.de는
+//      자필 편지 이미지만 제공하고 판독 텍스트가 없음)
+// [D] 이번 재검증에서 삭제: 49 마리 퀴리 — 근거가 Oxford Essential Quotations
+//     (2018)라는 3차 출처뿐이었고, 1차로 지목됐던 『피에르 퀴리』(1923)의
+//     영어·프랑스어 전문 어디에도 해당 문장이 없음을 확인했다.
 
 const QUOTES = [
   {
     id: 3,
     text: "오늘 할 수 있는 일을 내일로 미루지 마라.",
     author: "벤저민 프랭클린",
-    original: "Never leave that till tomorrow which you can do today.",
+    original: "Never leave that till tomorrow, which you can do to-day.",
     lang: "en",
     source: "『부자가 되는 길(The Way to Wealth)』 / 가난한 리처드의 달력",
     year: 1758,
-    sourceUrl: "https://wist.info/franklin-benjamin/70869/",
+    sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
   },
   {
     id: 4,
@@ -27,9 +41,9 @@ const QUOTES = [
     author: "노자",
     original: "千里之行，始於足下",
     lang: "lzh",
-    source: "『도덕경』 제64장",
+    source: "『도덕경』 제64장 (왕필본)",
     year: -400,
-    sourceUrl: "https://zh.wikipedia.org/zh-tw/%E5%8D%83%E9%87%8C%E4%B9%8B%E8%A1%8C%E5%A7%8B%E4%BA%8E%E8%B6%B3%E4%B8%8B",
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
   },
   {
     id: 6,
@@ -45,7 +59,7 @@ const QUOTES = [
     id: 21,
     text: "성공한 사람이 되려 하지 말고, 가치 있는 사람이 되려고 하라.",
     author: "알베르트 아인슈타인",
-    original: "Try not to become a man of success, but rather try to become a man of value.",
+    original: "Try not to become a man of success but rather try to become a man of value.",
     lang: "en",
     source: "LIFE 「Death of a Genius」 (윌리엄 밀러 기록, 5월 2일자)",
     year: 1955,
@@ -57,15 +71,15 @@ const QUOTES = [
     author: "요한 볼프강 폰 괴테",
     original: "Sobald du dir vertraust, sobald weißt du zu leben.",
     lang: "de",
-    source: "『파우스트』 1부 2062행 (서재 장면)",
+    source: "『파우스트』 1부 (서재 장면, 메피스토펠레스의 대사)",
     year: 1808,
-    sourceUrl: "https://www.aphorismen.de/zitat/119125",
+    sourceUrl: "https://de.wikisource.org/wiki/Faust_-_Der_Trag%C3%B6die_erster_Teil",
   },
   {
     id: 37,
     text: "관찰의 영역에서 우연은 오직 준비된 정신만을 돕는다.",
     author: "루이 파스퇴르",
-    original: "Dans les champs de l'observation le hasard ne favorise que les esprits préparés.",
+    original: "dans les champs de l’observation le hasard ne favorise que les esprits préparés",
     lang: "fr",
     source: "두에 강연 — 릴 대학 이학부 개설 기념 (12월 7일)",
     year: 1854,
@@ -75,7 +89,7 @@ const QUOTES = [
     id: 41,
     text: "반드시 죽고자 하면 살고, 반드시 살고자 하면 죽는다.",
     author: "이순신",
-    original: "必死則生，必生則死",
+    original: "必死則生 必生則死",
     lang: "lzh",
     source: "『난중일기』 1597년 9월 15일 (명량해전 전날)",
     year: 1597,
@@ -89,7 +103,7 @@ const QUOTES = [
     lang: "lzh",
     source: "유묵 (보물 제569-2호), 뤼순 감옥",
     year: 1910,
-    sourceUrl: "http://www.heritage.go.kr/heri/cul/culSelectDetail.do?ccbaCpno=1121105690200",
+    sourceUrl: "https://ko.wikipedia.org/wiki/%EC%95%88%EC%A4%91%EA%B7%BC",
   },
   {
     id: 43,
@@ -99,7 +113,7 @@ const QUOTES = [
     lang: "lzh",
     source: "『논어』 자한편",
     year: -450,
-    sourceUrl: "https://www.zdic.net/hant/%E4%B8%89%E8%BB%8D%E5%8F%AF%E5%A5%AA%E5%B8%A5%EF%BC%8C%E5%8C%B9%E5%A4%AB%E4%B8%8D%E5%8F%AF%E5%A5%AA%E5%BF%97",
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E5%AD%90%E7%BD%95%E7%AC%AC%E4%B9%9D",
   },
   {
     id: 44,
@@ -109,7 +123,7 @@ const QUOTES = [
     lang: "lzh",
     source: "『맹자』 고자하",
     year: -300,
-    sourceUrl: "https://ctext.org/mengzi/gaozi-ii",
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E5%91%8A%E5%AD%90%E4%B8%8B",
   },
   {
     id: 45,
@@ -129,7 +143,7 @@ const QUOTES = [
     lang: "la",
     source: "『도덕서한(Epistulae Morales)』 104편 26절",
     year: 65,
-    sourceUrl: "https://www.loebclassics.com/view/seneca_younger-epistles/1917/pb_LCL077.205.xml",
+    sourceUrl: "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_XVII_-_XVIII",
   },
   {
     id: 47,
@@ -139,7 +153,7 @@ const QUOTES = [
     lang: "en",
     source: "『월든』 결론장",
     year: 1854,
-    sourceUrl: "https://etc.usf.edu/lit2go/90/walden-or-life-in-the-woods/1698/conclusion/",
+    sourceUrl: "https://www.gutenberg.org/files/205/205-h/205-h.htm",
   },
   {
     id: 48,
@@ -152,20 +166,10 @@ const QUOTES = [
     sourceUrl: "https://www.gutenberg.org/files/31622/31622-h/31622-h.htm",
   },
   {
-    id: 49,
-    text: "사람은 이미 이룬 것은 보지 못하고, 아직 남은 일만 보게 된다.",
-    author: "마리 퀴리",
-    original: "One never notices what has been done; one can only see what remains to be done.",
-    lang: "en",
-    source: "동생 요제프에게 보낸 편지 (3월 18일) / 『피에르 퀴리』 1장(1923) 수록",
-    year: 1894,
-    sourceUrl: "https://en.wikiquote.org/wiki/Marie_Curie",
-  },
-  {
     id: 50,
     text: "내 성공의 비결은 이것이다. 나는 어떤 변명도 하지 않았고, 받아주지도 않았다.",
     author: "플로렌스 나이팅게일",
-    original: "I attribute my success to this:—I never gave or took any excuse.",
+    original: "I attribute my success to this:—I never gave or took an excuse.",
     lang: "en",
     source: "본햄 카터에게 보낸 편지 / E. 쿡 『The Life of Florence Nightingale』(1913) 1권 506쪽 수록",
     year: 1861,
@@ -173,13 +177,13 @@ const QUOTES = [
   },
   {
     id: 51,
-    text: "「너는 화가가 아니다」라는 목소리가 들리거든 기어이 그려라. 그러면 그 목소리는 잠잠해진다.",
+    text: "네 안에서 「너는 화가가 아니다」라고 말하거든 바로 그때 그려라. 그 소리도 잠잠해진다.",
     author: "빈센트 반 고흐",
-    original: "If you hear a voice within you saying: You are no painter, then paint by all means, lad, and that voice will be silenced, but only by working.",
+    original: "Als iets in U zelf zegt “gij zijt geen schilder” – SCHILDER DAN JUIST kerel, en die stem bedaart ook, maar slechts daardoor.",
     lang: "nl",
-    source: "동생 테오에게 보낸 편지 (10월, 드렌터)",
+    source: "테오에게 보낸 편지 400번, 니우암스테르담 (10월 28일)",
     year: 1883,
-    sourceUrl: "https://quoteinvestigator.com/2026/06/24/voice-paint/",
+    sourceUrl: "https://vangoghletters.org/vg/letters/let400/letter.html",
   },
   {
     id: 52,
@@ -187,9 +191,9 @@ const QUOTES = [
     author: "루트비히 판 베토벤",
     original: "Ich will dem Schicksal in den Rachen greifen, ganz niederbeugen soll es mich gewiß nicht.",
     lang: "de",
-    source: "베겔러에게 보낸 편지, 빈 (11월 16일)",
+    source: "베겔러에게 보낸 편지, 빈 (11월 16일) — 베토벤하우스 소장 자필본",
     year: 1801,
-    sourceUrl: "https://www.beethoven.de/en/g/schicksal",
+    sourceUrl: "https://www.beethoven.de/de/media/view/4862695861911552/Ludwig+van+Beethoven,+Brief+an+Franz+Gerhard+Wegeler+in+Bonn,+Wien,+16.+November+1801,+Autograph",
   },
   {
     id: 53,
@@ -199,17 +203,17 @@ const QUOTES = [
     lang: "en",
     source: "서인도 해방 기념 연설, 커낸다이과 (8월 3일)",
     year: 1857,
-    sourceUrl: "https://www.gilderlehrman.org/ap-african-american-studies/unit-2/organizing-for-freedom/west-india-emancipation-1857",
+    sourceUrl: "https://en.wikisource.org/wiki/West_India_Emancipation",
   },
   {
     id: 54,
-    text: "굴복하지 마라. 절대로, 절대로, 절대로 굴복하지 마라.",
+    text: "굴복하지 마라, 굴복하지 마라, 절대로, 절대로, 절대로, 절대로.",
     author: "윈스턴 처칠",
-    original: "Never give in, never give in, never, never, never.",
+    original: "never give in, never give in, never, never, never, never",
     lang: "en",
     source: "해로 스쿨 연설 (10월 29일)",
     year: 1941,
-    sourceUrl: "https://winstonchurchill.org/resources/speeches/1941-1945-war-leader/never-give-in/",
+    sourceUrl: "https://en.wikisource.org/wiki/Never_Give_In,_Never,_Never,_Never",
   },
   {
     id: 55,
@@ -217,8 +221,108 @@ const QUOTES = [
     author: "토머스 에디슨",
     original: "Genius is one per cent inspiration, ninety-nine per cent perspiration.",
     lang: "en",
-    source: "Harper's Monthly 인터뷰 (본인이 1927년 편지로 저작을 확인)",
+    source: "Harper's Monthly 165권 987호 406쪽 인터뷰",
     year: 1932,
     sourceUrl: "https://en.wikiquote.org/wiki/Thomas_Edison",
+  },
+  {
+    id: 56,
+    text: "새기다 그만두면 썩은 나무도 못 자르고, 새기기를 그치지 않으면 쇠와 돌도 새긴다.",
+    author: "순자",
+    original: "鍥而舍之，朽木不折；鍥而不舍，金石可鏤",
+    lang: "lzh",
+    source: "『순자』 권학편",
+    year: -250,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%8D%80%E5%AD%90/%E5%8B%B8%E5%AD%B8%E7%AF%87",
+  },
+  {
+    id: 57,
+    text: "나는 새가 아니다. 어떤 그물도 나를 가두지 못한다. 나는 자유로운 인간이다.",
+    author: "샬럿 브론테",
+    original: "I am no bird; and no net ensnares me; I am a free human being with an independent will.",
+    lang: "en",
+    source: "『제인 에어』 23장",
+    year: 1847,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1260/pg1260.txt",
+  },
+  {
+    id: 58,
+    text: "희망은 깃털 달린 것, 영혼에 내려앉아 가사 없는 노래를 부른다.",
+    author: "에밀리 디킨슨",
+    original: "Hope is the thing with feathers That perches in the soul, And sings the tune without the words",
+    lang: "en",
+    source: "시 「Hope」, 『Poems by Emily Dickinson』 제2집",
+    year: 1891,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
+  },
+  {
+    id: 59,
+    text: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
+    author: "김구",
+    original: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
+    lang: "ko",
+    source: "『백범일지』 「내가 원하는 우리 나라」",
+    year: 1947,
+    sourceUrl: "https://ko.wikisource.org/wiki/%EB%B0%B1%EB%B2%94%EC%9D%BC%EC%A7%80",
+  },
+  {
+    id: 60,
+    text: "말을 많이 하지 말고, 갑자기 성내지 마라.",
+    author: "정약용",
+    original: "毋多言。毋暴怒。",
+    lang: "lzh",
+    source: "『목민심서』 율기 제1조 칙궁",
+    year: 1818,
+    sourceUrl: "https://ko.wikisource.org/wiki/%EB%AA%A9%EB%AF%BC%EC%8B%AC%EC%84%9C/%EC%9C%A8%EA%B8%B0",
+  },
+  {
+    id: 61,
+    text: "나는 여성이 남성을 지배하기를 바라지 않는다. 자기 자신을 지배하기를 바란다.",
+    author: "메리 울스턴크래프트",
+    original: "I do not wish them to have power over men; but over themselves.",
+    lang: "en",
+    source: "『여성의 권리 옹호』 4장",
+    year: 1792,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/3420/pg3420.txt",
+  },
+  {
+    id: 62,
+    text: "시 삼백 편은 대개 성현이 발분하여 지은 것이다.",
+    author: "사마천",
+    original: "詩三百篇，大抵賢聖發憤之所為作也",
+    lang: "lzh",
+    source: "『사기』 권130 태사공자서",
+    year: -91,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%8F%B2%E8%A8%98/%E5%8D%B7130",
+  },
+  {
+    id: 63,
+    text: "천 길 둑도 개미구멍 하나로 무너진다.",
+    author: "한비",
+    original: "千丈之堤，以螻蟻之穴潰",
+    lang: "lzh",
+    source: "『한비자』 유로편",
+    year: -233,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9F%93%E9%9D%9E%E5%AD%90/%E5%96%BB%E8%80%81",
+  },
+  {
+    id: 64,
+    text: "길은 아득히 멀지만, 나는 오르내리며 찾아 헤매리라.",
+    author: "굴원",
+    original: "路曼曼其脩遠兮，吾將上下而求索",
+    lang: "lzh",
+    source: "「이소(離騷)」",
+    year: -300,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9B%A2%E9%A8%B7",
+  },
+  {
+    id: 65,
+    text: "희망을 품고 부지런히 일하라. 무슨 일이 있어도 너희에게 아버지는 있다.",
+    author: "루이자 메이 올컷",
+    original: "Hope and keep busy; and whatever happens, remember that you never can be fatherless.",
+    lang: "en",
+    source: "『작은 아씨들』 15장 (마치 부인의 편지)",
+    year: 1868,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/37106/pg37106.txt",
   },
 ];
