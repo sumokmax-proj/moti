@@ -1,7 +1,89 @@
-# 명언 출처 재검증 계획
+# 명언 출처 재검증 계획 — **2회차 완료 (2026-09-07)**
+
+> **이 문서의 2회차 재검증은 끝났다. 그대로 다시 실행하지 말 것.**
+> 결과는 커밋 `c76e937` (브랜치 `claude/verification-plan-quotes-bhqnc1`)에 있고,
+> 항목별 검증 등급은 `quotes.js` 헤더 주석에 A/B/C로 기록돼 있다.
+> 남은 일은 아래 「2회차 결과」의 **미해결** 항목뿐이다.
+
+## 2회차 결과 요약
+
+`quotes.js`: **21개 → 30개**, 삭제 1건, 원문 정정 4건, 출처 교체 11건, 신규 10건.
+
+### 열린 도메인 / 막힌 도메인 (2회차 실측)
+
+- 열림: wikisource·wikiquote·wikipedia(전 언어), gutenberg.org, quoteinvestigator.com,
+  ctext.org, vangoghletters.org
+- 막힘: `news.stanford.edu`(사이트 자체 봇 차단 403 — 허용목록과 무관),
+  `winstonchurchill.org`, `db.itkc.or.kr`, `heritage.go.kr`,
+  archive.org, babel.hathitrust.org, loebclassics.com, zeno.org
+
+### 삭제
+
+- **id 49 마리 퀴리** — 근거가 Oxford Essential Quotations(2018) 3차 출처뿐이었고,
+  1차로 지목됐던 『피에르 퀴리』(1923) 영어·프랑스어 전문 어디에도 해당 문장이 없음을 확인.
+  id 49는 재사용 금지 목록에 추가됨.
+
+### 원문(original) 정정 — 2회차의 실질적 수확
+
+| id | 기존 | 원전 |
+|---|---|---|
+| 3 프랭클린 | which you can do today | which you can do **to-day** (+쉼표) |
+| 21 아인슈타인 | of success**,** but rather | 쉼표 없음 (LIFE 1955.5.2) |
+| 50 나이팅게일 | took **any** excuse | took **an** excuse (Cook 1913) |
+| 54 처칠 | never ×3 | never ×4 (해로 연설 원문) |
+
+id 37·41은 원전 표기에 맞춰 정정, id 51은 영어 번역문 → 네덜란드어 원문으로 교체.
+
+### 신규 10건 (id 56~65)
+
+원전을 먼저 읽고 그 안에서 고르는 source-first 방식으로만 선정.
+순자 · 샬럿 브론테 · 에밀리 디킨슨 · 김구 · 정약용 · 메리 울스턴크래프트 ·
+사마천 · 한비 · 굴원 · 루이자 메이 올컷.
+→ 여성 3명 → 5명, 한국 원전 2개 → 4개.
+
+읽는 중 걸러낸 것(다시 넣지 말 것): 마르쿠스 아우렐리우스 "행복은 생각의 질에 달렸다"·
+"시간을 낭비하지 마라" 2건은 Long 역 전문에 없음. 올컷 "not afraid of storms"는
+『작은 아씨들』 전문에 없음. 소저너 트루스 "Ain't I a Woman?"의 위키문헌 판본은
+1851년 원 연설이 아니라 1863년 Gage의 각색본.
+
+### 미해결 — 남은 일은 이것뿐
+
+**[C] 1차 출처는 실재하나 사이트가 안 열려, 열리는 대체 페이지로 문구만 대조한 4건**
+(계획서 원안대로면 삭제 대상이지만, 증거가 부정된 게 아니라 네트워크 정책 때문에
+못 연 것이라 삭제하지 않았다. 처리 방침은 사용자 판단 대기 중.)
+
+| id | 저자 | 못 연 1차 출처 | 현재 대체 sourceUrl |
+|---|---|---|---|
+| 6 | 스티브 잡스 | news.stanford.edu | (동일 URL 유지, 미개방) |
+| 41 | 이순신 | db.itkc.or.kr 『난중일기』 | ko.wikiquote (3차) |
+| 42 | 안중근 | heritage.go.kr 유묵 | ko.wikipedia |
+| 52 | 베토벤 | — | 베토벤하우스 자필본(이미지만, 판독문 없음) |
+
+**허용목록에 추가하면 41·42를 진짜 원전으로 승급 가능:**
+
+```
+db.itkc.or.kr        (한국고전종합DB — 난중일기 정유년)
+www.heritage.go.kr   (국가유산포털 — 안중근 유묵)
+```
+
+`news.stanford.edu`는 허용목록과 무관하게 사이트가 봇 요청을 전부 403으로 막으므로
+도메인 추가로 해결되지 않는다.
+
+**[B] 인쇄물 1차 출처를 정확히 인용한 페이지로만 대조한 3건**: 21(LIFE 1955.5.2),
+50(Cook 1913 1권 506쪽), 55(Harper's Monthly 165권 987호 406쪽).
+원 인쇄물이 온라인에 없고 archive.org·hathitrust가 막혀 있어 더 올릴 방법이 없다.
+
+### 브랜치 주의
+
+계획서 원안의 검증 6번은 `claude/motivational-quote-app-7f4hr6`에 푸시하라고 돼 있으나,
+2회차 세션은 `claude/verification-plan-quotes-bhqnc1`을 지정받아 그쪽에 푸시했다.
+앱 브랜치로 반영하려면 별도 머지가 필요하다.
+
+---
+
+# (이하 원본 계획서 — 2회차 실행 시점의 기록)
 
 > 이 문서는 새 세션에서 이어서 작업하기 위한 인수인계 문서다.
-> Claude에게 "VERIFICATION_PLAN.md 따라서 재검증 진행해줘"라고 하면 된다.
 
 ## 배경
 
