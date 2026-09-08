@@ -1,10 +1,41 @@
+/* motimoti — 박스 없는 편집 레이아웃.
+   구조는 왼쪽 정렬축과 테라코타 룰이 만든다. 카드도 테두리도 쓰지 않는다.
+
+   색 규칙
+   - 순백(#fff)과 순흑(#000)은 쓰지 않는다. 눈부심과 과대비를 피하기 위해서다.
+   - 본문·저자 등 글자는 배경 대비 4.5:1(WCAG AA) 이상을 지킨다.
+     --accent 는 3.97:1 이라 글자에 쓰면 미달이므로, 글자와 테두리에는
+     한 단계 진한 --accent-text(5.3:1)를 쓴다. --accent 는 룰과 하트 같은
+     그래픽 전용이다(그래픽 기준 3:1, 통과).
+   - 포인트 컬러는 하나뿐이고 작은 요소에만 쓴다. */
+
 :root {
-  --bg-gradient: linear-gradient(160deg, #6b73ff 0%, #9b6bff 50%, #ff6bcb 100%);
-  --card-bg: rgba(255, 255, 255, 0.12);
-  --text-color: #ffffff;
-  --author-color: rgba(255, 255, 255, 0.8);
-  --btn-bg: rgba(255, 255, 255, 0.18);
-  --btn-bg-active: rgba(255, 255, 255, 0.32);
+  --bg: #f1eae0;
+  --ink: #33302b;          /* 본문      11.0:1 */
+  --ink-soft: #6f604f;     /* 저자·보조  5.1:1 */
+  --accent: #b4593a;       /* 룰·하트 등 그래픽 전용 */
+  --accent-text: #9c4529;  /* 글자·테두리 5.3:1 */
+  --hairline: #e0d6c6;
+  --toast-bg: #33302b;
+  --toast-ink: #f1eae0;
+
+  --font-kr: "Hahmlet", "Nanum Myeongjo", serif;
+  --pad: 28px;
+  --radius: 3px;
+  --tracking-wide: 0.22em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1917;
+    --ink: #e6e1d9;        /* 13.4:1 */
+    --ink-soft: #98908a;   /*  5.6:1 */
+    --accent: #d08a5f;
+    --accent-text: #d08a5f; /*  6.2:1 */
+    --hairline: #3a342f;
+    --toast-bg: #e6e1d9;
+    --toast-ink: #1c1917;
+  }
 }
 
 * {
@@ -17,12 +48,12 @@ html, body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
-    "Noto Sans KR", Roboto, sans-serif;
-  background: var(--bg-gradient);
-  color: var(--text-color);
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--ink);
   min-height: 100vh;
   min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
 }
 
 .app {
@@ -32,20 +63,22 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+  padding: env(safe-area-inset-top) var(--pad) env(safe-area-inset-bottom);
 }
 
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 4px 8px;
+  padding: 28px 0 8px;
+  margin-right: -10px;
 }
 
 .logo {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   margin: 0;
 }
 
@@ -53,192 +86,303 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
-.hidden {
-  display: none;
+/* 룰 — 카드를 대신해 "여기서 시작"을 표시하는 유일한 앵커. */
+.rule {
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  flex: none;
 }
+
+/* ── 메인 ─────────────────────────────────────────────── */
 
 #main-view {
-  justify-content: space-between;
-  padding: 24px 0 32px;
-  gap: 24px;
+  justify-content: flex-end;
 }
 
-.quote-card {
+.quote-block {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 20px;
-  background: var(--card-bg);
-  border-radius: 24px;
-  padding: 32px 24px;
-  text-align: center;
-  backdrop-filter: blur(6px);
+  align-items: flex-start;
+  gap: 36px;
+  /* 아래를 더 비워 명언을 중앙보다 위로 올린다.
+     상하 대칭이면 정적이 되고, 비대칭이라야 긴장이 생긴다. */
+  padding-bottom: 96px;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.quote-card.fade {
+.quote-block.fade {
   opacity: 0;
   transform: translateY(8px);
 }
 
+.quote-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+}
+
 .quote-text {
-  font-size: 22px;
-  line-height: 1.5;
-  font-weight: 600;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.85;
   margin: 0;
+  text-align: left;
+  word-break: keep-all; /* 없으면 한글이 단어 중간에서 끊긴다. */
+  text-wrap: pretty;
+}
+
+.quote-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
 }
 
 .quote-author {
-  font-size: 15px;
-  color: var(--author-color);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
   margin: 0;
 }
 
 .quote-actions {
   display: flex;
-  gap: 16px;
-  margin-top: 8px;
+  gap: 6px;
+  margin-left: -10px;
 }
+
+/* ── 버튼 ─────────────────────────────────────────────── */
 
 .icon-btn {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
   border: none;
-  background: var(--btn-bg);
-  color: var(--text-color);
-  font-size: 18px;
+  background: none;
+  padding: 0;
+  color: var(--ink-soft);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease, transform 0.1s ease;
+  transition: transform 0.1s ease;
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.app-header .icon-btn svg {
+  width: 21px;
+  height: 21px;
 }
 
 .icon-btn:active {
   transform: scale(0.92);
 }
 
+.heart-icon {
+  fill: none;
+}
+
 .icon-btn.active {
-  background: var(--btn-bg-active);
-  color: #ff5c8a;
+  color: var(--accent);
+}
+
+.icon-btn.active .heart-icon {
+  fill: var(--accent);
 }
 
 .primary-btn {
   width: 100%;
-  padding: 18px;
-  border: none;
-  border-radius: 16px;
-  background: #ffffff;
-  color: #6b3fd6;
-  font-size: 17px;
-  font-weight: 700;
+  height: 56px;
+  border: 1.5px solid var(--accent-text);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--accent-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-indent: var(--tracking-wide); /* 자간이 만든 오른쪽 여백만큼 되민다. */
   cursor: pointer;
+  margin-bottom: 40px;
   transition: transform 0.1s ease, opacity 0.15s ease;
 }
 
 .primary-btn:active {
   transform: scale(0.98);
-  opacity: 0.9;
+  opacity: 0.75;
 }
 
+/* ── 즐겨찾기 ─────────────────────────────────────────── */
+
 #favorites-view {
-  padding: 12px 0 32px;
+  padding-bottom: 32px;
 }
 
 .favorites-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 4px;
+  padding: 28px 0 4px;
+  margin-left: -10px;
 }
 
 .favorites-header h2 {
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
   margin: 0;
 }
 
+.favorites-count-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 18px;
+}
+
+.favorites-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.14em;
+  margin: 0;
+}
+
+/* 박스 대신 얇은 선과 여백으로 항목을 나눈다. 인쇄물 색인의 방식이다. */
 .favorites-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .favorite-item {
-  background: var(--card-bg);
-  border-radius: 16px;
-  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px;
+  padding: 26px 0 10px;
+}
+
+.favorite-item + .favorite-item {
+  border-top: 1px solid var(--hairline);
 }
 
 .favorite-item-text {
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.75;
   margin: 0;
+  word-break: keep-all;
+  text-wrap: pretty;
 }
 
 .favorite-item-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: -10px -10px -10px 0;
 }
 
 .favorite-item-author {
-  font-size: 13px;
-  color: var(--author-color);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.12em;
   margin: 0;
+  padding: 10px 0;
 }
 
 .remove-btn {
-  background: none;
   border: none;
-  color: var(--author-color);
-  font-size: 13px;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.12em;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 12px 10px;
 }
 
 .favorites-empty {
-  color: var(--author-color);
-  text-align: center;
-  margin-top: 40px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  margin-top: 48px;
 }
+
+/* ── 토스트 ───────────────────────────────────────────── */
 
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 32px;
+  bottom: calc(32px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-size: 14px;
+  background: var(--toast-bg);
+  color: var(--toast-ink);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-family: var(--font-kr);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
   transition: opacity 0.2s ease;
   z-index: 10;
 }
 
 .toast.hidden {
+  display: block; /* .hidden 의 display:none 을 되돌리고 페이드로 숨긴다. */
   opacity: 0;
   pointer-events: none;
 }
 
-@media (min-width: 600px) {
-  .app {
-    padding-top: 32px;
+/* ── 좁은 화면 ────────────────────────────────────────── */
+
+@media (max-width: 359px) {
+  :root {
+    --pad: 22px;
   }
 
   .quote-text {
-    font-size: 24px;
+    font-size: 20px;
   }
+}
+
+@media (min-width: 600px) {
+  .app-header {
+    padding-top: 40px;
+  }
+
+  .quote-text {
+    font-size: 23px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-block,
+  .icon-btn,
+  .primary-btn,
+  .toast {
+    transition: none;
+  }
+}
+
+/* ── 유틸리티 ─────────────────────────────────────────────
+   .hidden 은 반드시 파일 맨 끝에 둔다. 특정도가 같은 컴포넌트 규칙
+   (.favorites-count-row 의 display:flex 등)을 소스 순서로 이겨야 하기 때문이다.
+   .toast.hidden 은 특정도가 더 높아 순서와 무관하게 이 규칙을 덮는다. */
+
+.hidden {
+  display: none;
 }

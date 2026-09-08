@@ -1,6 +1,6 @@
 const FAVORITES_KEY = "motimoti-favorites";
 
-const quoteCardEl = document.getElementById("quote-card");
+const quoteBlockEl = document.getElementById("quote-block");
 const quoteTextEl = document.getElementById("quote-text");
 const quoteAuthorEl = document.getElementById("quote-author");
 const favoriteBtn = document.getElementById("favorite-btn");
@@ -12,7 +12,10 @@ const favoritesNavBtn = document.getElementById("favorites-nav-btn");
 const backBtn = document.getElementById("back-btn");
 const favoritesListEl = document.getElementById("favorites-list");
 const favoritesEmptyEl = document.getElementById("favorites-empty");
+const favoritesCountEl = document.getElementById("favorites-count");
+const favoritesCountRowEl = document.getElementById("favorites-count-row");
 const toastEl = document.getElementById("toast");
+const appHeaderEl = document.querySelector(".app-header");
 
 let currentQuote = null;
 let toastTimer = null;
@@ -52,9 +55,9 @@ function removeFavorite(id) {
 }
 
 function updateFavoriteButton() {
-  const active = currentQuote && isFavorite(currentQuote.id);
-  favoriteBtn.textContent = active ? "♥" : "♡";
-  favoriteBtn.classList.toggle("active", !!active);
+  const active = !!(currentQuote && isFavorite(currentQuote.id));
+  favoriteBtn.classList.toggle("active", active);
+  favoriteBtn.setAttribute("aria-pressed", String(active));
 }
 
 function pickRandomQuote(excludeId) {
@@ -65,18 +68,18 @@ function pickRandomQuote(excludeId) {
 }
 
 function renderQuote(quote) {
-  quoteTextEl.textContent = `"${quote.text}"`;
-  quoteAuthorEl.textContent = `- ${quote.author} -`;
+  quoteTextEl.textContent = quote.text;
+  quoteAuthorEl.textContent = quote.author;
   updateFavoriteButton();
 }
 
 function showNextQuote() {
   const nextQuote = pickRandomQuote(currentQuote ? currentQuote.id : null);
-  quoteCardEl.classList.add("fade");
+  quoteBlockEl.classList.add("fade");
   setTimeout(() => {
     currentQuote = nextQuote;
     renderQuote(currentQuote);
-    quoteCardEl.classList.remove("fade");
+    quoteBlockEl.classList.remove("fade");
   }, 200);
 }
 
@@ -111,6 +114,8 @@ function renderFavoritesList() {
   const favorites = getFavorites();
   favoritesListEl.innerHTML = "";
   favoritesEmptyEl.classList.toggle("hidden", favorites.length > 0);
+  favoritesCountRowEl.classList.toggle("hidden", favorites.length === 0);
+  favoritesCountEl.textContent = `${favorites.length}편`;
 
   favorites.forEach((quote) => {
     const li = document.createElement("li");
@@ -118,14 +123,14 @@ function renderFavoritesList() {
 
     const text = document.createElement("p");
     text.className = "favorite-item-text";
-    text.textContent = `"${quote.text}"`;
+    text.textContent = quote.text;
 
     const footer = document.createElement("div");
     footer.className = "favorite-item-footer";
 
     const author = document.createElement("p");
     author.className = "favorite-item-author";
-    author.textContent = `- ${quote.author} -`;
+    author.textContent = quote.author;
 
     const removeBtn = document.createElement("button");
     removeBtn.className = "remove-btn";
@@ -140,11 +145,13 @@ function renderFavoritesList() {
 
 function openFavoritesView() {
   renderFavoritesList();
+  appHeaderEl.classList.add("hidden");
   mainView.classList.add("hidden");
   favoritesView.classList.remove("hidden");
 }
 
 function closeFavoritesView() {
+  appHeaderEl.classList.remove("hidden");
   favoritesView.classList.add("hidden");
   mainView.classList.remove("hidden");
 }
