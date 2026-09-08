@@ -22,7 +22,14 @@
   --font-kr: "Hahmlet", "Nanum Myeongjo", serif;
   --pad: 28px;
   --radius: 3px;
-  --tracking-wide: 0.22em;
+  --tracking-wide: 0.22em;   /* 로고 — 라틴 대문자 기준 */
+  --tracking-btn: 0.22em;    /* 버튼 — 한글 두 글자 기준 */
+  --tracking-meta: 0.1em;    /* 저자·개수 등 캡션 */
+}
+
+html[lang="en"] {
+  --tracking-btn: 0.1em;
+  --tracking-meta: 0.05em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,6 +79,46 @@ body {
   justify-content: space-between;
   padding: 28px 0 8px;
   margin-right: -10px;
+}
+
+/* 언어 전환 — 국기나 지구본 아이콘을 쓰지 않는다. 국기는 언어가 아니라
+   국가를 뜻하고(영어는 어느 나라인가), 이 디자인은 자간 넓힌 타이포로
+   구조를 만들기 때문에 그림이 하나 늘면 목소리가 깨진다.
+   현재 언어만 --ink 로 올리고 나머지는 --ink-soft 로 둔다. */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.lang-btn {
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 15px 5px;   /* 글자는 작아도 터치 영역은 44px 를 넘긴다 */
+  transition: color 0.15s ease;
+}
+
+.lang-btn.active {
+  color: var(--ink);
+}
+
+.lang-sep {
+  font-size: 12px;
+  color: var(--ink-soft);
+  opacity: 0.6;
 }
 
 .logo {
@@ -149,7 +196,7 @@ body {
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-soft);
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-meta);
   margin: 0;
 }
 
@@ -211,8 +258,8 @@ body {
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: var(--tracking-wide);
-  text-indent: var(--tracking-wide); /* 자간이 만든 오른쪽 여백만큼 되민다. */
+  letter-spacing: var(--tracking-btn);
+  text-indent: var(--tracking-btn); /* 자간이 만든 오른쪽 여백만큼 되민다. */
   cursor: pointer;
   margin-bottom: 40px;
   transition: transform 0.1s ease, opacity 0.15s ease;
@@ -232,8 +279,14 @@ body {
 .favorites-header {
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: space-between;
   padding: 28px 0 4px;
+}
+
+.favorites-header-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   margin-left: -10px;
 }
 
@@ -299,7 +352,7 @@ body {
   font-size: 12px;
   font-weight: 600;
   color: var(--ink-soft);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-meta);
   margin: 0;
   padding: 10px 0;
 }
