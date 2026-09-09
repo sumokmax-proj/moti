@@ -25,11 +25,13 @@
   --tracking-wide: 0.22em;   /* 로고 — 라틴 대문자 기준 */
   --tracking-btn: 0.22em;    /* 버튼 — 한글 두 글자 기준 */
   --tracking-meta: 0.1em;    /* 저자·개수 등 캡션 */
+  --quote-size: 21px;
 }
 
 html[lang="en"] {
   --tracking-btn: 0.1em;
   --tracking-meta: 0.05em;
+  --quote-size: 22px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -176,7 +178,7 @@ body {
 }
 
 .quote-text {
-  font-size: 21px;
+  font-size: var(--quote-size);
   font-weight: 400;
   line-height: 1.85;
   margin: 0;
@@ -405,20 +407,26 @@ body {
 @media (max-width: 359px) {
   :root {
     --pad: 22px;
+    --quote-size: 20px;
   }
 
-  .quote-text {
-    font-size: 20px;
+  /* html[lang="en"] 이 :root 보다 특정도가 높으므로 여기서도 따로 덮는다. */
+  html[lang="en"] {
+    --quote-size: 21px;
   }
 }
 
 @media (min-width: 600px) {
-  .app-header {
-    padding-top: 40px;
+  :root {
+    --quote-size: 23px;
   }
 
-  .quote-text {
-    font-size: 23px;
+  html[lang="en"] {
+    --quote-size: 24px;
+  }
+
+  .app-header {
+    padding-top: 40px;
   }
 }
 

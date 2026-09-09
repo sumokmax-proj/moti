@@ -5,15 +5,15 @@ const LANGS = ["en", "ko"];
 const UI = {
   en: {
     next: "Next",
-    favorites: "Saved",
+    favorites: "Favorites",
     remove: "Remove",
     count: (n) => `${n} ${n === 1 ? "quote" : "quotes"}`,
     empty: "Nothing saved yet.",
     copied: "Copied to clipboard",
     shareUnsupported: "Sharing isn’t supported in this browser",
     aria: {
-      openFavorites: "Open saved quotes",
-      favorite: "Save quote",
+      openFavorites: "Open favorites",
+      favorite: "Add to favorites",
       share: "Share",
       back: "Back",
       language: "Language",
