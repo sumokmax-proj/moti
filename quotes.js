@@ -10,21 +10,32 @@
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
-// text.en 을 만드는 규칙 — 한국어 text 와 같은 규율을 적용한다.
-//  1) lang 이 "en" 인 항목(13개)은 original 을 그대로 쓴다. 이미 1차 출처와
-//     문자 그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
-//     (예외: id 54 처칠은 연설 문장 중간을 잘라온 것이라 소문자로 시작한다.
-//      화면에 단독으로 놓이므로 첫 글자만 대문자로 올렸다.)
-//  2) 나머지 항목은 공개된 정본 영역(英譯)을 원전에서 가져오고 translator 에
-//     번역자를 기록한다.
-//  3) 정본 영역을 끝내 찾지 못하면 original 에서 직접 번역하고 translator 를
-//     비워 둔다. translator 가 없다는 것은 자체 번역이라는 뜻이다.
+// text.en 은 세 가지 경로로 만들어졌다.
 //
-// text.en 이 null 인 항목은 영어 모드에서 제외된다. 번역이 준비되기 전에
-// 한국어를 섞어 보여주지 않기 위해서다.
+//  1) original 그대로 (13개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
+//     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
+//     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
+//
+//  2) 공개된 정본 영역 (8개) — translator 필드가 있는 항목. 번역자와 그
+//     번역문을 직접 열어 대조한 URL을 함께 기록한다.
+//       id 4  노자      James Legge
+//       id 30 괴테      Bayard Taylor
+//       id 37 파스퇴르   R. L. Devonshire (Vallery-Radot 『The Life of Pasteur』)
+//       id 43 공자      James Legge
+//       id 44 맹자      James Legge
+//       id 46 세네카     Richard M. Gummere
+//       id 51 반 고흐    반 고흐 미술관 / Huygens ING 공식 영역
+//       id 52 베토벤     Henry Edward Krehbiel (Thayer 『Life of Beethoven』)
+//
+//  3) 자체 번역 (9개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,62,63,64.
+//     정본을 찾으면 여기서 2)로 승급시킨다.
+//
+// translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
 //
 // 한국어 text 는 반드시 original 에서 번역한다. 원문의 주장(주어/서술어/한정
-// 조건)을 바꾸는 의역은 금지한다.
+// 조건)을 바꾸는 의역은 금지한다. 영어도 같은 규율을 따른다.
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
@@ -58,11 +69,15 @@ const QUOTES = [
     id: 4,
     text: {
       ko: "천 리 길도 발밑 한 걸음에서 시작된다.",
-      en: null,
+      en: "The journey of a thousand li commenced with a single step.",
     },
     author: {
       ko: "노자",
       en: "Laozi",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/216/pg216.txt",
     },
     original: "千里之行，始於足下",
     lang: "lzh",
@@ -106,11 +121,15 @@ const QUOTES = [
     id: 30,
     text: {
       ko: "네가 너 자신을 믿는 순간, 너는 사는 법을 알게 된다.",
-      en: null,
+      en: "Be thou but self-possessed, thou hast the art of living!",
     },
     author: {
       ko: "요한 볼프강 폰 괴테",
       en: "Johann Wolfgang von Goethe",
+    },
+    translator: {
+      en: "Bayard Taylor",
+      enUrl: "https://www.gutenberg.org/cache/epub/14591/pg14591.txt",
     },
     original: "Sobald du dir vertraust, sobald weißt du zu leben.",
     lang: "de",
@@ -122,11 +141,15 @@ const QUOTES = [
     id: 37,
     text: {
       ko: "관찰의 영역에서 우연은 오직 준비된 정신만을 돕는다.",
-      en: null,
+      en: "In the fields of observation, chance only favours the mind which is prepared.",
     },
     author: {
       ko: "루이 파스퇴르",
       en: "Louis Pasteur",
+    },
+    translator: {
+      en: "R. L. Devonshire",
+      enUrl: "https://www.gutenberg.org/cache/epub/60956/pg60956.txt",
     },
     original: "dans les champs de l’observation le hasard ne favorise que les esprits préparés",
     lang: "fr",
@@ -138,7 +161,7 @@ const QUOTES = [
     id: 41,
     text: {
       ko: "반드시 죽고자 하면 살고, 반드시 살고자 하면 죽는다.",
-      en: null,
+      en: "If you are determined to die, you will live; if you are determined to live, you will die.",
     },
     author: {
       ko: "이순신",
@@ -154,7 +177,7 @@ const QUOTES = [
     id: 42,
     text: {
       ko: "하루라도 책을 읽지 않으면 입 안에 가시가 돋는다.",
-      en: null,
+      en: "A single day without reading, and thorns grow in my mouth.",
     },
     author: {
       ko: "안중근",
@@ -170,11 +193,15 @@ const QUOTES = [
     id: 43,
     text: {
       ko: "삼군의 장수는 빼앗을 수 있어도, 한 사람의 뜻은 빼앗을 수 없다.",
-      en: null,
+      en: "The commander of the forces of a large state may be carried off, but the will of even a common man cannot be taken from him.",
     },
     author: {
       ko: "공자",
       en: "Confucius",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
     },
     original: "三軍可奪帥也，匹夫不可奪志也",
     lang: "lzh",
@@ -186,11 +213,15 @@ const QUOTES = [
     id: 44,
     text: {
       ko: "하늘이 큰 임무를 내리려 할 때는, 먼저 그 마음을 괴롭게 하고 몸을 지치게 한다.",
-      en: null,
+      en: "When Heaven is about to confer a great office on any man, it first exercises his mind with suffering, and his sinews and bones with toil.",
     },
     author: {
       ko: "맹자",
       en: "Mencius",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_2/The_Works_of_Mencius/chapter12",
     },
     original: "天將降大任於是人也，必先苦其心志，勞其筋骨",
     lang: "lzh",
@@ -202,7 +233,7 @@ const QUOTES = [
     id: 45,
     text: {
       ko: "본래 땅 위에 길은 없었다. 걷는 사람이 많아지면 그것이 곧 길이 된다.",
-      en: null,
+      en: "In truth the earth had no roads to begin with; where many people walk, a road is made.",
     },
     author: {
       ko: "루쉰",
@@ -218,11 +249,15 @@ const QUOTES = [
     id: 46,
     text: {
       ko: "어려워서 감히 못하는 것이 아니라, 감히 하지 않기에 어려워지는 것이다.",
-      en: null,
+      en: "Our lack of confidence is not the result of difficulty; the difficulty comes from our lack of confidence.",
     },
     author: {
       ko: "세네카",
       en: "Seneca",
+    },
+    translator: {
+      en: "Richard M. Gummere",
+      enUrl: "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_104",
     },
     original: "Non quia difficilia sunt non audemus, sed quia non audemus difficilia sunt.",
     lang: "la",
@@ -282,11 +317,15 @@ const QUOTES = [
     id: 51,
     text: {
       ko: "네 안에서 「너는 화가가 아니다」라고 말하거든 바로 그때 그려라. 그 소리도 잠잠해진다.",
-      en: null,
+      en: "If something in you yourself says ‘you aren’t a painter’ — IT’S THEN THAT YOU SHOULD PAINT, old chap, and that voice will be silenced too, but precisely because of that.",
     },
     author: {
       ko: "빈센트 반 고흐",
       en: "Vincent van Gogh",
+    },
+    translator: {
+      en: "Van Gogh Museum / Huygens ING",
+      enUrl: "https://vangoghletters.org/vg/letters/let400/letter.html",
     },
     original: "Als iets in U zelf zegt “gij zijt geen schilder” – SCHILDER DAN JUIST kerel, en die stem bedaart ook, maar slechts daardoor.",
     lang: "nl",
@@ -298,11 +337,15 @@ const QUOTES = [
     id: 52,
     text: {
       ko: "나는 운명의 목덜미를 움켜쥘 것이다. 운명이 나를 완전히 굴복시키지는 못한다.",
-      en: null,
+      en: "I will take Fate by the throat; it shall not wholly overcome me.",
     },
     author: {
       ko: "루트비히 판 베토벤",
       en: "Ludwig van Beethoven",
+    },
+    translator: {
+      en: "Henry Edward Krehbiel",
+      enUrl: "https://www.gutenberg.org/cache/epub/43591/pg43591.txt",
     },
     original: "Ich will dem Schicksal in den Rachen greifen, ganz niederbeugen soll es mich gewiß nicht.",
     lang: "de",
@@ -362,7 +405,7 @@ const QUOTES = [
     id: 56,
     text: {
       ko: "새기다 그만두면 썩은 나무도 못 자르고, 새기기를 그치지 않으면 쇠와 돌도 새긴다.",
-      en: null,
+      en: "Carve and give up, and even rotten wood will not break; carve without giving up, and metal and stone can be engraved.",
     },
     author: {
       ko: "순자",
@@ -410,7 +453,7 @@ const QUOTES = [
     id: 59,
     text: {
       ko: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
-      en: null,
+      en: "The one thing I want without limit is the power of a high culture.",
     },
     author: {
       ko: "김구",
@@ -426,7 +469,7 @@ const QUOTES = [
     id: 60,
     text: {
       ko: "말을 많이 하지 말고, 갑자기 성내지 마라.",
-      en: null,
+      en: "Do not speak much. Do not fly into a rage.",
     },
     author: {
       ko: "정약용",
@@ -458,7 +501,7 @@ const QUOTES = [
     id: 62,
     text: {
       ko: "시 삼백 편은 대개 성현이 발분하여 지은 것이다.",
-      en: null,
+      en: "The three hundred poems of the Odes were, for the most part, written by worthies and sages pouring out their indignation.",
     },
     author: {
       ko: "사마천",
@@ -474,7 +517,7 @@ const QUOTES = [
     id: 63,
     text: {
       ko: "천 길 둑도 개미구멍 하나로 무너진다.",
-      en: null,
+      en: "A dike of a thousand zhang collapses through the hole of an ant.",
     },
     author: {
       ko: "한비",
@@ -490,7 +533,7 @@ const QUOTES = [
     id: 64,
     text: {
       ko: "길은 아득히 멀지만, 나는 오르내리며 찾아 헤매리라.",
-      en: null,
+      en: "The road stretches on, long and far; I shall search up and down.",
     },
     author: {
       ko: "굴원",
