@@ -34,6 +34,7 @@ const QUOTES = [
     source: "『부자가 되는 길(The Way to Wealth)』 / 가난한 리처드의 달력",
     year: 1758,
     sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
+    tags: ["challenge", "energy"],
   },
   {
     id: 4,
@@ -44,6 +45,7 @@ const QUOTES = [
     source: "『도덕경』 제64장 (왕필본)",
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
+    tags: ["challenge", "energy"],
   },
   {
     id: 6,
@@ -54,6 +56,7 @@ const QUOTES = [
     source: "스탠퍼드대 졸업식 연설 (6월 12일)",
     year: 2005,
     sourceUrl: "https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-says",
+    tags: ["energy", "passion"],
   },
   {
     id: 21,
@@ -64,6 +67,7 @@ const QUOTES = [
     source: "LIFE 「Death of a Genius」 (윌리엄 밀러 기록, 5월 2일자)",
     year: 1955,
     sourceUrl: "https://quoteinvestigator.com/2017/11/20/value/",
+    tags: ["success", "meaning"],
   },
   {
     id: 30,
@@ -74,6 +78,7 @@ const QUOTES = [
     source: "『파우스트』 1부 (서재 장면, 메피스토펠레스의 대사)",
     year: 1808,
     sourceUrl: "https://de.wikisource.org/wiki/Faust_-_Der_Trag%C3%B6die_erster_Teil",
+    tags: ["challenge", "fear"],
   },
   {
     id: 37,
@@ -84,6 +89,7 @@ const QUOTES = [
     source: "두에 강연 — 릴 대학 이학부 개설 기념 (12월 7일)",
     year: 1854,
     sourceUrl: "https://fr.wikisource.org/wiki/Discours_prononc%C3%A9_%C3%A0_Douai_le_7_d%C3%A9cembre_1854_%C3%A0_l%E2%80%99occasion_de_l%E2%80%99installation_solennelle_de_la_facult%C3%A9_des_lettres_de_Douai_et_de_la_facult%C3%A9_des_sciences_de_Lille",
+    tags: ["preparation", "success"],
   },
   {
     id: 41,
@@ -94,6 +100,7 @@ const QUOTES = [
     source: "『난중일기』 1597년 9월 15일 (명량해전 전날)",
     year: 1597,
     sourceUrl: "https://ko.wikiquote.org/wiki/%EC%9D%B4%EC%88%9C%EC%8B%A0",
+    tags: ["challenge", "fear", "energy"],
   },
   {
     id: 42,
@@ -104,6 +111,7 @@ const QUOTES = [
     source: "유묵 (보물 제569-2호), 뤼순 감옥",
     year: 1910,
     sourceUrl: "https://ko.wikipedia.org/wiki/%EC%95%88%EC%A4%91%EA%B7%BC",
+    tags: ["perseverance", "energy"],
   },
   {
     id: 43,
@@ -114,6 +122,7 @@ const QUOTES = [
     source: "『논어』 자한편",
     year: -450,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E5%AD%90%E7%BD%95%E7%AC%AC%E4%B9%9D",
+    tags: ["freedom", "energy"],
   },
   {
     id: 44,
@@ -124,6 +133,7 @@ const QUOTES = [
     source: "『맹자』 고자하",
     year: -300,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E5%91%8A%E5%AD%90%E4%B8%8B",
+    tags: ["challenge", "meaning"],
   },
   {
     id: 45,
@@ -134,6 +144,7 @@ const QUOTES = [
     source: "단편소설 「고향(故鄕)」, 『신청년』 제9권 제1호",
     year: 1921,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E6%95%85%E9%84%89",
+    tags: ["failure_acceptance", "challenge"],
   },
   {
     id: 46,
@@ -144,6 +155,7 @@ const QUOTES = [
     source: "『도덕서한(Epistulae Morales)』 104편 26절",
     year: 65,
     sourceUrl: "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_XVII_-_XVIII",
+    tags: ["challenge", "fear"],
   },
   {
     id: 47,
@@ -154,6 +166,7 @@ const QUOTES = [
     source: "『월든』 결론장",
     year: 1854,
     sourceUrl: "https://www.gutenberg.org/files/205/205-h/205-h.htm",
+    tags: ["challenge", "dream"],
   },
   {
     id: 48,
@@ -164,6 +177,7 @@ const QUOTES = [
     source: "에세이 『낙관론(Optimism)』",
     year: 1903,
     sourceUrl: "https://www.gutenberg.org/files/31622/31622-h/31622-h.htm",
+    tags: ["hope", "despair"],
   },
   {
     id: 50,
@@ -174,6 +188,7 @@ const QUOTES = [
     source: "본햄 카터에게 보낸 편지 / E. 쿡 『The Life of Florence Nightingale』(1913) 1권 506쪽 수록",
     year: 1861,
     sourceUrl: "https://quoteinvestigator.com/2016/07/30/excuse/",
+    tags: ["success", "perseverance"],
   },
   {
     id: 51,
@@ -184,6 +199,7 @@ const QUOTES = [
     source: "테오에게 보낸 편지 400번, 니우암스테르담 (10월 28일)",
     year: 1883,
     sourceUrl: "https://vangoghletters.org/vg/letters/let400/letter.html",
+    tags: ["challenge", "fear"],
   },
   {
     id: 52,
@@ -194,6 +210,7 @@ const QUOTES = [
     source: "베겔러에게 보낸 편지, 빈 (11월 16일) — 베토벤하우스 소장 자필본",
     year: 1801,
     sourceUrl: "https://www.beethoven.de/de/media/view/4862695861911552/Ludwig+van+Beethoven,+Brief+an+Franz+Gerhard+Wegeler+in+Bonn,+Wien,+16.+November+1801,+Autograph",
+    tags: ["challenge", "fear", "energy"],
   },
   {
     id: 53,
@@ -204,6 +221,7 @@ const QUOTES = [
     source: "서인도 해방 기념 연설, 커낸다이과 (8월 3일)",
     year: 1857,
     sourceUrl: "https://en.wikisource.org/wiki/West_India_Emancipation",
+    tags: ["challenge", "success"],
   },
   {
     id: 54,
@@ -214,6 +232,7 @@ const QUOTES = [
     source: "해로 스쿨 연설 (10월 29일)",
     year: 1941,
     sourceUrl: "https://en.wikisource.org/wiki/Never_Give_In,_Never,_Never,_Never",
+    tags: ["despair", "energy"],
   },
   {
     id: 55,
@@ -224,6 +243,7 @@ const QUOTES = [
     source: "Harper's Monthly 165권 987호 406쪽 인터뷰",
     year: 1932,
     sourceUrl: "https://en.wikiquote.org/wiki/Thomas_Edison",
+    tags: ["preparation", "success"],
   },
   {
     id: 56,
@@ -234,6 +254,7 @@ const QUOTES = [
     source: "『순자』 권학편",
     year: -250,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%8D%80%E5%AD%90/%E5%8B%B8%E5%AD%B8%E7%AF%87",
+    tags: ["perseverance", "challenge"],
   },
   {
     id: 57,
@@ -244,6 +265,7 @@ const QUOTES = [
     source: "『제인 에어』 23장",
     year: 1847,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1260/pg1260.txt",
+    tags: ["freedom", "energy"],
   },
   {
     id: 58,
@@ -254,6 +276,7 @@ const QUOTES = [
     source: "시 「Hope」, 『Poems by Emily Dickinson』 제2집",
     year: 1891,
     sourceUrl: "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
+    tags: ["hope", "energy"],
   },
   {
     id: 59,
@@ -264,6 +287,7 @@ const QUOTES = [
     source: "『백범일지』 「내가 원하는 우리 나라」",
     year: 1947,
     sourceUrl: "https://ko.wikisource.org/wiki/%EB%B0%B1%EB%B2%94%EC%9D%BC%EC%A7%80",
+    tags: ["meaning", "energy"],
   },
   {
     id: 60,
@@ -274,6 +298,7 @@ const QUOTES = [
     source: "『목민심서』 율기 제1조 칙궁",
     year: 1818,
     sourceUrl: "https://ko.wikisource.org/wiki/%EB%AA%A9%EB%AF%BC%EC%8B%AC%EC%84%9C/%EC%9C%A8%EA%B8%B0",
+    tags: ["oriental", "energy"],
   },
   {
     id: 61,
@@ -284,6 +309,7 @@ const QUOTES = [
     source: "『여성의 권리 옹호』 4장",
     year: 1792,
     sourceUrl: "https://www.gutenberg.org/cache/epub/3420/pg3420.txt",
+    tags: ["freedom", "energy"],
   },
   {
     id: 62,
@@ -294,6 +320,7 @@ const QUOTES = [
     source: "『사기』 권130 태사공자서",
     year: -91,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%8F%B2%E8%A8%98/%E5%8D%B7130",
+    tags: ["oriental", "meaning"],
   },
   {
     id: 63,
@@ -304,6 +331,7 @@ const QUOTES = [
     source: "『한비자』 유로편",
     year: -233,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9F%93%E9%9D%9E%E5%AD%90/%E5%96%BB%E8%80%81",
+    tags: ["failure_acceptance", "warning"],
   },
   {
     id: 64,
@@ -314,6 +342,7 @@ const QUOTES = [
     source: "「이소(離騷)」",
     year: -300,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9B%A2%E9%A8%B7",
+    tags: ["challenge", "energy"],
   },
   {
     id: 65,
@@ -324,5 +353,6 @@ const QUOTES = [
     source: "『작은 아씨들』 15장 (마치 부인의 편지)",
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/37106/pg37106.txt",
+    tags: ["hope", "energy"],
   },
 ];

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>명언 수집기 (Moti Quote Collector)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s;
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      font-weight: bold;
+    }
+
+    .nav button.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .nav button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .section {
+      display: none;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #667eea;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .tags-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .tag-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 15px;
+      background: #f5f5f5;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tag-label:hover {
+      background: #e0e0e0;
+    }
+
+    .tag-label input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .tag-label input[type="checkbox"]:checked + .tag-text {
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .tag-text {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .quote-card {
+      background: #f8f8f8;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+
+    .quote-card h3 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .quote-card .quote-text {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .quote-card .quote-meta {
+      font-size: 0.9em;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .quote-card .quote-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .quote-tag {
+      background: #667eea;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85em;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      font-weight: bold;
+    }
+
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-approved {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-rejected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn-approve {
+      background: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .btn-approve:hover {
+      background: #45a049;
+    }
+
+    .btn-reject {
+      background: #f44336;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .btn-reject:hover {
+      background: #da190b;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .empty-state .emoji {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    .info-box {
+      background: #e3f2fd;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    .info-box strong {
+      color: #667eea;
+    }
+
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📚 명언 수집기</h1>
+    <p>명언을 수집하고 검증해서 앱에 추가하세요</p>
+  </div>
+
+  <div class="container">
+    <!-- 내비게이션 -->
+    <div class="nav">
+      <button class="nav-btn active" data-section="collect">➕ 명언 수집</button>
+      <button class="nav-btn" data-section="review">✓ 검증 대기</button>
+      <button class="nav-btn" data-section="approved">✅ 승인됨</button>
+      <button class="nav-btn" data-section="guide">📖 가이드</button>
+    </div>
+
+    <!-- 1. 명언 수집 섹션 -->
+    <div class="section active" id="collect">
+      <h2>✨ 새 명언 수집하기</h2>
+
+      <div class="success-message" id="successMsg"></div>
+      <div class="error-message" id="errorMsg"></div>
+
+      <div class="info-box">
+        <strong>💡 팁:</strong> 명언은 반드시 1차 출처(책, 연설, 편지 등)를 확인한 후에 추가해주세요.
+        원문과 한국어 번역을 모두 입력해야 합니다.
+      </div>
+
+      <form id="quoteForm">
+        <!-- 기본 정보 -->
+        <div class="form-group">
+          <label>한국어 명언 *</label>
+          <textarea name="text" placeholder="예: 오늘 할 수 있는 일을 내일로 미루지 마라." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>저자 *</label>
+          <input type="text" name="author" placeholder="예: 벤저민 프랭클린" required>
+        </div>
+
+        <!-- 원문 정보 -->
+        <div class="form-group">
+          <label>원문 (원래 언어) *</label>
+          <textarea name="original" placeholder="예: Never leave that till tomorrow, which you can do to-day." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>언어 코드 *</label>
+          <select name="lang" required>
+            <option value="">-- 선택 --</option>
+            <option value="en">English (영어)</option>
+            <option value="ko">Korean (한국어)</option>
+            <option value="lzh">Classical Chinese (한문)</option>
+            <option value="zh">Chinese (중국어)</option>
+            <option value="de">German (독일어)</option>
+            <option value="fr">French (프랑스어)</option>
+            <option value="ja">Japanese (일본어)</option>
+            <option value="es">Spanish (스페인어)</option>
+            <option value="it">Italian (이탈리아어)</option>
+            <option value="ru">Russian (러시아어)</option>
+            <option value="la">Latin (라틴어)</option>
+            <option value="nl">Dutch (네덜란드어)</option>
+          </select>
+        </div>
+
+        <!-- 출처 -->
+        <div class="form-group">
+          <label>출처 정보 *</label>
+          <textarea name="source" placeholder="예: 『부자가 되는 길(The Way to Wealth)』 / 가난한 리처드의 달력" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>연도 *</label>
+          <input type="number" name="year" placeholder="예: 1758" required>
+        </div>
+
+        <div class="form-group">
+          <label>출처 URL *</label>
+          <input type="url" name="sourceUrl" placeholder="예: https://en.wikisource.org/wiki/Way_to_wealth_(1)" required>
+        </div>
+
+        <!-- 상황별 태그 -->
+        <div class="form-group">
+          <label>상황별 태그 (최소 1개 선택) *</label>
+          <div class="tags-container" id="situationTags"></div>
+        </div>
+
+        <!-- 제출 -->
+        <button type="submit">💾 명언 추가하기</button>
+      </form>
+    </div>
+
+    <!-- 2. 검증 대기 섹션 -->
+    <div class="section" id="review">
+      <h2>⏳ 검증 대기 중인 명언</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number" id="pendingCount">0</div>
+          <div class="stat-label">대기 중</div>
+        </div>
+      </div>
+      <div id="pendingQuotes" class="empty-state">
+        <div class="emoji">📭</div>
+        <p>검증 대기 중인 명언이 없습니다.</p>
+      </div>
+    </div>
+
+    <!-- 3. 승인된 명언 섹션 -->
+    <div class="section" id="approved">
+      <h2>✅ 승인된 명언</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number" id="approvedCount">0</div>
+          <div class="stat-label">승인됨</div>
+        </div>
+      </div>
+      <div id="approvedQuotes" class="empty-state">
+        <div class="emoji">✨</div>
+        <p>승인된 명언이 없습니다.</p>
+      </div>
+    </div>
+
+    <!-- 4. 가이드 섹션 -->
+    <div class="section" id="guide">
+      <h2>📖 사용 가이드</h2>
+
+      <h3>📋 상황별 태그</h3>
+      <div id="tagsGuide"></div>
+
+      <h3>✅ 명언 검증 기준</h3>
+      <div class="info-box">
+        <ul style="margin-left: 20px;">
+          <li><strong>1차 출처 필수:</strong> 책, 연설, 편지, 당대 기록 등</li>
+          <li><strong>원문 필수:</strong> 원래 언어의 문구가 명확해야 함</li>
+          <li><strong>한국어 번역:</strong> 의역 금지, 원문의 주장 그대로 번역</li>
+          <li><strong>연도:</strong> 정확한 연도 또는 대략적 연도 (음수 = 기원전)</li>
+          <li><strong>URL:</strong> Wikisource, 공식 웹사이트 등 검증 가능한 곳</li>
+        </ul>
+      </div>
+
+      <h3>🎯 주제별 분류</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div class="info-box">
+          <strong>주제:</strong> 의지/도전, 열정/사랑, 준비/노력, 희망, 성공/가치, 자유/개인의지, 인내/꾸준함, 동양철학, 실패 수용, 사랑&관계, 죽음&의미, 유머&역설
+        </div>
+      </div>
+
+      <h3>💡 예시</h3>
+      <div class="quote-card">
+        <div class="quote-text">"오늘 할 수 있는 일을 내일로 미루지 마라."</div>
+        <div class="quote-meta">
+          <strong>저자:</strong> 벤저민 프랭클린<br>
+          <strong>원문:</strong> Never leave that till tomorrow, which you can do to-day.<br>
+          <strong>출처:</strong> 『부자가 되는 길』 (1758)
+        </div>
+        <div class="quote-tags">
+          <span class="quote-tag">challenge</span>
+          <span class="quote-tag">motivation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="collector.js"></script>
+  <script>
+    // 상황별 태그 초기화
+    function initializeSituationTags() {
+      const tags = window.quoteCollector.getSituationTags();
+      const container = document.getElementById('situationTags');
+      const guideContainer = document.getElementById('tagsGuide');
+
+      let html = '';
+      let guideHtml = '';
+
+      for (const [key, value] of Object.entries(tags)) {
+        html += `
+          <label class="tag-label">
+            <input type="checkbox" name="tags" value="${key}">
+            <span class="tag-text">${value.emoji} ${value.name}</span>
+          </label>
+        `;
+
+        guideHtml += `
+          <div class="info-box">
+            <strong>${value.emoji} ${value.name}</strong><br>
+            <span style="font-size: 0.9em;">${value.description}</span>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      guideContainer.innerHTML = guideHtml;
+    }
+
+    // 네비게이션
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+        btn.classList.add('active');
+        const sectionId = btn.dataset.section;
+        document.getElementById(sectionId).classList.add('active');
+      });
+    });
+
+    // 폼 제출
+    document.getElementById('quoteForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const tags = Array.from(formData.getAll('tags'));
+
+      if (tags.length === 0) {
+        showError('최소 1개 이상의 태그를 선택해주세요.');
+        return;
+      }
+
+      const quote = {
+        text: formData.get('text'),
+        author: formData.get('author'),
+        original: formData.get('original'),
+        lang: formData.get('lang'),
+        source: formData.get('source'),
+        year: parseInt(formData.get('year')),
+        sourceUrl: formData.get('sourceUrl'),
+        tags: tags
+      };
+
+      // 유효성 검증
+      const validation = window.quoteCollector.validateQuote(quote);
+      if (!validation.isValid) {
+        showError('오류가 있습니다:<br>• ' + validation.errors.join('<br>• '));
+        return;
+      }
+
+      // 로컬 스토리지에 저장 (임시)
+      let quotes = JSON.parse(localStorage.getItem('pendingQuotes') || '[]');
+      quote.tempId = 'temp_' + Date.now();
+      quotes.push(quote);
+      localStorage.setItem('pendingQuotes', JSON.stringify(quotes));
+
+      showSuccess('✅ 명언이 검증 대기 목록에 추가되었습니다!');
+      e.target.reset();
+      updateStats();
+      loadPendingQuotes();
+    });
+
+    // 메시지 표시
+    function showSuccess(msg) {
+      const el = document.getElementById('successMsg');
+      el.innerHTML = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.innerHTML = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 5000);
+    }
+
+    // 통계 업데이트
+    function updateStats() {
+      const pending = JSON.parse(localStorage.getItem('pendingQuotes') || '[]');
+      const approved = JSON.parse(localStorage.getItem('approvedQuotes') || '[]');
+
+      document.getElementById('pendingCount').textContent = pending.length;
+      document.getElementById('approvedCount').textContent = approved.length;
+    }
+
+    // 대기 중인 명언 로드
+    function loadPendingQuotes() {
+      const quotes = JSON.parse(localStorage.getItem('pendingQuotes') || '[]');
+      const container = document.getElementById('pendingQuotes');
+
+      if (quotes.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="emoji">📭</div><p>검증 대기 중인 명언이 없습니다.</p></div>';
+        return;
+      }
+
+      let html = '';
+      quotes.forEach((quote, index) => {
+        html += `
+          <div class="quote-card">
+            <h3>"${quote.text}"</h3>
+            <div class="quote-meta">
+              <strong>저자:</strong> ${quote.author}<br>
+              <strong>원문:</strong> ${quote.original}<br>
+              <strong>출처:</strong> ${quote.source} (${quote.year}년)
+            </div>
+            <div class="quote-tags">
+              ${quote.tags.map(tag => `<span class="quote-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="button-group">
+              <button class="btn-approve" onclick="approveQuote(${index})">✅ 승인</button>
+              <button class="btn-reject" onclick="rejectQuote(${index})">❌ 거절</button>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // 명언 승인
+    window.approveQuote = function(index) {
+      const pending = JSON.parse(localStorage.getItem('pendingQuotes') || '[]');
+      const approved = JSON.parse(localStorage.getItem('approvedQuotes') || '[]');
+
+      const quote = pending[index];
+      approved.push({...quote, status: 'approved'});
+
+      pending.splice(index, 1);
+      localStorage.setItem('pendingQuotes', JSON.stringify(pending));
+      localStorage.setItem('approvedQuotes', JSON.stringify(approved));
+
+      showSuccess('✅ 명언이 승인되었습니다!');
+      updateStats();
+      loadPendingQuotes();
+      loadApprovedQuotes();
+    };
+
+    // 명언 거절
+    window.rejectQuote = function(index) {
+      const pending = JSON.parse(localStorage.getItem('pendingQuotes') || '[]');
+      pending.splice(index, 1);
+      localStorage.setItem('pendingQuotes', JSON.stringify(pending));
+
+      showSuccess('거절되었습니다.');
+      updateStats();
+      loadPendingQuotes();
+    };
+
+    // 승인된 명언 로드
+    function loadApprovedQuotes() {
+      const quotes = JSON.parse(localStorage.getItem('approvedQuotes') || '[]');
+      const container = document.getElementById('approvedQuotes');
+
+      if (quotes.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="emoji">✨</div><p>승인된 명언이 없습니다.</p></div>';
+        return;
+      }
+
+      let html = '';
+      quotes.forEach(quote => {
+        html += `
+          <div class="quote-card">
+            <h3>"${quote.text}"</h3>
+            <div class="quote-meta">
+              <strong>저자:</strong> ${quote.author}<br>
+              <strong>출처:</strong> ${quote.source} (${quote.year}년)
+            </div>
+            <div class="quote-tags">
+              ${quote.tags.map(tag => `<span class="quote-tag">${tag}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // 초기화
+    initializeSituationTags();
+    updateStats();
+    loadPendingQuotes();
+    loadApprovedQuotes();
+  </script>
+</body>
+</html>
