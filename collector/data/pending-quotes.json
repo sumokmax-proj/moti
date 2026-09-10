@@ -121,6 +121,29 @@
       ],
       "id": 70,
       "approvedAt": "2026-09-10T09:16:36.813Z"
+    },
+    {
+      "tempId": "t1789036611543oqkxr",
+      "addedAt": "2026-09-10T10:36:51.544Z",
+      "text": {
+        "ko": "사람은 누구나 한 번 죽는다. 그 죽음이 태산보다 무겁기도 하고, 기러기 털보다 가볍기도 하다.",
+        "en": "Every man has but one death. That death may be heavier than Mount Tai, or lighter than a goose feather."
+      },
+      "author": {
+        "ko": "사마천",
+        "en": "Sima Qian"
+      },
+      "original": "人固有一死，死有重於泰山，或輕於鴻毛",
+      "lang": "lzh",
+      "source": "『한서』 권62 사마천전 「보임안서」",
+      "year": -93,
+      "sourceUrl": "https://zh.wikisource.org/wiki/%E6%BC%A2%E6%9B%B8/%E5%8D%B7062",
+      "tags": [
+        "despair",
+        "meaning"
+      ],
+      "id": 71,
+      "approvedAt": "2026-09-10T10:36:51.645Z"
     }
   ],
   "lastUpdated": "2026-09-10"

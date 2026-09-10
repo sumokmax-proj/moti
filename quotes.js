@@ -4,8 +4,8 @@
 //
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
-//            27,28,29,31,32,33,34,35,36,38,39,40,49
-// 다음 id: 71
+//            27,28,29,31,32,33,34,35,36,38,39,40,49,62
+// 다음 id: 72
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
@@ -29,7 +29,7 @@
 //       id 52 베토벤     Henry Edward Krehbiel (Thayer 『Life of Beethoven』)
 //
 //  3) 자체 번역 (9개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
-//     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,62,63,64.
+//     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71.
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
 // translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
@@ -39,7 +39,7 @@
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~65
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71
 // [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
 //     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
 //     55(Harper's Monthly 1932, 165권 987호 406쪽)
@@ -47,6 +47,11 @@
 //     열리는 대체 페이지로 문구만 대조한 항목: 6, 41, 42, 52
 // [D] 재검증에서 삭제: 49 마리 퀴리 — 3차 출처뿐이었고 1차로 지목됐던
 //     『피에르 퀴리』(1923) 전문에 해당 문장이 없음을 확인했다.
+//     62 사마천 「시 삼백 편은 대개 성현이 발분하여 지은 것이다」 — 출처는
+//     확실했으나(『사기』 태사공자서) 문장 혼자로는 뜻이 서지 않았다. 원문에서
+//     이 구절은 여덟 개 예시의 마지막 항목이고, 결론은 그 다음 문장에 있다.
+//     목록을 떼어내면 "『시경』의 저자가 누구인가" 라는 말로만 읽힌다.
+//     같은 뜻을 혼자 설 수 있는 문장으로 옮겨 담은 것이 id 71 이다.
 
 const QUOTES = [
   {
@@ -524,23 +529,6 @@ const QUOTES = [
     tags: ["freedom", "energy"],
   },
   {
-    id: 62,
-    text: {
-      ko: "시 삼백 편은 대개 성현이 발분하여 지은 것이다.",
-      en: "The three hundred poems of the Odes were, for the most part, written by worthies and sages pouring out their indignation.",
-    },
-    author: {
-      ko: "사마천",
-      en: "Sima Qian",
-    },
-    original: "詩三百篇，大抵賢聖發憤之所為作也",
-    lang: "lzh",
-    source: "『사기』 권130 태사공자서",
-    year: -91,
-    sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%8F%B2%E8%A8%98/%E5%8D%B7130",
-    tags: ["oriental", "meaning"],
-  },
-  {
     id: 63,
     text: {
       ko: "천 길 둑도 개미구멍 하나로 무너진다.",
@@ -687,5 +675,22 @@ const QUOTES = [
     year: 1901,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
     tags: ["failure", "success"],
+  },
+  {
+    id: 71,
+    text: {
+      ko: "사람은 누구나 한 번 죽는다. 그 죽음이 태산보다 무겁기도 하고, 기러기 털보다 가볍기도 하다.",
+      en: "Every man has but one death. That death may be heavier than Mount Tai, or lighter than a goose feather.",
+    },
+    author: {
+      ko: "사마천",
+      en: "Sima Qian",
+    },
+    original: "人固有一死，死有重於泰山，或輕於鴻毛",
+    lang: "lzh",
+    source: "『한서』 권62 사마천전 「보임안서」",
+    year: -93,
+    sourceUrl: "https://zh.wikisource.org/wiki/%E6%BC%A2%E6%9B%B8/%E5%8D%B7062",
+    tags: ["despair", "meaning"],
   },
 ];
