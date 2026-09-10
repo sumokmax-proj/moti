@@ -1,0 +1,30 @@
+{
+  "name": "moti-quote-collector",
+  "version": "1.0.0",
+  "description": "명언 수집 및 자동 생성 시스템",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node app.js",
+    "generate-quotes": "node scripts/generate-quotes.js",
+    "update-quotes": "node scripts/update-quotes.js",
+    "collector": "npx http-server collector -p 8000 -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "quotes",
+    "motivation",
+    "korean"
+  ],
+  "author": "beonlyone0405@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-sdk/sdk": "^0.16.0"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
