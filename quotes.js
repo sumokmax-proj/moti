@@ -5,7 +5,7 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49
-// 다음 id: 66
+// 다음 id: 71
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
@@ -590,5 +590,102 @@ const QUOTES = [
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/37106/pg37106.txt",
     tags: ["hope", "energy"],
+  },
+  {
+    id: 66,
+    text: {
+      ko: "네가 자주 떠올리는 생각이 어떠하든 네 마음도 그러하게 된다. 영혼은 생각에 물들기 때문이다.",
+      en: "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts.",
+    },
+    author: {
+      ko: "마르쿠스 아우렐리우스",
+      en: "Marcus Aurelius",
+    },
+    original: "Οἷα ἂν πολλάκις φαντασθῇς, τοιαύτη σοι ἔσται ἡ διάνοια· βάπτεται γὰρ ὑπὸ τῶν φαντασιῶν ἡ ψυχή.",
+    lang: "grc",
+    translator: {
+      en: "George Long",
+      enUrl: "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+    },
+    source: "『명상록』 5권 16",
+    year: 180,
+    sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
+    tags: ["meaning", "perseverance"],
+  },
+  {
+    id: 67,
+    text: {
+      ko: "사람을 어지럽히는 것은 사물이 아니라, 사물에 대해 갖는 생각이다.",
+      en: "Men are disturbed not by things, but by the views which they take of things.",
+    },
+    author: {
+      ko: "에픽테토스",
+      en: "Epictetus",
+    },
+    original: "Ταράσσει τοὺς ἀνθρώπους οὐ τὰ πράγματα, ἀλλὰ τὰ περὶ τῶν πραγμάτων δόγματα.",
+    lang: "grc",
+    translator: {
+      en: "Thomas Wentworth Higginson",
+      enUrl: "https://www.gutenberg.org/cache/epub/45109/pg45109.txt",
+    },
+    source: "『엥케이리디온』 5",
+    year: 125,
+    sourceUrl: "https://el.wikisource.org/wiki/%CE%95%CE%B3%CF%87%CE%B5%CE%B9%CF%81%CE%AF%CE%B4%CE%B9%CE%BF%CE%BD",
+    tags: ["fear", "meaning"],
+  },
+  {
+    id: 68,
+    text: {
+      ko: "자기 삶의 '왜'를 지닌 사람은 거의 모든 '어떻게'를 견뎌낸다.",
+      en: "If a man knows the wherefore of his existence, then the manner of it can take care of itself.",
+    },
+    author: {
+      ko: "프리드리히 니체",
+      en: "Friedrich Nietzsche",
+    },
+    original: "Hat man sein warum? des Lebens, so verträgt man sich fast mit jedem wie?",
+    lang: "de",
+    translator: {
+      en: "Anthony M. Ludovici",
+      enUrl: "https://www.gutenberg.org/cache/epub/52263/pg52263.txt",
+    },
+    source: "『우상의 황혼』 잠언과 화살 12",
+    year: 1889,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/7203/pg7203.txt",
+    tags: ["despair", "meaning"],
+  },
+  {
+    id: 69,
+    text: {
+      ko: "너 자신을 믿어라. 모든 심장은 그 쇠줄에 맞추어 울린다.",
+      en: "Trust thyself: every heart vibrates to that iron string.",
+    },
+    author: {
+      ko: "랠프 월도 에머슨",
+      en: "Ralph Waldo Emerson",
+    },
+    original: "Trust thyself: every heart vibrates to that iron string.",
+    lang: "en",
+    source: "『자기 신뢰(Self-Reliance)』",
+    year: 1841,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
+    tags: ["challenge", "freedom"],
+  },
+  {
+    id: 70,
+    text: {
+      ko: "성공은 그가 오른 자리가 아니라, 성공하려 애쓰며 넘어선 장애물로 재야 한다.",
+      en: "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed.",
+    },
+    author: {
+      ko: "부커 T. 워싱턴",
+      en: "Booker T. Washington",
+    },
+    original: "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed.",
+    lang: "en",
+    source: "『노예에서 일어서서(Up from Slavery)』 3장",
+    year: 1901,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
+    tags: ["failure", "success"],
   },
 ];
