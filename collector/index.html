@@ -38,6 +38,7 @@
       <button class="tab" role="tab" data-panel="review" aria-selected="false" id="tab-review">검증 대기<span class="tab-count" id="count-pending">0</span></button>
       <button class="tab" role="tab" data-panel="approved" aria-selected="false" id="tab-approved">승인됨<span class="tab-count" id="count-approved">0</span></button>
       <button class="tab" role="tab" data-panel="guide" aria-selected="false" id="tab-guide">가이드</button>
+      <button class="tab" role="tab" data-panel="all" aria-selected="false" id="tab-all">전체 명언<span class="tab-count" id="count-all">0</span></button>
     </div>
 
     <!-- ── 수집 ───────────────────────────────────────── -->
@@ -161,10 +162,20 @@
       <h3 id="guide-tags-h">상황 태그</h3>
       <ul class="guide-list" id="guide-tags"></ul>
     </section>
+
+    <!-- ── 전체 명언 ──────────────────────────────────── -->
+    <section class="panel" id="panel-all" role="tabpanel" aria-labelledby="tab-all" hidden>
+      <div class="rule" aria-hidden="true"></div>
+      <h2 id="all-h">전체 명언</h2>
+      <p class="lede" id="all-lede">앱에 등재된 명언입니다. quotes.js 를 그대로 읽습니다.</p>
+      <ul class="list" id="all-list"></ul>
+    </section>
   </div>
 
   <p class="toast" id="toast" role="status" hidden></p>
 
+  <!-- 앱과 같은 파일을 읽는다. 사본을 두면 언젠가 서로 어긋난다. -->
+  <script src="../quotes.js"></script>
   <script src="collector.js"></script>
 </body>
 </html>

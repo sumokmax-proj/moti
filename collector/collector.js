@@ -60,7 +60,7 @@ const MAX_EN = 170;
 const UI = {
   ko: {
     title: "수집기",
-    tabs: { collect: "수집", review: "검증 대기", approved: "승인됨", guide: "가이드" },
+    tabs: { collect: "수집", review: "검증 대기", approved: "승인됨", guide: "가이드", all: "전체 명언" },
     collectH: "새 명언",
     collectLede:
       "1차 출처를 확인한 명언만 등재합니다. 한국어와 영어를 모두 입력해야 앱의 두 언어에서 모두 나옵니다.",
@@ -102,6 +102,9 @@ const UI = {
       "전문은 저장소의 QUOTE_STANDARDS.md에 있습니다. 아래는 입력할 때 걸리는 규칙만 추린 것입니다.",
     guideRulesH: "등재 조건",
     guideTagsH: "상황 태그",
+    allH: "전체 명언",
+    allLede: "앱에 등재된 명언입니다. quotes.js 를 그대로 읽습니다.",
+    allMissing: "quotes.js 를 읽지 못했습니다.",
     rules: [
       ["출처", "책·연설·편지·당대 기록 등 1차 출처만 인정합니다. 인용 사이트와 백과사전은 근거가 되지 못합니다."],
       ["길이", `한국어 ${MAX_KO}자, 영어 ${MAX_EN}자 이내. 모바일 한 화면에 들어가야 합니다.`],
@@ -146,7 +149,7 @@ const UI = {
   },
   en: {
     title: "Collector",
-    tabs: { collect: "Collect", review: "Pending", approved: "Approved", guide: "Standards" },
+    tabs: { collect: "Collect", review: "Pending", approved: "Approved", guide: "Standards", all: "All quotes" },
     collectH: "New quote",
     collectLede:
       "Only quotes verified against a primary source. Both Korean and English are required so the quote appears in both languages.",
@@ -188,6 +191,9 @@ const UI = {
       "The full text lives in QUOTE_STANDARDS.md. Below are only the rules enforced on this form.",
     guideRulesH: "Requirements",
     guideTagsH: "Situation tags",
+    allH: "All quotes",
+    allLede: "Every quote in the app. Read straight from quotes.js.",
+    allMissing: "Could not read quotes.js.",
     rules: [
       ["Source", "Primary sources only — books, speeches, letters, contemporary records. Quote sites and encyclopedias are not evidence."],
       ["Length", `Korean within ${MAX_KO} characters, English within ${MAX_EN}. It has to fit one phone screen.`],
@@ -668,6 +674,42 @@ function renderLists() {
   $("count-approved").textContent = String(store.approved.length);
 }
 
+/* 앱에 등재된 명언을 그대로 보여준다. 명언과 저자만 — 출처·태그·id 는
+   검증할 때 보는 것이고, 여기는 "지금 뭐가 들어 있나" 를 훑는 자리다.
+   quotes.js 를 사본 없이 직접 읽으므로 앱과 어긋날 수 없다. */
+function renderAllQuotes() {
+  const list = $("all-list");
+  list.innerHTML = "";
+
+  if (typeof QUOTES === "undefined") {
+    const li = document.createElement("li");
+    li.className = "empty";
+    li.textContent = t().allMissing;
+    list.appendChild(li);
+    $("count-all").textContent = "0";
+    return;
+  }
+
+  QUOTES.forEach((quote) => {
+    const li = document.createElement("li");
+    li.className = "item";
+
+    const text = document.createElement("p");
+    text.className = "item-text";
+    text.textContent = quote.text[lang] || quote.text.ko;
+    li.appendChild(text);
+
+    const author = document.createElement("p");
+    author.className = "item-meta";
+    author.textContent = quote.author[lang] || quote.author.ko;
+    li.appendChild(author);
+
+    list.appendChild(li);
+  });
+
+  $("count-all").textContent = String(QUOTES.length);
+}
+
 function renderGuide() {
   const rules = $("guide-rules");
   rules.innerHTML = "";
@@ -707,6 +749,7 @@ function applyLang() {
   $("tab-review").childNodes[0].nodeValue = ui.tabs.review;
   $("tab-approved").childNodes[0].nodeValue = ui.tabs.approved;
   $("tab-guide").childNodes[0].nodeValue = ui.tabs.guide;
+  $("tab-all").childNodes[0].nodeValue = ui.tabs.all;
 
   $("collect-h").textContent = ui.collectH;
   $("collect-lede").textContent = ui.collectLede;
@@ -719,6 +762,8 @@ function applyLang() {
   $("guide-lede").textContent = ui.guideLede;
   $("guide-rules-h").textContent = ui.guideRulesH;
   $("guide-tags-h").textContent = ui.guideTagsH;
+  $("all-h").textContent = ui.allH;
+  $("all-lede").textContent = ui.allLede;
   $("bulk-h").textContent = ui.bulkH;
   $("bulk-lede").textContent = ui.bulkLede;
   $("bulk-btn").textContent = ui.bulkBtn;
@@ -758,6 +803,7 @@ function applyLang() {
   renderTagPicker();
   renderLangSelect();
   renderGuide();
+  renderAllQuotes();
   renderLists();
 }
 
