@@ -12,23 +12,33 @@
    quotes.js 의 tags 가 쓰는 값이다. 여기서 바꾸면 기존 데이터와 어긋나므로
    키는 고정하고 이름만 손본다. */
 const SITUATION_TAGS = [
+  // QUOTE_STANDARDS.md 의 표를 그대로 옮긴 것이 앞의 13개다.
   { key: "despair", ko: "절망할 때", en: "In despair" },
   { key: "failure", ko: "실패했을 때", en: "After failure" },
   { key: "challenge", ko: "도전할 때", en: "Starting out" },
   { key: "fear", ko: "두려울 때", en: "When afraid" },
-  { key: "perseverance", ko: "버텨야 할 때", en: "Holding on" },
+  { key: "energy", ko: "활기가 필요할 때", en: "Needing energy" },
   { key: "hope", ko: "희망이 필요할 때", en: "Needing hope" },
   { key: "meaning", ko: "의미를 물을 때", en: "Seeking meaning" },
-  { key: "energy", ko: "활기가 필요할 때", en: "Needing energy" },
-  { key: "success", ko: "성공했을 때", en: "After success" },
+  { key: "perseverance", ko: "인내·꾸준함", en: "Perseverance" },
   { key: "freedom", ko: "자유·의지", en: "Freedom, will" },
+  { key: "passion", ko: "열정·사랑", en: "Passion" },
+  { key: "success", ko: "성공·가치", en: "Success, worth" },
   { key: "preparation", ko: "준비·노력", en: "Preparation" },
   { key: "oriental", ko: "동양 고전", en: "Eastern classics" },
+
+  // 아래 셋은 표에 없지만 quotes.js 가 이미 쓰고 있다. 빼면 기존 명언을
+  // 수집기로 다시 넣을 때 "모르는 태그" 로 걸린다. 새 명언에는 위를 쓴다.
+  { key: "failure_acceptance", ko: "실패 수용 (기존)", en: "Accepting failure (legacy)" },
+  { key: "dream", ko: "꿈 (기존)", en: "Dream (legacy)" },
+  { key: "warning", ko: "경계 (기존)", en: "Caution (legacy)" },
 ];
+
 
 const LANGS = [
   ["en", "English", "영어"],
   ["ko", "Korean", "한국어"],
+  ["grc", "Ancient Greek", "고대 그리스어"],
   ["lzh", "Classical Chinese", "한문"],
   ["zh", "Chinese", "중국어"],
   ["de", "German", "독일어"],
@@ -422,6 +432,17 @@ function normalize(quote) {
   return out;
 }
 
+/* quotes.js 는 translator 를 { en, enUrl } 로 갖는다. 폼은 두 칸으로 받으므로
+   안에서는 평평하게 다룬다. 붙여넣는 JSON 은 두 모양 다 올 수 있어 —
+   quotes.js 에서 복사해 온 것과 손으로 적은 것 — 둘 다 받는다. */
+function flatTranslator(item) {
+  const t = item.translator;
+  if (t && typeof t === "object") {
+    return { translator: t.en, translatorUrl: t.enUrl };
+  }
+  return { translator: t, translatorUrl: item.translatorUrl };
+}
+
 /* ── quotes.js 코드 만들기 ─────────────────────────────
    백엔드가 없을 때 손으로 붙여넣을 수 있게 같은 모양의 문자열을 만든다.
    서버도 같은 규칙으로 쓰므로 두 경로의 결과가 같아야 한다. */
@@ -445,8 +466,12 @@ function toEntry(quote, id) {
   lines.push(`    original: ${jsString(quote.original)},`);
   lines.push(`    lang: ${jsString(quote.lang)},`);
   if (quote.translator) {
-    lines.push(`    translator: ${jsString(quote.translator)},`);
-    lines.push(`    translatorUrl: ${jsString(quote.translatorUrl)},`);
+    // quotes.js 의 기존 8개 항목과 같은 모양이어야 한다: { en, enUrl }.
+    // 폼은 두 칸으로 받지만 파일에는 중첩 객체로 쓴다.
+    lines.push("    translator: {");
+    lines.push(`      en: ${jsString(quote.translator)},`);
+    lines.push(`      enUrl: ${jsString(quote.translatorUrl)},`);
+    lines.push("    },");
   }
   lines.push(`    source: ${jsString(quote.source)},`);
   lines.push(`    year: ${Number(quote.year)},`);
@@ -826,8 +851,7 @@ async function onBulk() {
       source: item.source,
       year: item.year,
       sourceUrl: item.sourceUrl,
-      translator: item.translator,
-      translatorUrl: item.translatorUrl,
+      ...flatTranslator(item),
       tags: item.tags,
     };
     const errors = validate(shaped, existing.concat(good));

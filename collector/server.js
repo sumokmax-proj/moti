@@ -30,9 +30,12 @@ const HOST = "127.0.0.1";
 
 const MAX_BODY = 1024 * 1024; // 1MB. 명언 몇 편에 이보다 더 필요할 일이 없다.
 
+/* QUOTE_STANDARDS.md 의 표 13개 + quotes.js 가 이미 쓰는 legacy 3개.
+   legacy 를 빼면 기존 명언을 다시 넣을 때 "모르는 태그" 로 걸린다. */
 const TAG_KEYS = new Set([
-  "despair", "failure", "challenge", "fear", "perseverance", "hope",
-  "meaning", "energy", "success", "freedom", "preparation", "oriental",
+  "despair", "failure", "challenge", "fear", "energy", "hope", "meaning",
+  "perseverance", "freedom", "passion", "success", "preparation", "oriental",
+  "failure_acceptance", "dream", "warning",
 ]);
 
 const MAX_KO = 60;
@@ -92,8 +95,11 @@ function toEntry(quote, id) {
     `    lang: ${jsString(quote.lang)},`,
   ];
   if (quote.translator) {
-    lines.push(`    translator: ${jsString(quote.translator)},`);
-    lines.push(`    translatorUrl: ${jsString(quote.translatorUrl)},`);
+    // quotes.js 의 기존 8개 항목과 같은 모양: { en, enUrl }.
+    lines.push("    translator: {");
+    lines.push(`      en: ${jsString(quote.translator)},`);
+    lines.push(`      enUrl: ${jsString(quote.translatorUrl)},`);
+    lines.push("    },");
   }
   lines.push(`    source: ${jsString(quote.source)},`);
   lines.push(`    year: ${Number(quote.year)},`);
@@ -138,6 +144,16 @@ function appendToQuotesFile(quote) {
    화면에서 이미 검사하지만 여기서 다시 한다. API 는 화면 없이도
    불릴 수 있고, quotes.js 에 쓰는 쪽이 마지막 방어선이다. */
 
+/* 붙여넣는 JSON 은 translator 를 { en, enUrl } 로도, 평평하게도 보낼 수 있다.
+   quotes.js 에서 복사해 온 것과 손으로 적은 것을 둘 다 받는다. */
+function flatTranslator(quote) {
+  const t = quote.translator;
+  if (t && typeof t === "object") {
+    return { translator: t.en, translatorUrl: t.enUrl };
+  }
+  return { translator: t, translatorUrl: quote.translatorUrl };
+}
+
 function validate(quote, existing) {
   const errors = [];
   const str = (v) => (typeof v === "string" ? v.trim() : "");
@@ -157,7 +173,8 @@ function validate(quote, existing) {
   if (!Number.isInteger(Number(quote.year))) errors.push("year 가 정수가 아닙니다");
   if (!isHttpUrl(str(quote.sourceUrl))) errors.push("sourceUrl 이 http(s) 주소가 아닙니다");
 
-  if (str(quote.translator) && !isHttpUrl(str(quote.translatorUrl))) {
+  const tr = flatTranslator(quote);
+  if (str(tr.translator) && !isHttpUrl(str(tr.translatorUrl))) {
     errors.push("translator 가 있으면 translatorUrl 이 있어야 합니다");
   }
 
@@ -197,9 +214,10 @@ function normalize(quote) {
     sourceUrl: str(quote.sourceUrl),
     tags: quote.tags.slice(),
   };
-  if (str(quote.translator)) {
-    out.translator = str(quote.translator);
-    out.translatorUrl = str(quote.translatorUrl);
+  const tr = flatTranslator(quote);
+  if (str(tr.translator)) {
+    out.translator = str(tr.translator);
+    out.translatorUrl = str(tr.translatorUrl);
   }
   return out;
 }
