@@ -222,6 +222,8 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.1s ease;
+  /* 수집기 링크가 a 라서 필요하다. 버튼에는 영향이 없다. */
+  text-decoration: none;
 }
 
 .icon-btn svg {
