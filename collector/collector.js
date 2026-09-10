@@ -105,6 +105,7 @@ const UI = {
     allH: "전체 명언",
     allLede: "앱에 등재된 명언입니다. quotes.js 를 그대로 읽습니다.",
     allMissing: "quotes.js 를 읽지 못했습니다.",
+    allFallback: "명언을 불러오지 못했습니다. 새로고침(Ctrl+F5)해 보세요.",
     rules: [
       ["출처", "책·연설·편지·당대 기록 등 1차 출처만 인정합니다. 인용 사이트와 백과사전은 근거가 되지 못합니다."],
       ["길이", `한국어 ${MAX_KO}자, 영어 ${MAX_EN}자 이내. 모바일 한 화면에 들어가야 합니다.`],
@@ -194,6 +195,7 @@ const UI = {
     allH: "All quotes",
     allLede: "Every quote in the app. Read straight from quotes.js.",
     allMissing: "Could not read quotes.js.",
+    allFallback: "Could not load the quotes. Try a hard refresh.",
     rules: [
       ["Source", "Primary sources only — books, speeches, letters, contemporary records. Quote sites and encyclopedias are not evidence."],
       ["Length", `Korean within ${MAX_KO} characters, English within ${MAX_EN}. It has to fit one phone screen.`],
@@ -764,6 +766,8 @@ function applyLang() {
   $("guide-tags-h").textContent = ui.guideTagsH;
   $("all-h").textContent = ui.allH;
   $("all-lede").textContent = ui.allLede;
+  const fallback = $("all-fallback");
+  if (fallback) fallback.textContent = ui.allFallback;
   $("bulk-h").textContent = ui.bulkH;
   $("bulk-lede").textContent = ui.bulkLede;
   $("bulk-btn").textContent = ui.bulkBtn;

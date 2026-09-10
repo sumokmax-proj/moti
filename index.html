@@ -7,8 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
-  <link rel="stylesheet" href="tokens.css" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
+       파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
+       섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
+  <link rel="stylesheet" href="tokens.css?v=20260910a" />
+  <link rel="stylesheet" href="style.css?v=20260910a" />
 </head>
 <body>
   <div class="app">
@@ -77,7 +80,7 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="quotes.js"></script>
-  <script src="app.js"></script>
+  <script src="quotes.js?v=20260910a"></script>
+  <script src="app.js?v=20260910a"></script>
 </body>
 </html>
