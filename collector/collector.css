@@ -1,0 +1,555 @@
+/* 수집기 스타일.
+   색·간격·타이포는 ../tokens.css 의 토큰을 그대로 쓴다. 앱과 같은 집안으로
+   보이게 하되 레이아웃은 따로 간다 — 앱은 읽는 화면이고 여기는 입력 도구다.
+   확정안(시안 E)의 "박스 없음"을 폼에까지 적용하면 입력란의 경계가 사라져
+   쓸 수 없다. 그래서 여기서는 헤어라인으로 경계를 만든다. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  /* 폼 골격은 산세리프다. 명조(Hahmlet)는 명언이 인용돼 보이는 자리에만 쓴다.
+     URL·연도 같은 값은 명조에서 판독성이 떨어진다. */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--pad) 64px;
+}
+
+/* ── 헤더 ─────────────────────────────────────────────── */
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 0 14px;
+}
+
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.1s ease;
+}
+
+.icon-btn svg {
+  width: 21px;
+  height: 21px;
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* 언어 토글 — 앱 헤더와 같은 모양이라 눈이 같은 것으로 읽는다 */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-meta);
+}
+
+.lang-btn {
+  border: none;
+  background: none;
+  padding: 6px 2px;
+  color: var(--ink-soft);
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  opacity: 0.55;
+}
+
+.lang-btn.active {
+  opacity: 1;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.lang-sep {
+  color: var(--ink-soft);
+  opacity: 0.5;
+}
+
+/* 저장 위치 표시. 백엔드가 있으면 파일, 없으면 브라우저에만 남는다는
+   사실은 쓰는 사람이 늘 알아야 한다 — 숨기면 작업을 잃는다. */
+.mode {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 0 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: var(--tracking-meta);
+}
+
+.mode-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  flex: none;
+}
+
+.mode[data-mode="server"] .mode-dot {
+  background: var(--ok);
+}
+
+.mode[data-mode="local"] .mode-dot {
+  background: var(--accent);
+}
+
+/* ── 탭 ───────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: 22px;
+  margin: 18px 0 0;
+  border-bottom: 1px solid var(--hairline);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex: none;
+  border: none;
+  background: none;
+  padding: 10px 0 12px;
+  margin-bottom: -1px;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  /* 알약 버튼 대신 밑줄 탭. 선택된 탭의 밑줄이 메인 화면의 테라코타 룰과
+     같은 색·같은 두께라 두 화면이 같은 리듬으로 읽힌다. */
+  border-bottom: 2px solid transparent;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom-color: var(--accent);
+}
+
+.tab-count {
+  color: var(--ink-soft);
+  font-weight: 400;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panel {
+  padding-top: 26px;
+}
+
+.rule {
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 0 18px;
+}
+
+h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  letter-spacing: 0.01em;
+}
+
+.lede {
+  margin: 0 0 24px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 30px 0 10px;
+}
+
+/* ── 폼 ───────────────────────────────────────────────── */
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label,
+.field .label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-meta);
+  color: var(--ink-soft);
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+
+.req {
+  color: var(--accent-text);
+  margin-left: 3px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius);
+  padding: 11px 12px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* 명언 본문과 원문은 인용되는 글이라 명조로 둔다 —
+   입력하는 동안에도 앱에서 보일 모습에 가깝게 보인다. */
+textarea[name="text_ko"],
+textarea[name="text_en"],
+textarea[name="original"] {
+  font-family: var(--font-kr);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+
+textarea.tall {
+  min-height: 210px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--field-focus);
+  outline-offset: -1px;
+  border-color: var(--field-focus);
+}
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 480px) {
+  .two {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* ── 태그 ─────────────────────────────────────────────── */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius);
+  padding: 7px 11px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  background: none;
+  font-family: inherit;
+  transition: none;
+}
+
+.tag[aria-pressed="true"] {
+  border-color: var(--accent-text);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.tag:focus-visible {
+  outline: 2px solid var(--field-focus);
+  outline-offset: 2px;
+}
+
+/* ── 버튼 ─────────────────────────────────────────────── */
+
+.btn {
+  height: 52px;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--accent-text);
+  background: none;
+  color: var(--accent-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-btn);
+  text-indent: var(--tracking-btn);
+  cursor: pointer;
+  /* 목록의 '출처 열기'가 a 라서 필요하다. button 에는 영향이 없다. */
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: scale(0.995);
+}
+
+.btn-quiet {
+  height: auto;
+  width: auto;
+  border: none;
+  padding: 4px 0;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: var(--tracking-meta);
+  color: var(--ink-soft);
+  text-indent: 0;
+}
+
+.btn-quiet:hover {
+  color: var(--accent-text);
+}
+
+.btn-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* ── 알림 ─────────────────────────────────────────────── */
+
+.msg {
+  border-left: 2px solid var(--accent);
+  padding: 10px 0 10px 14px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  white-space: pre-line;
+}
+
+.msg[data-kind="ok"] {
+  border-left-color: var(--ok);
+}
+
+.msg[data-kind="error"] {
+  border-left-color: var(--danger);
+  color: var(--danger);
+}
+
+.msg[hidden] {
+  display: none;
+}
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 카드와 그림자 대신 항목 사이 헤어라인.
+   앱의 즐겨찾기 목록이 쓰는 방식과 같다. */
+.item {
+  padding: 20px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.item:first-child {
+  border-top: none;
+  padding-top: 4px;
+}
+
+.item-text {
+  font-family: var(--font-kr);
+  font-size: 17px;
+  line-height: 1.75;
+  margin: 0 0 10px;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+
+.item-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+
+.item-meta a {
+  color: var(--accent-text);
+}
+
+.item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+}
+
+.item-tag {
+  font-size: 11px;
+  letter-spacing: var(--tracking-meta);
+  color: var(--ink-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: 3px 7px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.item-issues {
+  margin: 10px 0 0;
+  padding: 0 0 0 16px;
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.empty {
+  color: var(--ink-soft);
+  font-size: 13px;
+  padding: 8px 0 0;
+}
+
+/* ── 가이드 ───────────────────────────────────────────── */
+
+.guide-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-list li {
+  padding: 12px 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 13px;
+}
+
+.guide-list li:first-child {
+  border-top: none;
+}
+
+.guide-key {
+  font-weight: 600;
+  letter-spacing: var(--tracking-meta);
+  color: var(--accent-text);
+  margin-right: 8px;
+}
+
+.guide-list p {
+  margin: 3px 0 0;
+  color: var(--ink-soft);
+}
+
+/* ── 토스트 ───────────────────────────────────────────── */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  background: var(--toast-bg);
+  color: var(--toast-ink);
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  max-width: calc(100% - 40px);
+  text-align: center;
+  z-index: 10;
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+@media (max-width: 359px) {
+  .wrap {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn,
+  .btn {
+    transition: none;
+  }
+
+  .icon-btn:active,
+  .btn:active {
+    transform: none;
+  }
+}

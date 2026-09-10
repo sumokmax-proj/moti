@@ -9,42 +9,13 @@
      그래픽 전용이다(그래픽 기준 3:1, 통과).
    - 포인트 컬러는 하나뿐이고 작은 요소에만 쓴다. */
 
-:root {
-  --bg: #f1eae0;
-  --ink: #33302b;          /* 본문      11.0:1 */
-  --ink-soft: #6f604f;     /* 저자·보조  5.1:1 */
-  --accent: #b4593a;       /* 룰·하트 등 그래픽 전용 */
-  --accent-text: #9c4529;  /* 글자·테두리 5.3:1 */
-  --hairline: #e0d6c6;
-  --toast-bg: #33302b;
-  --toast-ink: #f1eae0;
+/* 토큰은 tokens.css 에 있다 (수집기와 공유). index.html 에서 먼저 불러온다. */
 
-  --font-kr: "Hahmlet", "Nanum Myeongjo", serif;
-  --pad: 28px;
-  --radius: 3px;
-  --tracking-wide: 0.22em;   /* 로고 — 라틴 대문자 기준 */
-  --tracking-btn: 0.22em;    /* 버튼 — 한글 두 글자 기준 */
-  --tracking-meta: 0.1em;    /* 저자·개수 등 캡션 */
-  --quote-size: 21px;
-}
 
 html[lang="en"] {
   --tracking-btn: 0.1em;
   --tracking-meta: 0.05em;
   --quote-size: 22px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1917;
-    --ink: #e6e1d9;        /* 13.4:1 */
-    --ink-soft: #98908a;   /*  5.6:1 */
-    --accent: #d08a5f;
-    --accent-text: #d08a5f; /*  6.2:1 */
-    --hairline: #3a342f;
-    --toast-bg: #e6e1d9;
-    --toast-ink: #1c1917;
-  }
 }
 
 * {
