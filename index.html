@@ -8,23 +8,26 @@
        svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
        apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
        투명한 모서리는 검게 칠해버린다. -->
-  <link rel="icon" href="favicon.svg?v=20260910d" type="image/svg+xml" />
-  <link rel="icon" href="favicon-32.png?v=20260910d" sizes="32x32" type="image/png" />
-  <link rel="icon" href="favicon-16.png?v=20260910d" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20260910d" />
+  <link rel="icon" href="favicon.svg?v=20260910e" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png?v=20260910e" sizes="32x32" type="image/png" />
+  <link rel="icon" href="favicon-16.png?v=20260910e" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20260910e" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
   <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
        파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
        섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
-  <link rel="stylesheet" href="tokens.css?v=20260910d" />
-  <link rel="stylesheet" href="style.css?v=20260910d" />
+  <link rel="stylesheet" href="tokens.css?v=20260910e" />
+  <link rel="stylesheet" href="style.css?v=20260910e" />
 </head>
 <body>
   <div class="app">
     <header class="app-header">
-      <h1 class="logo">motimoti</h1>
+      <!-- 로고가 수집기로 가는 숨은 입구다. 겉모습은 로고 그대로고 링크처럼
+           보이지 않는다 (밑줄·색 변화·손가락 커서 없음). 아이콘을 다시 꺼낼
+           때는 이 a 를 풀고 header-right 에 톱니 링크를 되살리면 된다. -->
+      <h1 class="logo"><a class="logo-link" href="collector/index.html">motimoti</a></h1>
       <div class="header-right">
         <div class="lang-toggle" role="group" aria-label="Language">
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="true">EN</button>
@@ -34,9 +37,6 @@
         <button id="favorites-nav-btn" class="icon-btn" aria-label="Open favorites">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9L12 3.5Z"/></svg>
         </button>
-        <a id="collector-link" href="collector/index.html" class="icon-btn" aria-label="Quote collector" title="Quote collector">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 8.9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
-        </a>
       </div>
     </header>
 
@@ -88,7 +88,7 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="quotes.js?v=20260910d"></script>
-  <script src="app.js?v=20260910d"></script>
+  <script src="quotes.js?v=20260910e"></script>
+  <script src="app.js?v=20260910e"></script>
 </body>
 </html>

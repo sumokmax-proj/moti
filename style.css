@@ -102,6 +102,21 @@ body {
   margin: 0;
 }
 
+/* 로고는 수집기로 가는 숨은 입구다. 링크로 보이지 않아야 하므로 밑줄·색
+   변화·손가락 커서를 모두 없앤다. hover 에서도 아무 일도 일어나지 않는다.
+   다만 키보드 초점만은 남긴다 — 보이지 않게 하려고 아예 닿지 못하게 만들면
+   키보드로 쓰는 사람은 들어갈 방법이 사라진다. */
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: default;
+}
+
+.logo-link:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
 .view {
   flex: 1;
   display: flex;

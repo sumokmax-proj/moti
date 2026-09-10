@@ -17,7 +17,6 @@ const UI = {
       share: "Share",
       back: "Back",
       language: "Language",
-      collector: "Quote collector",
     },
   },
   ko: {
@@ -34,7 +33,6 @@ const UI = {
       share: "공유하기",
       back: "메인으로 돌아가기",
       language: "언어",
-      collector: "명언 수집기",
     },
   },
 };
@@ -44,7 +42,6 @@ const quoteTextEl = document.getElementById("quote-text");
 const quoteAuthorEl = document.getElementById("quote-author");
 const favoriteBtn = document.getElementById("favorite-btn");
 const shareBtn = document.getElementById("share-btn");
-const collectorLink = document.getElementById("collector-link");
 const nextBtn = document.getElementById("next-btn");
 const mainView = document.getElementById("main-view");
 const favoritesView = document.getElementById("favorites-view");
@@ -114,9 +111,6 @@ function applyLang() {
   favoriteBtn.setAttribute("aria-label", ui.aria.favorite);
   shareBtn.setAttribute("aria-label", ui.aria.share);
   backBtn.setAttribute("aria-label", ui.aria.back);
-  // 수집기는 제작 도구라 화면에 글자가 없다. 라벨과 툴팁만 언어를 따른다.
-  collectorLink.setAttribute("aria-label", ui.aria.collector);
-  collectorLink.setAttribute("title", ui.aria.collector);
   langBtns.forEach((btn) => {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
     btn.classList.toggle("active", btn.dataset.lang === lang);
