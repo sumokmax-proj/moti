@@ -164,7 +164,9 @@ body {
 }
 
 .quote-text {
-  font-size: var(--quote-size);
+  /* --quote-fit 은 app.js 가 긴 명언일 때만 심는다. 없으면 CSS 가 정한
+     기본 크기를 쓴다 — 대부분의 명언은 이 경로로 간다. */
+  font-size: var(--quote-fit, var(--quote-size));
   font-weight: 400;
   line-height: 1.85;
   margin: 0;

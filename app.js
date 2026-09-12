@@ -171,11 +171,41 @@ function pickRandomQuote(excludeId) {
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
+/* 긴 명언이 화면을 넘기지 않게 본문을 한 눈금씩 줄인다.
+ *
+ * 글자수로 판정하지 않고 실제로 넘치는지를 본다. 같은 글자수라도 언어·기기·
+ * 글꼴에 따라 차지하는 높이가 다르다 — 한글은 네모틀을 꽉 채우고 라틴은
+ * x-height 만 쓴다. 재보는 쪽이 정확하다.
+ *
+ * 길이 상한(수집기의 MAX_KO/MAX_EN)은 "이 정도면 큰 화면에 들어간다" 는
+ * 선이고, 이 함수는 작은 화면에서 그 선을 지키는 장치다. 둘이 같은 일을
+ * 나눠 맡는다.
+ *
+ * MIN_SIZE 까지 줄여도 넘치면 거기서 멈추고 스크롤을 허용한다. 글자를 읽지
+ * 못할 만큼 줄이는 것보다는 스크롤이 낫다. */
+const MIN_QUOTE_SIZE = 15;
+
+function fitQuoteText() {
+  // 먼저 CSS 가 정한 기본 크기로 되돌린다. 안 그러면 앞 명언에서 줄인 값이 남는다.
+  quoteTextEl.style.removeProperty("--quote-fit");
+
+  const overflows = () =>
+    document.documentElement.scrollHeight > window.innerHeight + 1;
+  if (!overflows()) return;
+
+  const base = Math.round(parseFloat(getComputedStyle(quoteTextEl).fontSize));
+  for (let size = base - 1; size >= MIN_QUOTE_SIZE; size -= 1) {
+    quoteTextEl.style.setProperty("--quote-fit", size + "px");
+    if (!overflows()) return;
+  }
+}
+
 function renderQuote(quote) {
   if (!quote) return;
   quoteTextEl.textContent = localized(quote.text);
   quoteAuthorEl.textContent = localized(quote.author);
   updateFavoriteButton();
+  fitQuoteText();
 }
 
 function showNextQuote() {
@@ -270,6 +300,13 @@ shareBtn.addEventListener("click", shareCurrentQuote);
 favoritesNavBtn.addEventListener("click", openFavoritesView);
 backBtn.addEventListener("click", closeFavoritesView);
 langBtns.forEach((btn) => btn.addEventListener("click", () => setLang(btn.dataset.lang)));
+
+// 회전하거나 창 크기가 바뀌면 들어가는 양이 달라진다. 다시 맞춘다.
+let fitTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(fitTimer);
+  fitTimer = setTimeout(fitQuoteText, 150);
+});
 
 applyLang();
 currentQuote = pickRandomQuote();

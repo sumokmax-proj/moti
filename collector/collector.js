@@ -51,9 +51,19 @@ const LANGS = [
   ["nl", "Dutch", "네덜란드어"],
 ];
 
-/* QUOTE_STANDARDS.md 의 수치를 그대로 옮긴 것이다. 문서가 바뀌면 여기도 바꾼다. */
-const MAX_KO = 60;
-const MAX_EN = 170;
+/* 길이 상한 — "화면이 감당하는 최대치" 다. 엄선 기준이 아니다.
+   375x667(아이폰 SE 2세대급, 지원하는 가장 작은 기기)에서 한 화면에 들어가는
+   값을 재서 정했다. 한국어 110자 / 영어 210자가 넘치기 시작하는 선이고
+   거기서 한 칸 물러섰다.
+   더 작은 320x568 에서는 앱이 본문을 한 눈금씩 줄여 맞춘다 (app.js 의
+   fitQuoteText). 그래서 이 상한을 지키면 어느 기기에서도 깨지지 않는다.
+
+   "짧을수록 좋다" 는 QUOTE_STANDARDS.md 의 편집 원칙으로 옮겼다. 숫자가
+   엄선까지 하려 들면 둘 다 어설퍼진다 — 실제로 그랬다. 한국어 60자는
+   느슨해서 아무것도 거르지 못했고(최대가 53자였다), 영어 170자는 가장 작은
+   화면에서 이미 넘치고 있었다. */
+const MAX_KO = 100;
+const MAX_EN = 200;
 
 /* ── 화면 문구 ─────────────────────────────────────────
    앱과 달리 수집기는 한국어가 기본이다. 쓰는 사람이 한국어 출처를 다루기 때문이다. */
@@ -108,7 +118,8 @@ const UI = {
     allFallback: "명언을 불러오지 못했습니다. 새로고침(Ctrl+F5)해 보세요.",
     rules: [
       ["출처", "책·연설·편지·당대 기록 등 1차 출처만 인정합니다. 인용 사이트와 백과사전은 근거가 되지 못합니다."],
-      ["길이", `한국어 ${MAX_KO}자, 영어 ${MAX_EN}자 이내. 모바일 한 화면에 들어가야 합니다.`],
+      ["상한", `한국어 ${MAX_KO}자, 영어 ${MAX_EN}자. 화면이 감당하는 최대치일 뿐 품질 기준이 아닙니다. 통과했다고 좋은 명언이 아닙니다.`],
+      ["짧게", "기본은 한국어 40자 안쪽입니다. 넘길 수는 있지만 그 길이가 필요한 이유가 있어야 합니다. 한 줄은 눈에 박히고 여섯 줄은 훑게 됩니다."],
       ["번역", "의역 금지. 원문의 주장을 그대로 옮깁니다."],
       ["자립성", "앱은 한 줄과 저자만 보여줍니다. 원전을 모르는 사람이 읽어도 뜻이 서야 합니다. 목록의 한 항목이거나 앞뒤 문장이 있어야 완성되는 구절은 뺍니다."],
       ["영역", "공개된 정본 영역이 있으면 번역자와 근거 URL을 함께 적고, 없으면 자체 번역으로 둡니다."],
@@ -199,7 +210,8 @@ const UI = {
     allFallback: "Could not load the quotes. Try a hard refresh.",
     rules: [
       ["Source", "Primary sources only — books, speeches, letters, contemporary records. Quote sites and encyclopedias are not evidence."],
-      ["Length", `Korean within ${MAX_KO} characters, English within ${MAX_EN}. It has to fit one phone screen.`],
+      ["Ceiling", `Korean ${MAX_KO} characters, English ${MAX_EN}. This is what the screen can hold — not a quality bar. Passing it does not make a quote good.`],
+      ["Keep it short", "Aim for under 40 Korean characters. You may go over, but you need a reason. One line lands; six lines get skimmed."],
       ["Translation", "No paraphrase. Carry the claim of the original across."],
       ["Standing alone", "The app shows one line and a name — nothing else. It has to make sense to someone who has never read the source. Drop anything that is one item in a list, or that needs the sentences around it."],
       ["English", "Name the translator and link the translation when a public-domain one exists; otherwise leave it as our own."],
