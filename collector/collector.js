@@ -130,7 +130,7 @@ const UI = {
     mode: {
       checking: "저장 위치 확인 중…",
       server: "백엔드 연결됨 — data/pending-quotes.json에 저장되고, 승인하면 quotes.js에 등재됩니다.",
-      local: "백엔드 없음 — 이 브라우저에만 저장됩니다. quotes.js 반영은 코드 복사로 하세요.",
+      local: "백엔드 없음 — 저장소의 검증 대기 목록을 읽어 보여줍니다. 승인·삭제는 이 브라우저에만 남고 quotes.js 는 바뀌지 않습니다.",
     },
     msg: {
       added: "검증 대기에 추가했습니다.",
@@ -222,7 +222,7 @@ const UI = {
     mode: {
       checking: "Checking where this saves…",
       server: "Backend connected — saves to data/pending-quotes.json, and approving writes quotes.js.",
-      local: "No backend — this browser only. Use copy-as-code to get quotes into quotes.js.",
+      local: "No backend — showing the pending list from the repository. Approving or deleting stays in this browser; quotes.js is not touched.",
     },
     msg: {
       added: "Added to pending.",
@@ -285,14 +285,35 @@ async function detectMode() {
   return "local";
 }
 
+/* 저장소에 커밋된 검증 대기 목록. 정적 모드에서도 이걸 읽어서 보여준다.
+   안 읽으면 배포된 수집기는 늘 비어 보이고, Claude 가 올려둔 목록을 볼 방법이
+   없다 — 실제로 그래서 "여기서 볼 수 있게 해달라" 는 요청이 나왔다. */
+let seeded = { pending: [], approved: [] };
+
+async function loadSeed() {
+  try {
+    // Pages 가 10분 캐시하므로 no-store 로 우회한다. 목록은 늘 최신이어야 한다.
+    const res = await fetch("data/pending-quotes.json", { cache: "no-store" });
+    if (!res.ok) return { pending: [], approved: [] };
+    const d = await res.json();
+    return { pending: d.pending || [], approved: d.approved || [] };
+  } catch (_) {
+    // 파일이 없어도 수집기는 동작해야 한다. localStorage 만으로 간다.
+    return { pending: [], approved: [] };
+  }
+}
+
 function readLocal() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const d = JSON.parse(raw);
+      return { pending: d.pending || [], approved: d.approved || [], handled: d.handled || [] };
+    }
   } catch (_) {
     /* 사생활 보호 모드 등에서 접근 자체가 던진다. 빈 상태로 시작한다. */
   }
-  return { pending: [], approved: [] };
+  return { pending: [], approved: [], handled: [] };
 }
 
 function writeLocal(data) {
@@ -311,7 +332,15 @@ async function loadStore() {
     const data = await res.json();
     return { pending: data.pending || [], approved: data.approved || [] };
   }
-  return readLocal();
+  /* 정적 모드 = 저장소 파일(읽기 전용) + 이 브라우저가 더한 것.
+     파일 항목을 승인·삭제하면 파일은 못 고치므로 그 tempId 를 handled 에
+     적어두고 목록에서 뺀다. 그래야 누른 것이 사라진 채로 유지된다. */
+  const local = readLocal();
+  const handled = new Set(local.handled);
+  return {
+    pending: seeded.pending.filter((q) => !handled.has(q.tempId)).concat(local.pending),
+    approved: seeded.approved.concat(local.approved),
+  };
 }
 
 async function addQuotes(quotes) {
@@ -340,11 +369,16 @@ async function approveQuote(tempId) {
     if (!res.ok) throw new Error(body.error || `POST api/quotes/approve ${res.status}`);
     return body;
   }
-  const i = store.pending.findIndex((q) => q.tempId === tempId);
-  if (i === -1) return {};
-  const [quote] = store.pending.splice(i, 1);
-  store.approved.push({ ...quote, approvedAt: new Date().toISOString() });
-  if (!writeLocal(store)) throw new Error("localStorage");
+  const quote = store.pending.find((q) => q.tempId === tempId);
+  if (!quote) return {};
+  const local = readLocal();
+  if (local.pending.some((q) => q.tempId === tempId)) {
+    local.pending = local.pending.filter((q) => q.tempId !== tempId);
+  } else {
+    local.handled.push(tempId); // 파일에서 온 항목이다. 파일은 못 고치니 표시만 한다.
+  }
+  local.approved.push({ ...quote, approvedAt: new Date().toISOString() });
+  if (!writeLocal(local)) throw new Error("localStorage");
   return {};
 }
 
@@ -359,8 +393,13 @@ async function rejectQuote(tempId, from) {
     if (!res.ok) throw new Error(body.error || `POST api/quotes/reject ${res.status}`);
     return;
   }
-  store[from] = store[from].filter((q) => q.tempId !== tempId);
-  if (!writeLocal(store)) throw new Error("localStorage");
+  const local = readLocal();
+  if (local[from].some((q) => q.tempId === tempId)) {
+    local[from] = local[from].filter((q) => q.tempId !== tempId);
+  } else {
+    local.handled.push(tempId);
+  }
+  if (!writeLocal(local)) throw new Error("localStorage");
 }
 
 /* ── 검증 ──────────────────────────────────────────────
@@ -1008,6 +1047,7 @@ async function init() {
   applyLang();
 
   mode = await detectMode();
+  if (mode === "local") seeded = await loadSeed();
   $("mode").dataset.mode = mode;
   $("mode-text").textContent = t().mode[mode];
   $("review-lede").textContent = mode === "server" ? t().reviewLede : t().reviewLedeLocal;
