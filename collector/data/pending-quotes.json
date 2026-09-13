@@ -1,218 +1,5 @@
 {
-  "pending": [
-    {
-      "tempId": "t1789269962994cfzci",
-      "addedAt": "2026-09-13T03:26:02.994Z",
-      "text": {
-        "ko": "나는 내 운명의 주인이요, 내 영혼의 선장이다.",
-        "en": "I am the master of my fate: I am the captain of my soul."
-      },
-      "author": {
-        "ko": "윌리엄 어니스트 헨리",
-        "en": "William Ernest Henley"
-      },
-      "original": "I am the master of my fate: I am the captain of my soul.",
-      "lang": "en",
-      "source": "『시집(Poems)』 「인빅터스」",
-      "year": 1888,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/1568/pg1568.txt",
-      "tags": [
-        "despair",
-        "freedom"
-      ]
-    },
-    {
-      "tempId": "t1789269963009vapx2",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "마음은 그 자체로 하나의 세계라, 스스로 지옥을 천국으로도 천국을 지옥으로도 만든다.",
-        "en": "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven."
-      },
-      "author": {
-        "ko": "존 밀턴",
-        "en": "John Milton"
-      },
-      "original": "The mind is its own place, and in itself Can make a Heaven of Hell, a Hell of Heaven.",
-      "lang": "en",
-      "source": "『실낙원』 1권",
-      "year": 1667,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/26/pg26.txt",
-      "tags": [
-        "meaning",
-        "despair"
-      ]
-    },
-    {
-      "tempId": "t17892699630090uk4r",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "의심은 배신자다. 시도를 두려워하게 만들어, 얻었을 좋은 것을 잃게 한다.",
-        "en": "Our doubts are traitors, and make us lose the good we oft might win by fearing to attempt."
-      },
-      "author": {
-        "ko": "윌리엄 셰익스피어",
-        "en": "William Shakespeare"
-      },
-      "original": "Our doubts are traitors, And make us lose the good we oft might win By fearing to attempt.",
-      "lang": "en",
-      "source": "『자에는 자로』 1막 4장, 루치오의 대사",
-      "year": 1604,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/100/pg100.txt",
-      "tags": [
-        "fear",
-        "challenge"
-      ]
-    },
-    {
-      "tempId": "t1789269963009nsq3z",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "우리는 모두 시궁창에 있다. 그러나 그중 몇은 별을 바라본다.",
-        "en": "We are all in the gutter, but some of us are looking at the stars."
-      },
-      "author": {
-        "ko": "오스카 와일드",
-        "en": "Oscar Wilde"
-      },
-      "original": "We are all in the gutter, but some of us are looking at the stars.",
-      "lang": "en",
-      "source": "『윈더미어 부인의 부채』 3막, 달링턴 경의 대사",
-      "year": 1892,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/790/pg790.txt",
-      "tags": [
-        "hope",
-        "despair"
-      ]
-    },
-    {
-      "tempId": "t1789269963009y8dc9",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "그 이름에 값하는 유일한 자유는, 제 방식대로 제 좋음을 좇는 자유다.",
-        "en": "The only freedom which deserves the name, is that of pursuing our own good in our own way."
-      },
-      "author": {
-        "ko": "존 스튜어트 밀",
-        "en": "John Stuart Mill"
-      },
-      "original": "The only freedom which deserves the name, is that of pursuing our own good in our own way.",
-      "lang": "en",
-      "source": "『자유론』 1장",
-      "year": 1859,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/34901/pg34901.txt",
-      "tags": [
-        "freedom",
-        "meaning"
-      ]
-    },
-    {
-      "tempId": "t17892699630097p3eq",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "위대한 일은 힘이 아니라 끈기로 이루어진다.",
-        "en": "Great works are performed not by strength, but perseverance."
-      },
-      "author": {
-        "ko": "새뮤얼 존슨",
-        "en": "Samuel Johnson"
-      },
-      "original": "Great works are performed not by strength, but perseverance.",
-      "lang": "en",
-      "source": "『라셀라스』 13장",
-      "year": 1759,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/652/pg652.txt",
-      "tags": [
-        "perseverance",
-        "challenge"
-      ]
-    },
-    {
-      "tempId": "t17892699630091vt0o",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "사람이 닿으려는 곳은 잡히는 곳보다 멀어야 한다. 아니면 하늘은 무엇하러 있겠는가?",
-        "en": "Ah, but a man's reach should exceed his grasp, or what's a heaven for?"
-      },
-      "author": {
-        "ko": "로버트 브라우닝",
-        "en": "Robert Browning"
-      },
-      "original": "Ah, but a man's reach should exceed his grasp, Or what's a heaven for?",
-      "lang": "en",
-      "source": "「안드레아 델 사르토」",
-      "year": 1855,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/50954/pg50954.txt",
-      "tags": [
-        "challenge",
-        "meaning"
-      ]
-    },
-    {
-      "tempId": "t17892699630094n7dt",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "언젠가 반드시 정상에 올라, 뭇 산이 작음을 한눈에 보리라.",
-        "en": "One day I shall climb to the very summit, and see at a glance how small the mountains are."
-      },
-      "author": {
-        "ko": "두보",
-        "en": "Du Fu"
-      },
-      "original": "會當凌絕頂，一覽衆山小",
-      "lang": "lzh",
-      "source": "『전당시』 권216 「망악(望嶽)」",
-      "year": 736,
-      "sourceUrl": "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
-      "tags": [
-        "challenge",
-        "oriental"
-      ]
-    },
-    {
-      "tempId": "t1789269963009xiei6",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "세 사람이 길을 가면, 그중에 반드시 내 스승이 있다.",
-        "en": "When I walk along with two others, they may serve me as my teachers."
-      },
-      "author": {
-        "ko": "공자",
-        "en": "Confucius"
-      },
-      "original": "三人行，必有我師焉",
-      "lang": "lzh",
-      "source": "『논어』 술이편 21",
-      "year": -450,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
-      "tags": [
-        "preparation",
-        "oriental"
-      ],
-      "translator": "James Legge",
-      "translatorUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt"
-    },
-    {
-      "tempId": "t1789269963009afi3d",
-      "addedAt": "2026-09-13T03:26:03.009Z",
-      "text": {
-        "ko": "제 배움의 끝을 걱정하지 마라. 일하는 시간마다 성실히 바쁘다면, 마지막 결과는 저절로 되도록 맡겨도 좋다.",
-        "en": "Let no youth have any anxiety about the upshot of his education. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself."
-      },
-      "author": {
-        "ko": "윌리엄 제임스",
-        "en": "William James"
-      },
-      "original": "Let no youth have any anxiety about the upshot of his education, whatever the line of it may be. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
-      "lang": "en",
-      "source": "『교사에게 하는 심리학 강의』 8장 「습관의 법칙」",
-      "year": 1899,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/16287/pg16287.txt",
-      "tags": [
-        "perseverance",
-        "fear"
-      ]
-    }
-  ],
+  "pending": [],
   "approved": [
     {
       "tempId": "t178903179656457q51",
@@ -357,6 +144,238 @@
       ],
       "id": 71,
       "approvedAt": "2026-09-10T10:36:51.645Z"
+    },
+    {
+      "tempId": "t1789269962994cfzci",
+      "addedAt": "2026-09-13T03:26:02.994Z",
+      "text": {
+        "ko": "나는 내 운명의 주인이요, 내 영혼의 선장이다.",
+        "en": "I am the master of my fate: I am the captain of my soul."
+      },
+      "author": {
+        "ko": "윌리엄 어니스트 헨리",
+        "en": "William Ernest Henley"
+      },
+      "original": "I am the master of my fate: I am the captain of my soul.",
+      "lang": "en",
+      "source": "『시집(Poems)』 「인빅터스」",
+      "year": 1888,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1568/pg1568.txt",
+      "tags": [
+        "despair",
+        "freedom"
+      ],
+      "id": 72,
+      "approvedAt": "2026-09-13T05:42:11.001Z"
+    },
+    {
+      "tempId": "t1789269963009vapx2",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "마음은 그 자체로 하나의 세계라, 스스로 지옥을 천국으로도 천국을 지옥으로도 만든다.",
+        "en": "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven."
+      },
+      "author": {
+        "ko": "존 밀턴",
+        "en": "John Milton"
+      },
+      "original": "The mind is its own place, and in itself Can make a Heaven of Hell, a Hell of Heaven.",
+      "lang": "en",
+      "source": "『실낙원』 1권",
+      "year": 1667,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/26/pg26.txt",
+      "tags": [
+        "meaning",
+        "despair"
+      ],
+      "id": 73,
+      "approvedAt": "2026-09-13T05:42:11.063Z"
+    },
+    {
+      "tempId": "t17892699630090uk4r",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "의심은 배신자다. 시도를 두려워하게 만들어, 얻었을 좋은 것을 잃게 한다.",
+        "en": "Our doubts are traitors, and make us lose the good we oft might win by fearing to attempt."
+      },
+      "author": {
+        "ko": "윌리엄 셰익스피어",
+        "en": "William Shakespeare"
+      },
+      "original": "Our doubts are traitors, And make us lose the good we oft might win By fearing to attempt.",
+      "lang": "en",
+      "source": "『자에는 자로』 1막 4장, 루치오의 대사",
+      "year": 1604,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/100/pg100.txt",
+      "tags": [
+        "fear",
+        "challenge"
+      ],
+      "id": 74,
+      "approvedAt": "2026-09-13T05:42:11.128Z"
+    },
+    {
+      "tempId": "t1789269963009nsq3z",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "우리는 모두 시궁창에 있다. 그러나 그중 몇은 별을 바라본다.",
+        "en": "We are all in the gutter, but some of us are looking at the stars."
+      },
+      "author": {
+        "ko": "오스카 와일드",
+        "en": "Oscar Wilde"
+      },
+      "original": "We are all in the gutter, but some of us are looking at the stars.",
+      "lang": "en",
+      "source": "『윈더미어 부인의 부채』 3막, 달링턴 경의 대사",
+      "year": 1892,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/790/pg790.txt",
+      "tags": [
+        "hope",
+        "despair"
+      ],
+      "id": 75,
+      "approvedAt": "2026-09-13T05:42:11.165Z"
+    },
+    {
+      "tempId": "t1789269963009y8dc9",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "그 이름에 값하는 유일한 자유는, 제 방식대로 제 좋음을 좇는 자유다.",
+        "en": "The only freedom which deserves the name, is that of pursuing our own good in our own way."
+      },
+      "author": {
+        "ko": "존 스튜어트 밀",
+        "en": "John Stuart Mill"
+      },
+      "original": "The only freedom which deserves the name, is that of pursuing our own good in our own way.",
+      "lang": "en",
+      "source": "『자유론』 1장",
+      "year": 1859,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/34901/pg34901.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "id": 76,
+      "approvedAt": "2026-09-13T05:42:11.204Z"
+    },
+    {
+      "tempId": "t17892699630097p3eq",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "위대한 일은 힘이 아니라 끈기로 이루어진다.",
+        "en": "Great works are performed not by strength, but perseverance."
+      },
+      "author": {
+        "ko": "새뮤얼 존슨",
+        "en": "Samuel Johnson"
+      },
+      "original": "Great works are performed not by strength, but perseverance.",
+      "lang": "en",
+      "source": "『라셀라스』 13장",
+      "year": 1759,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/652/pg652.txt",
+      "tags": [
+        "perseverance",
+        "challenge"
+      ],
+      "id": 77,
+      "approvedAt": "2026-09-13T05:42:11.239Z"
+    },
+    {
+      "tempId": "t17892699630091vt0o",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "사람이 닿으려는 곳은 잡히는 곳보다 멀어야 한다. 아니면 하늘은 무엇하러 있겠는가?",
+        "en": "Ah, but a man's reach should exceed his grasp, or what's a heaven for?"
+      },
+      "author": {
+        "ko": "로버트 브라우닝",
+        "en": "Robert Browning"
+      },
+      "original": "Ah, but a man's reach should exceed his grasp, Or what's a heaven for?",
+      "lang": "en",
+      "source": "「안드레아 델 사르토」",
+      "year": 1855,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/50954/pg50954.txt",
+      "tags": [
+        "challenge",
+        "meaning"
+      ],
+      "id": 78,
+      "approvedAt": "2026-09-13T05:42:11.274Z"
+    },
+    {
+      "tempId": "t17892699630094n7dt",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "언젠가 반드시 정상에 올라, 뭇 산이 작음을 한눈에 보리라.",
+        "en": "One day I shall climb to the very summit, and see at a glance how small the mountains are."
+      },
+      "author": {
+        "ko": "두보",
+        "en": "Du Fu"
+      },
+      "original": "會當凌絕頂，一覽衆山小",
+      "lang": "lzh",
+      "source": "『전당시』 권216 「망악(望嶽)」",
+      "year": 736,
+      "sourceUrl": "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
+      "tags": [
+        "challenge",
+        "oriental"
+      ],
+      "id": 79,
+      "approvedAt": "2026-09-13T05:42:11.310Z"
+    },
+    {
+      "tempId": "t1789269963009xiei6",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "세 사람이 길을 가면, 그중에 반드시 내 스승이 있다.",
+        "en": "When I walk along with two others, they may serve me as my teachers."
+      },
+      "author": {
+        "ko": "공자",
+        "en": "Confucius"
+      },
+      "original": "三人行，必有我師焉",
+      "lang": "lzh",
+      "source": "『논어』 술이편 21",
+      "year": -450,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+      "tags": [
+        "preparation",
+        "oriental"
+      ],
+      "translator": "James Legge",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+      "id": 80,
+      "approvedAt": "2026-09-13T05:42:11.343Z"
+    },
+    {
+      "tempId": "t1789269963009afi3d",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "제 배움의 끝을 걱정하지 마라. 일하는 시간마다 성실히 바쁘다면, 마지막 결과는 저절로 되도록 맡겨도 좋다.",
+        "en": "Let no youth have any anxiety about the upshot of his education. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself."
+      },
+      "author": {
+        "ko": "윌리엄 제임스",
+        "en": "William James"
+      },
+      "original": "Let no youth have any anxiety about the upshot of his education, whatever the line of it may be. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
+      "lang": "en",
+      "source": "『교사에게 하는 심리학 강의』 8장 「습관의 법칙」",
+      "year": 1899,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/16287/pg16287.txt",
+      "tags": [
+        "perseverance",
+        "fear"
+      ],
+      "id": 81,
+      "approvedAt": "2026-09-13T05:42:11.376Z"
     }
   ],
   "lastUpdated": "2026-09-13"
