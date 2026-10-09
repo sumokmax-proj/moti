@@ -394,7 +394,7 @@ const QUOTES = [
     lang: "nl",
     source: "테오에게 보낸 편지 400번, 니우암스테르담 (10월 28일)",
     year: 1883,
-    sourceUrl: "https://vangoghletters.org/vg/letters/let400/letter.html",
+    sourceUrl: "https://vangoghletters.org/vg/letters/let400/print.html",
     tags: ["challenge", "fear"],
   },
   {

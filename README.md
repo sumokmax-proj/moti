@@ -67,6 +67,19 @@ npm run collector      # http://127.0.0.1:3001/collector/
 
 **엄선은 [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) 의 편집 원칙이 한다** — 한국어 40자 안쪽이 기본이고, 넘길 때는 이유가 있어야 한다. 숫자 하나가 두 일을 다 하려 들면 둘 다 어설퍼진다.
 
+## 점검 도구 — `tools/`
+
+명언을 넣거나 고친 뒤, 커밋하기 전에 돌린다. 기준값(길이 상한, 태그, 저자당 상한)은 `collector/server.js` 에서 읽으므로 따로 맞출 것이 없다.
+
+| 명령 | 하는 일 | 걸리는 시간 |
+|---|---|---|
+| `npm run check` | 데이터 점검 — id 중복·삭제 id 재사용·「다음 id」, 필수 필드·길이·태그, 저자당 상한, 머리 주석의 번역 경로 개수·목록, 수집기 승인 기록 | 1초, 네트워크 없음 |
+| `npm run verify:sources` | 출처 원문 대조 — 기록된 `sourceUrl` 을 실제로 열어 `original` 이 있는지, `translator.enUrl` 에 `text.en` 이 있는지 본다. `-- --ids 59,63` · `-- --from 124` 로 좁힐 수 있다 | 전체 10초 남짓 |
+| `npm run test:app` | 앱 동작 — 화면 그리기, 최근 20% 피하기, 주르륵 넘김, 뒤로 가기·반동, 즐겨찾기가 고친 문구를 따라가는지, 페이지 오류 | 30초 남짓 |
+| `npm test` | `check` + `test:app` | |
+
+`test:app` 은 Playwright 를 쓴다. 처음 한 번 `npm install` 이 필요하다(전역에 깔려 있으면 `NODE_PATH=$(npm root -g)` 로도 된다). 하나라도 실패하면 종료 코드 1.
+
 ## 배포
 
 `main` 에 푸시하면 GitHub Pages 가 자동으로 배포한다. 별도 워크플로 파일은 없고 Pages 기본 빌드를 쓴다.
