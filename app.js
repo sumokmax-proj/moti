@@ -232,6 +232,7 @@ function pickRandomQuote(excludeId) {
 function turnPage(excludeId) {
   const quote = pickRandomQuote(excludeId);
   if (quote) rememberShown(quote.id);
+  wentBack = false; // 새 쪽으로 나아가면 다시 한 장 되돌아갈 수 있다
   return quote;
 }
 
@@ -464,26 +465,221 @@ nextBtn.addEventListener("click", (e) => {
   else showNextQuote();
 });
 
-/* 명언 영역: 넘기는 중 탭하면 멈추고, 왼쪽으로 밀면 주르륵 넘긴다.
-   즐겨찾기·공유 버튼에서 시작한 손짓은 넘김으로 보지 않는다 — 버튼 누르다
-   손이 미끄러진 것을 넘김으로 착각하면 안 된다. */
+/* ── 한 장 되돌아가기 (숨은 장치) ─────────────────────
+   명언을 오른쪽으로 밀면 방금 넘긴 쪽으로 딱 한 장 되돌아간다. 「어, 방금
+   그거 좋았는데」 — 즐겨찾기를 놓치는 가장 흔한 순간을 위한 것이다.
+
+   한 장까지만이다. 여러 장을 허용하면 「아무 데나 펼치는 책」이 「본 명언
+   목록」이 되고, 그 일은 즐겨찾기 화면이 이미 한다. 되돌아간 상태에서 다시
+   오른쪽으로 밀면 쪽이 살짝 들렸다 제자리로 돌아온다(반동) — 반응이 없으면
+   고장처럼 보이고, 반동이 있으면 「더 넘길 쪽이 없구나」가 손에 전해진다.
+
+   직전 쪽은 이미 기기에 저장하는 최근 목록(motimoti-recent)에서 읽는다.
+   그래서 앱을 닫았다 열어도 지난번 마지막 명언으로 한 장 되돌아갈 수 있다. */
+const BACK_MS = 480;
+const BOUNCE_MS = 460;
+const BOUNCE_PX = 22; // 여백(--pad 28px)보다 작게 — 드러나는 틈엔 빈 종이만 보인다
+const EDGE_GUARD_PX = 24;
+
+let wentBack = false;
+
+function previousQuote() {
+  if (wentBack || !currentQuote) return null;
+  const recent = getRecent();
+  const at = recent.lastIndexOf(currentQuote.id);
+  const prevId = at > 0 ? recent[at - 1] : null;
+  if (prevId == null) return null;
+  return QUOTES.find((q) => q.id === prevId && hasLang(q, lang)) || null;
+}
+
+// 지금 화면 그대로를 복제한 낱장 (id 는 지운다).
+function snapshotSheet() {
+  const sheet = document.createElement("div");
+  sheet.className = "sheet";
+  sheet.setAttribute("aria-hidden", "true");
+  for (const child of quoteBlockEl.children) {
+    if (child.classList.contains("sheet") || child.classList.contains("cast")) continue;
+    sheet.appendChild(child.cloneNode(true));
+  }
+  sheet.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  const crease = document.createElement("div");
+  crease.className = "crease";
+  const shade = document.createElement("div");
+  shade.className = "shade";
+  sheet.append(crease, shade);
+  return sheet;
+}
+
+function goBack() {
+  if (turning || isRiffling()) return;
+  const prev = previousQuote();
+  if (!prev) {
+    bounce();
+    return;
+  }
+  wentBack = true;
+  // 최근 목록에 새로 쌓지 않고 순서만 맨 뒤로 옮긴다. 그래야 여기서 다시
+  // 나아갔을 때 「직전」이 지금 보고 있는 이 명언이 된다.
+  rememberShown(prev.id);
+
+  if (reduceMotion.matches) {
+    currentQuote = prev;
+    renderQuote(currentQuote);
+    return;
+  }
+
+  turning = true;
+  // 직전 쪽을 그려 낱장으로 떠 두고, 화면은 다시 지금 쪽으로 돌려 둔다.
+  // 같은 프레임 안에서 일어나므로 깜박임은 없다.
+  const here = currentQuote;
+  renderQuote(prev);
+  const sheet = snapshotSheet();
+  renderQuote(here);
+  const cast = document.createElement("div");
+  cast.className = "cast";
+  cast.setAttribute("aria-hidden", "true");
+  sheet.style.zIndex = "20";
+  cast.style.zIndex = "19";
+  quoteBlockEl.append(cast, sheet);
+
+  // 주르륵의 거울상: 책등에서 펼쳐지고, 그림자는 책등에서 바깥으로 간다.
+  const width = sheet.offsetWidth;
+  const opts = { duration: BACK_MS, easing: "cubic-bezier(.25,.1,.25,1)", fill: "both" };
+  const unfold = sheet.animate(
+    [
+      { transform: "scaleX(0.002)", opacity: 0 },
+      { transform: "scaleX(0.04)", opacity: 1, offset: 0.04 },
+      { transform: "scaleX(1)", opacity: 1 },
+    ],
+    opts
+  );
+  const shade = sheet.querySelector(".shade").animate([{ opacity: 0.9 }, { opacity: 0 }], opts);
+  const shadow = cast.animate(
+    [
+      { transform: "translateX(0px)", opacity: 0 },
+      { transform: `translateX(${width * 0.5}px)`, opacity: 1, offset: 0.5 },
+      { transform: `translateX(${width}px)`, opacity: 0 },
+    ],
+    opts
+  );
+  unfold.finished
+    .then(() => {
+      currentQuote = prev;
+      renderQuote(currentQuote);
+    })
+    .catch(() => {})
+    .finally(() => {
+      [unfold, shade, shadow].forEach((a) => a.cancel());
+      sheet.remove();
+      cast.remove();
+      turning = false;
+    });
+}
+
+/* 반동 — 더 되돌아갈 쪽이 없을 때. 지금 쪽이 손가락을 따라 오른쪽으로 살짝
+   끌려 들렸다가, 종이가 내려앉듯 아주 조금 지나쳤다 제자리에 멈춘다.
+   들리는 동안 책등 쪽 틈에 얇은 그림자가 생기고 쪽 면이 조금 어두워진다. */
+function bounce() {
+  if (turning || isRiffling() || reduceMotion.matches) return;
+  turning = true;
+  const sheet = snapshotSheet();
+  const cast = document.createElement("div");
+  cast.className = "cast cast-lift";
+  cast.setAttribute("aria-hidden", "true");
+  sheet.style.zIndex = "20";
+  cast.style.zIndex = "21";
+  quoteBlockEl.append(sheet, cast);
+
+  const lift = "cubic-bezier(.2,.7,.3,1)"; // 빠르게 들리고
+  const drop = "cubic-bezier(.5,0,.6,1)"; // 무게로 내려앉고
+  const settle = "cubic-bezier(.3,0,.3,1)"; // 살짝 지나쳤다 멈춘다
+  const opts = { duration: BOUNCE_MS, fill: "both" };
+  const move = (x) => `translateX(${x}px)`;
+  const a = sheet.animate(
+    [
+      { transform: move(0), easing: lift },
+      { transform: move(BOUNCE_PX), offset: 0.38, easing: drop },
+      { transform: move(-3), offset: 0.74, easing: settle },
+      { transform: move(0) },
+    ],
+    opts
+  );
+  const b = sheet.querySelector(".shade").animate(
+    [
+      { opacity: 0, easing: lift },
+      { opacity: 0.35, offset: 0.38, easing: drop },
+      { opacity: 0, offset: 0.74 },
+      { opacity: 0 },
+    ],
+    opts
+  );
+  const c = cast.animate(
+    [
+      { transform: move(0), opacity: 0, easing: lift },
+      { transform: move(BOUNCE_PX), opacity: 1, offset: 0.38, easing: drop },
+      { transform: move(-3), opacity: 0, offset: 0.74, easing: settle },
+      { transform: move(0), opacity: 0 },
+    ],
+    opts
+  );
+  a.finished
+    .catch(() => {})
+    .finally(() => {
+      [a, b, c].forEach((x) => x.cancel());
+      sheet.remove();
+      cast.remove();
+      turning = false;
+    });
+}
+
+/* 명언 영역의 손짓.
+   - 넘기는 중에는 어떤 손짓이든 「짚기」다 — 그 자리에서 멈춘다.
+   - 왼쪽으로 밀면 주르륵, 오른쪽으로 밀면 한 장 되돌아가기(없으면 반동).
+   - 화면 가장자리 24px 안에서 시작한 밀기는 받지 않는다. 휴대폰 브라우저는
+     가장자리에서 오른쪽으로 쓸면 「뒤로 가기」로 앱을 떠나 버리는데, 그 손짓은
+     앱이 막을 수 없다. 겹치지 않게 비켜 서는 것까지가 할 수 있는 일이다.
+   - 즐겨찾기·공유 버튼에서 시작한 손짓은 넘김으로 보지 않는다 — 버튼 누르다
+     손이 미끄러진 것을 넘김으로 착각하면 안 된다. */
 let swipeStart = null;
 quoteBlockEl.addEventListener("pointerdown", (e) => {
-  swipeStart = e.target.closest("button") && !isRiffling() ? null : { x: e.clientX, y: e.clientY };
+  const fromButton = e.target.closest("button") && !isRiffling();
+  const fromEdge = e.clientX < EDGE_GUARD_PX || e.clientX > window.innerWidth - EDGE_GUARD_PX;
+  swipeStart = fromButton || (fromEdge && !isRiffling()) ? null : { x: e.clientX, y: e.clientY };
 });
 quoteBlockEl.addEventListener("pointerup", (e) => {
   if (!swipeStart) return;
   const dx = e.clientX - swipeStart.x;
   const dy = e.clientY - swipeStart.y;
   swipeStart = null;
-  if (isRiffling() && Math.abs(dx) < 12 && Math.abs(dy) < 12) {
+  if (isRiffling()) {
     stopRiffle();
     return;
   }
-  if (dx < -SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 1.4) riffleToNextQuote();
+  const horizontal = Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 1.4;
+  if (!horizontal) return;
+  // 마우스로 밀면 지나간 자리의 글자가 선택된다(휴대폰 손가락은 그렇지 않다).
+  // 넘김이든 되돌아가기든 반동이든, 밀기로 본 순간 풀어 둔다.
+  window.getSelection()?.removeAllRanges();
+  if (dx < 0) riffleToNextQuote();
+  else goBack();
 });
 quoteBlockEl.addEventListener("pointercancel", () => {
   swipeStart = null;
+});
+
+/* 키보드: ← 한 장 되돌아가기, → 다음(Shift+→ 주르륵). 즐겨찾기 화면에서는 끈다. */
+document.addEventListener("keydown", (e) => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  if (mainView.classList.contains("hidden")) return;
+  if (e.key === "ArrowLeft") {
+    e.preventDefault();
+    goBack();
+  } else if (e.key === "ArrowRight") {
+    e.preventDefault();
+    if (isRiffling()) stopRiffle();
+    else if (e.shiftKey) riffleToNextQuote();
+    else showNextQuote();
+  }
 });
 
 function showToast(message) {
