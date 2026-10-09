@@ -5,20 +5,21 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 102
+// 다음 id: 114
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (35개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (42개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
-//     (82 페인, 84 스티븐슨, 101 앤 브론테, 정본 영역의 93 아우렐리우스도 같다.)
+//     (82 페인, 84 스티븐슨, 101 앤 브론테, 104 메리 셸리, 정본 영역의
+//      93 아우렐리우스도 같다.)
 //
-//  2) 공개된 정본 영역 (17개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (20개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -37,10 +38,13 @@
 //       id 93 아우렐리우스 George Long
 //       id 97 노자      James Legge
 //       id 98 몽테뉴     Charles Cotton (W. C. Hazlitt 편)
+//       id 105 탕왕      James Legge
+//       id 111 세네카    Richard M. Gummere
+//       id 112 세르반테스 John Ormsby
 //
-//  3) 자체 번역 (13개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (15개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91.
+//     87,88,91,106,107.
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
 // translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
@@ -50,10 +54,13 @@
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~101
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~113
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
-//      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.)
+//      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
+//      107 호라티우스는 렌더링된 페이지가 행 번호 「40」을 끼워 넣어, 위키텍스트로
+//      대조했다. 108 트웨인은 구텐베르크 평문의 "--" 를 text.en 에서 "—" 로 적었다.
+//      112·113 은 작품 속 속담 인용이다 — QUOTE_STANDARDS.md v1.5.)
 // [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
 //     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
 //     55(Harper's Monthly 1932, 165권 987호 406쪽)
@@ -1240,5 +1247,221 @@ const QUOTES = [
     year: 1848,
     sourceUrl: "https://en.wikisource.org/wiki/The_Complete_Poems_of_Anne_Bront%C3%AB/The_Narrow_Way",
     tags: ["challenge", "fear"],
+  },
+  {
+    id: 102,
+    text: {
+      ko: "새벽이 언제 올지 몰라, 나는 모든 문을 열어 둔다.",
+      en: "Not knowing when the dawn will come, I open every door.",
+    },
+    author: {
+      ko: "에밀리 디킨슨",
+      en: "Emily Dickinson",
+    },
+    original: "Not knowing when the dawn will come / I open every door;",
+    lang: "en",
+    source: "『시집 제3집(Poems, Third Series)』 「새벽(Dawn)」",
+    year: 1896,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
+    tags: ["hope", "despair"],
+  },
+  {
+    id: 103,
+    text: {
+      ko: "실패는 괴롭다. 그러나 성공하려고 시도조차 하지 않은 것은 더 나쁘다.",
+      en: "It is hard to fail, but it is worse never to have tried to succeed.",
+    },
+    author: {
+      ko: "시어도어 루스벨트",
+      en: "Theodore Roosevelt",
+    },
+    original: "It is hard to fail, but it is worse never to have tried to succeed.",
+    lang: "en",
+    source: "「분투하는 삶(The Strenuous Life)」 해밀턴 클럽 연설, 시카고 (4월 10일)",
+    year: 1899,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/58821/pg58821.txt",
+    tags: ["failure", "challenge"],
+  },
+  {
+    id: 104,
+    text: {
+      ko: "확고한 목적만큼 마음을 고요하게 해 주는 것은 없다.",
+      en: "Nothing contributes so much to tranquillize the mind as a steady purpose.",
+    },
+    author: {
+      ko: "메리 셸리",
+      en: "Mary Shelley",
+    },
+    original: "nothing contributes so much to tranquillize the mind as a steady purpose",
+    lang: "en",
+    source: "『프랑켄슈타인』 (1818년 초판) 월턴의 첫 번째 편지",
+    year: 1818,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/41445/pg41445.txt",
+    tags: ["meaning", "preparation"],
+  },
+  {
+    id: 105,
+    text: {
+      ko: "진실로 하루를 새롭게 하려거든, 날마다 새롭게 하고, 또 날마다 새롭게 하라.",
+      en: "If you can one day renovate yourself, do so from day to day. Yea, let there be daily renovation.",
+    },
+    author: {
+      ko: "탕왕",
+      en: "King Tang",
+    },
+    original: "苟日新，日日新，又日新",
+    lang: "lzh",
+    translator: {
+      en: "James Legge",
+      enUrl: "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_1/The_Great_Learning",
+    },
+    source: "『대학』 전2장 (탕왕의 세숫대야에 새긴 글)",
+    year: -1600,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E5%A4%A7%E5%AD%B8",
+    tags: ["energy", "challenge", "oriental"],
+  },
+  {
+    id: 106,
+    text: {
+      ko: "사람은 하지 않는 것이 있은 뒤에야, 해낼 수 있는 것이 생긴다.",
+      en: "Only when there are things a person will not do can there be things they will do.",
+    },
+    author: {
+      ko: "맹자",
+      en: "Mencius",
+    },
+    original: "人有不為也，而後可以有為",
+    lang: "lzh",
+    source: "『맹자』 이루하 8",
+    year: -300,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E9%9B%A2%E5%A9%81%E4%B8%8B",
+    tags: ["preparation", "oriental"],
+  },
+  {
+    id: 107,
+    text: {
+      ko: "시작한 사람은 이미 절반을 이룬 것이다. 감히 지혜로워져라. 시작하라.",
+      en: "He who has begun has half done. Dare to be wise; begin.",
+    },
+    author: {
+      ko: "호라티우스",
+      en: "Horace",
+    },
+    original: "Dimidium facti, qui coepit, habet; sapere aude, incipe.",
+    lang: "la",
+    source: "『서간집(Epistulae)』 1권 2편 40행",
+    year: -20,
+    sourceUrl: "https://la.wikisource.org/wiki/Epistulae_(Horatius)/Liber_I/Epistula_II",
+    tags: ["challenge", "energy"],
+  },
+  {
+    id: 108,
+    text: {
+      ko: "용기란 두려움에 맞서고 두려움을 다스리는 것이지, 두려움이 없는 것이 아니다.",
+      en: "Courage is resistance to fear, mastery of fear—not absence of fear.",
+    },
+    author: {
+      ko: "마크 트웨인",
+      en: "Mark Twain",
+    },
+    original: "Courage is resistance to fear, mastery of fear--not absence of fear.",
+    lang: "en",
+    source: "『얼간이 윌슨(Pudd'nhead Wilson)』 12장 「얼간이 윌슨의 달력」",
+    year: 1894,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/102/pg102.txt",
+    tags: ["fear", "challenge"],
+  },
+  {
+    id: 109,
+    text: {
+      ko: "겁쟁이는 죽기 전에 여러 번 죽지만, 용감한 사람은 죽음을 단 한 번만 맛본다.",
+      en: "Cowards die many times before their deaths; the valiant never taste of death but once.",
+    },
+    author: {
+      ko: "윌리엄 셰익스피어",
+      en: "William Shakespeare",
+    },
+    original: "Cowards die many times before their deaths; The valiant never taste of death but once.",
+    lang: "en",
+    source: "『줄리어스 시저』 2막 2장, 시저의 대사",
+    year: 1599,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1522/pg1522.txt",
+    tags: ["fear", "despair"],
+  },
+  {
+    id: 110,
+    text: {
+      ko: "삶은 원한을 품거나 잘못을 따지며 보내기에는 너무 짧은 것 같다.",
+      en: "Life appears to me too short to be spent in nursing animosity or registering wrongs.",
+    },
+    author: {
+      ko: "샬럿 브론테",
+      en: "Charlotte Brontë",
+    },
+    original: "Life appears to me too short to be spent in nursing animosity or registering wrongs.",
+    lang: "en",
+    source: "『제인 에어』 6장, 헬렌 번스의 대사",
+    year: 1847,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1260/pg1260.txt",
+    tags: ["meaning", "freedom"],
+  },
+  {
+    id: 111,
+    text: {
+      ko: "모든 것은 남의 것이고, 오직 시간만이 우리 것이다.",
+      en: "Nothing, Lucilius, is ours, except time.",
+    },
+    author: {
+      ko: "세네카",
+      en: "Seneca",
+    },
+    original: "Omnia, Lucili, aliena sunt, tempus tantum nostrum est",
+    lang: "la",
+    translator: {
+      en: "Richard M. Gummere",
+      enUrl: "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_1",
+    },
+    source: "『도덕서한(Epistulae Morales)』 1편 3절",
+    year: 65,
+    sourceUrl: "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_I",
+    tags: ["meaning", "energy"],
+  },
+  {
+    id: 112,
+    text: {
+      ko: "한 문이 닫히면 다른 문이 열린다.",
+      en: "Where one door shuts, another opens.",
+    },
+    author: {
+      ko: "미겔 데 세르반테스",
+      en: "Miguel de Cervantes",
+    },
+    original: "Donde una puerta se cierra, otra se abre",
+    lang: "es",
+    translator: {
+      en: "John Ormsby",
+      enUrl: "https://www.gutenberg.org/cache/epub/996/pg996.txt",
+    },
+    source: "『돈키호테』 1부 21장, 돈키호테의 대사(속담 인용)",
+    year: 1605,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2000/pg2000.txt",
+    tags: ["hope", "failure"],
+  },
+  {
+    id: 113,
+    text: {
+      ko: "근면은 행운의 어머니다.",
+      en: "Diligence is the mother of good luck.",
+    },
+    author: {
+      ko: "벤저민 프랭클린",
+      en: "Benjamin Franklin",
+    },
+    original: "Diligence is the mother of good luck",
+    lang: "en",
+    source: "『부자가 되는 길(The Way to Wealth)』, 에이브러햄 영감의 연설(속담 인용)",
+    year: 1758,
+    sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
+    tags: ["preparation", "success"],
   },
 ];
