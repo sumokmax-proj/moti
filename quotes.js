@@ -5,19 +5,19 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 82
+// 다음 id: 92
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (13개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (28개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
 //
-//  2) 공개된 정본 영역 (8개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (14개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -27,9 +27,16 @@
 //       id 46 세네카     Richard M. Gummere
 //       id 51 반 고흐    반 고흐 미술관 / Huygens ING 공식 영역
 //       id 52 베토벤     Henry Edward Krehbiel (Thayer 『Life of Beethoven』)
+//       id 66 아우렐리우스 George Long
+//       id 67 에픽테토스  Thomas Wentworth Higginson
+//       id 68 니체      Anthony M. Ludovici
+//       id 80 공자      James Legge
+//       id 89 세네카     Richard M. Gummere
+//       id 90 공자      James Legge
 //
-//  3) 자체 번역 (9개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
-//     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71.
+//  3) 자체 번역 (13개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
+//     87,88,91.
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
 // translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
@@ -39,7 +46,10 @@
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~91
+//     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
+//      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
+//      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.)
 // [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
 //     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
 //     55(Harper's Monthly 1932, 165권 987호 406쪽)
@@ -866,5 +876,183 @@ const QUOTES = [
     year: 1899,
     sourceUrl: "https://www.gutenberg.org/cache/epub/16287/pg16287.txt",
     tags: ["perseverance", "fear"],
+  },
+  {
+    id: 82,
+    text: {
+      ko: "싸움이 힘겨울수록 승리는 더 영광스럽다.",
+      en: "The harder the conflict, the more glorious the triumph.",
+    },
+    author: {
+      ko: "토머스 페인",
+      en: "Thomas Paine",
+    },
+    original: "the harder the conflict, the more glorious the triumph.",
+    lang: "en",
+    source: "『아메리카의 위기(The American Crisis)』 제1호",
+    year: 1776,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/3741/pg3741.txt",
+    tags: ["despair", "perseverance"],
+  },
+  {
+    id: 83,
+    text: {
+      ko: "우리는 성공보다 실패에서 훨씬 더 많은 지혜를 배운다.",
+      en: "We learn wisdom from failure much more than from success.",
+    },
+    author: {
+      ko: "새뮤얼 스마일스",
+      en: "Samuel Smiles",
+    },
+    original: "We learn wisdom from failure much more than from success.",
+    lang: "en",
+    source: "『자조론(Self-Help)』 11장",
+    year: 1859,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/935/pg935.txt",
+    tags: ["failure"],
+  },
+  {
+    id: 84,
+    text: {
+      ko: "희망을 품고 길을 가는 것이 도착하는 것보다 낫다. 참된 성공은 애쓰는 것이다.",
+      en: "To travel hopefully is a better thing than to arrive, and the true success is to labour.",
+    },
+    author: {
+      ko: "로버트 루이스 스티븐슨",
+      en: "Robert Louis Stevenson",
+    },
+    original: "to travel hopefully is a better thing than to arrive, and the true success is to labour.",
+    lang: "en",
+    source: "『젊은이들을 위하여(Virginibus Puerisque)』 「엘도라도」",
+    year: 1881,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/386/pg386.txt",
+    tags: ["hope", "perseverance"],
+  },
+  {
+    id: 85,
+    text: {
+      ko: "애쓰고, 구하고, 찾아내되, 굴하지 않는 것.",
+      en: "To strive, to seek, to find, and not to yield.",
+    },
+    author: {
+      ko: "앨프리드 테니슨",
+      en: "Alfred Tennyson",
+    },
+    original: "To strive, to seek, to find, and not to yield.",
+    lang: "en",
+    source: "『시집(Poems)』 「율리시스」",
+    year: 1842,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/8601/pg8601.txt",
+    tags: ["perseverance", "challenge"],
+  },
+  {
+    id: 86,
+    text: {
+      ko: "그러니 일어나 움직이자, 어떤 운명이든 감당할 마음으로.",
+      en: "Let us, then, be up and doing, with a heart for any fate.",
+    },
+    author: {
+      ko: "헨리 워즈워스 롱펠로",
+      en: "Henry Wadsworth Longfellow",
+    },
+    original: "Let us, then, be up and doing, / With a heart for any fate;",
+    lang: "en",
+    source: "『밤의 목소리(Voices of the Night)』 「인생 찬가(A Psalm of Life)」",
+    year: 1839,
+    sourceUrl: "https://en.wikisource.org/wiki/Voices_of_the_Night/A_Psalm_of_Life",
+    tags: ["energy", "challenge"],
+  },
+  {
+    id: 87,
+    text: {
+      ko: "어쩌면 언젠가는 이 일마저 기쁘게 떠올릴 날이 오리라.",
+      en: "Perhaps one day it will be a pleasure to remember even these things.",
+    },
+    author: {
+      ko: "베르길리우스",
+      en: "Virgil",
+    },
+    original: "forsan et haec ōlim meminisse iuvābit.",
+    lang: "la",
+    source: "『아이네이스』 1권 203행",
+    year: -19,
+    sourceUrl: "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+    tags: ["despair", "hope"],
+  },
+  {
+    id: 88,
+    text: {
+      ko: "참고 견뎌라. 이 고통이 언젠가 너에게 도움이 되리라.",
+      en: "Bear up and endure; this pain will one day do you good.",
+    },
+    author: {
+      ko: "오비디우스",
+      en: "Ovid",
+    },
+    original: "perfer et obdura! dolor hic tibi proderit olim",
+    lang: "la",
+    source: "『사랑의 노래(Amores)』 3권 11a편",
+    year: -16,
+    sourceUrl: "https://la.wikisource.org/wiki/Amores/3.11a",
+    tags: ["despair", "perseverance"],
+  },
+  {
+    id: 89,
+    text: {
+      ko: "우리를 겁주는 것이 짓누르는 것보다 많다. 우리는 실제보다 상상 속에서 더 자주 괴로워한다.",
+      en: "There are more things, Lucilius, likely to frighten us than there are to crush us; we suffer more often in imagination than in reality.",
+    },
+    author: {
+      ko: "세네카",
+      en: "Seneca",
+    },
+    original: "Plura sunt, Lucili, quae nos terrent quam quae premunt, et saepius opinione quam re laboramus.",
+    lang: "la",
+    translator: {
+      en: "Richard M. Gummere",
+      enUrl: "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_13",
+    },
+    source: "『도덕서한(Epistulae Morales)』 13편 4절",
+    year: 65,
+    sourceUrl: "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_II",
+    tags: ["fear", "despair"],
+  },
+  {
+    id: 90,
+    text: {
+      ko: "잘못하고도 고치지 않는 것, 이것을 잘못이라 한다.",
+      en: "To have faults and not to reform them,—this, indeed, should be pronounced having faults.",
+    },
+    author: {
+      ko: "공자",
+      en: "Confucius",
+    },
+    original: "過而不改，是謂過矣",
+    lang: "lzh",
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    },
+    source: "『논어』 위령공편 29",
+    year: -450,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E8%A1%9E%E9%9D%88%E5%85%AC%E7%AC%AC%E5%8D%81%E4%BA%94",
+    tags: ["failure", "oriental"],
+  },
+  {
+    id: 91,
+    text: {
+      ko: "남이 한 번에 해내면 나는 백 번을 하고, 남이 열 번에 해내면 나는 천 번을 한다.",
+      en: "If another succeeds in one try, I will make a hundred; if another in ten, I will make a thousand.",
+    },
+    author: {
+      ko: "자사",
+      en: "Zisi",
+    },
+    original: "人一能之，己百之；人十能之，己千之",
+    lang: "lzh",
+    source: "『중용』 20장",
+    year: -400,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
+    tags: ["perseverance", "oriental"],
   },
 ];
