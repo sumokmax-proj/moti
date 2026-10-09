@@ -5,21 +5,22 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 124
+// 다음 id: 137
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (49개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (54개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
 //     (82 페인, 84 스티븐슨, 101 앤 브론테, 104 메리 셸리, 정본 영역의
-//      93 아우렐리우스도 같다.)
+//      93 아우렐리우스도 같다. 134 엘리엇은 첫머리 접속사 「But」 를 떼고
+//      대문자로 올렸다.)
 //
-//  2) 공개된 정본 영역 (21개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (23개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -42,11 +43,13 @@
 //       id 111 세네카    Richard M. Gummere
 //       id 112 세르반테스 John Ormsby
 //       id 119 괴테      Bayard Taylor
+//       id 127 단테      Henry Wadsworth Longfellow
+//       id 133 아우렐리우스 George Long
 //
-//  3) 자체 번역 (17개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (23개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91,106,107,114,115. (59·114·115 는 한국어 원문이라 text.en 만
-//     자체 번역이다.)
+//     87,88,91,106,107,114,115,124,125,126,128,129,130. (59·114·115·129 는
+//     한국어 원문이라 text.en 만 자체 번역이다.)
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
 // translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
@@ -56,7 +59,7 @@
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~123
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~136
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
@@ -64,7 +67,10 @@
 //      대조했다. 108 트웨인은 구텐베르크 평문의 "--" 를 text.en 에서 "—" 로 적었다.
 //      112·113 은 작품 속 속담 인용이다 — QUOTE_STANDARDS.md v1.5.
 //      115 윤동주는 1948 초판 표기(「우르러」「한점」)를 original 에 두고,
-//      text.ko 는 표준 표기 「우러러」「한 점」으로 적었다.)
+//      text.ko 는 표준 표기 「우러러」「한 점」으로 적었다.
+//      130 이백은 91 처럼 이문 주석 「浪 一作波」를 빼고 대조했고, zh-hant 페이지가
+//      보여주는 「掛」로 적었다(원 위키텍스트는 「挂」). 133 아우렐리우스는 위키문헌
+//      전사가 「ἄνδραδιαλέγεσθαι」로 붙여 쓴 것을 띄어 적고 글자 단위로 대조했다.)
 // [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
 //     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
 //     55(Harper's Monthly 1932, 165권 987호 406쪽)
@@ -1641,5 +1647,234 @@ const QUOTES = [
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/514/pg514.txt",
     tags: ["dream", "passion"],
+  },
+  {
+    id: 124,
+    text: {
+      ko: "할 수 있다고 여기기에, 그들은 해낸다.",
+      en: "They can, because they think they can.",
+    },
+    author: {
+      ko: "베르길리우스",
+      en: "Virgil",
+    },
+    original: "possunt, quia posse uidentur.",
+    lang: "la",
+    source: "『아이네이스』 5권 231행",
+    year: -19,
+    sourceUrl: "https://la.wikisource.org/wiki/Aeneis/Liber_V",
+    tags: ["challenge", "fear"],
+  },
+  {
+    id: 125,
+    text: {
+      ko: "오늘을 붙잡아라. 내일은 될 수 있는 한 믿지 마라.",
+      en: "Seize the day, trusting as little as possible in tomorrow.",
+    },
+    author: {
+      ko: "호라티우스",
+      en: "Horace",
+    },
+    original: "carpe diem, quam minimum credula postero.",
+    lang: "la",
+    source: "『송가(Carmina)』 1권 11편",
+    year: -23,
+    sourceUrl: "https://la.wikisource.org/wiki/Carmina_(Horatius)/Liber_I/Carmen_XI",
+    tags: ["energy", "challenge"],
+  },
+  {
+    id: 126,
+    text: {
+      ko: "물방울이 바위를 뚫는다.",
+      en: "Dripping water hollows out stone.",
+    },
+    author: {
+      ko: "오비디우스",
+      en: "Ovid",
+    },
+    original: "Gutta cavat lapidem",
+    lang: "la",
+    source: "『흑해에서 보낸 편지(Epistulae ex Ponto)』 4권 10편 5행",
+    year: 13,
+    sourceUrl: "https://la.wikisource.org/wiki/Epistulae_ex_Ponto/Liber_IV",
+    tags: ["perseverance", "preparation"],
+  },
+  {
+    id: 127,
+    text: {
+      ko: "너희는 짐승처럼 살려고 태어난 것이 아니라, 덕과 지식을 좇으려고 태어났다.",
+      en: "Ye were not made to live like unto brutes, But for pursuit of virtue and of knowledge.",
+    },
+    author: {
+      ko: "단테 알리기에리",
+      en: "Dante Alighieri",
+    },
+    original: "fatti non foste a viver come bruti, ma per seguir virtute e canoscenza",
+    lang: "it",
+    translator: {
+      en: "Henry Wadsworth Longfellow",
+      enUrl: "https://www.gutenberg.org/cache/epub/1001/pg1001.txt",
+    },
+    source: "『신곡』 지옥편 26곡, 율리시스의 대사",
+    year: 1320,
+    sourceUrl: "https://it.wikisource.org/wiki/Divina_Commedia/Inferno/Canto_XXVI",
+    tags: ["meaning", "challenge"],
+  },
+  {
+    id: 128,
+    text: {
+      ko: "달리기만 해서는 소용없다. 제때 출발해야 한다.",
+      en: "Running is no use; one must set out in time.",
+    },
+    author: {
+      ko: "장 드 라퐁텐",
+      en: "Jean de La Fontaine",
+    },
+    original: "Rien ne sert de courir ; il faut partir à point",
+    lang: "fr",
+    source: "『우화』 6권 10 「토끼와 거북」",
+    year: 1668,
+    sourceUrl: "https://fr.wikisource.org/wiki/Fables_de_La_Fontaine_(%C3%A9d._1874)/Le_Li%C3%A8vre_et_la_Tortue",
+    tags: ["preparation", "perseverance"],
+  },
+  {
+    id: 129,
+    text: {
+      ko: "어제도 가고 오늘도 갈 나의 길, 새로운 길.",
+      en: "The road I walked yesterday and will walk today: my road, a new road.",
+    },
+    author: {
+      ko: "윤동주",
+      en: "Yun Dong-ju",
+    },
+    original: "어제도 가고 오늘도 갈 / 나의 길 새로운 길",
+    lang: "ko",
+    source: "『하늘과 바람과 별과 시』(1948 초판) 「새로운 길」",
+    year: 1938,
+    sourceUrl: "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%83%88%EB%A1%9C%EC%9A%B4_%EA%B8%B8",
+    tags: ["hope", "challenge"],
+  },
+  {
+    id: 130,
+    text: {
+      ko: "거센 바람 타고 물결을 헤칠 때가 반드시 오리니, 곧장 구름 돛을 올려 푸른 바다를 건너리라.",
+      en: "The day will come to ride the long wind and break the waves; then I will raise my cloud-high sail and cross the vast sea.",
+    },
+    author: {
+      ko: "이백",
+      en: "Li Bai",
+    },
+    original: "長風破浪會有時，直掛雲帆濟滄海",
+    lang: "lzh",
+    source: "「행로난(行路難)」 제1수",
+    year: 744,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%A1%8C%E8%B7%AF%E9%9B%A3_(%E9%87%91%E6%A8%BD%E6%B8%85%E9%85%92%E6%96%97%E5%8D%81%E5%8D%83)",
+    tags: ["hope", "dream", "oriental"],
+  },
+  {
+    id: 131,
+    text: {
+      ko: "내게는 남의 뜻에 겁먹는 것을 결코 견디지 못하는 고집이 있다. 누가 나를 위협하려 들 때마다 내 용기는 솟아오른다.",
+      en: "There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises with every attempt to intimidate me.",
+    },
+    author: {
+      ko: "제인 오스틴",
+      en: "Jane Austen",
+    },
+    original: "There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises with every attempt to intimidate me.",
+    lang: "en",
+    source: "『오만과 편견』 31장, 엘리자베스의 대사",
+    year: 1813,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    tags: ["fear", "freedom"],
+  },
+  {
+    id: 132,
+    text: {
+      ko: "옳음이 힘을 만든다는 믿음을 갖자. 그리고 그 믿음으로 끝까지, 우리가 아는 대로 우리의 의무를 과감히 행하자.",
+      en: "Let us have faith that right makes might; and in that faith, let us, to the end, dare to do our duty as we understand it.",
+    },
+    author: {
+      ko: "에이브러햄 링컨",
+      en: "Abraham Lincoln",
+    },
+    original: "Let us have faith that right makes might; and in that faith, let us, to the end, dare to do our duty as we understand it.",
+    lang: "en",
+    source: "쿠퍼 유니언 연설, 뉴욕 (2월 27일)",
+    year: 1860,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2657/pg2657.txt",
+    tags: ["challenge", "fear"],
+  },
+  {
+    id: 133,
+    text: {
+      ko: "좋은 사람이란 어떠해야 하는지 더는 논하지 말고, 그런 사람이 되어라.",
+      en: "No longer talk at all about the kind of man that a good man ought to be, but be such.",
+    },
+    author: {
+      ko: "마르쿠스 아우렐리우스",
+      en: "Marcus Aurelius",
+    },
+    original: "Μηκέθ ὅλως περὶ τοῦ οἷόν τινα εἶναι τὸν ἀγαθὸν ἄνδρα διαλέγεσθαι, ἀλλὰ εἶναι τοιοῦτον.",
+    lang: "grc",
+    translator: {
+      en: "George Long",
+      enUrl: "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+    },
+    source: "『명상록』 10권 16",
+    year: 180,
+    sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/10",
+    tags: ["energy", "challenge"],
+  },
+  {
+    id: 134,
+    text: {
+      ko: "우리가 절망이라 부르는 것은 흔히, 채워지지 못한 희망의 고통스러운 갈망일 뿐이다.",
+      en: "What we call our despair is often only the painful eagerness of unfed hope.",
+    },
+    author: {
+      ko: "조지 엘리엇",
+      en: "George Eliot",
+    },
+    original: "what we call our despair is often only the painful eagerness of unfed hope.",
+    lang: "en",
+    source: "『미들마치』 51장",
+    year: 1872,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+    tags: ["despair", "hope"],
+  },
+  {
+    id: 135,
+    text: {
+      ko: "단순하게, 단순하게.",
+      en: "Simplify, simplify.",
+    },
+    author: {
+      ko: "헨리 데이비드 소로",
+      en: "Henry David Thoreau",
+    },
+    original: "Simplify, simplify.",
+    lang: "en",
+    source: "『월든』 2장 「내가 살았던 곳, 그리고 살았던 이유」",
+    year: 1854,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/205/pg205.txt",
+    tags: ["freedom", "meaning"],
+  },
+  {
+    id: 136,
+    text: {
+      ko: "무엇보다 이것만은 지켜라. 너 자신에게 진실하라.",
+      en: "This above all: to thine own self be true.",
+    },
+    author: {
+      ko: "윌리엄 셰익스피어",
+      en: "William Shakespeare",
+    },
+    original: "This above all: to thine own self be true;",
+    lang: "en",
+    source: "『햄릿』 1막 3장, 폴로니어스의 대사",
+    year: 1600,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1524/pg1524.txt",
+    tags: ["freedom", "meaning"],
   },
 ];
