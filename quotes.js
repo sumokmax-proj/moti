@@ -83,6 +83,18 @@
 //     이 구절은 여덟 개 예시의 마지막 항목이고, 결론은 그 다음 문장에 있다.
 //     목록을 떼어내면 "『시경』의 저자가 누구인가" 라는 말로만 읽힌다.
 //     같은 뜻을 혼자 설 수 있는 문장으로 옮겨 담은 것이 id 71 이다.
+// [E] 기준 재검토 (2026-10-09) — 자립성(v1.1)·발전성(v1.3) 이전에 등재된 3~81 중
+//     걸릴 만한 넷을 원전 맥락과 함께 다시 봤다. 같은 문장을 다듬은 것이라 id 는 유지.
+//     59 김구: 주어가 「우리나라」라 혼자 놓으면 「누가, 왜」가 비었다. 원전의 바로
+//        다음 문장(이유)까지 이어 실었다.
+//     63 한비: 경고로 끝나지만 「작은 구멍을 막으면 된다」는 길이 그림 안에 있어
+//        일침으로 본다(90 공자와 같은 판단). 태그만 warning → preparation 등으로.
+//     65 올컷: 뒷문장(「너희는 결코 아버지 없는 아이가 될 수 없다」)이 맥락 없이는
+//        서지 않아 앞 절만 남겼다. 소설에서도 딸들이 이 절을 「우리의 좌우명」으로
+//        따로 인용한다. 「keep busy」 를 「부지런히 일하라」로 옮겼던 것을 「손을
+//        놓지 마라」로, 출처의 「편지」를 「말」로 바로잡았다(떠나며 한 말이다).
+//     60 정약용: 규칙 위반은 아니나 수령의 몸가짐 수칙이라 동기부여와 가장 멀다.
+//        같은 조에 더 나은 대체 문장이 없어 그대로 둔다 — 가장 약한 카드로 기록.
 
 const QUOTES = [
   {
@@ -511,14 +523,14 @@ const QUOTES = [
   {
     id: 59,
     text: {
-      ko: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
-      en: "The one thing I want without limit is the power of a high culture.",
+      ko: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다. 문화의 힘은 우리 자신을 행복하게 하고, 나아가서 남에게 행복을 주겠기 때문이다.",
+      en: "The one thing I want without limit is the power of a high culture, for the power of culture makes us happy and, beyond that, brings happiness to others.",
     },
     author: {
       ko: "김구",
       en: "Kim Ku",
     },
-    original: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
+    original: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다. 문화의 힘은 우리 자신을 행복하게 하고, 나아가서 남에게 행복을 주겠기 때문이다.",
     lang: "ko",
     source: "『백범일지』 「내가 원하는 우리 나라」",
     year: 1947,
@@ -574,7 +586,7 @@ const QUOTES = [
     source: "『한비자』 유로편",
     year: -233,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9F%93%E9%9D%9E%E5%AD%90/%E5%96%BB%E8%80%81",
-    tags: ["failure_acceptance", "warning"],
+    tags: ["preparation", "perseverance"],
   },
   {
     id: 64,
@@ -596,16 +608,16 @@ const QUOTES = [
   {
     id: 65,
     text: {
-      ko: "희망을 품고 부지런히 일하라. 무슨 일이 있어도 너희에게 아버지는 있다.",
-      en: "Hope and keep busy; and whatever happens, remember that you never can be fatherless.",
+      ko: "희망을 품고, 손을 놓지 마라.",
+      en: "Hope and keep busy.",
     },
     author: {
       ko: "루이자 메이 올컷",
       en: "Louisa May Alcott",
     },
-    original: "Hope and keep busy; and whatever happens, remember that you never can be fatherless.",
+    original: "Hope and keep busy;",
     lang: "en",
-    source: "『작은 아씨들』 15장 (마치 부인의 편지)",
+    source: "『작은 아씨들』 15장 「전보」, 떠나며 딸들에게 한 마치 부인의 말",
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/37106/pg37106.txt",
     tags: ["hope", "energy"],
