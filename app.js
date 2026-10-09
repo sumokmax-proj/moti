@@ -1,5 +1,6 @@
 const FAVORITES_KEY = "motimoti-favorites";
 const LANG_KEY = "motimoti-lang";
+const RECENT_KEY = "motimoti-recent";
 const LANGS = ["en", "ko"];
 
 const UI = {
@@ -95,7 +96,7 @@ function setLang(next) {
   applyLang();
   // 현재 명언이 새 언어로 준비돼 있지 않으면 다른 명언으로 바꾼다.
   if (currentQuote && !hasLang(currentQuote, lang)) {
-    currentQuote = pickRandomQuote(currentQuote.id);
+    currentQuote = turnPage(currentQuote.id);
   }
   renderQuote(currentQuote);
   if (!favoritesView.classList.contains("hidden")) renderFavoritesList();
@@ -164,11 +165,73 @@ function updateFavoriteButton() {
 
 /* ── 명언 ─────────────────────────────────────────────── */
 
+/* 명언 책을 아무 데나 펼치는 느낌을 낸다.
+ *
+ * 순서도, 「다 봤는지」 기록도 없다. 매번 전부 같은 확률로 펼치되, 최근에
+ * 펼친 몇 쪽만 잠시 피한다 — 방금 덮은 쪽이 바로 다시 펼쳐지면 넘긴 의미가
+ * 없지만, 한참 뒤에 예전 쪽이 다시 펼쳐지는 것은 반가운 일이다.
+ *
+ * 피하는 폭은 전체의 20% 다. 고정 숫자로 두지 않은 것은 명언이 늘어도 같은
+ * 느낌을 유지하기 위해서다(100편이면 20편, 200편이면 40편). 100편 기준으로
+ * 한 명언은 최소 21번째 넘김 이후에야 다시 나오고, 평균 100번쯤에 돌아온다.
+ *
+ * 최근 목록은 기기에 저장해 앱을 닫았다 열어도 이어진다. 어제 마지막으로
+ * 본 명언이 오늘 첫 화면에 다시 나오지 않게 하려는 것이다. 저장할 수 없는
+ * 환경(사생활 보호 모드 등)에서는 메모리에만 둔다. */
+const RECENT_RATIO = 0.2;
+
+function recentWindow(poolSize) {
+  return Math.floor(poolSize * RECENT_RATIO);
+}
+
+// 시작할 때 한 번만 저장소에서 읽고, 그 뒤로는 메모리가 기준이다. 매번
+// 저장소를 다시 읽으면, 쓰기가 막힌 환경에서 옛 목록만 계속 돌려받는다.
+function loadRecent() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(RECENT_KEY));
+    if (Array.isArray(raw)) return raw.filter(Number.isInteger);
+  } catch {
+    // 못 읽으면 빈 목록에서 시작한다.
+  }
+  return [];
+}
+
+let recentMemory = loadRecent();
+
+function getRecent() {
+  return recentMemory;
+}
+
+function rememberShown(id) {
+  const keep = Math.max(1, recentWindow(QUOTES.length));
+  const recent = recentMemory.filter((x) => x !== id);
+  recent.push(id);
+  recentMemory = recent.slice(-keep);
+  try {
+    localStorage.setItem(RECENT_KEY, JSON.stringify(recentMemory));
+  } catch {
+    // 저장이 막혀도 이번 방문 동안은 recentMemory 로 동작한다.
+  }
+}
+
 function pickRandomQuote(excludeId) {
   const available = QUOTES.filter((q) => hasLang(q, lang));
-  const pool = available.filter((q) => q.id !== excludeId);
-  const candidates = pool.length > 0 ? pool : available;
+  // 최근 목록은 언어를 가리지 않고 쌓이므로, 지금 언어의 풀 크기로 폭을 잰다.
+  const avoid = new Set(getRecent().slice(-recentWindow(available.length)));
+  avoid.add(excludeId);
+  const fresh = available.filter((q) => !avoid.has(q.id));
+  // 풀이 작아 전부 피해야 하는 경우에도 같은 명언이 연달아 나오지는 않게 한다.
+  const notCurrent = available.filter((q) => q.id !== excludeId);
+  const candidates = fresh.length > 0 ? fresh : notCurrent.length > 0 ? notCurrent : available;
   return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
+/* 한 쪽을 펼친다 — 고르는 순간 최근 목록에 넣는다. 화면에 그리는 시점(페이드
+   뒤 200ms)에 넣으면, 빠르게 두 번 누를 때 둘 다 같은 목록을 보고 고르게 된다. */
+function turnPage(excludeId) {
+  const quote = pickRandomQuote(excludeId);
+  if (quote) rememberShown(quote.id);
+  return quote;
 }
 
 /* 긴 명언이 화면을 넘기지 않게 본문을 한 눈금씩 줄인다.
@@ -208,13 +271,20 @@ function renderQuote(quote) {
   fitQuoteText();
 }
 
+// 한 번에 한 쪽만 넘긴다. 넘기는 중(페이드 200ms)에 또 누르면 무시한다 —
+// 아니면 화면에 보이지도 않은 명언이 최근 목록 자리를 차지한다.
+let turning = false;
+
 function showNextQuote() {
-  const nextQuote = pickRandomQuote(currentQuote ? currentQuote.id : null);
+  if (turning) return;
+  turning = true;
+  const nextQuote = turnPage(currentQuote ? currentQuote.id : null);
   quoteBlockEl.classList.add("fade");
   setTimeout(() => {
     currentQuote = nextQuote;
     renderQuote(currentQuote);
     quoteBlockEl.classList.remove("fade");
+    turning = false;
   }, 200);
 }
 
@@ -309,5 +379,5 @@ window.addEventListener("resize", () => {
 });
 
 applyLang();
-currentQuote = pickRandomQuote();
+currentQuote = turnPage(null);
 renderQuote(currentQuote);
