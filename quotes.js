@@ -4,31 +4,66 @@
 //
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
-//            27,28,29,31,32,33,34,35,36,38,39,40,49
-// 다음 id: 66
+//            27,28,29,31,32,33,34,35,36,38,39,40,49,62
+// 다음 id: 82
 //
-// 한국어 text는 반드시 original에서 번역한다. 원문의 주장(주어/서술어/한정 조건)을
-// 바꾸는 의역은 금지한다.
+// ── 이중 언어 ────────────────────────────────────────────────────────────
+// text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
+//
+// text.en 은 세 가지 경로로 만들어졌다.
+//
+//  1) original 그대로 (13개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
+//     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
+//     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
+//
+//  2) 공개된 정본 영역 (8개) — translator 필드가 있는 항목. 번역자와 그
+//     번역문을 직접 열어 대조한 URL을 함께 기록한다.
+//       id 4  노자      James Legge
+//       id 30 괴테      Bayard Taylor
+//       id 37 파스퇴르   R. L. Devonshire (Vallery-Radot 『The Life of Pasteur』)
+//       id 43 공자      James Legge
+//       id 44 맹자      James Legge
+//       id 46 세네카     Richard M. Gummere
+//       id 51 반 고흐    반 고흐 미술관 / Huygens ING 공식 영역
+//       id 52 베토벤     Henry Edward Krehbiel (Thayer 『Life of Beethoven』)
+//
+//  3) 자체 번역 (9개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71.
+//     정본을 찾으면 여기서 2)로 승급시킨다.
+//
+// translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
+//
+// 한국어 text 는 반드시 original 에서 번역한다. 원문의 주장(주어/서술어/한정
+// 조건)을 바꾸는 의역은 금지한다. 영어도 같은 규율을 따른다.
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 그리고 신규 56~65 전부
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71
 // [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
 //     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
 //     55(Harper's Monthly 1932, 165권 987호 406쪽)
 // [C] 1차 출처가 실재하나 해당 사이트가 이 환경에서 열리지 않아,
 //     열리는 대체 페이지로 문구만 대조한 항목: 6, 41, 42, 52
-//     (news.stanford.edu·db.itkc.or.kr·heritage.go.kr 미개방, beethoven.de는
-//      자필 편지 이미지만 제공하고 판독 텍스트가 없음)
-// [D] 이번 재검증에서 삭제: 49 마리 퀴리 — 근거가 Oxford Essential Quotations
-//     (2018)라는 3차 출처뿐이었고, 1차로 지목됐던 『피에르 퀴리』(1923)의
-//     영어·프랑스어 전문 어디에도 해당 문장이 없음을 확인했다.
+// [D] 재검증에서 삭제: 49 마리 퀴리 — 3차 출처뿐이었고 1차로 지목됐던
+//     『피에르 퀴리』(1923) 전문에 해당 문장이 없음을 확인했다.
+//     62 사마천 「시 삼백 편은 대개 성현이 발분하여 지은 것이다」 — 출처는
+//     확실했으나(『사기』 태사공자서) 문장 혼자로는 뜻이 서지 않았다. 원문에서
+//     이 구절은 여덟 개 예시의 마지막 항목이고, 결론은 그 다음 문장에 있다.
+//     목록을 떼어내면 "『시경』의 저자가 누구인가" 라는 말로만 읽힌다.
+//     같은 뜻을 혼자 설 수 있는 문장으로 옮겨 담은 것이 id 71 이다.
 
 const QUOTES = [
   {
     id: 3,
-    text: "오늘 할 수 있는 일을 내일로 미루지 마라.",
-    author: "벤저민 프랭클린",
+    text: {
+      ko: "오늘 할 수 있는 일을 내일로 미루지 마라.",
+      en: "Never leave that till tomorrow, which you can do to-day.",
+    },
+    author: {
+      ko: "벤저민 프랭클린",
+      en: "Benjamin Franklin",
+    },
     original: "Never leave that till tomorrow, which you can do to-day.",
     lang: "en",
     source: "『부자가 되는 길(The Way to Wealth)』 / 가난한 리처드의 달력",
@@ -38,8 +73,18 @@ const QUOTES = [
   },
   {
     id: 4,
-    text: "천 리 길도 발밑 한 걸음에서 시작된다.",
-    author: "노자",
+    text: {
+      ko: "천 리 길도 발밑 한 걸음에서 시작된다.",
+      en: "The journey of a thousand li commenced with a single step.",
+    },
+    author: {
+      ko: "노자",
+      en: "Laozi",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+    },
     original: "千里之行，始於足下",
     lang: "lzh",
     source: "『도덕경』 제64장 (왕필본)",
@@ -49,8 +94,14 @@ const QUOTES = [
   },
   {
     id: 6,
-    text: "위대한 일을 해내는 유일한 방법은 자신이 하는 일을 사랑하는 것이다.",
-    author: "스티브 잡스",
+    text: {
+      ko: "위대한 일을 해내는 유일한 방법은 자신이 하는 일을 사랑하는 것이다.",
+      en: "The only way to do great work is to love what you do.",
+    },
+    author: {
+      ko: "스티브 잡스",
+      en: "Steve Jobs",
+    },
     original: "The only way to do great work is to love what you do.",
     lang: "en",
     source: "스탠퍼드대 졸업식 연설 (6월 12일)",
@@ -60,8 +111,14 @@ const QUOTES = [
   },
   {
     id: 21,
-    text: "성공한 사람이 되려 하지 말고, 가치 있는 사람이 되려고 하라.",
-    author: "알베르트 아인슈타인",
+    text: {
+      ko: "성공한 사람이 되려 하지 말고, 가치 있는 사람이 되려고 하라.",
+      en: "Try not to become a man of success but rather try to become a man of value.",
+    },
+    author: {
+      ko: "알베르트 아인슈타인",
+      en: "Albert Einstein",
+    },
     original: "Try not to become a man of success but rather try to become a man of value.",
     lang: "en",
     source: "LIFE 「Death of a Genius」 (윌리엄 밀러 기록, 5월 2일자)",
@@ -71,8 +128,18 @@ const QUOTES = [
   },
   {
     id: 30,
-    text: "네가 너 자신을 믿는 순간, 너는 사는 법을 알게 된다.",
-    author: "요한 볼프강 폰 괴테",
+    text: {
+      ko: "네가 너 자신을 믿는 순간, 너는 사는 법을 알게 된다.",
+      en: "Be thou but self-possessed, thou hast the art of living!",
+    },
+    author: {
+      ko: "요한 볼프강 폰 괴테",
+      en: "Johann Wolfgang von Goethe",
+    },
+    translator: {
+      en: "Bayard Taylor",
+      enUrl: "https://www.gutenberg.org/cache/epub/14591/pg14591.txt",
+    },
     original: "Sobald du dir vertraust, sobald weißt du zu leben.",
     lang: "de",
     source: "『파우스트』 1부 (서재 장면, 메피스토펠레스의 대사)",
@@ -82,8 +149,18 @@ const QUOTES = [
   },
   {
     id: 37,
-    text: "관찰의 영역에서 우연은 오직 준비된 정신만을 돕는다.",
-    author: "루이 파스퇴르",
+    text: {
+      ko: "관찰의 영역에서 우연은 오직 준비된 정신만을 돕는다.",
+      en: "In the fields of observation, chance only favours the mind which is prepared.",
+    },
+    author: {
+      ko: "루이 파스퇴르",
+      en: "Louis Pasteur",
+    },
+    translator: {
+      en: "R. L. Devonshire",
+      enUrl: "https://www.gutenberg.org/cache/epub/60956/pg60956.txt",
+    },
     original: "dans les champs de l’observation le hasard ne favorise que les esprits préparés",
     lang: "fr",
     source: "두에 강연 — 릴 대학 이학부 개설 기념 (12월 7일)",
@@ -93,8 +170,14 @@ const QUOTES = [
   },
   {
     id: 41,
-    text: "반드시 죽고자 하면 살고, 반드시 살고자 하면 죽는다.",
-    author: "이순신",
+    text: {
+      ko: "반드시 죽고자 하면 살고, 반드시 살고자 하면 죽는다.",
+      en: "If you are determined to die, you will live; if you are determined to live, you will die.",
+    },
+    author: {
+      ko: "이순신",
+      en: "Yi Sun-sin",
+    },
     original: "必死則生 必生則死",
     lang: "lzh",
     source: "『난중일기』 1597년 9월 15일 (명량해전 전날)",
@@ -104,8 +187,14 @@ const QUOTES = [
   },
   {
     id: 42,
-    text: "하루라도 책을 읽지 않으면 입 안에 가시가 돋는다.",
-    author: "안중근",
+    text: {
+      ko: "하루라도 책을 읽지 않으면 입 안에 가시가 돋는다.",
+      en: "A single day without reading, and thorns grow in my mouth.",
+    },
+    author: {
+      ko: "안중근",
+      en: "An Jung-geun",
+    },
     original: "一日不讀書口中生荊棘",
     lang: "lzh",
     source: "유묵 (보물 제569-2호), 뤼순 감옥",
@@ -115,8 +204,18 @@ const QUOTES = [
   },
   {
     id: 43,
-    text: "삼군의 장수는 빼앗을 수 있어도, 한 사람의 뜻은 빼앗을 수 없다.",
-    author: "공자",
+    text: {
+      ko: "삼군의 장수는 빼앗을 수 있어도, 한 사람의 뜻은 빼앗을 수 없다.",
+      en: "The commander of the forces of a large state may be carried off, but the will of even a common man cannot be taken from him.",
+    },
+    author: {
+      ko: "공자",
+      en: "Confucius",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    },
     original: "三軍可奪帥也，匹夫不可奪志也",
     lang: "lzh",
     source: "『논어』 자한편",
@@ -126,8 +225,18 @@ const QUOTES = [
   },
   {
     id: 44,
-    text: "하늘이 큰 임무를 내리려 할 때는, 먼저 그 마음을 괴롭게 하고 몸을 지치게 한다.",
-    author: "맹자",
+    text: {
+      ko: "하늘이 큰 임무를 내리려 할 때는, 먼저 그 마음을 괴롭게 하고 몸을 지치게 한다.",
+      en: "When Heaven is about to confer a great office on any man, it first exercises his mind with suffering, and his sinews and bones with toil.",
+    },
+    author: {
+      ko: "맹자",
+      en: "Mencius",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_2/The_Works_of_Mencius/chapter12",
+    },
     original: "天將降大任於是人也，必先苦其心志，勞其筋骨",
     lang: "lzh",
     source: "『맹자』 고자하",
@@ -137,8 +246,14 @@ const QUOTES = [
   },
   {
     id: 45,
-    text: "본래 땅 위에 길은 없었다. 걷는 사람이 많아지면 그것이 곧 길이 된다.",
-    author: "루쉰",
+    text: {
+      ko: "본래 땅 위에 길은 없었다. 걷는 사람이 많아지면 그것이 곧 길이 된다.",
+      en: "In truth the earth had no roads to begin with; where many people walk, a road is made.",
+    },
+    author: {
+      ko: "루쉰",
+      en: "Lu Xun",
+    },
     original: "其實地上本沒有路；走的人多了，也便成了路",
     lang: "zh",
     source: "단편소설 「고향(故鄕)」, 『신청년』 제9권 제1호",
@@ -148,8 +263,18 @@ const QUOTES = [
   },
   {
     id: 46,
-    text: "어려워서 감히 못하는 것이 아니라, 감히 하지 않기에 어려워지는 것이다.",
-    author: "세네카",
+    text: {
+      ko: "어려워서 감히 못하는 것이 아니라, 감히 하지 않기에 어려워지는 것이다.",
+      en: "Our lack of confidence is not the result of difficulty; the difficulty comes from our lack of confidence.",
+    },
+    author: {
+      ko: "세네카",
+      en: "Seneca",
+    },
+    translator: {
+      en: "Richard M. Gummere",
+      enUrl: "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_104",
+    },
     original: "Non quia difficilia sunt non audemus, sed quia non audemus difficilia sunt.",
     lang: "la",
     source: "『도덕서한(Epistulae Morales)』 104편 26절",
@@ -159,8 +284,14 @@ const QUOTES = [
   },
   {
     id: 47,
-    text: "꿈을 향해 당당히 나아가며 그리던 삶을 살고자 하면, 예기치 못한 성공을 만난다.",
-    author: "헨리 데이비드 소로",
+    text: {
+      ko: "꿈을 향해 당당히 나아가며 그리던 삶을 살고자 하면, 예기치 못한 성공을 만난다.",
+      en: "If one advances confidently in the direction of his dreams, and endeavors to live the life which he has imagined, he will meet with a success unexpected in common hours.",
+    },
+    author: {
+      ko: "헨리 데이비드 소로",
+      en: "Henry David Thoreau",
+    },
     original: "If one advances confidently in the direction of his dreams, and endeavors to live the life which he has imagined, he will meet with a success unexpected in common hours.",
     lang: "en",
     source: "『월든』 결론장",
@@ -170,8 +301,14 @@ const QUOTES = [
   },
   {
     id: 48,
-    text: "세상은 고통으로 가득하지만, 그 고통을 이겨내는 일로도 가득하다.",
-    author: "헬렌 켈러",
+    text: {
+      ko: "세상은 고통으로 가득하지만, 그 고통을 이겨내는 일로도 가득하다.",
+      en: "Although the world is full of suffering, it is full also of the overcoming of it.",
+    },
+    author: {
+      ko: "헬렌 켈러",
+      en: "Helen Keller",
+    },
     original: "Although the world is full of suffering, it is full also of the overcoming of it.",
     lang: "en",
     source: "에세이 『낙관론(Optimism)』",
@@ -181,8 +318,14 @@ const QUOTES = [
   },
   {
     id: 50,
-    text: "내 성공의 비결은 이것이다. 나는 어떤 변명도 하지 않았고, 받아주지도 않았다.",
-    author: "플로렌스 나이팅게일",
+    text: {
+      ko: "내 성공의 비결은 이것이다. 나는 어떤 변명도 하지 않았고, 받아주지도 않았다.",
+      en: "I attribute my success to this:—I never gave or took an excuse.",
+    },
+    author: {
+      ko: "플로렌스 나이팅게일",
+      en: "Florence Nightingale",
+    },
     original: "I attribute my success to this:—I never gave or took an excuse.",
     lang: "en",
     source: "본햄 카터에게 보낸 편지 / E. 쿡 『The Life of Florence Nightingale』(1913) 1권 506쪽 수록",
@@ -192,8 +335,18 @@ const QUOTES = [
   },
   {
     id: 51,
-    text: "네 안에서 「너는 화가가 아니다」라고 말하거든 바로 그때 그려라. 그 소리도 잠잠해진다.",
-    author: "빈센트 반 고흐",
+    text: {
+      ko: "네 안에서 「너는 화가가 아니다」라고 말하거든 바로 그때 그려라. 그 소리도 잠잠해진다.",
+      en: "If something in you yourself says ‘you aren’t a painter’ — IT’S THEN THAT YOU SHOULD PAINT, old chap, and that voice will be silenced too, but precisely because of that.",
+    },
+    author: {
+      ko: "빈센트 반 고흐",
+      en: "Vincent van Gogh",
+    },
+    translator: {
+      en: "Van Gogh Museum / Huygens ING",
+      enUrl: "https://vangoghletters.org/vg/letters/let400/letter.html",
+    },
     original: "Als iets in U zelf zegt “gij zijt geen schilder” – SCHILDER DAN JUIST kerel, en die stem bedaart ook, maar slechts daardoor.",
     lang: "nl",
     source: "테오에게 보낸 편지 400번, 니우암스테르담 (10월 28일)",
@@ -203,8 +356,18 @@ const QUOTES = [
   },
   {
     id: 52,
-    text: "나는 운명의 목덜미를 움켜쥘 것이다. 운명이 나를 완전히 굴복시키지는 못한다.",
-    author: "루트비히 판 베토벤",
+    text: {
+      ko: "나는 운명의 목덜미를 움켜쥘 것이다. 운명이 나를 완전히 굴복시키지는 못한다.",
+      en: "I will take Fate by the throat; it shall not wholly overcome me.",
+    },
+    author: {
+      ko: "루트비히 판 베토벤",
+      en: "Ludwig van Beethoven",
+    },
+    translator: {
+      en: "Henry Edward Krehbiel",
+      enUrl: "https://www.gutenberg.org/cache/epub/43591/pg43591.txt",
+    },
     original: "Ich will dem Schicksal in den Rachen greifen, ganz niederbeugen soll es mich gewiß nicht.",
     lang: "de",
     source: "베겔러에게 보낸 편지, 빈 (11월 16일) — 베토벤하우스 소장 자필본",
@@ -214,8 +377,14 @@ const QUOTES = [
   },
   {
     id: 53,
-    text: "투쟁이 없으면 진보도 없다.",
-    author: "프레더릭 더글러스",
+    text: {
+      ko: "투쟁이 없으면 진보도 없다.",
+      en: "If there is no struggle there is no progress.",
+    },
+    author: {
+      ko: "프레더릭 더글러스",
+      en: "Frederick Douglass",
+    },
     original: "If there is no struggle there is no progress.",
     lang: "en",
     source: "서인도 해방 기념 연설, 커낸다이과 (8월 3일)",
@@ -225,8 +394,14 @@ const QUOTES = [
   },
   {
     id: 54,
-    text: "굴복하지 마라, 굴복하지 마라, 절대로, 절대로, 절대로, 절대로.",
-    author: "윈스턴 처칠",
+    text: {
+      ko: "굴복하지 마라, 굴복하지 마라, 절대로, 절대로, 절대로, 절대로.",
+      en: "Never give in, never give in, never, never, never, never.",
+    },
+    author: {
+      ko: "윈스턴 처칠",
+      en: "Winston Churchill",
+    },
     original: "never give in, never give in, never, never, never, never",
     lang: "en",
     source: "해로 스쿨 연설 (10월 29일)",
@@ -236,8 +411,14 @@ const QUOTES = [
   },
   {
     id: 55,
-    text: "천재는 1퍼센트의 영감과 99퍼센트의 땀으로 이루어진다.",
-    author: "토머스 에디슨",
+    text: {
+      ko: "천재는 1퍼센트의 영감과 99퍼센트의 땀으로 이루어진다.",
+      en: "Genius is one per cent inspiration, ninety-nine per cent perspiration.",
+    },
+    author: {
+      ko: "토머스 에디슨",
+      en: "Thomas Edison",
+    },
     original: "Genius is one per cent inspiration, ninety-nine per cent perspiration.",
     lang: "en",
     source: "Harper's Monthly 165권 987호 406쪽 인터뷰",
@@ -247,8 +428,14 @@ const QUOTES = [
   },
   {
     id: 56,
-    text: "새기다 그만두면 썩은 나무도 못 자르고, 새기기를 그치지 않으면 쇠와 돌도 새긴다.",
-    author: "순자",
+    text: {
+      ko: "새기다 그만두면 썩은 나무도 못 자르고, 새기기를 그치지 않으면 쇠와 돌도 새긴다.",
+      en: "Carve and give up, and even rotten wood will not break; carve without giving up, and metal and stone can be engraved.",
+    },
+    author: {
+      ko: "순자",
+      en: "Xunzi",
+    },
     original: "鍥而舍之，朽木不折；鍥而不舍，金石可鏤",
     lang: "lzh",
     source: "『순자』 권학편",
@@ -258,8 +445,14 @@ const QUOTES = [
   },
   {
     id: 57,
-    text: "나는 새가 아니다. 어떤 그물도 나를 가두지 못한다. 나는 자유로운 인간이다.",
-    author: "샬럿 브론테",
+    text: {
+      ko: "나는 새가 아니다. 어떤 그물도 나를 가두지 못한다. 나는 자유로운 인간이다.",
+      en: "I am no bird; and no net ensnares me; I am a free human being with an independent will.",
+    },
+    author: {
+      ko: "샬럿 브론테",
+      en: "Charlotte Brontë",
+    },
     original: "I am no bird; and no net ensnares me; I am a free human being with an independent will.",
     lang: "en",
     source: "『제인 에어』 23장",
@@ -269,8 +462,14 @@ const QUOTES = [
   },
   {
     id: 58,
-    text: "희망은 깃털 달린 것, 영혼에 내려앉아 가사 없는 노래를 부른다.",
-    author: "에밀리 디킨슨",
+    text: {
+      ko: "희망은 깃털 달린 것, 영혼에 내려앉아 가사 없는 노래를 부른다.",
+      en: "Hope is the thing with feathers That perches in the soul, And sings the tune without the words",
+    },
+    author: {
+      ko: "에밀리 디킨슨",
+      en: "Emily Dickinson",
+    },
     original: "Hope is the thing with feathers That perches in the soul, And sings the tune without the words",
     lang: "en",
     source: "시 「Hope」, 『Poems by Emily Dickinson』 제2집",
@@ -280,8 +479,14 @@ const QUOTES = [
   },
   {
     id: 59,
-    text: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
-    author: "김구",
+    text: {
+      ko: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
+      en: "The one thing I want without limit is the power of a high culture.",
+    },
+    author: {
+      ko: "김구",
+      en: "Kim Ku",
+    },
     original: "오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.",
     lang: "ko",
     source: "『백범일지』 「내가 원하는 우리 나라」",
@@ -291,8 +496,14 @@ const QUOTES = [
   },
   {
     id: 60,
-    text: "말을 많이 하지 말고, 갑자기 성내지 마라.",
-    author: "정약용",
+    text: {
+      ko: "말을 많이 하지 말고, 갑자기 성내지 마라.",
+      en: "Do not speak much. Do not fly into a rage.",
+    },
+    author: {
+      ko: "정약용",
+      en: "Jeong Yak-yong",
+    },
     original: "毋多言。毋暴怒。",
     lang: "lzh",
     source: "『목민심서』 율기 제1조 칙궁",
@@ -302,8 +513,14 @@ const QUOTES = [
   },
   {
     id: 61,
-    text: "나는 여성이 남성을 지배하기를 바라지 않는다. 자기 자신을 지배하기를 바란다.",
-    author: "메리 울스턴크래프트",
+    text: {
+      ko: "나는 여성이 남성을 지배하기를 바라지 않는다. 자기 자신을 지배하기를 바란다.",
+      en: "I do not wish them to have power over men; but over themselves.",
+    },
+    author: {
+      ko: "메리 울스턴크래프트",
+      en: "Mary Wollstonecraft",
+    },
     original: "I do not wish them to have power over men; but over themselves.",
     lang: "en",
     source: "『여성의 권리 옹호』 4장",
@@ -312,20 +529,15 @@ const QUOTES = [
     tags: ["freedom", "energy"],
   },
   {
-    id: 62,
-    text: "시 삼백 편은 대개 성현이 발분하여 지은 것이다.",
-    author: "사마천",
-    original: "詩三百篇，大抵賢聖發憤之所為作也",
-    lang: "lzh",
-    source: "『사기』 권130 태사공자서",
-    year: -91,
-    sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%8F%B2%E8%A8%98/%E5%8D%B7130",
-    tags: ["oriental", "meaning"],
-  },
-  {
     id: 63,
-    text: "천 길 둑도 개미구멍 하나로 무너진다.",
-    author: "한비",
+    text: {
+      ko: "천 길 둑도 개미구멍 하나로 무너진다.",
+      en: "A dike of a thousand zhang collapses through the hole of an ant.",
+    },
+    author: {
+      ko: "한비",
+      en: "Han Fei",
+    },
     original: "千丈之堤，以螻蟻之穴潰",
     lang: "lzh",
     source: "『한비자』 유로편",
@@ -335,8 +547,14 @@ const QUOTES = [
   },
   {
     id: 64,
-    text: "길은 아득히 멀지만, 나는 오르내리며 찾아 헤매리라.",
-    author: "굴원",
+    text: {
+      ko: "길은 아득히 멀지만, 나는 오르내리며 찾아 헤매리라.",
+      en: "The road stretches on, long and far; I shall search up and down.",
+    },
+    author: {
+      ko: "굴원",
+      en: "Qu Yuan",
+    },
     original: "路曼曼其脩遠兮，吾將上下而求索",
     lang: "lzh",
     source: "「이소(離騷)」",
@@ -346,13 +564,307 @@ const QUOTES = [
   },
   {
     id: 65,
-    text: "희망을 품고 부지런히 일하라. 무슨 일이 있어도 너희에게 아버지는 있다.",
-    author: "루이자 메이 올컷",
+    text: {
+      ko: "희망을 품고 부지런히 일하라. 무슨 일이 있어도 너희에게 아버지는 있다.",
+      en: "Hope and keep busy; and whatever happens, remember that you never can be fatherless.",
+    },
+    author: {
+      ko: "루이자 메이 올컷",
+      en: "Louisa May Alcott",
+    },
     original: "Hope and keep busy; and whatever happens, remember that you never can be fatherless.",
     lang: "en",
     source: "『작은 아씨들』 15장 (마치 부인의 편지)",
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/37106/pg37106.txt",
     tags: ["hope", "energy"],
+  },
+  {
+    id: 66,
+    text: {
+      ko: "네가 자주 떠올리는 생각이 어떠하든 네 마음도 그러하게 된다. 영혼은 생각에 물들기 때문이다.",
+      en: "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts.",
+    },
+    author: {
+      ko: "마르쿠스 아우렐리우스",
+      en: "Marcus Aurelius",
+    },
+    original: "Οἷα ἂν πολλάκις φαντασθῇς, τοιαύτη σοι ἔσται ἡ διάνοια· βάπτεται γὰρ ὑπὸ τῶν φαντασιῶν ἡ ψυχή.",
+    lang: "grc",
+    translator: {
+      en: "George Long",
+      enUrl: "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+    },
+    source: "『명상록』 5권 16",
+    year: 180,
+    sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
+    tags: ["meaning", "perseverance"],
+  },
+  {
+    id: 67,
+    text: {
+      ko: "사람을 어지럽히는 것은 사물이 아니라, 사물에 대해 갖는 생각이다.",
+      en: "Men are disturbed not by things, but by the views which they take of things.",
+    },
+    author: {
+      ko: "에픽테토스",
+      en: "Epictetus",
+    },
+    original: "Ταράσσει τοὺς ἀνθρώπους οὐ τὰ πράγματα, ἀλλὰ τὰ περὶ τῶν πραγμάτων δόγματα.",
+    lang: "grc",
+    translator: {
+      en: "Thomas Wentworth Higginson",
+      enUrl: "https://www.gutenberg.org/cache/epub/45109/pg45109.txt",
+    },
+    source: "『엥케이리디온』 5",
+    year: 125,
+    sourceUrl: "https://el.wikisource.org/wiki/%CE%95%CE%B3%CF%87%CE%B5%CE%B9%CF%81%CE%AF%CE%B4%CE%B9%CE%BF%CE%BD",
+    tags: ["fear", "meaning"],
+  },
+  {
+    id: 68,
+    text: {
+      ko: "자기 삶의 '왜'를 지닌 사람은 거의 모든 '어떻게'를 견뎌낸다.",
+      en: "If a man knows the wherefore of his existence, then the manner of it can take care of itself.",
+    },
+    author: {
+      ko: "프리드리히 니체",
+      en: "Friedrich Nietzsche",
+    },
+    original: "Hat man sein warum? des Lebens, so verträgt man sich fast mit jedem wie?",
+    lang: "de",
+    translator: {
+      en: "Anthony M. Ludovici",
+      enUrl: "https://www.gutenberg.org/cache/epub/52263/pg52263.txt",
+    },
+    source: "『우상의 황혼』 잠언과 화살 12",
+    year: 1889,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/7203/pg7203.txt",
+    tags: ["despair", "meaning"],
+  },
+  {
+    id: 69,
+    text: {
+      ko: "너 자신을 믿어라. 모든 심장은 그 쇠줄에 맞추어 울린다.",
+      en: "Trust thyself: every heart vibrates to that iron string.",
+    },
+    author: {
+      ko: "랠프 월도 에머슨",
+      en: "Ralph Waldo Emerson",
+    },
+    original: "Trust thyself: every heart vibrates to that iron string.",
+    lang: "en",
+    source: "『자기 신뢰(Self-Reliance)』",
+    year: 1841,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
+    tags: ["challenge", "freedom"],
+  },
+  {
+    id: 70,
+    text: {
+      ko: "성공은 그가 오른 자리가 아니라, 성공하려 애쓰며 넘어선 장애물로 재야 한다.",
+      en: "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed.",
+    },
+    author: {
+      ko: "부커 T. 워싱턴",
+      en: "Booker T. Washington",
+    },
+    original: "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed.",
+    lang: "en",
+    source: "『노예에서 일어서서(Up from Slavery)』 3장",
+    year: 1901,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
+    tags: ["failure", "success"],
+  },
+  {
+    id: 71,
+    text: {
+      ko: "사람은 누구나 한 번 죽는다. 그 죽음이 태산보다 무겁기도 하고, 기러기 털보다 가볍기도 하다.",
+      en: "Every man has but one death. That death may be heavier than Mount Tai, or lighter than a goose feather.",
+    },
+    author: {
+      ko: "사마천",
+      en: "Sima Qian",
+    },
+    original: "人固有一死，死有重於泰山，或輕於鴻毛",
+    lang: "lzh",
+    source: "『한서』 권62 사마천전 「보임안서」",
+    year: -93,
+    sourceUrl: "https://zh.wikisource.org/wiki/%E6%BC%A2%E6%9B%B8/%E5%8D%B7062",
+    tags: ["despair", "meaning"],
+  },
+  {
+    id: 72,
+    text: {
+      ko: "나는 내 운명의 주인이요, 내 영혼의 선장이다.",
+      en: "I am the master of my fate: I am the captain of my soul.",
+    },
+    author: {
+      ko: "윌리엄 어니스트 헨리",
+      en: "William Ernest Henley",
+    },
+    original: "I am the master of my fate: I am the captain of my soul.",
+    lang: "en",
+    source: "『시집(Poems)』 「인빅터스」",
+    year: 1888,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1568/pg1568.txt",
+    tags: ["despair", "freedom"],
+  },
+  {
+    id: 73,
+    text: {
+      ko: "마음은 그 자체로 하나의 세계라, 스스로 지옥을 천국으로도 천국을 지옥으로도 만든다.",
+      en: "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven.",
+    },
+    author: {
+      ko: "존 밀턴",
+      en: "John Milton",
+    },
+    original: "The mind is its own place, and in itself Can make a Heaven of Hell, a Hell of Heaven.",
+    lang: "en",
+    source: "『실낙원』 1권",
+    year: 1667,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/26/pg26.txt",
+    tags: ["meaning", "despair"],
+  },
+  {
+    id: 74,
+    text: {
+      ko: "의심은 배신자다. 시도를 두려워하게 만들어, 얻었을 좋은 것을 잃게 한다.",
+      en: "Our doubts are traitors, and make us lose the good we oft might win by fearing to attempt.",
+    },
+    author: {
+      ko: "윌리엄 셰익스피어",
+      en: "William Shakespeare",
+    },
+    original: "Our doubts are traitors, And make us lose the good we oft might win By fearing to attempt.",
+    lang: "en",
+    source: "『자에는 자로』 1막 4장, 루치오의 대사",
+    year: 1604,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/100/pg100.txt",
+    tags: ["fear", "challenge"],
+  },
+  {
+    id: 75,
+    text: {
+      ko: "우리는 모두 시궁창에 있다. 그러나 그중 몇은 별을 바라본다.",
+      en: "We are all in the gutter, but some of us are looking at the stars.",
+    },
+    author: {
+      ko: "오스카 와일드",
+      en: "Oscar Wilde",
+    },
+    original: "We are all in the gutter, but some of us are looking at the stars.",
+    lang: "en",
+    source: "『윈더미어 부인의 부채』 3막, 달링턴 경의 대사",
+    year: 1892,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/790/pg790.txt",
+    tags: ["hope", "despair"],
+  },
+  {
+    id: 76,
+    text: {
+      ko: "그 이름에 값하는 유일한 자유는, 제 방식대로 제 좋음을 좇는 자유다.",
+      en: "The only freedom which deserves the name, is that of pursuing our own good in our own way.",
+    },
+    author: {
+      ko: "존 스튜어트 밀",
+      en: "John Stuart Mill",
+    },
+    original: "The only freedom which deserves the name, is that of pursuing our own good in our own way.",
+    lang: "en",
+    source: "『자유론』 1장",
+    year: 1859,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/34901/pg34901.txt",
+    tags: ["freedom", "meaning"],
+  },
+  {
+    id: 77,
+    text: {
+      ko: "위대한 일은 힘이 아니라 끈기로 이루어진다.",
+      en: "Great works are performed not by strength, but perseverance.",
+    },
+    author: {
+      ko: "새뮤얼 존슨",
+      en: "Samuel Johnson",
+    },
+    original: "Great works are performed not by strength, but perseverance.",
+    lang: "en",
+    source: "『라셀라스』 13장",
+    year: 1759,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/652/pg652.txt",
+    tags: ["perseverance", "challenge"],
+  },
+  {
+    id: 78,
+    text: {
+      ko: "사람이 닿으려는 곳은 잡히는 곳보다 멀어야 한다. 아니면 하늘은 무엇하러 있겠는가?",
+      en: "Ah, but a man's reach should exceed his grasp, or what's a heaven for?",
+    },
+    author: {
+      ko: "로버트 브라우닝",
+      en: "Robert Browning",
+    },
+    original: "Ah, but a man's reach should exceed his grasp, Or what's a heaven for?",
+    lang: "en",
+    source: "「안드레아 델 사르토」",
+    year: 1855,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/50954/pg50954.txt",
+    tags: ["challenge", "meaning"],
+  },
+  {
+    id: 79,
+    text: {
+      ko: "언젠가 반드시 정상에 올라, 뭇 산이 작음을 한눈에 보리라.",
+      en: "One day I shall climb to the very summit, and see at a glance how small the mountains are.",
+    },
+    author: {
+      ko: "두보",
+      en: "Du Fu",
+    },
+    original: "會當凌絕頂，一覽衆山小",
+    lang: "lzh",
+    source: "『전당시』 권216 「망악(望嶽)」",
+    year: 736,
+    sourceUrl: "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
+    tags: ["challenge", "oriental"],
+  },
+  {
+    id: 80,
+    text: {
+      ko: "세 사람이 길을 가면, 그중에 반드시 내 스승이 있다.",
+      en: "When I walk along with two others, they may serve me as my teachers.",
+    },
+    author: {
+      ko: "공자",
+      en: "Confucius",
+    },
+    original: "三人行，必有我師焉",
+    lang: "lzh",
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    },
+    source: "『논어』 술이편 21",
+    year: -450,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    tags: ["preparation", "oriental"],
+  },
+  {
+    id: 81,
+    text: {
+      ko: "제 배움의 끝을 걱정하지 마라. 일하는 시간마다 성실히 바쁘다면, 마지막 결과는 저절로 되도록 맡겨도 좋다.",
+      en: "Let no youth have any anxiety about the upshot of his education. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
+    },
+    author: {
+      ko: "윌리엄 제임스",
+      en: "William James",
+    },
+    original: "Let no youth have any anxiety about the upshot of his education, whatever the line of it may be. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
+    lang: "en",
+    source: "『교사에게 하는 심리학 강의』 8장 「습관의 법칙」",
+    year: 1899,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/16287/pg16287.txt",
+    tags: ["perseverance", "fear"],
   },
 ];
