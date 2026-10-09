@@ -384,6 +384,40 @@ body {
   margin: 0;
 }
 
+/* 켬/끔을 스위치 모양 대신 글자 색과 점 하나로 보인다. 꺼지면 점이 빈 원이 된다. */
+.weight-btn {
+  margin-left: auto;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 12px 0 12px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+
+.weight-btn::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+}
+
+.weight-btn.active {
+  color: var(--ink);
+}
+
+.weight-btn.active::before {
+  background: currentColor;
+}
+
 /* 박스 대신 얇은 선과 여백으로 항목을 나눈다. 인쇄물 색인의 방식이다. */
 .favorites-list {
   list-style: none;

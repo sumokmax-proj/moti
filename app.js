@@ -1,6 +1,7 @@
 const FAVORITES_KEY = "motimoti-favorites";
 const LANG_KEY = "motimoti-lang";
 const RECENT_KEY = "motimoti-recent";
+const WEIGHT_KEY = "motimoti-favorites-weight";
 const LANGS = ["en", "ko"];
 
 const UI = {
@@ -10,6 +11,8 @@ const UI = {
     remove: "Remove",
     count: (n) => `${n} ${n === 1 ? "quote" : "quotes"}`,
     empty: "Nothing saved yet.",
+    weight: "Show more often",
+    weightHint: "Saved quotes turn up twice as often",
     copied: "Copied to clipboard",
     shareUnsupported: "Sharing isn’t supported in this browser",
     aria: {
@@ -26,6 +29,8 @@ const UI = {
     remove: "삭제",
     count: (n) => `${n}편`,
     empty: "아직 저장한 명언이 없어요.",
+    weight: "더 자주 펼치기",
+    weightHint: "저장한 명언이 두 배 자주 펼쳐집니다",
     copied: "클립보드에 복사되었습니다",
     shareUnsupported: "공유하기를 지원하지 않는 브라우저입니다",
     aria: {
@@ -53,6 +58,7 @@ const favoritesEmptyEl = document.getElementById("favorites-empty");
 const favoritesCountEl = document.getElementById("favorites-count");
 const favoritesCountRowEl = document.getElementById("favorites-count-row");
 const favoritesTitleEl = document.getElementById("favorites-title");
+const weightBtn = document.getElementById("weight-btn");
 const toastEl = document.getElementById("toast");
 const appHeaderEl = document.querySelector(".app-header");
 const langBtns = Array.from(document.querySelectorAll(".lang-btn"));
@@ -109,6 +115,8 @@ function applyLang() {
   nextBtn.textContent = ui.next;
   favoritesTitleEl.textContent = ui.favorites;
   favoritesEmptyEl.textContent = ui.empty;
+  weightBtn.textContent = ui.weight;
+  weightBtn.title = ui.weightHint;
   favoritesNavBtn.setAttribute("aria-label", ui.aria.openFavorites);
   favoriteBtn.setAttribute("aria-label", ui.aria.favorite);
   shareBtn.setAttribute("aria-label", ui.aria.share);
@@ -156,6 +164,42 @@ function toggleFavorite(quote) {
 function removeFavorite(id) {
   saveFavorites(getFavorites().filter((q) => q.id !== id));
   renderFavoritesList();
+}
+
+/* 자주 펼친 쪽이 잘 펼쳐진다 — 실제 책은 자주 펼친 곳에 길이 든다.
+ *
+ * 켜 두면 즐겨찾기한 명언이 두 배 자주 나온다. 「아무 쪽이나」의 공평함과
+ * 맞바꾸는 것이라 끌 수 있게 했고, 기본은 켬이다.
+ *
+ * 가중치는 최근 20% 피하기를 통과한 후보 안에서만 건다. 그래서 즐겨찾기라도
+ * 방금 본 명언이 곧바로 다시 나오지는 않는다 — 돌아오는 간격이 짧아질 뿐이다.
+ * 2배로 둔 것은, 이보다 크면 즐겨찾기가 많지 않을 때 같은 몇 편만 맴도는
+ * 느낌이 나기 때문이다. */
+const FAVORITE_WEIGHT = 2;
+
+function loadWeightSetting() {
+  try {
+    return localStorage.getItem(WEIGHT_KEY) !== "off";
+  } catch {
+    return true;
+  }
+}
+
+let weightFavorites = loadWeightSetting();
+
+function setWeightFavorites(on) {
+  weightFavorites = on;
+  try {
+    localStorage.setItem(WEIGHT_KEY, on ? "on" : "off");
+  } catch {
+    // 저장이 막혀도 이번 방문 동안은 따른다.
+  }
+  updateWeightButton();
+}
+
+function updateWeightButton() {
+  weightBtn.setAttribute("aria-pressed", String(weightFavorites));
+  weightBtn.classList.toggle("active", weightFavorites);
 }
 
 function updateFavoriteButton() {
@@ -224,7 +268,19 @@ function pickRandomQuote(excludeId) {
   // 풀이 작아 전부 피해야 하는 경우에도 같은 명언이 연달아 나오지는 않게 한다.
   const notCurrent = available.filter((q) => q.id !== excludeId);
   const candidates = fresh.length > 0 ? fresh : notCurrent.length > 0 ? notCurrent : available;
-  return candidates[Math.floor(Math.random() * candidates.length)];
+  return weightedChoice(candidates);
+}
+
+function weightedChoice(candidates) {
+  if (!weightFavorites) return candidates[Math.floor(Math.random() * candidates.length)];
+  const favorites = new Set(getFavorites().map((f) => f.id));
+  const weightOf = (q) => (favorites.has(q.id) ? FAVORITE_WEIGHT : 1);
+  let r = Math.random() * candidates.reduce((sum, q) => sum + weightOf(q), 0);
+  for (const q of candidates) {
+    r -= weightOf(q);
+    if (r < 0) return q;
+  }
+  return candidates[candidates.length - 1];
 }
 
 /* 한 쪽을 펼친다 — 고르는 순간 최근 목록에 넣는다. 화면에 그리는 시점(페이드
@@ -763,6 +819,7 @@ favoriteBtn.addEventListener("click", () => toggleFavorite(currentQuote));
 shareBtn.addEventListener("click", shareCurrentQuote);
 favoritesNavBtn.addEventListener("click", openFavoritesView);
 backBtn.addEventListener("click", closeFavoritesView);
+weightBtn.addEventListener("click", () => setWeightFavorites(!weightFavorites));
 langBtns.forEach((btn) => btn.addEventListener("click", () => setLang(btn.dataset.lang)));
 
 // 회전하거나 창 크기가 바뀌면 들어가는 양이 달라진다. 다시 맞춘다.
@@ -773,5 +830,6 @@ window.addEventListener("resize", () => {
 });
 
 applyLang();
+updateWeightButton();
 currentQuote = turnPage(null);
 renderQuote(currentQuote);

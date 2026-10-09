@@ -353,6 +353,50 @@ async function suiteFavorites(browser) {
   await p.context().close();
 }
 
+/* ── 더 자주 펼치기 ───────────────────────────────── */
+async function suiteWeight(browser) {
+  const p = await freshPage(browser);
+  // 즐겨찾기 10편을 심고 넘김 2만 번. 즐겨찾기 한 편과 나머지 한 편이 각각
+  // 평균 몇 번 나왔는지 비교한다. 최근 20% 피하기가 자주 나온 쪽을 더 자주
+  // 막으므로 실제 배율은 2보다 조금 낮다.
+  const run = (on) => p.evaluate((on) => {
+    const favIds = QUOTES.slice(0, 10).map((q) => q.id);
+    localStorage.setItem("motimoti-favorites", JSON.stringify(favIds.map((id) => ({ id }))));
+    setWeightFavorites(on);
+    const W = Math.floor(QUOTES.length * 0.2);
+    const fav = new Set(favIds);
+    let cur = currentQuote, favHits = 0, otherHits = 0, violations = 0;
+    const seen = [cur.id];
+    for (let i = 0; i < 20000; i++) {
+      cur = turnPage(cur.id);
+      if (seen.slice(-W).includes(cur.id)) violations++;
+      seen.push(cur.id);
+      if (fav.has(cur.id)) favHits++; else otherHits++;
+    }
+    const ratio = (favHits / fav.size) / (otherHits / (QUOTES.length - fav.size));
+    return { ratio: Math.round(ratio * 100) / 100, violations };
+  }, on);
+  const onR = await run(true);
+  const offR = await run(false);
+  report.check("더 자주 펼치기 켬 — 즐겨찾기가 더 자주 나옴", onR.ratio >= 1.5 && onR.ratio <= 2.05, `${onR.ratio}배`);
+  report.check("더 자주 펼치기 켬 — 최근 20% 피하기는 그대로", onR.violations === 0, `2만 번 중 위반 ${onR.violations}`);
+  report.check("더 자주 펼치기 끔 — 고르게 나옴", offR.ratio >= 0.85 && offR.ratio <= 1.15, `${offR.ratio}배`);
+
+  // 기본은 켬, 누르면 꺼지고, 앱을 닫았다 열어도 기억한다.
+  await p.evaluate(() => { localStorage.removeItem("motimoti-favorites-weight"); localStorage.setItem("motimoti-lang", "ko"); });
+  await p.reload({ waitUntil: "networkidle" });
+  await p.click("#favorites-nav-btn");
+  const btn = p.locator("#weight-btn");
+  const defaultOn = (await btn.getAttribute("aria-pressed")) === "true";
+  const label = (await btn.textContent()).trim();
+  await btn.click();
+  const offNow = (await btn.getAttribute("aria-pressed")) === "false" && !(await p.evaluate(() => weightFavorites));
+  await p.reload({ waitUntil: "networkidle" });
+  const remembered = await p.evaluate(() => !weightFavorites && document.getElementById("weight-btn").getAttribute("aria-pressed") === "false");
+  report.check("더 자주 펼치기 — 기본 켬, 누르면 끔, 다시 열어도 기억", defaultOn && offNow && remembered, `「${label}」`);
+  await p.context().close();
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { proc, url } = await startServer();
@@ -361,7 +405,7 @@ async function suiteFavorites(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight]]) {
       try {
         await suite(browser);
       } catch (err) {
