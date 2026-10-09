@@ -5,21 +5,21 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 114
+// 다음 id: 124
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (42개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (49개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
 //     (82 페인, 84 스티븐슨, 101 앤 브론테, 104 메리 셸리, 정본 영역의
 //      93 아우렐리우스도 같다.)
 //
-//  2) 공개된 정본 영역 (20개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (21개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -41,10 +41,12 @@
 //       id 105 탕왕      James Legge
 //       id 111 세네카    Richard M. Gummere
 //       id 112 세르반테스 John Ormsby
+//       id 119 괴테      Bayard Taylor
 //
-//  3) 자체 번역 (15개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (17개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91,106,107.
+//     87,88,91,106,107,114,115. (59·114·115 는 한국어 원문이라 text.en 만
+//     자체 번역이다.)
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
 // translator 가 없다는 것은 자체 번역이라는 뜻이다. 이 규칙을 바꾸지 말 것.
@@ -54,13 +56,15 @@
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~113
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~123
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
 //      107 호라티우스는 렌더링된 페이지가 행 번호 「40」을 끼워 넣어, 위키텍스트로
 //      대조했다. 108 트웨인은 구텐베르크 평문의 "--" 를 text.en 에서 "—" 로 적었다.
-//      112·113 은 작품 속 속담 인용이다 — QUOTE_STANDARDS.md v1.5.)
+//      112·113 은 작품 속 속담 인용이다 — QUOTE_STANDARDS.md v1.5.
+//      115 윤동주는 1948 초판 표기(「우르러」「한점」)를 original 에 두고,
+//      text.ko 는 표준 표기 「우러러」「한 점」으로 적었다.)
 // [B] 원문 인쇄물(1차)이 온라인에 없어, 그 인쇄물을 정확히 인용한 페이지를
 //     열어 문구를 대조한 항목: 21(LIFE 1955.5.2), 50(Cook 1913 1권 506쪽),
 //     55(Harper's Monthly 1932, 165권 987호 406쪽)
@@ -1463,5 +1467,179 @@ const QUOTES = [
     year: 1758,
     sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
     tags: ["preparation", "success"],
+  },
+  {
+    id: 114,
+    text: {
+      ko: "우리는 만날 때에 떠날 것을 염려하는 것과 같이 떠날 때에 다시 만날 것을 믿습니다.",
+      en: "Just as we fear parting when we meet, so when we part we believe that we will meet again.",
+    },
+    author: {
+      ko: "한용운",
+      en: "Han Yong-un",
+    },
+    original: "우리는 만날 때에 떠날 것을 염려하는 것과 같이 떠날 때에 다시 만날 것을 믿습니다.",
+    lang: "ko",
+    source: "『님의 침묵』 「님의 침묵」",
+    year: 1926,
+    sourceUrl: "https://ko.wikisource.org/wiki/%EB%8B%98%EC%9D%98_%EC%B9%A8%EB%AC%B5/%EB%8B%98%EC%9D%98_%EC%B9%A8%EB%AC%B5",
+    tags: ["hope", "despair"],
+  },
+  {
+    id: 115,
+    text: {
+      ko: "죽는 날까지 하늘을 우러러 한 점 부끄럼이 없기를.",
+      en: "Until the day I die, may I look up to the heavens with not a speck of shame.",
+    },
+    author: {
+      ko: "윤동주",
+      en: "Yun Dong-ju",
+    },
+    original: "죽는 날까지 하늘을 우르러 / 한점 부끄럼이 없기를,",
+    lang: "ko",
+    source: "『하늘과 바람과 별과 시』(1948 초판) 「서시」",
+    year: 1941,
+    sourceUrl: "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%84%9C%EC%8B%9C",
+    tags: ["meaning"],
+  },
+  {
+    id: 116,
+    text: {
+      ko: "에너지는 영원한 기쁨이다.",
+      en: "Energy is Eternal Delight.",
+    },
+    author: {
+      ko: "윌리엄 블레이크",
+      en: "William Blake",
+    },
+    original: "Energy is Eternal Delight.",
+    lang: "en",
+    source: "『천국과 지옥의 결혼』 「악마의 목소리」",
+    year: 1790,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/45315/pg45315.txt",
+    tags: ["energy", "passion"],
+  },
+  {
+    id: 117,
+    text: {
+      ko: "숲속에 두 갈래 길이 있었고, 나는 사람들이 덜 다닌 길을 택했다. 그리고 그것이 모든 것을 바꾸어 놓았다.",
+      en: "Two roads diverged in a wood, and I— I took the one less traveled by, and that has made all the difference.",
+    },
+    author: {
+      ko: "로버트 프로스트",
+      en: "Robert Frost",
+    },
+    original: "Two roads diverged in a wood, and I-- / I took the one less traveled by, / And that has made all the difference.",
+    lang: "en",
+    source: "『산의 막간(Mountain Interval)』 「가지 않은 길」",
+    year: 1916,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/29345/pg29345.txt",
+    tags: ["challenge", "freedom"],
+  },
+  {
+    id: 118,
+    text: {
+      ko: "겨울이 오면, 봄이 어찌 멀리 있으랴?",
+      en: "If Winter comes, can Spring be far behind?",
+    },
+    author: {
+      ko: "퍼시 비시 셸리",
+      en: "Percy Bysshe Shelley",
+    },
+    original: "If Winter comes, can Spring be far behind?",
+    lang: "en",
+    source: "「서풍에 부치는 노래(Ode to the West Wind)」",
+    year: 1820,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/4800/pg4800.txt",
+    tags: ["hope", "despair"],
+  },
+  {
+    id: 119,
+    text: {
+      ko: "사람은 애쓰는 동안에는 헤매기 마련이다.",
+      en: "While Man’s desires and aspirations stir, He cannot choose but err.",
+    },
+    author: {
+      ko: "요한 볼프강 폰 괴테",
+      en: "Johann Wolfgang von Goethe",
+    },
+    original: "Es irrt der Mensch so lang er strebt.",
+    lang: "de",
+    translator: {
+      en: "Bayard Taylor",
+      enUrl: "https://www.gutenberg.org/cache/epub/14591/pg14591.txt",
+    },
+    source: "『파우스트』 1부 「천상의 서곡」, 주님의 대사",
+    year: 1808,
+    sourceUrl: "https://de.wikisource.org/wiki/Faust_-_Der_Trag%C3%B6die_erster_Teil",
+    tags: ["failure", "perseverance"],
+  },
+  {
+    id: 120,
+    text: {
+      ko: "일은 눈에 보이게 된 사랑이다.",
+      en: "Work is love made visible.",
+    },
+    author: {
+      ko: "칼릴 지브란",
+      en: "Kahlil Gibran",
+    },
+    original: "Work is love made visible.",
+    lang: "en",
+    source: "『예언자』 「일에 대하여」",
+    year: 1923,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/58585/pg58585.txt",
+    tags: ["passion", "meaning"],
+  },
+  {
+    id: 121,
+    text: {
+      ko: "너 자신 말고는 그 무엇도 너에게 평화를 가져다줄 수 없다.",
+      en: "Nothing can bring you peace but yourself.",
+    },
+    author: {
+      ko: "랠프 월도 에머슨",
+      en: "Ralph Waldo Emerson",
+    },
+    original: "Nothing can bring you peace but yourself.",
+    lang: "en",
+    source: "『자기 신뢰(Self-Reliance)』",
+    year: 1841,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
+    tags: ["freedom", "meaning"],
+  },
+  {
+    id: 122,
+    text: {
+      ko: "희망은 사람의 가슴속에서 영원히 솟아난다.",
+      en: "Hope springs eternal in the human breast.",
+    },
+    author: {
+      ko: "알렉산더 포프",
+      en: "Alexander Pope",
+    },
+    original: "Hope springs eternal in the human breast:",
+    lang: "en",
+    source: "『인간론(An Essay on Man)』 제1서간",
+    year: 1733,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2428/pg2428.txt",
+    tags: ["hope"],
+  },
+  {
+    id: 123,
+    text: {
+      ko: "내 성에 들어가기 전에 근사한 일을 하고 싶어. 내가 죽은 뒤에도 잊히지 않을, 영웅적이거나 놀라운 일을.",
+      en: "I want to do something splendid before I go into my castle, something heroic or wonderful that won't be forgotten after I'm dead.",
+    },
+    author: {
+      ko: "루이자 메이 올컷",
+      en: "Louisa May Alcott",
+    },
+    original: "I want to do something splendid before I go into my castle, something heroic or wonderful that won’t be forgotten after I’m dead.",
+    lang: "en",
+    source: "『작은 아씨들』 13장 「공중누각」, 조의 대사",
+    year: 1868,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/514/pg514.txt",
+    tags: ["dream", "passion"],
   },
 ];
