@@ -1651,7 +1651,7 @@ const QUOTES = [
   {
     id: 124,
     text: {
-      ko: "할 수 있다고 여기기에, 그들은 해낸다.",
+      ko: "할 수 있다고 여기기에, 그들은 할 수 있다.",
       en: "They can, because they think they can.",
     },
     author: {
