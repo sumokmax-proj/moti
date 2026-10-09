@@ -5,19 +5,20 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 92
+// 다음 id: 102
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (28개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (35개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
+//     (82 페인, 84 스티븐슨, 101 앤 브론테, 정본 영역의 93 아우렐리우스도 같다.)
 //
-//  2) 공개된 정본 영역 (14개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (17개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -33,6 +34,9 @@
 //       id 80 공자      James Legge
 //       id 89 세네카     Richard M. Gummere
 //       id 90 공자      James Legge
+//       id 93 아우렐리우스 George Long
+//       id 97 노자      James Legge
+//       id 98 몽테뉴     Charles Cotton (W. C. Hazlitt 편)
 //
 //  3) 자체 번역 (13개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
@@ -46,7 +50,7 @@
 //
 // ── 2차 검증(재검증) 상태 ────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~91
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~101
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.)
@@ -1054,5 +1058,187 @@ const QUOTES = [
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
     tags: ["perseverance", "oriental"],
+  },
+  {
+    id: 92,
+    text: {
+      ko: "실패는 더 현명하게 다시 시작할 기회일 뿐이다.",
+      en: "Failure is only the opportunity more intelligently to begin again.",
+    },
+    author: {
+      ko: "헨리 포드",
+      en: "Henry Ford",
+    },
+    original: "Failure is only the opportunity more intelligently to begin again.",
+    lang: "en",
+    source: "『나의 삶과 일(My Life and Work)』 서문",
+    year: 1922,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/7213/pg7213.txt",
+    tags: ["failure", "challenge"],
+  },
+  {
+    id: 93,
+    text: {
+      ko: "길 위의 장애물이 이 길을 가도록 돕는다.",
+      en: "That which is an obstacle on the road helps us on this road.",
+    },
+    author: {
+      ko: "마르쿠스 아우렐리우스",
+      en: "Marcus Aurelius",
+    },
+    original: "πρὸ ὁδοῦ τὸ τῆς ὁδοῦ ταύτης ἐνστατικόν",
+    lang: "grc",
+    translator: {
+      en: "George Long",
+      enUrl: "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+    },
+    source: "『명상록』 5권 20",
+    year: 180,
+    sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
+    tags: ["failure", "challenge"],
+  },
+  {
+    id: 94,
+    text: {
+      ko: "나는 폭풍이 두렵지 않다. 내 배를 모는 법을 배우고 있으니까.",
+      en: "I'm not afraid of storms, for I'm learning how to sail my ship.",
+    },
+    author: {
+      ko: "루이자 메이 올컷",
+      en: "Louisa May Alcott",
+    },
+    original: "I’m not afraid of storms, for I’m learning how to sail my ship.",
+    lang: "en",
+    source: "『작은 아씨들』 44장 (에이미의 대사)",
+    year: 1869,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/514/pg514.txt",
+    tags: ["fear", "challenge"],
+  },
+  {
+    id: 95,
+    text: {
+      ko: "서로의 삶을 덜 힘들게 해 주려는 게 아니라면, 우리는 무엇을 위해 사는가?",
+      en: "What do we live for, if it is not to make life less difficult to each other?",
+    },
+    author: {
+      ko: "조지 엘리엇",
+      en: "George Eliot",
+    },
+    original: "What do we live for, if it is not to make life less difficult to each other?",
+    lang: "en",
+    source: "『미들마치』 72장 (도러시아의 대사)",
+    year: 1872,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+    tags: ["meaning"],
+  },
+  {
+    id: 96,
+    text: {
+      ko: "열정 없이 이루어진 위대한 일은 하나도 없다.",
+      en: "Nothing great was ever achieved without enthusiasm.",
+    },
+    author: {
+      ko: "랠프 월도 에머슨",
+      en: "Ralph Waldo Emerson",
+    },
+    original: "Nothing great was ever achieved without enthusiasm.",
+    lang: "en",
+    source: "『에세이 1집』 「원(Circles)」",
+    year: 1841,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2944/pg2944.txt",
+    tags: ["passion", "energy"],
+  },
+  {
+    id: 97,
+    text: {
+      ko: "남을 이기는 사람은 힘이 있고, 자신을 이기는 사람은 강하다.",
+      en: "He who overcomes others is strong; he who overcomes himself is mighty.",
+    },
+    author: {
+      ko: "노자",
+      en: "Laozi",
+    },
+    original: "勝人者有力，自勝者強",
+    lang: "lzh",
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+    },
+    source: "『도덕경』 제33장 (왕필본)",
+    year: -400,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
+    tags: ["challenge", "oriental"],
+  },
+  {
+    id: 98,
+    text: {
+      ko: "세상에서 가장 위대한 일은 자기 자신에게 속할 줄 아는 것이다.",
+      en: "The greatest thing in the world is for a man to know that he is his own.",
+    },
+    author: {
+      ko: "미셸 드 몽테뉴",
+      en: "Michel de Montaigne",
+    },
+    original: "La plus grande chose du monde, c’est de sçavoir estre à soy.",
+    lang: "fr",
+    translator: {
+      en: "Charles Cotton",
+      enUrl: "https://www.gutenberg.org/cache/epub/3600/pg3600.txt",
+    },
+    source: "『에세』 1권 39장 「고독에 대하여」",
+    year: 1580,
+    sourceUrl: "https://fr.wikisource.org/wiki/Essais/Livre_I/Chapitre_39",
+    tags: ["freedom", "meaning"],
+  },
+  {
+    id: 99,
+    text: {
+      ko: "낙관은 성취로 이끄는 믿음이다. 희망 없이는 아무것도 이룰 수 없다.",
+      en: "Optimism is the faith that leads to achievement; nothing can be done without hope.",
+    },
+    author: {
+      ko: "헬렌 켈러",
+      en: "Helen Keller",
+    },
+    original: "Optimism is the faith that leads to achievement; nothing can be done without hope.",
+    lang: "en",
+    source: "에세이 『낙관론(Optimism)』",
+    year: 1903,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/31622/pg31622.txt",
+    tags: ["hope", "success"],
+  },
+  {
+    id: 100,
+    text: {
+      ko: "자기 일을 찾은 사람은 복되다. 다른 복은 구하지 말라.",
+      en: "Blessed is he who has found his work; let him ask no other blessedness.",
+    },
+    author: {
+      ko: "토머스 칼라일",
+      en: "Thomas Carlyle",
+    },
+    original: "Blessed is he who has found his work; let him ask no other blessedness.",
+    lang: "en",
+    source: "『과거와 현재(Past and Present)』 3권 11장 「노동」",
+    year: 1843,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
+    tags: ["meaning", "passion"],
+  },
+  {
+    id: 101,
+    text: {
+      ko: "가시를 쥘 엄두를 내지 못하는 사람은 장미를 바라서도 안 된다.",
+      en: "He that dares not grasp the thorn should never crave the rose.",
+    },
+    author: {
+      ko: "앤 브론테",
+      en: "Anne Brontë",
+    },
+    original: "he that dares not grasp the thorn / Should never crave the rose.",
+    lang: "en",
+    source: "시 「좁은 길(The Narrow Way)」",
+    year: 1848,
+    sourceUrl: "https://en.wikisource.org/wiki/The_Complete_Poems_of_Anne_Bront%C3%AB/The_Narrow_Way",
+    tags: ["challenge", "fear"],
   },
 ];

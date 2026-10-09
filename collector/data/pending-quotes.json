@@ -1,221 +1,5 @@
 {
-  "pending": [
-    {
-      "tempId": "t1791516984368m7yyt",
-      "addedAt": "2026-10-09T03:36:24.368Z",
-      "text": {
-        "ko": "실패는 더 현명하게 다시 시작할 기회일 뿐이다.",
-        "en": "Failure is only the opportunity more intelligently to begin again."
-      },
-      "author": {
-        "ko": "헨리 포드",
-        "en": "Henry Ford"
-      },
-      "original": "Failure is only the opportunity more intelligently to begin again.",
-      "lang": "en",
-      "source": "『나의 삶과 일(My Life and Work)』 서문",
-      "year": 1922,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/7213/pg7213.txt",
-      "tags": [
-        "failure",
-        "challenge"
-      ]
-    },
-    {
-      "tempId": "t1791516984370x2lwk",
-      "addedAt": "2026-10-09T03:36:24.370Z",
-      "text": {
-        "ko": "길 위의 장애물이 이 길을 가도록 돕는다.",
-        "en": "That which is an obstacle on the road helps us on this road."
-      },
-      "author": {
-        "ko": "마르쿠스 아우렐리우스",
-        "en": "Marcus Aurelius"
-      },
-      "original": "πρὸ ὁδοῦ τὸ τῆς ὁδοῦ ταύτης ἐνστατικόν",
-      "lang": "grc",
-      "source": "『명상록』 5권 20",
-      "year": 180,
-      "sourceUrl": "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
-      "tags": [
-        "failure",
-        "challenge"
-      ],
-      "translator": "George Long",
-      "translatorUrl": "https://www.gutenberg.org/cache/epub/15877/pg15877.txt"
-    },
-    {
-      "tempId": "t1791516984370yuei3",
-      "addedAt": "2026-10-09T03:36:24.370Z",
-      "text": {
-        "ko": "나는 폭풍이 두렵지 않다. 내 배를 모는 법을 배우고 있으니까.",
-        "en": "I'm not afraid of storms, for I'm learning how to sail my ship."
-      },
-      "author": {
-        "ko": "루이자 메이 올컷",
-        "en": "Louisa May Alcott"
-      },
-      "original": "I’m not afraid of storms, for I’m learning how to sail my ship.",
-      "lang": "en",
-      "source": "『작은 아씨들』 44장 (에이미의 대사)",
-      "year": 1869,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/514/pg514.txt",
-      "tags": [
-        "fear",
-        "challenge"
-      ]
-    },
-    {
-      "tempId": "t1791516984370sah9w",
-      "addedAt": "2026-10-09T03:36:24.370Z",
-      "text": {
-        "ko": "서로의 삶을 덜 힘들게 해 주려는 게 아니라면, 우리는 무엇을 위해 사는가?",
-        "en": "What do we live for, if it is not to make life less difficult to each other?"
-      },
-      "author": {
-        "ko": "조지 엘리엇",
-        "en": "George Eliot"
-      },
-      "original": "What do we live for, if it is not to make life less difficult to each other?",
-      "lang": "en",
-      "source": "『미들마치』 72장 (도러시아의 대사)",
-      "year": 1872,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/145/pg145.txt",
-      "tags": [
-        "meaning"
-      ]
-    },
-    {
-      "tempId": "t1791516984370ukjth",
-      "addedAt": "2026-10-09T03:36:24.370Z",
-      "text": {
-        "ko": "열정 없이 이루어진 위대한 일은 하나도 없다.",
-        "en": "Nothing great was ever achieved without enthusiasm."
-      },
-      "author": {
-        "ko": "랠프 월도 에머슨",
-        "en": "Ralph Waldo Emerson"
-      },
-      "original": "Nothing great was ever achieved without enthusiasm.",
-      "lang": "en",
-      "source": "『에세이 1집』 「원(Circles)」",
-      "year": 1841,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/2944/pg2944.txt",
-      "tags": [
-        "passion",
-        "energy"
-      ]
-    },
-    {
-      "tempId": "t1791516984371vs6k9",
-      "addedAt": "2026-10-09T03:36:24.371Z",
-      "text": {
-        "ko": "남을 이기는 사람은 힘이 있고, 자신을 이기는 사람은 강하다.",
-        "en": "He who overcomes others is strong; he who overcomes himself is mighty."
-      },
-      "author": {
-        "ko": "노자",
-        "en": "Laozi"
-      },
-      "original": "勝人者有力，自勝者強",
-      "lang": "lzh",
-      "source": "『도덕경』 제33장 (왕필본)",
-      "year": -400,
-      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
-      "tags": [
-        "challenge",
-        "oriental"
-      ],
-      "translator": "James Legge",
-      "translatorUrl": "https://www.gutenberg.org/cache/epub/216/pg216.txt"
-    },
-    {
-      "tempId": "t1791516984371ew8sb",
-      "addedAt": "2026-10-09T03:36:24.371Z",
-      "text": {
-        "ko": "세상에서 가장 위대한 일은 자기 자신에게 속할 줄 아는 것이다.",
-        "en": "The greatest thing in the world is for a man to know that he is his own."
-      },
-      "author": {
-        "ko": "미셸 드 몽테뉴",
-        "en": "Michel de Montaigne"
-      },
-      "original": "La plus grande chose du monde, c’est de sçavoir estre à soy.",
-      "lang": "fr",
-      "source": "『에세』 1권 39장 「고독에 대하여」",
-      "year": 1580,
-      "sourceUrl": "https://fr.wikisource.org/wiki/Essais/Livre_I/Chapitre_39",
-      "tags": [
-        "freedom",
-        "meaning"
-      ],
-      "translator": "Charles Cotton",
-      "translatorUrl": "https://www.gutenberg.org/cache/epub/3600/pg3600.txt"
-    },
-    {
-      "tempId": "t1791516984371re8p2",
-      "addedAt": "2026-10-09T03:36:24.371Z",
-      "text": {
-        "ko": "낙관은 성취로 이끄는 믿음이다. 희망 없이는 아무것도 이룰 수 없다.",
-        "en": "Optimism is the faith that leads to achievement; nothing can be done without hope."
-      },
-      "author": {
-        "ko": "헬렌 켈러",
-        "en": "Helen Keller"
-      },
-      "original": "Optimism is the faith that leads to achievement; nothing can be done without hope.",
-      "lang": "en",
-      "source": "에세이 『낙관론(Optimism)』",
-      "year": 1903,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/31622/pg31622.txt",
-      "tags": [
-        "hope",
-        "success"
-      ]
-    },
-    {
-      "tempId": "t1791516984371e5ail",
-      "addedAt": "2026-10-09T03:36:24.371Z",
-      "text": {
-        "ko": "자기 일을 찾은 사람은 복되다. 다른 복은 구하지 말라.",
-        "en": "Blessed is he who has found his work; let him ask no other blessedness."
-      },
-      "author": {
-        "ko": "토머스 칼라일",
-        "en": "Thomas Carlyle"
-      },
-      "original": "Blessed is he who has found his work; let him ask no other blessedness.",
-      "lang": "en",
-      "source": "『과거와 현재(Past and Present)』 3권 11장 「노동」",
-      "year": 1843,
-      "sourceUrl": "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
-      "tags": [
-        "meaning",
-        "passion"
-      ]
-    },
-    {
-      "tempId": "t1791516984371vxyhz",
-      "addedAt": "2026-10-09T03:36:24.371Z",
-      "text": {
-        "ko": "가시를 쥘 엄두를 내지 못하는 사람은 장미를 바라서도 안 된다.",
-        "en": "He that dares not grasp the thorn should never crave the rose."
-      },
-      "author": {
-        "ko": "앤 브론테",
-        "en": "Anne Brontë"
-      },
-      "original": "he that dares not grasp the thorn / Should never crave the rose.",
-      "lang": "en",
-      "source": "시 「좁은 길(The Narrow Way)」",
-      "year": 1848,
-      "sourceUrl": "https://en.wikisource.org/wiki/The_Complete_Poems_of_Anne_Bront%C3%AB/The_Narrow_Way",
-      "tags": [
-        "challenge",
-        "fear"
-      ]
-    }
-  ],
+  "pending": [],
   "approved": [
     {
       "tempId": "t178903179656457q51",
@@ -825,6 +609,241 @@
       ],
       "id": 91,
       "approvedAt": "2026-10-09T03:22:50.325Z"
+    },
+    {
+      "tempId": "t1791516984368m7yyt",
+      "addedAt": "2026-10-09T03:36:24.368Z",
+      "text": {
+        "ko": "실패는 더 현명하게 다시 시작할 기회일 뿐이다.",
+        "en": "Failure is only the opportunity more intelligently to begin again."
+      },
+      "author": {
+        "ko": "헨리 포드",
+        "en": "Henry Ford"
+      },
+      "original": "Failure is only the opportunity more intelligently to begin again.",
+      "lang": "en",
+      "source": "『나의 삶과 일(My Life and Work)』 서문",
+      "year": 1922,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/7213/pg7213.txt",
+      "tags": [
+        "failure",
+        "challenge"
+      ],
+      "id": 92,
+      "approvedAt": "2026-10-09T03:52:05.621Z"
+    },
+    {
+      "tempId": "t1791516984370x2lwk",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "길 위의 장애물이 이 길을 가도록 돕는다.",
+        "en": "That which is an obstacle on the road helps us on this road."
+      },
+      "author": {
+        "ko": "마르쿠스 아우렐리우스",
+        "en": "Marcus Aurelius"
+      },
+      "original": "πρὸ ὁδοῦ τὸ τῆς ὁδοῦ ταύτης ἐνστατικόν",
+      "lang": "grc",
+      "source": "『명상록』 5권 20",
+      "year": 180,
+      "sourceUrl": "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
+      "tags": [
+        "failure",
+        "challenge"
+      ],
+      "translator": "George Long",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+      "id": 93,
+      "approvedAt": "2026-10-09T03:52:05.643Z"
+    },
+    {
+      "tempId": "t1791516984370yuei3",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "나는 폭풍이 두렵지 않다. 내 배를 모는 법을 배우고 있으니까.",
+        "en": "I'm not afraid of storms, for I'm learning how to sail my ship."
+      },
+      "author": {
+        "ko": "루이자 메이 올컷",
+        "en": "Louisa May Alcott"
+      },
+      "original": "I’m not afraid of storms, for I’m learning how to sail my ship.",
+      "lang": "en",
+      "source": "『작은 아씨들』 44장 (에이미의 대사)",
+      "year": 1869,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/514/pg514.txt",
+      "tags": [
+        "fear",
+        "challenge"
+      ],
+      "id": 94,
+      "approvedAt": "2026-10-09T03:52:05.652Z"
+    },
+    {
+      "tempId": "t1791516984370sah9w",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "서로의 삶을 덜 힘들게 해 주려는 게 아니라면, 우리는 무엇을 위해 사는가?",
+        "en": "What do we live for, if it is not to make life less difficult to each other?"
+      },
+      "author": {
+        "ko": "조지 엘리엇",
+        "en": "George Eliot"
+      },
+      "original": "What do we live for, if it is not to make life less difficult to each other?",
+      "lang": "en",
+      "source": "『미들마치』 72장 (도러시아의 대사)",
+      "year": 1872,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+      "tags": [
+        "meaning"
+      ],
+      "id": 95,
+      "approvedAt": "2026-10-09T03:52:05.662Z"
+    },
+    {
+      "tempId": "t1791516984370ukjth",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "열정 없이 이루어진 위대한 일은 하나도 없다.",
+        "en": "Nothing great was ever achieved without enthusiasm."
+      },
+      "author": {
+        "ko": "랠프 월도 에머슨",
+        "en": "Ralph Waldo Emerson"
+      },
+      "original": "Nothing great was ever achieved without enthusiasm.",
+      "lang": "en",
+      "source": "『에세이 1집』 「원(Circles)」",
+      "year": 1841,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2944/pg2944.txt",
+      "tags": [
+        "passion",
+        "energy"
+      ],
+      "id": 96,
+      "approvedAt": "2026-10-09T03:52:05.672Z"
+    },
+    {
+      "tempId": "t1791516984371vs6k9",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "남을 이기는 사람은 힘이 있고, 자신을 이기는 사람은 강하다.",
+        "en": "He who overcomes others is strong; he who overcomes himself is mighty."
+      },
+      "author": {
+        "ko": "노자",
+        "en": "Laozi"
+      },
+      "original": "勝人者有力，自勝者強",
+      "lang": "lzh",
+      "source": "『도덕경』 제33장 (왕필본)",
+      "year": -400,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
+      "tags": [
+        "challenge",
+        "oriental"
+      ],
+      "translator": "James Legge",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+      "id": 97,
+      "approvedAt": "2026-10-09T03:52:05.682Z"
+    },
+    {
+      "tempId": "t1791516984371ew8sb",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "세상에서 가장 위대한 일은 자기 자신에게 속할 줄 아는 것이다.",
+        "en": "The greatest thing in the world is for a man to know that he is his own."
+      },
+      "author": {
+        "ko": "미셸 드 몽테뉴",
+        "en": "Michel de Montaigne"
+      },
+      "original": "La plus grande chose du monde, c’est de sçavoir estre à soy.",
+      "lang": "fr",
+      "source": "『에세』 1권 39장 「고독에 대하여」",
+      "year": 1580,
+      "sourceUrl": "https://fr.wikisource.org/wiki/Essais/Livre_I/Chapitre_39",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "translator": "Charles Cotton",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/3600/pg3600.txt",
+      "id": 98,
+      "approvedAt": "2026-10-09T03:52:05.691Z"
+    },
+    {
+      "tempId": "t1791516984371re8p2",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "낙관은 성취로 이끄는 믿음이다. 희망 없이는 아무것도 이룰 수 없다.",
+        "en": "Optimism is the faith that leads to achievement; nothing can be done without hope."
+      },
+      "author": {
+        "ko": "헬렌 켈러",
+        "en": "Helen Keller"
+      },
+      "original": "Optimism is the faith that leads to achievement; nothing can be done without hope.",
+      "lang": "en",
+      "source": "에세이 『낙관론(Optimism)』",
+      "year": 1903,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/31622/pg31622.txt",
+      "tags": [
+        "hope",
+        "success"
+      ],
+      "id": 99,
+      "approvedAt": "2026-10-09T03:52:05.701Z"
+    },
+    {
+      "tempId": "t1791516984371e5ail",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "자기 일을 찾은 사람은 복되다. 다른 복은 구하지 말라.",
+        "en": "Blessed is he who has found his work; let him ask no other blessedness."
+      },
+      "author": {
+        "ko": "토머스 칼라일",
+        "en": "Thomas Carlyle"
+      },
+      "original": "Blessed is he who has found his work; let him ask no other blessedness.",
+      "lang": "en",
+      "source": "『과거와 현재(Past and Present)』 3권 11장 「노동」",
+      "year": 1843,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
+      "tags": [
+        "meaning",
+        "passion"
+      ],
+      "id": 100,
+      "approvedAt": "2026-10-09T03:52:05.711Z"
+    },
+    {
+      "tempId": "t1791516984371vxyhz",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "가시를 쥘 엄두를 내지 못하는 사람은 장미를 바라서도 안 된다.",
+        "en": "He that dares not grasp the thorn should never crave the rose."
+      },
+      "author": {
+        "ko": "앤 브론테",
+        "en": "Anne Brontë"
+      },
+      "original": "he that dares not grasp the thorn / Should never crave the rose.",
+      "lang": "en",
+      "source": "시 「좁은 길(The Narrow Way)」",
+      "year": 1848,
+      "sourceUrl": "https://en.wikisource.org/wiki/The_Complete_Poems_of_Anne_Bront%C3%AB/The_Narrow_Way",
+      "tags": [
+        "challenge",
+        "fear"
+      ],
+      "id": 101,
+      "approvedAt": "2026-10-09T03:52:05.720Z"
     }
   ],
   "lastUpdated": "2026-10-09"
