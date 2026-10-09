@@ -9,42 +9,13 @@
      그래픽 전용이다(그래픽 기준 3:1, 통과).
    - 포인트 컬러는 하나뿐이고 작은 요소에만 쓴다. */
 
-:root {
-  --bg: #f1eae0;
-  --ink: #33302b;          /* 본문      11.0:1 */
-  --ink-soft: #6f604f;     /* 저자·보조  5.1:1 */
-  --accent: #b4593a;       /* 룰·하트 등 그래픽 전용 */
-  --accent-text: #9c4529;  /* 글자·테두리 5.3:1 */
-  --hairline: #e0d6c6;
-  --toast-bg: #33302b;
-  --toast-ink: #f1eae0;
+/* 토큰은 tokens.css 에 있다 (수집기와 공유). index.html 에서 먼저 불러온다. */
 
-  --font-kr: "Hahmlet", "Nanum Myeongjo", serif;
-  --pad: 28px;
-  --radius: 3px;
-  --tracking-wide: 0.22em;   /* 로고 — 라틴 대문자 기준 */
-  --tracking-btn: 0.22em;    /* 버튼 — 한글 두 글자 기준 */
-  --tracking-meta: 0.1em;    /* 저자·개수 등 캡션 */
-  --quote-size: 21px;
-}
 
 html[lang="en"] {
   --tracking-btn: 0.1em;
   --tracking-meta: 0.05em;
   --quote-size: 22px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1917;
-    --ink: #e6e1d9;        /* 13.4:1 */
-    --ink-soft: #98908a;   /*  5.6:1 */
-    --accent: #d08a5f;
-    --accent-text: #d08a5f; /*  6.2:1 */
-    --hairline: #3a342f;
-    --toast-bg: #e6e1d9;
-    --toast-ink: #1c1917;
-  }
 }
 
 * {
@@ -73,6 +44,10 @@ body {
   display: flex;
   flex-direction: column;
   padding: env(safe-area-inset-top) var(--pad) env(safe-area-inset-bottom);
+  /* 책장 넘김의 낱장·그림자가 움직이며 화면 밖으로 잠깐 나간다. 그대로 두면
+     휴대폰에서 가로 스크롤이 생겨 화면이 출렁인다. clip 은 스크롤 상자를
+     만들지 않아서 세로 흐름에는 영향이 없다. */
+  overflow-x: clip;
 }
 
 .app-header {
@@ -131,6 +106,21 @@ body {
   margin: 0;
 }
 
+/* 로고는 수집기로 가는 숨은 입구다. 링크로 보이지 않아야 하므로 밑줄·색
+   변화·손가락 커서를 모두 없앤다. hover 에서도 아무 일도 일어나지 않는다.
+   다만 키보드 초점만은 남긴다 — 보이지 않게 하려고 아예 닿지 못하게 만들면
+   키보드로 쓰는 사람은 들어갈 방법이 사라진다. */
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: default;
+}
+
+.logo-link:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
 .view {
   flex: 1;
   display: flex;
@@ -163,11 +153,82 @@ body {
      상하 대칭이면 정적이 되고, 비대칭이라야 긴장이 생긴다. */
   padding-bottom: 96px;
   transition: opacity 0.25s ease, transform 0.25s ease;
+  /* 책장 넘김의 낱장(.sheet)이 이 안에 겹쳐 깔린다. */
+  position: relative;
+  isolation: isolate;
+  touch-action: pan-y;   /* 세로 스크롤은 브라우저에, 가로 밀기는 넘김에 */
 }
 
 .quote-block.fade {
   opacity: 0;
   transform: translateY(8px);
+}
+
+/* ── 책장 넘김 (숨은 장치) ─────────────────────────────
+   「다음」을 짧게 누르면 위의 페이드로 바뀐다. 길게 누르거나 명언을 왼쪽으로
+   밀면 4~7장이 주르륵 넘어가다 멈춘다. 필수 기능이 아니라 즐거움이라서
+   화면에 표시하지 않는다 — 로고가 수집기로 가는 숨은 입구인 것처럼.
+
+   3D 로 돌리지 않는다. 정면에서 본 책장처럼 책등(왼쪽) 쪽으로 좁아지며
+   접힌다. 원근 왜곡이 있으면 이 박스 없는 평면 디자인에서 「3D 과제」처럼
+   보인다(실제로 시험판에서 그랬다). 종이는 바탕과 같은 색이고, 경계는
+   테두리 대신 책등의 접힘 그늘과 아래 쪽에 드리우는 그림자가 만든다. */
+.sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* 화면 가장자리까지 — 종이니까. .app 의 좌우 여백만큼 밖으로 낸다. */
+  left: calc(var(--pad) * -1);
+  right: calc(var(--pad) * -1);
+  padding: 0 var(--pad) 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px;
+  background: var(--bg);
+  transform-origin: left center;
+  will-change: transform;
+  /* 낱장이 탭을 받는다. 그대로 통과시키면 「멈추려고」 누른 탭이 아래에 깔린
+     새 명언의 즐겨찾기·공유 버튼을 눌러 버린다. */
+  pointer-events: auto;
+}
+
+.sheet .crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 28%;
+  background: linear-gradient(90deg, var(--fold), transparent);
+  opacity: 0.72;   /* 폭이 넓은 만큼 연하게 — 시험판에서 고른 28% 의 짝 */
+}
+
+.sheet .shade {
+  position: absolute;
+  inset: 0;
+  background: var(--fold);
+  opacity: 0;
+}
+
+.cast {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--pad) * -1);
+  width: 44px;
+  background: linear-gradient(90deg, var(--cast), transparent);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* 반동: 쪽이 오른쪽으로 들릴 때 책등 쪽 틈에 생기는 그림자. 낱장의 왼쪽
+   가장자리에 붙어 같이 움직이고, 틈(왼쪽)으로 갈수록 옅어진다. */
+.cast.cast-lift {
+  left: calc(var(--pad) * -1 - 22px);
+  width: 22px;
+  background: linear-gradient(270deg, var(--cast), transparent);
 }
 
 .quote-body {
@@ -178,7 +239,9 @@ body {
 }
 
 .quote-text {
-  font-size: var(--quote-size);
+  /* --quote-fit 은 app.js 가 긴 명언일 때만 심는다. 없으면 CSS 가 정한
+     기본 크기를 쓴다 — 대부분의 명언은 이 경로로 간다. */
+  font-size: var(--quote-fit, var(--quote-size));
   font-weight: 400;
   line-height: 1.85;
   margin: 0;
@@ -222,6 +285,8 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.1s ease;
+  /* 수집기 링크가 a 라서 필요하다. 버튼에는 영향이 없다. */
+  text-decoration: none;
 }
 
 .icon-btn svg {
@@ -265,6 +330,11 @@ body {
   cursor: pointer;
   margin-bottom: 40px;
   transition: transform 0.1s ease, opacity 0.15s ease;
+  /* 길게 누르기가 책장 넘김이다. 휴대폰의 글자 선택·확대·메뉴를 막는다. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 .primary-btn:active {
@@ -312,6 +382,40 @@ body {
   color: var(--ink-soft);
   letter-spacing: 0.14em;
   margin: 0;
+}
+
+/* 켬/끔을 스위치 모양 대신 글자 색과 점 하나로 보인다. 꺼지면 점이 빈 원이 된다. */
+.weight-btn {
+  margin-left: auto;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 12px 0 12px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+
+.weight-btn::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+}
+
+.weight-btn.active {
+  color: var(--ink);
+}
+
+.weight-btn.active::before {
+  background: currentColor;
 }
 
 /* 박스 대신 얇은 선과 여백으로 항목을 나눈다. 인쇄물 색인의 방식이다. */

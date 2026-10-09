@@ -1,0 +1,1667 @@
+{
+  "pending": [],
+  "approved": [
+    {
+      "tempId": "t178903179656457q51",
+      "addedAt": "2026-09-10T09:16:36.564Z",
+      "text": {
+        "ko": "네가 자주 떠올리는 생각이 어떠하든 네 마음도 그러하게 된다. 영혼은 생각에 물들기 때문이다.",
+        "en": "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts."
+      },
+      "author": {
+        "ko": "마르쿠스 아우렐리우스",
+        "en": "Marcus Aurelius"
+      },
+      "original": "Οἷα ἂν πολλάκις φαντασθῇς, τοιαύτη σοι ἔσται ἡ διάνοια· βάπτεται γὰρ ὑπὸ τῶν φαντασιῶν ἡ ψυχή.",
+      "lang": "grc",
+      "source": "『명상록』 5권 16",
+      "year": 180,
+      "sourceUrl": "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
+      "tags": [
+        "meaning",
+        "perseverance"
+      ],
+      "translator": "George Long",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+      "id": 66,
+      "approvedAt": "2026-09-10T09:16:36.677Z"
+    },
+    {
+      "tempId": "t1789031796564rkm96",
+      "addedAt": "2026-09-10T09:16:36.564Z",
+      "text": {
+        "ko": "사람을 어지럽히는 것은 사물이 아니라, 사물에 대해 갖는 생각이다.",
+        "en": "Men are disturbed not by things, but by the views which they take of things."
+      },
+      "author": {
+        "ko": "에픽테토스",
+        "en": "Epictetus"
+      },
+      "original": "Ταράσσει τοὺς ἀνθρώπους οὐ τὰ πράγματα, ἀλλὰ τὰ περὶ τῶν πραγμάτων δόγματα.",
+      "lang": "grc",
+      "source": "『엥케이리디온』 5",
+      "year": 125,
+      "sourceUrl": "https://el.wikisource.org/wiki/%CE%95%CE%B3%CF%87%CE%B5%CE%B9%CF%81%CE%AF%CE%B4%CE%B9%CE%BF%CE%BD",
+      "tags": [
+        "fear",
+        "meaning"
+      ],
+      "translator": "Thomas Wentworth Higginson",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/45109/pg45109.txt",
+      "id": 67,
+      "approvedAt": "2026-09-10T09:16:36.725Z"
+    },
+    {
+      "tempId": "t1789031796564mumzi",
+      "addedAt": "2026-09-10T09:16:36.564Z",
+      "text": {
+        "ko": "자기 삶의 '왜'를 지닌 사람은 거의 모든 '어떻게'를 견뎌낸다.",
+        "en": "If a man knows the wherefore of his existence, then the manner of it can take care of itself."
+      },
+      "author": {
+        "ko": "프리드리히 니체",
+        "en": "Friedrich Nietzsche"
+      },
+      "original": "Hat man sein warum? des Lebens, so verträgt man sich fast mit jedem wie?",
+      "lang": "de",
+      "source": "『우상의 황혼』 잠언과 화살 12",
+      "year": 1889,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/7203/pg7203.txt",
+      "tags": [
+        "despair",
+        "meaning"
+      ],
+      "translator": "Anthony M. Ludovici",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/52263/pg52263.txt",
+      "id": 68,
+      "approvedAt": "2026-09-10T09:16:36.754Z"
+    },
+    {
+      "tempId": "t17890317965649a5ig",
+      "addedAt": "2026-09-10T09:16:36.564Z",
+      "text": {
+        "ko": "너 자신을 믿어라. 모든 심장은 그 쇠줄에 맞추어 울린다.",
+        "en": "Trust thyself: every heart vibrates to that iron string."
+      },
+      "author": {
+        "ko": "랠프 월도 에머슨",
+        "en": "Ralph Waldo Emerson"
+      },
+      "original": "Trust thyself: every heart vibrates to that iron string.",
+      "lang": "en",
+      "source": "『자기 신뢰(Self-Reliance)』",
+      "year": 1841,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
+      "tags": [
+        "challenge",
+        "freedom"
+      ],
+      "id": 69,
+      "approvedAt": "2026-09-10T09:16:36.785Z"
+    },
+    {
+      "tempId": "t1789031796564jrs5x",
+      "addedAt": "2026-09-10T09:16:36.564Z",
+      "text": {
+        "ko": "성공은 그가 오른 자리가 아니라, 성공하려 애쓰며 넘어선 장애물로 재야 한다.",
+        "en": "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed."
+      },
+      "author": {
+        "ko": "부커 T. 워싱턴",
+        "en": "Booker T. Washington"
+      },
+      "original": "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed.",
+      "lang": "en",
+      "source": "『노예에서 일어서서(Up from Slavery)』 3장",
+      "year": 1901,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
+      "tags": [
+        "failure",
+        "success"
+      ],
+      "id": 70,
+      "approvedAt": "2026-09-10T09:16:36.813Z"
+    },
+    {
+      "tempId": "t1789036611543oqkxr",
+      "addedAt": "2026-09-10T10:36:51.544Z",
+      "text": {
+        "ko": "사람은 누구나 한 번 죽는다. 그 죽음이 태산보다 무겁기도 하고, 기러기 털보다 가볍기도 하다.",
+        "en": "Every man has but one death. That death may be heavier than Mount Tai, or lighter than a goose feather."
+      },
+      "author": {
+        "ko": "사마천",
+        "en": "Sima Qian"
+      },
+      "original": "人固有一死，死有重於泰山，或輕於鴻毛",
+      "lang": "lzh",
+      "source": "『한서』 권62 사마천전 「보임안서」",
+      "year": -93,
+      "sourceUrl": "https://zh.wikisource.org/wiki/%E6%BC%A2%E6%9B%B8/%E5%8D%B7062",
+      "tags": [
+        "despair",
+        "meaning"
+      ],
+      "id": 71,
+      "approvedAt": "2026-09-10T10:36:51.645Z"
+    },
+    {
+      "tempId": "t1789269962994cfzci",
+      "addedAt": "2026-09-13T03:26:02.994Z",
+      "text": {
+        "ko": "나는 내 운명의 주인이요, 내 영혼의 선장이다.",
+        "en": "I am the master of my fate: I am the captain of my soul."
+      },
+      "author": {
+        "ko": "윌리엄 어니스트 헨리",
+        "en": "William Ernest Henley"
+      },
+      "original": "I am the master of my fate: I am the captain of my soul.",
+      "lang": "en",
+      "source": "『시집(Poems)』 「인빅터스」",
+      "year": 1888,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1568/pg1568.txt",
+      "tags": [
+        "despair",
+        "freedom"
+      ],
+      "id": 72,
+      "approvedAt": "2026-09-13T05:42:11.001Z"
+    },
+    {
+      "tempId": "t1789269963009vapx2",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "마음은 그 자체로 하나의 세계라, 스스로 지옥을 천국으로도 천국을 지옥으로도 만든다.",
+        "en": "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven."
+      },
+      "author": {
+        "ko": "존 밀턴",
+        "en": "John Milton"
+      },
+      "original": "The mind is its own place, and in itself Can make a Heaven of Hell, a Hell of Heaven.",
+      "lang": "en",
+      "source": "『실낙원』 1권",
+      "year": 1667,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/26/pg26.txt",
+      "tags": [
+        "meaning",
+        "despair"
+      ],
+      "id": 73,
+      "approvedAt": "2026-09-13T05:42:11.063Z"
+    },
+    {
+      "tempId": "t17892699630090uk4r",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "의심은 배신자다. 시도를 두려워하게 만들어, 얻었을 좋은 것을 잃게 한다.",
+        "en": "Our doubts are traitors, and make us lose the good we oft might win by fearing to attempt."
+      },
+      "author": {
+        "ko": "윌리엄 셰익스피어",
+        "en": "William Shakespeare"
+      },
+      "original": "Our doubts are traitors, And make us lose the good we oft might win By fearing to attempt.",
+      "lang": "en",
+      "source": "『자에는 자로』 1막 4장, 루치오의 대사",
+      "year": 1604,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/100/pg100.txt",
+      "tags": [
+        "fear",
+        "challenge"
+      ],
+      "id": 74,
+      "approvedAt": "2026-09-13T05:42:11.128Z"
+    },
+    {
+      "tempId": "t1789269963009nsq3z",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "우리는 모두 시궁창에 있다. 그러나 그중 몇은 별을 바라본다.",
+        "en": "We are all in the gutter, but some of us are looking at the stars."
+      },
+      "author": {
+        "ko": "오스카 와일드",
+        "en": "Oscar Wilde"
+      },
+      "original": "We are all in the gutter, but some of us are looking at the stars.",
+      "lang": "en",
+      "source": "『윈더미어 부인의 부채』 3막, 달링턴 경의 대사",
+      "year": 1892,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/790/pg790.txt",
+      "tags": [
+        "hope",
+        "despair"
+      ],
+      "id": 75,
+      "approvedAt": "2026-09-13T05:42:11.165Z"
+    },
+    {
+      "tempId": "t1789269963009y8dc9",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "그 이름에 값하는 유일한 자유는, 제 방식대로 제 좋음을 좇는 자유다.",
+        "en": "The only freedom which deserves the name, is that of pursuing our own good in our own way."
+      },
+      "author": {
+        "ko": "존 스튜어트 밀",
+        "en": "John Stuart Mill"
+      },
+      "original": "The only freedom which deserves the name, is that of pursuing our own good in our own way.",
+      "lang": "en",
+      "source": "『자유론』 1장",
+      "year": 1859,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/34901/pg34901.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "id": 76,
+      "approvedAt": "2026-09-13T05:42:11.204Z"
+    },
+    {
+      "tempId": "t17892699630097p3eq",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "위대한 일은 힘이 아니라 끈기로 이루어진다.",
+        "en": "Great works are performed not by strength, but perseverance."
+      },
+      "author": {
+        "ko": "새뮤얼 존슨",
+        "en": "Samuel Johnson"
+      },
+      "original": "Great works are performed not by strength, but perseverance.",
+      "lang": "en",
+      "source": "『라셀라스』 13장",
+      "year": 1759,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/652/pg652.txt",
+      "tags": [
+        "perseverance",
+        "challenge"
+      ],
+      "id": 77,
+      "approvedAt": "2026-09-13T05:42:11.239Z"
+    },
+    {
+      "tempId": "t17892699630091vt0o",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "사람이 닿으려는 곳은 잡히는 곳보다 멀어야 한다. 아니면 하늘은 무엇하러 있겠는가?",
+        "en": "Ah, but a man's reach should exceed his grasp, or what's a heaven for?"
+      },
+      "author": {
+        "ko": "로버트 브라우닝",
+        "en": "Robert Browning"
+      },
+      "original": "Ah, but a man's reach should exceed his grasp, Or what's a heaven for?",
+      "lang": "en",
+      "source": "「안드레아 델 사르토」",
+      "year": 1855,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/50954/pg50954.txt",
+      "tags": [
+        "challenge",
+        "meaning"
+      ],
+      "id": 78,
+      "approvedAt": "2026-09-13T05:42:11.274Z"
+    },
+    {
+      "tempId": "t17892699630094n7dt",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "언젠가 반드시 정상에 올라, 뭇 산이 작음을 한눈에 보리라.",
+        "en": "One day I shall climb to the very summit, and see at a glance how small the mountains are."
+      },
+      "author": {
+        "ko": "두보",
+        "en": "Du Fu"
+      },
+      "original": "會當凌絕頂，一覽衆山小",
+      "lang": "lzh",
+      "source": "『전당시』 권216 「망악(望嶽)」",
+      "year": 736,
+      "sourceUrl": "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
+      "tags": [
+        "challenge",
+        "oriental"
+      ],
+      "id": 79,
+      "approvedAt": "2026-09-13T05:42:11.310Z"
+    },
+    {
+      "tempId": "t1789269963009xiei6",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "세 사람이 길을 가면, 그중에 반드시 내 스승이 있다.",
+        "en": "When I walk along with two others, they may serve me as my teachers."
+      },
+      "author": {
+        "ko": "공자",
+        "en": "Confucius"
+      },
+      "original": "三人行，必有我師焉",
+      "lang": "lzh",
+      "source": "『논어』 술이편 21",
+      "year": -450,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+      "tags": [
+        "preparation",
+        "oriental"
+      ],
+      "translator": "James Legge",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+      "id": 80,
+      "approvedAt": "2026-09-13T05:42:11.343Z"
+    },
+    {
+      "tempId": "t1789269963009afi3d",
+      "addedAt": "2026-09-13T03:26:03.009Z",
+      "text": {
+        "ko": "제 배움의 끝을 걱정하지 마라. 일하는 시간마다 성실히 바쁘다면, 마지막 결과는 저절로 되도록 맡겨도 좋다.",
+        "en": "Let no youth have any anxiety about the upshot of his education. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself."
+      },
+      "author": {
+        "ko": "윌리엄 제임스",
+        "en": "William James"
+      },
+      "original": "Let no youth have any anxiety about the upshot of his education, whatever the line of it may be. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
+      "lang": "en",
+      "source": "『교사에게 하는 심리학 강의』 8장 「습관의 법칙」",
+      "year": 1899,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/16287/pg16287.txt",
+      "tags": [
+        "perseverance",
+        "fear"
+      ],
+      "id": 81,
+      "approvedAt": "2026-09-13T05:42:11.376Z"
+    },
+    {
+      "tempId": "t1791515637793ya1nu",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "싸움이 힘겨울수록 승리는 더 영광스럽다.",
+        "en": "The harder the conflict, the more glorious the triumph."
+      },
+      "author": {
+        "ko": "토머스 페인",
+        "en": "Thomas Paine"
+      },
+      "original": "the harder the conflict, the more glorious the triumph.",
+      "lang": "en",
+      "source": "『아메리카의 위기(The American Crisis)』 제1호",
+      "year": 1776,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/3741/pg3741.txt",
+      "tags": [
+        "despair",
+        "perseverance"
+      ],
+      "id": 82,
+      "approvedAt": "2026-10-09T03:22:50.214Z"
+    },
+    {
+      "tempId": "t1791515637793pnau8",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "우리는 성공보다 실패에서 훨씬 더 많은 지혜를 배운다.",
+        "en": "We learn wisdom from failure much more than from success."
+      },
+      "author": {
+        "ko": "새뮤얼 스마일스",
+        "en": "Samuel Smiles"
+      },
+      "original": "We learn wisdom from failure much more than from success.",
+      "lang": "en",
+      "source": "『자조론(Self-Help)』 11장",
+      "year": 1859,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/935/pg935.txt",
+      "tags": [
+        "failure"
+      ],
+      "id": 83,
+      "approvedAt": "2026-10-09T03:22:50.236Z"
+    },
+    {
+      "tempId": "t1791515637793i430b",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "희망을 품고 길을 가는 것이 도착하는 것보다 낫다. 참된 성공은 애쓰는 것이다.",
+        "en": "To travel hopefully is a better thing than to arrive, and the true success is to labour."
+      },
+      "author": {
+        "ko": "로버트 루이스 스티븐슨",
+        "en": "Robert Louis Stevenson"
+      },
+      "original": "to travel hopefully is a better thing than to arrive, and the true success is to labour.",
+      "lang": "en",
+      "source": "『젊은이들을 위하여(Virginibus Puerisque)』 「엘도라도」",
+      "year": 1881,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/386/pg386.txt",
+      "tags": [
+        "hope",
+        "perseverance"
+      ],
+      "id": 84,
+      "approvedAt": "2026-10-09T03:22:50.246Z"
+    },
+    {
+      "tempId": "t1791515637793114b3",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "애쓰고, 구하고, 찾아내되, 굴하지 않는 것.",
+        "en": "To strive, to seek, to find, and not to yield."
+      },
+      "author": {
+        "ko": "앨프리드 테니슨",
+        "en": "Alfred Tennyson"
+      },
+      "original": "To strive, to seek, to find, and not to yield.",
+      "lang": "en",
+      "source": "『시집(Poems)』 「율리시스」",
+      "year": 1842,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/8601/pg8601.txt",
+      "tags": [
+        "perseverance",
+        "challenge"
+      ],
+      "id": 85,
+      "approvedAt": "2026-10-09T03:22:50.258Z"
+    },
+    {
+      "tempId": "t1791515637793v8aho",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "그러니 일어나 움직이자, 어떤 운명이든 감당할 마음으로.",
+        "en": "Let us, then, be up and doing, with a heart for any fate."
+      },
+      "author": {
+        "ko": "헨리 워즈워스 롱펠로",
+        "en": "Henry Wadsworth Longfellow"
+      },
+      "original": "Let us, then, be up and doing, / With a heart for any fate;",
+      "lang": "en",
+      "source": "『밤의 목소리(Voices of the Night)』 「인생 찬가(A Psalm of Life)」",
+      "year": 1839,
+      "sourceUrl": "https://en.wikisource.org/wiki/Voices_of_the_Night/A_Psalm_of_Life",
+      "tags": [
+        "energy",
+        "challenge"
+      ],
+      "id": 86,
+      "approvedAt": "2026-10-09T03:22:50.276Z"
+    },
+    {
+      "tempId": "t1791515637793u8npx",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "어쩌면 언젠가는 이 일마저 기쁘게 떠올릴 날이 오리라.",
+        "en": "Perhaps one day it will be a pleasure to remember even these things."
+      },
+      "author": {
+        "ko": "베르길리우스",
+        "en": "Virgil"
+      },
+      "original": "forsan et haec ōlim meminisse iuvābit.",
+      "lang": "la",
+      "source": "『아이네이스』 1권 203행",
+      "year": -19,
+      "sourceUrl": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+      "tags": [
+        "despair",
+        "hope"
+      ],
+      "id": 87,
+      "approvedAt": "2026-10-09T03:22:50.285Z"
+    },
+    {
+      "tempId": "t1791515637793xhmja",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "참고 견뎌라. 이 고통이 언젠가 너에게 도움이 되리라.",
+        "en": "Bear up and endure; this pain will one day do you good."
+      },
+      "author": {
+        "ko": "오비디우스",
+        "en": "Ovid"
+      },
+      "original": "perfer et obdura! dolor hic tibi proderit olim",
+      "lang": "la",
+      "source": "『사랑의 노래(Amores)』 3권 11a편",
+      "year": -16,
+      "sourceUrl": "https://la.wikisource.org/wiki/Amores/3.11a",
+      "tags": [
+        "despair",
+        "perseverance"
+      ],
+      "id": 88,
+      "approvedAt": "2026-10-09T03:22:50.294Z"
+    },
+    {
+      "tempId": "t17915156377933rfoz",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "우리를 겁주는 것이 짓누르는 것보다 많다. 우리는 실제보다 상상 속에서 더 자주 괴로워한다.",
+        "en": "There are more things, Lucilius, likely to frighten us than there are to crush us; we suffer more often in imagination than in reality."
+      },
+      "author": {
+        "ko": "세네카",
+        "en": "Seneca"
+      },
+      "original": "Plura sunt, Lucili, quae nos terrent quam quae premunt, et saepius opinione quam re laboramus.",
+      "lang": "la",
+      "source": "『도덕서한(Epistulae Morales)』 13편 4절",
+      "year": 65,
+      "sourceUrl": "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_II",
+      "tags": [
+        "fear",
+        "despair"
+      ],
+      "translator": "Richard M. Gummere",
+      "translatorUrl": "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_13",
+      "id": 89,
+      "approvedAt": "2026-10-09T03:22:50.303Z"
+    },
+    {
+      "tempId": "t1791515637793omc5n",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "잘못하고도 고치지 않는 것, 이것을 잘못이라 한다.",
+        "en": "To have faults and not to reform them,—this, indeed, should be pronounced having faults."
+      },
+      "author": {
+        "ko": "공자",
+        "en": "Confucius"
+      },
+      "original": "過而不改，是謂過矣",
+      "lang": "lzh",
+      "source": "『논어』 위령공편 29",
+      "year": -450,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E8%A1%9E%E9%9D%88%E5%85%AC%E7%AC%AC%E5%8D%81%E4%BA%94",
+      "tags": [
+        "failure",
+        "oriental"
+      ],
+      "translator": "James Legge",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+      "id": 90,
+      "approvedAt": "2026-10-09T03:22:50.314Z"
+    },
+    {
+      "tempId": "t1791515637793ffpzv",
+      "addedAt": "2026-10-09T03:13:57.793Z",
+      "text": {
+        "ko": "남이 한 번에 해내면 나는 백 번을 하고, 남이 열 번에 해내면 나는 천 번을 한다.",
+        "en": "If another succeeds in one try, I will make a hundred; if another in ten, I will make a thousand."
+      },
+      "author": {
+        "ko": "자사",
+        "en": "Zisi"
+      },
+      "original": "人一能之，己百之；人十能之，己千之",
+      "lang": "lzh",
+      "source": "『중용』 20장",
+      "year": -400,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
+      "tags": [
+        "perseverance",
+        "oriental"
+      ],
+      "id": 91,
+      "approvedAt": "2026-10-09T03:22:50.325Z"
+    },
+    {
+      "tempId": "t1791516984368m7yyt",
+      "addedAt": "2026-10-09T03:36:24.368Z",
+      "text": {
+        "ko": "실패는 더 현명하게 다시 시작할 기회일 뿐이다.",
+        "en": "Failure is only the opportunity more intelligently to begin again."
+      },
+      "author": {
+        "ko": "헨리 포드",
+        "en": "Henry Ford"
+      },
+      "original": "Failure is only the opportunity more intelligently to begin again.",
+      "lang": "en",
+      "source": "『나의 삶과 일(My Life and Work)』 서문",
+      "year": 1922,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/7213/pg7213.txt",
+      "tags": [
+        "failure",
+        "challenge"
+      ],
+      "id": 92,
+      "approvedAt": "2026-10-09T03:52:05.621Z"
+    },
+    {
+      "tempId": "t1791516984370x2lwk",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "길 위의 장애물이 이 길을 가도록 돕는다.",
+        "en": "That which is an obstacle on the road helps us on this road."
+      },
+      "author": {
+        "ko": "마르쿠스 아우렐리우스",
+        "en": "Marcus Aurelius"
+      },
+      "original": "πρὸ ὁδοῦ τὸ τῆς ὁδοῦ ταύτης ἐνστατικόν",
+      "lang": "grc",
+      "source": "『명상록』 5권 20",
+      "year": 180,
+      "sourceUrl": "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
+      "tags": [
+        "failure",
+        "challenge"
+      ],
+      "translator": "George Long",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+      "id": 93,
+      "approvedAt": "2026-10-09T03:52:05.643Z"
+    },
+    {
+      "tempId": "t1791516984370yuei3",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "나는 폭풍이 두렵지 않다. 내 배를 모는 법을 배우고 있으니까.",
+        "en": "I'm not afraid of storms, for I'm learning how to sail my ship."
+      },
+      "author": {
+        "ko": "루이자 메이 올컷",
+        "en": "Louisa May Alcott"
+      },
+      "original": "I’m not afraid of storms, for I’m learning how to sail my ship.",
+      "lang": "en",
+      "source": "『작은 아씨들』 44장 (에이미의 대사)",
+      "year": 1869,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/514/pg514.txt",
+      "tags": [
+        "fear",
+        "challenge"
+      ],
+      "id": 94,
+      "approvedAt": "2026-10-09T03:52:05.652Z"
+    },
+    {
+      "tempId": "t1791516984370sah9w",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "서로의 삶을 덜 힘들게 해 주려는 게 아니라면, 우리는 무엇을 위해 사는가?",
+        "en": "What do we live for, if it is not to make life less difficult to each other?"
+      },
+      "author": {
+        "ko": "조지 엘리엇",
+        "en": "George Eliot"
+      },
+      "original": "What do we live for, if it is not to make life less difficult to each other?",
+      "lang": "en",
+      "source": "『미들마치』 72장 (도러시아의 대사)",
+      "year": 1872,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+      "tags": [
+        "meaning"
+      ],
+      "id": 95,
+      "approvedAt": "2026-10-09T03:52:05.662Z"
+    },
+    {
+      "tempId": "t1791516984370ukjth",
+      "addedAt": "2026-10-09T03:36:24.370Z",
+      "text": {
+        "ko": "열정 없이 이루어진 위대한 일은 하나도 없다.",
+        "en": "Nothing great was ever achieved without enthusiasm."
+      },
+      "author": {
+        "ko": "랠프 월도 에머슨",
+        "en": "Ralph Waldo Emerson"
+      },
+      "original": "Nothing great was ever achieved without enthusiasm.",
+      "lang": "en",
+      "source": "『에세이 1집』 「원(Circles)」",
+      "year": 1841,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2944/pg2944.txt",
+      "tags": [
+        "passion",
+        "energy"
+      ],
+      "id": 96,
+      "approvedAt": "2026-10-09T03:52:05.672Z"
+    },
+    {
+      "tempId": "t1791516984371vs6k9",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "남을 이기는 사람은 힘이 있고, 자신을 이기는 사람은 강하다.",
+        "en": "He who overcomes others is strong; he who overcomes himself is mighty."
+      },
+      "author": {
+        "ko": "노자",
+        "en": "Laozi"
+      },
+      "original": "勝人者有力，自勝者強",
+      "lang": "lzh",
+      "source": "『도덕경』 제33장 (왕필본)",
+      "year": -400,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
+      "tags": [
+        "challenge",
+        "oriental"
+      ],
+      "translator": "James Legge",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+      "id": 97,
+      "approvedAt": "2026-10-09T03:52:05.682Z"
+    },
+    {
+      "tempId": "t1791516984371ew8sb",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "세상에서 가장 위대한 일은 자기 자신에게 속할 줄 아는 것이다.",
+        "en": "The greatest thing in the world is for a man to know that he is his own."
+      },
+      "author": {
+        "ko": "미셸 드 몽테뉴",
+        "en": "Michel de Montaigne"
+      },
+      "original": "La plus grande chose du monde, c’est de sçavoir estre à soy.",
+      "lang": "fr",
+      "source": "『에세』 1권 39장 「고독에 대하여」",
+      "year": 1580,
+      "sourceUrl": "https://fr.wikisource.org/wiki/Essais/Livre_I/Chapitre_39",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "translator": "Charles Cotton",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/3600/pg3600.txt",
+      "id": 98,
+      "approvedAt": "2026-10-09T03:52:05.691Z"
+    },
+    {
+      "tempId": "t1791516984371re8p2",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "낙관은 성취로 이끄는 믿음이다. 희망 없이는 아무것도 이룰 수 없다.",
+        "en": "Optimism is the faith that leads to achievement; nothing can be done without hope."
+      },
+      "author": {
+        "ko": "헬렌 켈러",
+        "en": "Helen Keller"
+      },
+      "original": "Optimism is the faith that leads to achievement; nothing can be done without hope.",
+      "lang": "en",
+      "source": "에세이 『낙관론(Optimism)』",
+      "year": 1903,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/31622/pg31622.txt",
+      "tags": [
+        "hope",
+        "success"
+      ],
+      "id": 99,
+      "approvedAt": "2026-10-09T03:52:05.701Z"
+    },
+    {
+      "tempId": "t1791516984371e5ail",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "자기 일을 찾은 사람은 복되다. 다른 복은 구하지 말라.",
+        "en": "Blessed is he who has found his work; let him ask no other blessedness."
+      },
+      "author": {
+        "ko": "토머스 칼라일",
+        "en": "Thomas Carlyle"
+      },
+      "original": "Blessed is he who has found his work; let him ask no other blessedness.",
+      "lang": "en",
+      "source": "『과거와 현재(Past and Present)』 3권 11장 「노동」",
+      "year": 1843,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
+      "tags": [
+        "meaning",
+        "passion"
+      ],
+      "id": 100,
+      "approvedAt": "2026-10-09T03:52:05.711Z"
+    },
+    {
+      "tempId": "t1791516984371vxyhz",
+      "addedAt": "2026-10-09T03:36:24.371Z",
+      "text": {
+        "ko": "가시를 쥘 엄두를 내지 못하는 사람은 장미를 바라서도 안 된다.",
+        "en": "He that dares not grasp the thorn should never crave the rose."
+      },
+      "author": {
+        "ko": "앤 브론테",
+        "en": "Anne Brontë"
+      },
+      "original": "he that dares not grasp the thorn / Should never crave the rose.",
+      "lang": "en",
+      "source": "시 「좁은 길(The Narrow Way)」",
+      "year": 1848,
+      "sourceUrl": "https://en.wikisource.org/wiki/The_Complete_Poems_of_Anne_Bront%C3%AB/The_Narrow_Way",
+      "tags": [
+        "challenge",
+        "fear"
+      ],
+      "id": 101,
+      "approvedAt": "2026-10-09T03:52:05.720Z"
+    },
+    {
+      "tempId": "t1791524281973ayuv8",
+      "addedAt": "2026-10-09T05:38:01.973Z",
+      "text": {
+        "ko": "새벽이 언제 올지 몰라, 나는 모든 문을 열어 둔다.",
+        "en": "Not knowing when the dawn will come, I open every door."
+      },
+      "author": {
+        "ko": "에밀리 디킨슨",
+        "en": "Emily Dickinson"
+      },
+      "original": "Not knowing when the dawn will come / I open every door;",
+      "lang": "en",
+      "source": "『시집 제3집(Poems, Third Series)』 「새벽(Dawn)」",
+      "year": 1896,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
+      "tags": [
+        "hope",
+        "despair"
+      ],
+      "id": 102,
+      "approvedAt": "2026-10-09T05:54:07.410Z"
+    },
+    {
+      "tempId": "t1791524281977juf8x",
+      "addedAt": "2026-10-09T05:38:01.977Z",
+      "text": {
+        "ko": "실패는 괴롭다. 그러나 성공하려고 시도조차 하지 않은 것은 더 나쁘다.",
+        "en": "It is hard to fail, but it is worse never to have tried to succeed."
+      },
+      "author": {
+        "ko": "시어도어 루스벨트",
+        "en": "Theodore Roosevelt"
+      },
+      "original": "It is hard to fail, but it is worse never to have tried to succeed.",
+      "lang": "en",
+      "source": "「분투하는 삶(The Strenuous Life)」 해밀턴 클럽 연설, 시카고 (4월 10일)",
+      "year": 1899,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/58821/pg58821.txt",
+      "tags": [
+        "failure",
+        "challenge"
+      ],
+      "id": 103,
+      "approvedAt": "2026-10-09T05:54:07.421Z"
+    },
+    {
+      "tempId": "t17915242819777icyl",
+      "addedAt": "2026-10-09T05:38:01.977Z",
+      "text": {
+        "ko": "확고한 목적만큼 마음을 고요하게 해 주는 것은 없다.",
+        "en": "Nothing contributes so much to tranquillize the mind as a steady purpose."
+      },
+      "author": {
+        "ko": "메리 셸리",
+        "en": "Mary Shelley"
+      },
+      "original": "nothing contributes so much to tranquillize the mind as a steady purpose",
+      "lang": "en",
+      "source": "『프랑켄슈타인』 (1818년 초판) 월턴의 첫 번째 편지",
+      "year": 1818,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/41445/pg41445.txt",
+      "tags": [
+        "meaning",
+        "preparation"
+      ],
+      "id": 104,
+      "approvedAt": "2026-10-09T05:54:07.430Z"
+    },
+    {
+      "tempId": "t1791524281977skn02",
+      "addedAt": "2026-10-09T05:38:01.978Z",
+      "text": {
+        "ko": "진실로 하루를 새롭게 하려거든, 날마다 새롭게 하고, 또 날마다 새롭게 하라.",
+        "en": "If you can one day renovate yourself, do so from day to day. Yea, let there be daily renovation."
+      },
+      "author": {
+        "ko": "탕왕",
+        "en": "King Tang"
+      },
+      "original": "苟日新，日日新，又日新",
+      "lang": "lzh",
+      "source": "『대학』 전2장 (탕왕의 세숫대야에 새긴 글)",
+      "year": -1600,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E5%A4%A7%E5%AD%B8",
+      "tags": [
+        "energy",
+        "challenge",
+        "oriental"
+      ],
+      "translator": "James Legge",
+      "translatorUrl": "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_1/The_Great_Learning",
+      "id": 105,
+      "approvedAt": "2026-10-09T05:54:07.438Z"
+    },
+    {
+      "tempId": "t1791524281978p5vre",
+      "addedAt": "2026-10-09T05:38:01.978Z",
+      "text": {
+        "ko": "사람은 하지 않는 것이 있은 뒤에야, 해낼 수 있는 것이 생긴다.",
+        "en": "Only when there are things a person will not do can there be things they will do."
+      },
+      "author": {
+        "ko": "맹자",
+        "en": "Mencius"
+      },
+      "original": "人有不為也，而後可以有為",
+      "lang": "lzh",
+      "source": "『맹자』 이루하 8",
+      "year": -300,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E9%9B%A2%E5%A9%81%E4%B8%8B",
+      "tags": [
+        "preparation",
+        "oriental"
+      ],
+      "id": 106,
+      "approvedAt": "2026-10-09T05:54:07.446Z"
+    },
+    {
+      "tempId": "t1791524281978qpgzd",
+      "addedAt": "2026-10-09T05:38:01.978Z",
+      "text": {
+        "ko": "시작한 사람은 이미 절반을 이룬 것이다. 감히 지혜로워져라. 시작하라.",
+        "en": "He who has begun has half done. Dare to be wise; begin."
+      },
+      "author": {
+        "ko": "호라티우스",
+        "en": "Horace"
+      },
+      "original": "Dimidium facti, qui coepit, habet; sapere aude, incipe.",
+      "lang": "la",
+      "source": "『서간집(Epistulae)』 1권 2편 40행",
+      "year": -20,
+      "sourceUrl": "https://la.wikisource.org/wiki/Epistulae_(Horatius)/Liber_I/Epistula_II",
+      "tags": [
+        "challenge",
+        "energy"
+      ],
+      "id": 107,
+      "approvedAt": "2026-10-09T05:54:07.454Z"
+    },
+    {
+      "tempId": "t1791524281979acyvu",
+      "addedAt": "2026-10-09T05:38:01.979Z",
+      "text": {
+        "ko": "용기란 두려움에 맞서고 두려움을 다스리는 것이지, 두려움이 없는 것이 아니다.",
+        "en": "Courage is resistance to fear, mastery of fear—not absence of fear."
+      },
+      "author": {
+        "ko": "마크 트웨인",
+        "en": "Mark Twain"
+      },
+      "original": "Courage is resistance to fear, mastery of fear--not absence of fear.",
+      "lang": "en",
+      "source": "『얼간이 윌슨(Pudd'nhead Wilson)』 12장 「얼간이 윌슨의 달력」",
+      "year": 1894,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/102/pg102.txt",
+      "tags": [
+        "fear",
+        "challenge"
+      ],
+      "id": 108,
+      "approvedAt": "2026-10-09T05:54:07.463Z"
+    },
+    {
+      "tempId": "t1791524281979bvcne",
+      "addedAt": "2026-10-09T05:38:01.979Z",
+      "text": {
+        "ko": "겁쟁이는 죽기 전에 여러 번 죽지만, 용감한 사람은 죽음을 단 한 번만 맛본다.",
+        "en": "Cowards die many times before their deaths; the valiant never taste of death but once."
+      },
+      "author": {
+        "ko": "윌리엄 셰익스피어",
+        "en": "William Shakespeare"
+      },
+      "original": "Cowards die many times before their deaths; The valiant never taste of death but once.",
+      "lang": "en",
+      "source": "『줄리어스 시저』 2막 2장, 시저의 대사",
+      "year": 1599,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1522/pg1522.txt",
+      "tags": [
+        "fear",
+        "despair"
+      ],
+      "id": 109,
+      "approvedAt": "2026-10-09T05:54:07.472Z"
+    },
+    {
+      "tempId": "t1791524281979ydjox",
+      "addedAt": "2026-10-09T05:38:01.979Z",
+      "text": {
+        "ko": "삶은 원한을 품거나 잘못을 따지며 보내기에는 너무 짧은 것 같다.",
+        "en": "Life appears to me too short to be spent in nursing animosity or registering wrongs."
+      },
+      "author": {
+        "ko": "샬럿 브론테",
+        "en": "Charlotte Brontë"
+      },
+      "original": "Life appears to me too short to be spent in nursing animosity or registering wrongs.",
+      "lang": "en",
+      "source": "『제인 에어』 6장, 헬렌 번스의 대사",
+      "year": 1847,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1260/pg1260.txt",
+      "tags": [
+        "meaning",
+        "freedom"
+      ],
+      "id": 110,
+      "approvedAt": "2026-10-09T05:54:07.481Z"
+    },
+    {
+      "tempId": "t1791524281979w6u15",
+      "addedAt": "2026-10-09T05:38:01.979Z",
+      "text": {
+        "ko": "모든 것은 남의 것이고, 오직 시간만이 우리 것이다.",
+        "en": "Nothing, Lucilius, is ours, except time."
+      },
+      "author": {
+        "ko": "세네카",
+        "en": "Seneca"
+      },
+      "original": "Omnia, Lucili, aliena sunt, tempus tantum nostrum est",
+      "lang": "la",
+      "source": "『도덕서한(Epistulae Morales)』 1편 3절",
+      "year": 65,
+      "sourceUrl": "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_I",
+      "tags": [
+        "meaning",
+        "energy"
+      ],
+      "translator": "Richard M. Gummere",
+      "translatorUrl": "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_1",
+      "id": 111,
+      "approvedAt": "2026-10-09T05:54:07.489Z"
+    },
+    {
+      "tempId": "t1791525235436jbg1m",
+      "addedAt": "2026-10-09T05:53:55.436Z",
+      "text": {
+        "ko": "한 문이 닫히면 다른 문이 열린다.",
+        "en": "Where one door shuts, another opens."
+      },
+      "author": {
+        "ko": "미겔 데 세르반테스",
+        "en": "Miguel de Cervantes"
+      },
+      "original": "Donde una puerta se cierra, otra se abre",
+      "lang": "es",
+      "source": "『돈키호테』 1부 21장, 돈키호테의 대사(속담 인용)",
+      "year": 1605,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2000/pg2000.txt",
+      "tags": [
+        "hope",
+        "failure"
+      ],
+      "translator": "John Ormsby",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/996/pg996.txt",
+      "id": 112,
+      "approvedAt": "2026-10-09T05:54:07.498Z"
+    },
+    {
+      "tempId": "t17915252354407ctlq",
+      "addedAt": "2026-10-09T05:53:55.440Z",
+      "text": {
+        "ko": "근면은 행운의 어머니다.",
+        "en": "Diligence is the mother of good luck."
+      },
+      "author": {
+        "ko": "벤저민 프랭클린",
+        "en": "Benjamin Franklin"
+      },
+      "original": "Diligence is the mother of good luck",
+      "lang": "en",
+      "source": "『부자가 되는 길(The Way to Wealth)』, 에이브러햄 영감의 연설(속담 인용)",
+      "year": 1758,
+      "sourceUrl": "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
+      "tags": [
+        "preparation",
+        "success"
+      ],
+      "id": 113,
+      "approvedAt": "2026-10-09T05:54:07.505Z"
+    },
+    {
+      "tempId": "t17915256605373mz9y",
+      "addedAt": "2026-10-09T06:01:00.537Z",
+      "text": {
+        "ko": "우리는 만날 때에 떠날 것을 염려하는 것과 같이 떠날 때에 다시 만날 것을 믿습니다.",
+        "en": "Just as we fear parting when we meet, so when we part we believe that we will meet again."
+      },
+      "author": {
+        "ko": "한용운",
+        "en": "Han Yong-un"
+      },
+      "original": "우리는 만날 때에 떠날 것을 염려하는 것과 같이 떠날 때에 다시 만날 것을 믿습니다.",
+      "lang": "ko",
+      "source": "『님의 침묵』 「님의 침묵」",
+      "year": 1926,
+      "sourceUrl": "https://ko.wikisource.org/wiki/%EB%8B%98%EC%9D%98_%EC%B9%A8%EB%AC%B5/%EB%8B%98%EC%9D%98_%EC%B9%A8%EB%AC%B5",
+      "tags": [
+        "hope",
+        "despair"
+      ],
+      "id": 114,
+      "approvedAt": "2026-10-09T06:05:46.651Z"
+    },
+    {
+      "tempId": "t1791525660539bdawf",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "죽는 날까지 하늘을 우러러 한 점 부끄럼이 없기를.",
+        "en": "Until the day I die, may I look up to the heavens with not a speck of shame."
+      },
+      "author": {
+        "ko": "윤동주",
+        "en": "Yun Dong-ju"
+      },
+      "original": "죽는 날까지 하늘을 우르러 / 한점 부끄럼이 없기를,",
+      "lang": "ko",
+      "source": "『하늘과 바람과 별과 시』(1948 초판) 「서시」",
+      "year": 1941,
+      "sourceUrl": "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%84%9C%EC%8B%9C",
+      "tags": [
+        "meaning"
+      ],
+      "id": 115,
+      "approvedAt": "2026-10-09T06:05:46.672Z"
+    },
+    {
+      "tempId": "t1791525660539roi74",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "에너지는 영원한 기쁨이다.",
+        "en": "Energy is Eternal Delight."
+      },
+      "author": {
+        "ko": "윌리엄 블레이크",
+        "en": "William Blake"
+      },
+      "original": "Energy is Eternal Delight.",
+      "lang": "en",
+      "source": "『천국과 지옥의 결혼』 「악마의 목소리」",
+      "year": 1790,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/45315/pg45315.txt",
+      "tags": [
+        "energy",
+        "passion"
+      ],
+      "id": 116,
+      "approvedAt": "2026-10-09T06:05:46.683Z"
+    },
+    {
+      "tempId": "t17915256605391j1uz",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "숲속에 두 갈래 길이 있었고, 나는 사람들이 덜 다닌 길을 택했다. 그리고 그것이 모든 것을 바꾸어 놓았다.",
+        "en": "Two roads diverged in a wood, and I— I took the one less traveled by, and that has made all the difference."
+      },
+      "author": {
+        "ko": "로버트 프로스트",
+        "en": "Robert Frost"
+      },
+      "original": "Two roads diverged in a wood, and I-- / I took the one less traveled by, / And that has made all the difference.",
+      "lang": "en",
+      "source": "『산의 막간(Mountain Interval)』 「가지 않은 길」",
+      "year": 1916,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/29345/pg29345.txt",
+      "tags": [
+        "challenge",
+        "freedom"
+      ],
+      "id": 117,
+      "approvedAt": "2026-10-09T06:05:46.697Z"
+    },
+    {
+      "tempId": "t1791525660539ehm9z",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "겨울이 오면, 봄이 어찌 멀리 있으랴?",
+        "en": "If Winter comes, can Spring be far behind?"
+      },
+      "author": {
+        "ko": "퍼시 비시 셸리",
+        "en": "Percy Bysshe Shelley"
+      },
+      "original": "If Winter comes, can Spring be far behind?",
+      "lang": "en",
+      "source": "「서풍에 부치는 노래(Ode to the West Wind)」",
+      "year": 1820,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/4800/pg4800.txt",
+      "tags": [
+        "hope",
+        "despair"
+      ],
+      "id": 118,
+      "approvedAt": "2026-10-09T06:05:46.709Z"
+    },
+    {
+      "tempId": "t1791525660539nu0rj",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "사람은 애쓰는 동안에는 헤매기 마련이다.",
+        "en": "While Man’s desires and aspirations stir, He cannot choose but err."
+      },
+      "author": {
+        "ko": "요한 볼프강 폰 괴테",
+        "en": "Johann Wolfgang von Goethe"
+      },
+      "original": "Es irrt der Mensch so lang er strebt.",
+      "lang": "de",
+      "source": "『파우스트』 1부 「천상의 서곡」, 주님의 대사",
+      "year": 1808,
+      "sourceUrl": "https://de.wikisource.org/wiki/Faust_-_Der_Trag%C3%B6die_erster_Teil",
+      "tags": [
+        "failure",
+        "perseverance"
+      ],
+      "translator": "Bayard Taylor",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/14591/pg14591.txt",
+      "id": 119,
+      "approvedAt": "2026-10-09T06:05:46.719Z"
+    },
+    {
+      "tempId": "t1791525660539ouuix",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "일은 눈에 보이게 된 사랑이다.",
+        "en": "Work is love made visible."
+      },
+      "author": {
+        "ko": "칼릴 지브란",
+        "en": "Kahlil Gibran"
+      },
+      "original": "Work is love made visible.",
+      "lang": "en",
+      "source": "『예언자』 「일에 대하여」",
+      "year": 1923,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/58585/pg58585.txt",
+      "tags": [
+        "passion",
+        "meaning"
+      ],
+      "id": 120,
+      "approvedAt": "2026-10-09T06:05:46.732Z"
+    },
+    {
+      "tempId": "t1791525660539errtl",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "너 자신 말고는 그 무엇도 너에게 평화를 가져다줄 수 없다.",
+        "en": "Nothing can bring you peace but yourself."
+      },
+      "author": {
+        "ko": "랠프 월도 에머슨",
+        "en": "Ralph Waldo Emerson"
+      },
+      "original": "Nothing can bring you peace but yourself.",
+      "lang": "en",
+      "source": "『자기 신뢰(Self-Reliance)』",
+      "year": 1841,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "id": 121,
+      "approvedAt": "2026-10-09T06:05:46.743Z"
+    },
+    {
+      "tempId": "t1791525660539w0bgt",
+      "addedAt": "2026-10-09T06:01:00.539Z",
+      "text": {
+        "ko": "희망은 사람의 가슴속에서 영원히 솟아난다.",
+        "en": "Hope springs eternal in the human breast."
+      },
+      "author": {
+        "ko": "알렉산더 포프",
+        "en": "Alexander Pope"
+      },
+      "original": "Hope springs eternal in the human breast:",
+      "lang": "en",
+      "source": "『인간론(An Essay on Man)』 제1서간",
+      "year": 1733,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2428/pg2428.txt",
+      "tags": [
+        "hope"
+      ],
+      "id": 122,
+      "approvedAt": "2026-10-09T06:05:46.756Z"
+    },
+    {
+      "tempId": "t17915256605405tat9",
+      "addedAt": "2026-10-09T06:01:00.540Z",
+      "text": {
+        "ko": "내 성에 들어가기 전에 근사한 일을 하고 싶어. 내가 죽은 뒤에도 잊히지 않을, 영웅적이거나 놀라운 일을.",
+        "en": "I want to do something splendid before I go into my castle, something heroic or wonderful that won't be forgotten after I'm dead."
+      },
+      "author": {
+        "ko": "루이자 메이 올컷",
+        "en": "Louisa May Alcott"
+      },
+      "original": "I want to do something splendid before I go into my castle, something heroic or wonderful that won’t be forgotten after I’m dead.",
+      "lang": "en",
+      "source": "『작은 아씨들』 13장 「공중누각」, 조의 대사",
+      "year": 1868,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/514/pg514.txt",
+      "tags": [
+        "dream",
+        "passion"
+      ],
+      "id": 123,
+      "approvedAt": "2026-10-09T06:05:46.766Z"
+    },
+    {
+      "tempId": "t1791526589945chxx4",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "할 수 있다고 여기기에, 그들은 해낸다.",
+        "en": "They can, because they think they can."
+      },
+      "author": {
+        "ko": "베르길리우스",
+        "en": "Virgil"
+      },
+      "original": "possunt, quia posse uidentur.",
+      "lang": "la",
+      "source": "『아이네이스』 5권 231행",
+      "year": -19,
+      "sourceUrl": "https://la.wikisource.org/wiki/Aeneis/Liber_V",
+      "tags": [
+        "challenge",
+        "fear"
+      ],
+      "id": 124,
+      "approvedAt": "2026-10-09T06:41:31.506Z"
+    },
+    {
+      "tempId": "t1791526589945ugn9j",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "오늘을 붙잡아라. 내일은 될 수 있는 한 믿지 마라.",
+        "en": "Seize the day, trusting as little as possible in tomorrow."
+      },
+      "author": {
+        "ko": "호라티우스",
+        "en": "Horace"
+      },
+      "original": "carpe diem, quam minimum credula postero.",
+      "lang": "la",
+      "source": "『송가(Carmina)』 1권 11편",
+      "year": -23,
+      "sourceUrl": "https://la.wikisource.org/wiki/Carmina_(Horatius)/Liber_I/Carmen_XI",
+      "tags": [
+        "energy",
+        "challenge"
+      ],
+      "id": 125,
+      "approvedAt": "2026-10-09T06:41:31.518Z"
+    },
+    {
+      "tempId": "t1791526589945ml4cz",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "물방울이 바위를 뚫는다.",
+        "en": "Dripping water hollows out stone."
+      },
+      "author": {
+        "ko": "오비디우스",
+        "en": "Ovid"
+      },
+      "original": "Gutta cavat lapidem",
+      "lang": "la",
+      "source": "『흑해에서 보낸 편지(Epistulae ex Ponto)』 4권 10편 5행",
+      "year": 13,
+      "sourceUrl": "https://la.wikisource.org/wiki/Epistulae_ex_Ponto/Liber_IV",
+      "tags": [
+        "perseverance",
+        "preparation"
+      ],
+      "id": 126,
+      "approvedAt": "2026-10-09T06:41:31.530Z"
+    },
+    {
+      "tempId": "t1791526589945ct469",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "너희는 짐승처럼 살려고 태어난 것이 아니라, 덕과 지식을 좇으려고 태어났다.",
+        "en": "Ye were not made to live like unto brutes, But for pursuit of virtue and of knowledge."
+      },
+      "author": {
+        "ko": "단테 알리기에리",
+        "en": "Dante Alighieri"
+      },
+      "original": "fatti non foste a viver come bruti, ma per seguir virtute e canoscenza",
+      "lang": "it",
+      "source": "『신곡』 지옥편 26곡, 율리시스의 대사",
+      "year": 1320,
+      "sourceUrl": "https://it.wikisource.org/wiki/Divina_Commedia/Inferno/Canto_XXVI",
+      "tags": [
+        "meaning",
+        "challenge"
+      ],
+      "translator": "Henry Wadsworth Longfellow",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/1001/pg1001.txt",
+      "id": 127,
+      "approvedAt": "2026-10-09T06:41:31.542Z"
+    },
+    {
+      "tempId": "t1791526589945308n0",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "달리기만 해서는 소용없다. 제때 출발해야 한다.",
+        "en": "Running is no use; one must set out in time."
+      },
+      "author": {
+        "ko": "장 드 라퐁텐",
+        "en": "Jean de La Fontaine"
+      },
+      "original": "Rien ne sert de courir ; il faut partir à point",
+      "lang": "fr",
+      "source": "『우화』 6권 10 「토끼와 거북」",
+      "year": 1668,
+      "sourceUrl": "https://fr.wikisource.org/wiki/Fables_de_La_Fontaine_(%C3%A9d._1874)/Le_Li%C3%A8vre_et_la_Tortue",
+      "tags": [
+        "preparation",
+        "perseverance"
+      ],
+      "id": 128,
+      "approvedAt": "2026-10-09T06:41:31.553Z"
+    },
+    {
+      "tempId": "t17915265899455vbx6",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "어제도 가고 오늘도 갈 나의 길, 새로운 길.",
+        "en": "The road I walked yesterday and will walk today: my road, a new road."
+      },
+      "author": {
+        "ko": "윤동주",
+        "en": "Yun Dong-ju"
+      },
+      "original": "어제도 가고 오늘도 갈 / 나의 길 새로운 길",
+      "lang": "ko",
+      "source": "『하늘과 바람과 별과 시』(1948 초판) 「새로운 길」",
+      "year": 1938,
+      "sourceUrl": "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%83%88%EB%A1%9C%EC%9A%B4_%EA%B8%B8",
+      "tags": [
+        "hope",
+        "challenge"
+      ],
+      "id": 129,
+      "approvedAt": "2026-10-09T06:41:31.564Z"
+    },
+    {
+      "tempId": "t1791526589945dkv5u",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "거센 바람 타고 물결을 헤칠 때가 반드시 오리니, 곧장 구름 돛을 올려 푸른 바다를 건너리라.",
+        "en": "The day will come to ride the long wind and break the waves; then I will raise my cloud-high sail and cross the vast sea."
+      },
+      "author": {
+        "ko": "이백",
+        "en": "Li Bai"
+      },
+      "original": "長風破浪會有時，直掛雲帆濟滄海",
+      "lang": "lzh",
+      "source": "「행로난(行路難)」 제1수",
+      "year": 744,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E8%A1%8C%E8%B7%AF%E9%9B%A3_(%E9%87%91%E6%A8%BD%E6%B8%85%E9%85%92%E6%96%97%E5%8D%81%E5%8D%83)",
+      "tags": [
+        "hope",
+        "dream",
+        "oriental"
+      ],
+      "id": 130,
+      "approvedAt": "2026-10-09T06:41:31.578Z"
+    },
+    {
+      "tempId": "t1791526589945f9nb9",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "내게는 남의 뜻에 겁먹는 것을 결코 견디지 못하는 고집이 있다. 누가 나를 위협하려 들 때마다 내 용기는 솟아오른다.",
+        "en": "There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises with every attempt to intimidate me."
+      },
+      "author": {
+        "ko": "제인 오스틴",
+        "en": "Jane Austen"
+      },
+      "original": "There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises with every attempt to intimidate me.",
+      "lang": "en",
+      "source": "『오만과 편견』 31장, 엘리자베스의 대사",
+      "year": 1813,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+      "tags": [
+        "fear",
+        "freedom"
+      ],
+      "id": 131,
+      "approvedAt": "2026-10-09T06:41:31.589Z"
+    },
+    {
+      "tempId": "t1791526589945m1j01",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "옳음이 힘을 만든다는 믿음을 갖자. 그리고 그 믿음으로 끝까지, 우리가 아는 대로 우리의 의무를 과감히 행하자.",
+        "en": "Let us have faith that right makes might; and in that faith, let us, to the end, dare to do our duty as we understand it."
+      },
+      "author": {
+        "ko": "에이브러햄 링컨",
+        "en": "Abraham Lincoln"
+      },
+      "original": "Let us have faith that right makes might; and in that faith, let us, to the end, dare to do our duty as we understand it.",
+      "lang": "en",
+      "source": "쿠퍼 유니언 연설, 뉴욕 (2월 27일)",
+      "year": 1860,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2657/pg2657.txt",
+      "tags": [
+        "challenge",
+        "fear"
+      ],
+      "id": 132,
+      "approvedAt": "2026-10-09T06:41:31.600Z"
+    },
+    {
+      "tempId": "t179152658994518gwe",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "좋은 사람이란 어떠해야 하는지 더는 논하지 말고, 그런 사람이 되어라.",
+        "en": "No longer talk at all about the kind of man that a good man ought to be, but be such."
+      },
+      "author": {
+        "ko": "마르쿠스 아우렐리우스",
+        "en": "Marcus Aurelius"
+      },
+      "original": "Μηκέθ ὅλως περὶ τοῦ οἷόν τινα εἶναι τὸν ἀγαθὸν ἄνδρα διαλέγεσθαι, ἀλλὰ εἶναι τοιοῦτον.",
+      "lang": "grc",
+      "source": "『명상록』 10권 16",
+      "year": 180,
+      "sourceUrl": "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/10",
+      "tags": [
+        "energy",
+        "challenge"
+      ],
+      "translator": "George Long",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/15877/pg15877.txt",
+      "id": 133,
+      "approvedAt": "2026-10-09T06:41:31.610Z"
+    },
+    {
+      "tempId": "t1791526589945vpiv3",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "우리가 절망이라 부르는 것은 흔히, 채워지지 못한 희망의 고통스러운 갈망일 뿐이다.",
+        "en": "What we call our despair is often only the painful eagerness of unfed hope."
+      },
+      "author": {
+        "ko": "조지 엘리엇",
+        "en": "George Eliot"
+      },
+      "original": "what we call our despair is often only the painful eagerness of unfed hope.",
+      "lang": "en",
+      "source": "『미들마치』 51장",
+      "year": 1872,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+      "tags": [
+        "despair",
+        "hope"
+      ],
+      "id": 134,
+      "approvedAt": "2026-10-09T06:41:31.621Z"
+    },
+    {
+      "tempId": "t1791526589945ycrb1",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "단순하게, 단순하게.",
+        "en": "Simplify, simplify."
+      },
+      "author": {
+        "ko": "헨리 데이비드 소로",
+        "en": "Henry David Thoreau"
+      },
+      "original": "Simplify, simplify.",
+      "lang": "en",
+      "source": "『월든』 2장 「내가 살았던 곳, 그리고 살았던 이유」",
+      "year": 1854,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/205/pg205.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "id": 135,
+      "approvedAt": "2026-10-09T06:41:31.633Z"
+    },
+    {
+      "tempId": "t1791526589945tfcr1",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "무엇보다 이것만은 지켜라. 너 자신에게 진실하라.",
+        "en": "This above all: to thine own self be true."
+      },
+      "author": {
+        "ko": "윌리엄 셰익스피어",
+        "en": "William Shakespeare"
+      },
+      "original": "This above all: to thine own self be true;",
+      "lang": "en",
+      "source": "『햄릿』 1막 3장, 폴로니어스의 대사",
+      "year": 1600,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1524/pg1524.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ],
+      "id": 136,
+      "approvedAt": "2026-10-09T06:41:31.648Z"
+    }
+  ],
+  "lastUpdated": "2026-10-09"
+}

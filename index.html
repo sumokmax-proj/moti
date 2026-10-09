@@ -4,15 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>motimoti</title>
+  <!-- 파비콘 — 확정안의 룰에서 나온 마크. 원본은 favicon.svg 다.
+       svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
+       apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
+       투명한 모서리는 검게 칠해버린다. -->
+  <link rel="icon" href="favicon.svg?v=20261009l" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png?v=20261009l" sizes="32x32" type="image/png" />
+  <link rel="icon" href="favicon-16.png?v=20261009l" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261009l" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
+       파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
+       섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
+  <link rel="stylesheet" href="tokens.css?v=20261009l" />
+  <link rel="stylesheet" href="style.css?v=20261009l" />
 </head>
 <body>
   <div class="app">
     <header class="app-header">
-      <h1 class="logo">motimoti</h1>
+      <!-- 로고가 수집기로 가는 숨은 입구다. 겉모습은 로고 그대로고 링크처럼
+           보이지 않는다 (밑줄·색 변화·손가락 커서 없음). 아이콘을 다시 꺼낼
+           때는 이 a 를 풀고 header-right 에 톱니 링크를 되살리면 된다. -->
+      <h1 class="logo"><a class="logo-link" href="collector/index.html">motimoti</a></h1>
       <div class="header-right">
         <div class="lang-toggle" role="group" aria-label="Language">
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="true">EN</button>
@@ -65,6 +80,8 @@
       <div class="favorites-count-row" id="favorites-count-row">
         <div class="rule" aria-hidden="true"></div>
         <p class="favorites-count" id="favorites-count"></p>
+        <!-- 즐겨찾기를 두 배 자주 펼칠지. 켜짐은 글자 색으로만 보인다 — 언어 버튼과 같은 방식이다. -->
+        <button id="weight-btn" class="weight-btn" type="button" aria-pressed="true">Show more often</button>
       </div>
       <ul id="favorites-list" class="favorites-list"></ul>
       <p id="favorites-empty" class="favorites-empty hidden">Nothing saved yet.</p>
@@ -73,7 +90,7 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="quotes.js"></script>
-  <script src="app.js"></script>
+  <script src="quotes.js?v=20261009l"></script>
+  <script src="app.js?v=20261009l"></script>
 </body>
 </html>
