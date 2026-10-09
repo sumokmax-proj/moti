@@ -1,5 +1,284 @@
 {
-  "pending": [],
+  "pending": [
+    {
+      "tempId": "t1791526589945chxx4",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "할 수 있다고 여기기에, 그들은 해낸다.",
+        "en": "They can, because they think they can."
+      },
+      "author": {
+        "ko": "베르길리우스",
+        "en": "Virgil"
+      },
+      "original": "possunt, quia posse uidentur.",
+      "lang": "la",
+      "source": "『아이네이스』 5권 231행",
+      "year": -19,
+      "sourceUrl": "https://la.wikisource.org/wiki/Aeneis/Liber_V",
+      "tags": [
+        "challenge",
+        "fear"
+      ]
+    },
+    {
+      "tempId": "t1791526589945ugn9j",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "오늘을 붙잡아라. 내일은 될 수 있는 한 믿지 마라.",
+        "en": "Seize the day, trusting as little as possible in tomorrow."
+      },
+      "author": {
+        "ko": "호라티우스",
+        "en": "Horace"
+      },
+      "original": "carpe diem, quam minimum credula postero.",
+      "lang": "la",
+      "source": "『송가(Carmina)』 1권 11편",
+      "year": -23,
+      "sourceUrl": "https://la.wikisource.org/wiki/Carmina_(Horatius)/Liber_I/Carmen_XI",
+      "tags": [
+        "energy",
+        "challenge"
+      ]
+    },
+    {
+      "tempId": "t1791526589945ml4cz",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "물방울이 바위를 뚫는다.",
+        "en": "Dripping water hollows out stone."
+      },
+      "author": {
+        "ko": "오비디우스",
+        "en": "Ovid"
+      },
+      "original": "Gutta cavat lapidem",
+      "lang": "la",
+      "source": "『흑해에서 보낸 편지(Epistulae ex Ponto)』 4권 10편 5행",
+      "year": 13,
+      "sourceUrl": "https://la.wikisource.org/wiki/Epistulae_ex_Ponto/Liber_IV",
+      "tags": [
+        "perseverance",
+        "preparation"
+      ]
+    },
+    {
+      "tempId": "t1791526589945ct469",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "너희는 짐승처럼 살려고 태어난 것이 아니라, 덕과 지식을 좇으려고 태어났다.",
+        "en": "Ye were not made to live like unto brutes, But for pursuit of virtue and of knowledge."
+      },
+      "author": {
+        "ko": "단테 알리기에리",
+        "en": "Dante Alighieri"
+      },
+      "original": "fatti non foste a viver come bruti, ma per seguir virtute e canoscenza",
+      "lang": "it",
+      "source": "『신곡』 지옥편 26곡, 율리시스의 대사",
+      "year": 1320,
+      "sourceUrl": "https://it.wikisource.org/wiki/Divina_Commedia/Inferno/Canto_XXVI",
+      "tags": [
+        "meaning",
+        "challenge"
+      ],
+      "translator": "Henry Wadsworth Longfellow",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/1001/pg1001.txt"
+    },
+    {
+      "tempId": "t1791526589945308n0",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "달리기만 해서는 소용없다. 제때 출발해야 한다.",
+        "en": "Running is no use; one must set out in time."
+      },
+      "author": {
+        "ko": "장 드 라퐁텐",
+        "en": "Jean de La Fontaine"
+      },
+      "original": "Rien ne sert de courir ; il faut partir à point",
+      "lang": "fr",
+      "source": "『우화』 6권 10 「토끼와 거북」",
+      "year": 1668,
+      "sourceUrl": "https://fr.wikisource.org/wiki/Fables_de_La_Fontaine_(%C3%A9d._1874)/Le_Li%C3%A8vre_et_la_Tortue",
+      "tags": [
+        "preparation",
+        "perseverance"
+      ]
+    },
+    {
+      "tempId": "t17915265899455vbx6",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "어제도 가고 오늘도 갈 나의 길, 새로운 길.",
+        "en": "The road I walked yesterday and will walk today: my road, a new road."
+      },
+      "author": {
+        "ko": "윤동주",
+        "en": "Yun Dong-ju"
+      },
+      "original": "어제도 가고 오늘도 갈 / 나의 길 새로운 길",
+      "lang": "ko",
+      "source": "『하늘과 바람과 별과 시』(1948 초판) 「새로운 길」",
+      "year": 1938,
+      "sourceUrl": "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%83%88%EB%A1%9C%EC%9A%B4_%EA%B8%B8",
+      "tags": [
+        "hope",
+        "challenge"
+      ]
+    },
+    {
+      "tempId": "t1791526589945dkv5u",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "거센 바람 타고 물결을 헤칠 때가 반드시 오리니, 곧장 구름 돛을 올려 푸른 바다를 건너리라.",
+        "en": "The day will come to ride the long wind and break the waves; then I will raise my cloud-high sail and cross the vast sea."
+      },
+      "author": {
+        "ko": "이백",
+        "en": "Li Bai"
+      },
+      "original": "長風破浪會有時，直掛雲帆濟滄海",
+      "lang": "lzh",
+      "source": "「행로난(行路難)」 제1수",
+      "year": 744,
+      "sourceUrl": "https://zh.wikisource.org/zh-hant/%E8%A1%8C%E8%B7%AF%E9%9B%A3_(%E9%87%91%E6%A8%BD%E6%B8%85%E9%85%92%E6%96%97%E5%8D%81%E5%8D%83)",
+      "tags": [
+        "hope",
+        "dream",
+        "oriental"
+      ]
+    },
+    {
+      "tempId": "t1791526589945f9nb9",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "내게는 남의 뜻에 겁먹는 것을 결코 견디지 못하는 고집이 있다. 누가 나를 위협하려 들 때마다 내 용기는 솟아오른다.",
+        "en": "There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises with every attempt to intimidate me."
+      },
+      "author": {
+        "ko": "제인 오스틴",
+        "en": "Jane Austen"
+      },
+      "original": "There is a stubbornness about me that never can bear to be frightened at the will of others. My courage always rises with every attempt to intimidate me.",
+      "lang": "en",
+      "source": "『오만과 편견』 31장, 엘리자베스의 대사",
+      "year": 1813,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+      "tags": [
+        "fear",
+        "freedom"
+      ]
+    },
+    {
+      "tempId": "t1791526589945m1j01",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "옳음이 힘을 만든다는 믿음을 갖자. 그리고 그 믿음으로 끝까지, 우리가 아는 대로 우리의 의무를 과감히 행하자.",
+        "en": "Let us have faith that right makes might; and in that faith, let us, to the end, dare to do our duty as we understand it."
+      },
+      "author": {
+        "ko": "에이브러햄 링컨",
+        "en": "Abraham Lincoln"
+      },
+      "original": "Let us have faith that right makes might; and in that faith, let us, to the end, dare to do our duty as we understand it.",
+      "lang": "en",
+      "source": "쿠퍼 유니언 연설, 뉴욕 (2월 27일)",
+      "year": 1860,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2657/pg2657.txt",
+      "tags": [
+        "challenge",
+        "fear"
+      ]
+    },
+    {
+      "tempId": "t179152658994518gwe",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "좋은 사람이란 어떠해야 하는지 더는 논하지 말고, 그런 사람이 되어라.",
+        "en": "No longer talk at all about the kind of man that a good man ought to be, but be such."
+      },
+      "author": {
+        "ko": "마르쿠스 아우렐리우스",
+        "en": "Marcus Aurelius"
+      },
+      "original": "Μηκέθ ὅλως περὶ τοῦ οἷόν τινα εἶναι τὸν ἀγαθὸν ἄνδρα διαλέγεσθαι, ἀλλὰ εἶναι τοιοῦτον.",
+      "lang": "grc",
+      "source": "『명상록』 10권 16",
+      "year": 180,
+      "sourceUrl": "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/10",
+      "tags": [
+        "energy",
+        "challenge"
+      ],
+      "translator": "George Long",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/15877/pg15877.txt"
+    },
+    {
+      "tempId": "t1791526589945vpiv3",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "우리가 절망이라 부르는 것은 흔히, 채워지지 못한 희망의 고통스러운 갈망일 뿐이다.",
+        "en": "What we call our despair is often only the painful eagerness of unfed hope."
+      },
+      "author": {
+        "ko": "조지 엘리엇",
+        "en": "George Eliot"
+      },
+      "original": "what we call our despair is often only the painful eagerness of unfed hope.",
+      "lang": "en",
+      "source": "『미들마치』 51장",
+      "year": 1872,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+      "tags": [
+        "despair",
+        "hope"
+      ]
+    },
+    {
+      "tempId": "t1791526589945ycrb1",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "단순하게, 단순하게.",
+        "en": "Simplify, simplify."
+      },
+      "author": {
+        "ko": "헨리 데이비드 소로",
+        "en": "Henry David Thoreau"
+      },
+      "original": "Simplify, simplify.",
+      "lang": "en",
+      "source": "『월든』 2장 「내가 살았던 곳, 그리고 살았던 이유」",
+      "year": 1854,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/205/pg205.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ]
+    },
+    {
+      "tempId": "t1791526589945tfcr1",
+      "addedAt": "2026-10-09T06:16:29.945Z",
+      "text": {
+        "ko": "무엇보다 이것만은 지켜라. 너 자신에게 진실하라.",
+        "en": "This above all: to thine own self be true."
+      },
+      "author": {
+        "ko": "윌리엄 셰익스피어",
+        "en": "William Shakespeare"
+      },
+      "original": "This above all: to thine own self be true;",
+      "lang": "en",
+      "source": "『햄릿』 1막 3장, 폴로니어스의 대사",
+      "year": 1600,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/1524/pg1524.txt",
+      "tags": [
+        "freedom",
+        "meaning"
+      ]
+    }
+  ],
   "approved": [
     {
       "tempId": "t178903179656457q51",
