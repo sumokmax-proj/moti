@@ -52,6 +52,11 @@ const TAG_KEYS = new Set([
 const MAX_KO = 100;
 const MAX_EN = 200;
 
+/* 저자당 상한 — QUOTE_STANDARDS.md 「저자당 상한」. author.ko 가 같으면 같은 저자다.
+   quotes.js 등재분과 검증 대기분을 합쳐 센다. approved 기록은 이미 quotes.js 에
+   들어가 있으므로 따로 세지 않는다. */
+const MAX_PER_AUTHOR = 3;
+
 /* ── 데이터 파일 ───────────────────────────────────────*/
 
 function readData() {
@@ -165,7 +170,19 @@ function flatTranslator(quote) {
   return { translator: t, translatorUrl: quote.translatorUrl };
 }
 
-function validate(quote, existing) {
+/* quotes.js 를 실행하지 않고 author.ko 만 읽는다. 등재 코드(toEntry)가 늘
+   `author: {` 다음 줄에 JSON 문자열로 ko 를 쓰므로 그 모양에 기댄다. */
+function registeredAuthorCounts() {
+  const source = fs.readFileSync(QUOTES_FILE, "utf8");
+  const counts = new Map();
+  for (const m of source.matchAll(/author: \{\s*ko: ("(?:[^"\\]|\\.)*")/g)) {
+    const name = JSON.parse(m[1]).trim();
+    counts.set(name, (counts.get(name) || 0) + 1);
+  }
+  return counts;
+}
+
+function validate(quote, existing, authorCounts) {
   const errors = [];
   const str = (v) => (typeof v === "string" ? v.trim() : "");
 
@@ -197,6 +214,11 @@ function validate(quote, existing) {
 
   if (textKo && existing.some((q) => str(q.text && q.text.ko) === textKo)) {
     errors.push("이미 같은 text.ko 가 있습니다");
+  }
+
+  const authorKo = str(quote.author && quote.author.ko);
+  if (authorKo && authorCounts && (authorCounts.get(authorKo) || 0) >= MAX_PER_AUTHOR) {
+    errors.push(`${authorKo} 의 명언이 이미 ${MAX_PER_AUTHOR}개입니다 (저자당 상한)`);
   }
 
   return errors;
@@ -330,10 +352,21 @@ async function handleApi(req, res, pathname) {
     const accepted = [];
     const problems = [];
 
+    const authorCounts = registeredAuthorCounts();
+    const countAuthor = (q) => {
+      const name = q.author.ko;
+      authorCounts.set(name, (authorCounts.get(name) || 0) + 1);
+    };
+    data.pending.forEach(countAuthor);
+
     incoming.forEach((quote, i) => {
-      const errors = validate(quote, existing.concat(accepted));
+      const errors = validate(quote, existing.concat(accepted), authorCounts);
       if (errors.length > 0) problems.push(`#${i + 1} — ${errors.join(" / ")}`);
-      else accepted.push(normalize(quote));
+      else {
+        const normalized = normalize(quote);
+        accepted.push(normalized);
+        countAuthor(normalized);
+      }
     });
 
     if (accepted.length === 0) {
