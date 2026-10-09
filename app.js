@@ -93,6 +93,7 @@ function setLang(next) {
   if (!LANGS.includes(next) || next === lang) return;
   lang = next;
   localStorage.setItem(LANG_KEY, lang);
+  stopRiffle(); // 넘어가던 낱장은 옛 언어로 그려져 있다
   applyLang();
   // 현재 명언이 새 언어로 준비돼 있지 않으면 다른 명언으로 바꾼다.
   if (currentQuote && !hasLang(currentQuote, lang)) {
@@ -288,6 +289,203 @@ function showNextQuote() {
   }, 200);
 }
 
+/* ── 책장 넘김 (숨은 장치) ─────────────────────────────
+   「다음」을 길게 누르거나 명언을 왼쪽으로 밀면, 짧은 탭의 페이드 대신 책을
+   엄지로 주르륵 넘기듯 4~7장이 빠르게 넘어가다 점점 느려지며 멈춘다.
+   가볍게 넘기면 한 장, 꾹 누르면 주르륵 — 실제 책과 같은 손짓이다.
+
+   - 상태를 기억하지 않는다. 짧은 탭은 언제나 페이드다.
+   - 고를 명언은 누르는 순간 정해진다(turnPage). 넘김은 보여주는 방식일 뿐이라
+     최근 20% 피하기 규칙이 그대로 적용된다.
+   - 넘기는 중에 화면이나 「다음」을 탭하면 그 자리에서 멈춘다 — 넘어가는
+     책장을 손가락으로 짚는 것처럼.
+   - 동작 줄이기 설정이면 넘기지 않고 페이드로 바꾼다.
+   값(0.8초, 접힘 28%)은 시험판에서 직접 눌러 보고 고른 것이다. */
+const RIFFLE_MS = 800;
+const LONG_PRESS_MS = 400;
+const SWIPE_MIN_PX = 48;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+let riffleAnims = [];
+
+function makeSheet(kind) {
+  const sheet = document.createElement("div");
+  sheet.className = "sheet";
+  sheet.setAttribute("aria-hidden", "true");
+  if (kind === "current") {
+    // 지금 보던 쪽 그대로 — 이 쪽부터 넘어간다. 복제본의 id 는 지워야
+    // 진짜 요소와 겹치지 않는다. 글자 크기 맞춤(--quote-fit)은 그대로 따라온다.
+    for (const child of quoteBlockEl.children) {
+      if (child.classList.contains("sheet") || child.classList.contains("cast")) continue;
+      sheet.appendChild(child.cloneNode(true));
+    }
+    sheet.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  } else {
+    // 지나가는 쪽은 빈 종이에 룰 하나. 글자 자리 막대를 그리면 「로딩 중」으로 읽힌다.
+    const body = document.createElement("div");
+    body.className = "quote-body";
+    const rule = document.createElement("div");
+    rule.className = "rule";
+    body.appendChild(rule);
+    sheet.appendChild(body);
+  }
+  const crease = document.createElement("div");
+  crease.className = "crease";
+  const shade = document.createElement("div");
+  shade.className = "shade";
+  sheet.append(crease, shade);
+  const cast = document.createElement("div");
+  cast.className = "cast";
+  cast.setAttribute("aria-hidden", "true");
+  return { sheet, cast };
+}
+
+function turnSheet({ sheet, cast }, delay, duration, easing, width) {
+  // fill: both — 차례를 기다리는 동안에도 시작 모습(펼친 종이, 그림자 없음)을 지킨다.
+  const opts = { delay, duration, easing, fill: "both" };
+  // 끝까지 얇아지며 사라진다. 마지막 4% 에서 투명해지게 해 둔다 — 아니면 먼저
+  // 넘어간 낱장이 머리카락 같은 줄로 책등에 남아, 마지막 장이 끝날 때까지 보인다.
+  const fold = sheet.animate(
+    [
+      { transform: "scaleX(1)", opacity: 1 },
+      { transform: "scaleX(0.04)", opacity: 1, offset: 0.96 },
+      { transform: "scaleX(0.002)", opacity: 0 },
+    ],
+    opts
+  );
+  const shade = sheet.querySelector(".shade").animate([{ opacity: 0 }, { opacity: 0.9 }], opts);
+  // 그림자는 넘어가는 가장자리를 따라 오른쪽에서 책등으로 오고,
+  // 종이가 가장 높이 들린 중간에 가장 짙다.
+  const shadow = cast.animate(
+    [
+      { transform: `translateX(${width}px)`, opacity: 0 },
+      { transform: `translateX(${width * 0.5}px)`, opacity: 1, offset: 0.5 },
+      { transform: "translateX(0px)", opacity: 0 },
+    ],
+    opts
+  );
+  riffleAnims.push(fold, shade, shadow);
+  return fold;
+}
+
+function isRiffling() {
+  return riffleAnims.length > 0;
+}
+
+function stopRiffle() {
+  // 넘김 중이 아니면 손대지 않는다. 특히 turning 은 페이드도 쓰는 잠금이라,
+  // 여기서 함부로 풀면 진행 중인 페이드가 두 번 겹칠 수 있다.
+  if (!isRiffling()) return;
+  riffleAnims.forEach((a) => a.cancel());
+  riffleAnims = [];
+  quoteBlockEl.querySelectorAll(".sheet, .cast").forEach((el) => el.remove());
+  turning = false;
+}
+
+function riffleToNextQuote() {
+  if (turning) return;
+  if (reduceMotion.matches) {
+    showNextQuote();
+    return;
+  }
+  turning = true;
+  const nextQuote = turnPage(currentQuote ? currentQuote.id : null);
+  // 마우스로 밀면 명언 글자가 선택된 채 넘어간다. 넘기기 전에 풀어 둔다.
+  window.getSelection()?.removeAllRanges();
+
+  const count = 4 + Math.floor(Math.random() * 4); // 4~7장 — 매번 달라야 「어디서 멈출까」가 생긴다
+  const pairs = [makeSheet("current")];
+  for (let k = 1; k < count; k++) pairs.push(makeSheet("blank"));
+  // 위에 있는 쪽이 먼저 넘어간다. 각 그림자는 자기 종이 바로 아래, 다음 종이 위.
+  pairs.forEach((p, k) => {
+    p.sheet.style.zIndex = String(10 + (count - k) * 2);
+    p.cast.style.zIndex = String(9 + (count - k) * 2);
+    quoteBlockEl.append(p.cast, p.sheet);
+  });
+
+  // 새 쪽은 낱장 아래에 미리 그려 둔다. 글자 크기 맞춤도 종이가 덮고 있는
+  // 동안 끝나므로, 바뀌는 순간 글자가 출렁이지 않는다.
+  currentQuote = nextQuote;
+  renderQuote(currentQuote);
+
+  // 넘김 간격이 뒤로 갈수록 길어진다: 빠름 → 느림 → 멈춤.
+  const width = pairs[0].sheet.offsetWidth;
+  const gaps = pairs.map((_, k) => Math.pow(k + 1, 1.5));
+  const lens = gaps.map((g) => g * 1.7);
+  const starts = gaps.map((_, k) => gaps.slice(0, k).reduce((a, b) => a + b, 0));
+  const scale = RIFFLE_MS / (starts[count - 1] + lens[count - 1]);
+  let last;
+  pairs.forEach((p, k) => {
+    const easing = k === count - 1 ? "cubic-bezier(.3,.1,.25,1)" : "cubic-bezier(.4,.2,.6,1)";
+    last = turnSheet(p, starts[k] * scale, lens[k] * scale, easing, width);
+  });
+  last.finished.then(stopRiffle).catch(() => {}); // cancel 되면 reject — 이미 치웠다
+}
+
+/* 「다음」: 짧게 누르면 페이드, 0.4초 이상 누르면 손을 떼기 전에 주르륵.
+   키보드로는 Shift 를 누른 채 「다음」. */
+let pressTimer = null;
+let longPressFired = false;
+
+function clearPressTimer() {
+  clearTimeout(pressTimer);
+  pressTimer = null;
+}
+
+nextBtn.addEventListener("pointerdown", (e) => {
+  if (e.button !== 0) return;
+  longPressFired = false;
+  clearPressTimer();
+  if (turning) return;
+  pressTimer = setTimeout(() => {
+    pressTimer = null;
+    longPressFired = true;
+    riffleToNextQuote();
+  }, LONG_PRESS_MS);
+});
+["pointerup", "pointercancel", "pointerleave"].forEach((type) =>
+  nextBtn.addEventListener(type, clearPressTimer)
+);
+// 길게 누를 때 뜨는 휴대폰 메뉴를 막는다.
+nextBtn.addEventListener("contextmenu", (e) => e.preventDefault());
+
+nextBtn.addEventListener("click", (e) => {
+  if (longPressFired) {
+    // 길게 눌러 이미 넘기기 시작했다. 손을 뗄 때 오는 click 은 삼킨다 —
+    // 안 그러면 방금 시작한 넘김을 바로 멈춰 버린다.
+    longPressFired = false;
+    return;
+  }
+  if (isRiffling()) {
+    stopRiffle();
+    return;
+  }
+  if (e.shiftKey) riffleToNextQuote();
+  else showNextQuote();
+});
+
+/* 명언 영역: 넘기는 중 탭하면 멈추고, 왼쪽으로 밀면 주르륵 넘긴다.
+   즐겨찾기·공유 버튼에서 시작한 손짓은 넘김으로 보지 않는다 — 버튼 누르다
+   손이 미끄러진 것을 넘김으로 착각하면 안 된다. */
+let swipeStart = null;
+quoteBlockEl.addEventListener("pointerdown", (e) => {
+  swipeStart = e.target.closest("button") && !isRiffling() ? null : { x: e.clientX, y: e.clientY };
+});
+quoteBlockEl.addEventListener("pointerup", (e) => {
+  if (!swipeStart) return;
+  const dx = e.clientX - swipeStart.x;
+  const dy = e.clientY - swipeStart.y;
+  swipeStart = null;
+  if (isRiffling() && Math.abs(dx) < 12 && Math.abs(dy) < 12) {
+    stopRiffle();
+    return;
+  }
+  if (dx < -SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 1.4) riffleToNextQuote();
+});
+quoteBlockEl.addEventListener("pointercancel", () => {
+  swipeStart = null;
+});
+
 function showToast(message) {
   toastEl.textContent = message;
   toastEl.classList.remove("hidden");
@@ -352,6 +550,7 @@ function renderFavoritesList() {
 }
 
 function openFavoritesView() {
+  stopRiffle();
   renderFavoritesList();
   appHeaderEl.classList.add("hidden");
   mainView.classList.add("hidden");
@@ -364,7 +563,6 @@ function closeFavoritesView() {
   mainView.classList.remove("hidden");
 }
 
-nextBtn.addEventListener("click", showNextQuote);
 favoriteBtn.addEventListener("click", () => toggleFavorite(currentQuote));
 shareBtn.addEventListener("click", shareCurrentQuote);
 favoritesNavBtn.addEventListener("click", openFavoritesView);

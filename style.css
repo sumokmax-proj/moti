@@ -149,11 +149,74 @@ body {
      상하 대칭이면 정적이 되고, 비대칭이라야 긴장이 생긴다. */
   padding-bottom: 96px;
   transition: opacity 0.25s ease, transform 0.25s ease;
+  /* 책장 넘김의 낱장(.sheet)이 이 안에 겹쳐 깔린다. */
+  position: relative;
+  isolation: isolate;
+  touch-action: pan-y;   /* 세로 스크롤은 브라우저에, 가로 밀기는 넘김에 */
 }
 
 .quote-block.fade {
   opacity: 0;
   transform: translateY(8px);
+}
+
+/* ── 책장 넘김 (숨은 장치) ─────────────────────────────
+   「다음」을 짧게 누르면 위의 페이드로 바뀐다. 길게 누르거나 명언을 왼쪽으로
+   밀면 4~7장이 주르륵 넘어가다 멈춘다. 필수 기능이 아니라 즐거움이라서
+   화면에 표시하지 않는다 — 로고가 수집기로 가는 숨은 입구인 것처럼.
+
+   3D 로 돌리지 않는다. 정면에서 본 책장처럼 책등(왼쪽) 쪽으로 좁아지며
+   접힌다. 원근 왜곡이 있으면 이 박스 없는 평면 디자인에서 「3D 과제」처럼
+   보인다(실제로 시험판에서 그랬다). 종이는 바탕과 같은 색이고, 경계는
+   테두리 대신 책등의 접힘 그늘과 아래 쪽에 드리우는 그림자가 만든다. */
+.sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* 화면 가장자리까지 — 종이니까. .app 의 좌우 여백만큼 밖으로 낸다. */
+  left: calc(var(--pad) * -1);
+  right: calc(var(--pad) * -1);
+  padding: 0 var(--pad) 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px;
+  background: var(--bg);
+  transform-origin: left center;
+  will-change: transform;
+  /* 낱장이 탭을 받는다. 그대로 통과시키면 「멈추려고」 누른 탭이 아래에 깔린
+     새 명언의 즐겨찾기·공유 버튼을 눌러 버린다. */
+  pointer-events: auto;
+}
+
+.sheet .crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 28%;
+  background: linear-gradient(90deg, var(--fold), transparent);
+  opacity: 0.72;   /* 폭이 넓은 만큼 연하게 — 시험판에서 고른 28% 의 짝 */
+}
+
+.sheet .shade {
+  position: absolute;
+  inset: 0;
+  background: var(--fold);
+  opacity: 0;
+}
+
+.cast {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--pad) * -1);
+  width: 44px;
+  background: linear-gradient(90deg, var(--cast), transparent);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .quote-body {
@@ -255,6 +318,11 @@ body {
   cursor: pointer;
   margin-bottom: 40px;
   transition: transform 0.1s ease, opacity 0.15s ease;
+  /* 길게 누르기가 책장 넘김이다. 휴대폰의 글자 선택·확대·메뉴를 막는다. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 .primary-btn:active {

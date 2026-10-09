@@ -11,6 +11,10 @@
   --hairline: #e0d6c6;
   --toast-bg: #33302b;
   --toast-ink: #f1eae0;
+  /* 책장 넘김(길게 누르기·밀기)의 그늘. 회색이 아니라 --ink-soft 에서 뽑은
+     따뜻한 갈색이다 — 크림색 종이 위에 회색을 얹으면 지저분한 면이 된다. */
+  --fold: rgba(111, 96, 79, 0.20);   /* 책등 쪽 접힘 */
+  --cast: rgba(111, 96, 79, 0.26);   /* 아래 쪽에 드리우는 그림자 */
 
   --font-kr: "Hahmlet", "Nanum Myeongjo", serif;
   --pad: 28px;
@@ -41,6 +45,8 @@
     --hairline: #3a342f;
     --toast-bg: #e6e1d9;
     --toast-ink: #1c1917;
+    --fold: rgba(0, 0, 0, 0.40);
+    --cast: rgba(0, 0, 0, 0.55);
   }
 }
 
