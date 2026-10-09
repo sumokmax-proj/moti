@@ -12,8 +12,8 @@
  *   EXACT         공백만 정리하면 문자 그대로 있다
  *   LETTERS-ONLY  문장부호·숫자·위키문헌 이문 주석(「一作…」)을 빼면 있다.
  *                 예: Legge 평문의 "--", 행 번호가 끼어든 라틴 시, 「浪 一作波」
- *   KNOWN         머리 주석 [B]·[C] 에 「2차/대체 페이지로 대조」 라고 적어 둔 항목.
- *                 원문 페이지가 이 환경에서 열리지 않았던 것이라 실패로 치지 않는다
+ *   CITED         머리 주석 [B] 「인용 확인」 항목(QUOTE_STANDARDS.md v1.6 ②).
+ *                 원문 대신 그것을 인용한 2차 자료로 확인한 것이라 실패로 치지 않는다
  *   MISSING       없다 — 확인이 필요하다. 종료 코드 1
  *   FETCH-FAILED  주소를 받지 못했다(네트워크). 종료 코드 1
  *
@@ -38,17 +38,13 @@ const fromId = argValue("--from") ? Number(argValue("--from")) : null;
 const { quotes, source } = loadQuotes();
 const targets = quotes.filter((q) => (!onlyIds || onlyIds.has(q.id)) && (fromId === null || q.id >= fromId));
 
-/* 머리 주석의 [B]·[C] 에서 「대체 페이지로 대조」 항목 id 를 읽는다. 여기 따로 적어
-   두면 주석과 어긋나기 쉽다. */
-function knownSecondary() {
+/* 머리 주석의 [B] 에서 「인용 확인」 항목 id 를 읽는다. 여기 따로 적어 두면
+   주석과 어긋나기 쉽다. 항목은 「id(출처 위치)」 모양이다. */
+function citedIds() {
   const b = source.slice(source.indexOf("// [B]"), source.indexOf("// [C]"));
-  const c = source.slice(source.indexOf("// [C]"), source.indexOf("// [D]"));
-  const fromB = [...b.matchAll(/(\d+)\(/g)].map((m) => Number(m[1]));
-  const cList = (c.match(/항목: ([\d,\s]+)/) || [])[1] || "";
-  const fromC = (cList.match(/\d+/g) || []).map(Number);
-  return new Set([...fromB, ...fromC]);
+  return new Set([...b.matchAll(/(\d+)\(/g)].map((m) => Number(m[1])));
 }
-const KNOWN = knownSecondary();
+const CITED = citedIds();
 
 /* ── 받기 ─────────────────────────────────────────── */
 const cache = new Map();
@@ -146,18 +142,18 @@ async function pool(items, size, fn) {
   const report = createReport(`출처 원문 대조 — ${label}`);
   const tally = {};
   for (const { q, original, translation } of results) {
-    const known = KNOWN.has(q.id) && original !== "EXACT" && original !== "LETTERS-ONLY";
-    const shownOriginal = known ? "KNOWN" : original;
+    const cited = CITED.has(q.id) && original !== "EXACT" && original !== "LETTERS-ONLY";
+    const shownOriginal = cited ? "CITED" : original;
     tally[shownOriginal] = (tally[shownOriginal] || 0) + 1;
     const name = `${q.id} ${q.author.ko}`;
-    // KNOWN 은 실제 판정(MISSING 인지 받지 못한 것인지)을 괄호로 함께 보여 준다.
-    const originalLabel = known ? `KNOWN (${original})` : original;
+    // CITED 는 실제 판정(MISSING 인지 받지 못한 것인지)을 괄호로 함께 보여 준다.
+    const originalLabel = cited ? `CITED (${original})` : original;
     const detail = `원문 ${originalLabel}${translation ? ` · 영역 ${translation}` : ""}`;
     const bad = (s) => s === "MISSING" || s === "FETCH-FAILED";
     if (bad(shownOriginal) || (translation && bad(translation))) report.fail(name, `${detail} — ${q.sourceUrl}`);
     else if (shownOriginal !== "EXACT" || (translation && translation !== "EXACT")) report.note(name, detail);
   }
-  const okCount = (tally.EXACT || 0) + (tally["LETTERS-ONLY"] || 0) + (tally.KNOWN || 0);
+  const okCount = (tally.EXACT || 0) + (tally["LETTERS-ONLY"] || 0) + (tally.CITED || 0);
   report.check(`원문 확인 ${okCount}/${targets.length}편`, okCount === targets.length,
     Object.entries(tally).map(([k, v]) => `${k} ${v}`).join(" · "));
   process.exitCode = report.print() > 0 ? 1 : 0;
