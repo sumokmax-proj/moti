@@ -214,6 +214,50 @@
       ],
       "translator": "Richard M. Gummere",
       "translatorUrl": "https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_1"
+    },
+    {
+      "tempId": "t1791525235436jbg1m",
+      "addedAt": "2026-10-09T05:53:55.436Z",
+      "text": {
+        "ko": "한 문이 닫히면 다른 문이 열린다.",
+        "en": "Where one door shuts, another opens."
+      },
+      "author": {
+        "ko": "미겔 데 세르반테스",
+        "en": "Miguel de Cervantes"
+      },
+      "original": "Donde una puerta se cierra, otra se abre",
+      "lang": "es",
+      "source": "『돈키호테』 1부 21장, 돈키호테의 대사(속담 인용)",
+      "year": 1605,
+      "sourceUrl": "https://www.gutenberg.org/cache/epub/2000/pg2000.txt",
+      "tags": [
+        "hope",
+        "failure"
+      ],
+      "translator": "John Ormsby",
+      "translatorUrl": "https://www.gutenberg.org/cache/epub/996/pg996.txt"
+    },
+    {
+      "tempId": "t17915252354407ctlq",
+      "addedAt": "2026-10-09T05:53:55.440Z",
+      "text": {
+        "ko": "근면은 행운의 어머니다.",
+        "en": "Diligence is the mother of good luck."
+      },
+      "author": {
+        "ko": "벤저민 프랭클린",
+        "en": "Benjamin Franklin"
+      },
+      "original": "Diligence is the mother of good luck",
+      "lang": "en",
+      "source": "『부자가 되는 길(The Way to Wealth)』, 에이브러햄 영감의 연설(속담 인용)",
+      "year": 1758,
+      "sourceUrl": "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
+      "tags": [
+        "preparation",
+        "success"
+      ]
     }
   ],
   "approved": [
