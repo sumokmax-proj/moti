@@ -27,6 +27,13 @@ html, body {
   margin: 0;
 }
 
+/* 가로 스크롤은 어떤 경우에도 없다. html 에 걸면 화면(뷰포트)으로 올라가므로
+   body 가 따로 스크롤 상자가 되지 않는다. .app 의 overflow-x: clip 이 1차로
+   막고, 이것이 2차다 — iPhone 에서 1차가 새어 화면이 옆으로 밀린 채 남았다. */
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-kr);
   background: var(--bg);

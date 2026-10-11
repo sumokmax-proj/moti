@@ -306,18 +306,40 @@ function turnPage(excludeId) {
  * 못할 만큼 줄이는 것보다는 스크롤이 낫다. */
 const MIN_QUOTE_SIZE = 15;
 
+/* 잴 수 없을 때는 재지 않는다 — 둘 다 실제로 겪은 일이다.
+ *
+ * 1) 즐겨찾기 화면이 떠 있으면 명언은 숨어 있고, 문서 높이는 즐겨찾기 목록이
+ *    정한다. 이때 재면(주소창이 접히며 오는 resize, 즐겨찾기 화면에서 언어
+ *    전환) 「넘친다」 가 계속 참이라 글자가 최소 15px 까지 내려간 채 남았다.
+ *    그래서 숨어 있을 때는 미뤄 두고, 메인으로 돌아올 때 잰다.
+ * 2) 넘침이 글자 때문이 아닐 수도 있다(iOS 주소창이 움직이는 도중 innerHeight
+ *    와 100dvh 가 한 프레임 어긋나는 등). 한 눈금 줄였는데 넘침이 그대로면
+ *    글자가 원인이 아니다 — 기본 크기로 두고 멈춘다. */
+let fitDeferred = false;
+
 function fitQuoteText() {
+  if (mainView.classList.contains("hidden")) {
+    fitDeferred = true;
+    return;
+  }
+  fitDeferred = false;
   // 먼저 CSS 가 정한 기본 크기로 되돌린다. 안 그러면 앞 명언에서 줄인 값이 남는다.
   quoteTextEl.style.removeProperty("--quote-fit");
 
-  const overflows = () =>
-    document.documentElement.scrollHeight > window.innerHeight + 1;
-  if (!overflows()) return;
+  const overflow = () => document.documentElement.scrollHeight - window.innerHeight;
+  let before = overflow();
+  if (before <= 1) return;
 
   const base = Math.round(parseFloat(getComputedStyle(quoteTextEl).fontSize));
   for (let size = base - 1; size >= MIN_QUOTE_SIZE; size -= 1) {
     quoteTextEl.style.setProperty("--quote-fit", size + "px");
-    if (!overflows()) return;
+    const now = overflow();
+    if (now <= 1) return;
+    if (now >= before) {
+      quoteTextEl.style.removeProperty("--quote-fit");
+      return;
+    }
+    before = now;
   }
 }
 
@@ -816,6 +838,7 @@ function closeFavoritesView() {
   appHeaderEl.classList.remove("hidden");
   favoritesView.classList.add("hidden");
   mainView.classList.remove("hidden");
+  if (fitDeferred) fitQuoteText();
 }
 
 favoriteBtn.addEventListener("click", () => toggleFavorite(currentQuote));
@@ -824,6 +847,17 @@ favoritesNavBtn.addEventListener("click", openFavoritesView);
 backBtn.addEventListener("click", closeFavoritesView);
 weightBtn.addEventListener("click", () => setWeightFavorites(!weightFavorites));
 langBtns.forEach((btn) => btn.addEventListener("click", () => setLang(btn.dataset.lang)));
+
+/* 화면이 옆으로 밀려 있으면 되돌린다. 이 앱에는 가로로 스크롤할 것이 없다.
+   책장 넘김·반동의 낱장은 잠깐 화면 밖으로 나가고, .app 의 overflow-x: clip
+   과 html 의 overflow-x: hidden 이 그것을 가린다. 그래도 어떤 브라우저가
+   그 순간 가로 스크롤을 허락하면(iPhone 에서 실제로 화면이 왼쪽으로 붙은 채
+   남았다), 여기서 바로 0 으로 돌린다. 세로 위치는 건드리지 않는다. */
+function resetHorizontalScroll() {
+  if (window.scrollX !== 0) window.scrollTo(0, window.scrollY);
+}
+window.addEventListener("scroll", resetHorizontalScroll, { passive: true });
+window.addEventListener("pageshow", resetHorizontalScroll);
 
 // 회전하거나 창 크기가 바뀌면 들어가는 양이 달라진다. 다시 맞춘다.
 let fitTimer = null;

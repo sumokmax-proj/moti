@@ -419,6 +419,76 @@ async function suiteWeight(browser) {
   await p.context().close();
 }
 
+/* ── 화면 안정 (iPhone 에서 실제로 겪은 두 가지) ───── */
+async function suiteStable(browser) {
+  const p = await freshPage(browser, { viewport: { width: 393, height: 700 }, hasTouch: true, isMobile: true });
+  await p.evaluate(() => {
+    localStorage.setItem("motimoti-lang", "en");
+    localStorage.setItem("motimoti-favorites", JSON.stringify(QUOTES.slice(0, 12).map((q) => ({ id: q.id }))));
+  });
+  await p.reload({ waitUntil: "networkidle" });
+  const size = () => p.evaluate(() => getComputedStyle(document.getElementById("quote-text")).fontSize);
+  const base = await size();
+
+  // 1) 즐겨찾기 화면에서 창 크기가 바뀌어도(주소창 접힘) 돌아오면 원래 크기
+  await p.tap("#favorites-nav-btn");
+  await p.setViewportSize({ width: 393, height: 760 });
+  await p.waitForTimeout(300);
+  await p.tap("#back-btn");
+  const afterResize = await size();
+  report.check("즐겨찾기 화면에서 창 크기 변화 → 돌아와도 글자 크기 그대로", afterResize === base, `${base} → ${afterResize}`);
+
+  // 2) 즐겨찾기 화면에서 언어를 바꿔도 돌아오면 그 언어의 기본 크기
+  await p.tap("#favorites-nav-btn");
+  await p.locator("#favorites-view .lang-btn[data-lang=ko]").tap();
+  await p.tap("#back-btn");
+  const koExpected = await p.evaluate(() => {
+    const t = document.getElementById("quote-text");
+    const fit = t.style.getPropertyValue("--quote-fit");
+    t.style.removeProperty("--quote-fit");
+    const v = getComputedStyle(t).fontSize;
+    if (fit) t.style.setProperty("--quote-fit", fit);
+    return v;
+  });
+  const afterLang = await size();
+  report.check("즐겨찾기 화면에서 언어 전환 → 돌아와도 기본 크기", afterLang === koExpected, `${afterLang} (기본 ${koExpected})`);
+
+  // 3) 글자와 상관없는 넘침(주소창이 움직이는 도중 등)에는 줄이지 않는다
+  const spurious = await p.evaluate(() => {
+    const pad = document.createElement("div");
+    pad.style.height = "3000px";
+    document.body.appendChild(pad);
+    fitQuoteText();
+    const v = getComputedStyle(document.getElementById("quote-text")).fontSize;
+    pad.remove();
+    fitQuoteText();
+    return v;
+  });
+  report.check("글자 탓이 아닌 넘침에는 글자를 줄이지 않음", spurious === koExpected, `${spurious}`);
+
+  // 4) 가로로 밀린 화면이 남지 않는다. iPhone 에서 .app 의 clip 이 새는 상황을
+  //    clip 을 꺼서 흉내 내고, 반동·되돌아가기 낱장이 화면 밖으로 나가게 한다.
+  const sideways = await p.evaluate(async () => {
+    document.querySelector(".app").style.overflowX = "visible";
+    const out = [];
+    let widened = 0;
+    const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // 손가락이 옆으로 끌었다고 치고 한 프레임 뒤에 본다(scroll 이벤트는 프레임마다 온다).
+    const tryScroll = async () => { window.scrollTo(30, window.scrollY); await frame(); out.push(window.scrollX); };
+    goBack(); // 직전이 없으면 반동, 있으면 되돌아가기
+    for (let i = 0; i < 12; i++) { await new Promise((r) => setTimeout(r, 25)); await tryScroll(); widened = Math.max(widened, document.documentElement.scrollWidth - innerWidth); }
+    await new Promise((r) => setTimeout(r, 600));
+    goBack();
+    for (let i = 0; i < 12; i++) { await new Promise((r) => setTimeout(r, 25)); await tryScroll(); widened = Math.max(widened, document.documentElement.scrollWidth - innerWidth); }
+    await new Promise((r) => setTimeout(r, 600));
+    document.querySelector(".app").style.overflowX = "";
+    return { max: Math.max(...out), widened };
+  });
+  report.check("낱장이 화면 밖으로 새도 가로로 밀린 채 남지 않음", sideways.widened > 0 && sideways.max === 0,
+    `새어 나간 폭 ${sideways.widened}px, 남은 scrollX ${sideways.max}`);
+  await p.context().close();
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { proc, url } = await startServer();
@@ -427,7 +497,7 @@ async function suiteWeight(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable]]) {
       try {
         await suite(browser);
       } catch (err) {
