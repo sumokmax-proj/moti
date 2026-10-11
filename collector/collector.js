@@ -12,7 +12,7 @@
    quotes.js 의 tags 가 쓰는 값이다. 여기서 바꾸면 기존 데이터와 어긋나므로
    키는 고정하고 이름만 손본다. */
 const SITUATION_TAGS = [
-  // QUOTE_STANDARDS.md 의 표를 그대로 옮긴 것이 앞의 13개다.
+  // QUOTE_STANDARDS.md 4장의 표를 그대로 옮긴 것이 앞의 13개다.
   { key: "despair", ko: "절망할 때", en: "In despair" },
   { key: "failure", ko: "실패했을 때", en: "After failure" },
   { key: "challenge", ko: "도전할 때", en: "Starting out" },
@@ -73,7 +73,7 @@ const UI = {
     tabs: { collect: "수집", review: "검증 대기", approved: "승인됨", guide: "가이드", all: "전체 명언" },
     collectH: "새 명언",
     collectLede:
-      "1차 출처를 확인한 명언만 등재합니다. 한국어와 영어를 모두 입력해야 앱의 두 언어에서 모두 나옵니다.",
+      "출처가 그 시대의 기록까지 이어지는 명언만 등재합니다. 한국어와 영어를 모두 입력해야 앱의 두 언어에서 모두 나옵니다.",
     labels: {
       textKo: "한국어 명언",
       textEn: "영어 명언",
@@ -117,7 +117,7 @@ const UI = {
     allMissing: "quotes.js 를 읽지 못했습니다.",
     allFallback: "명언을 불러오지 못했습니다. 새로고침(Ctrl+F5)해 보세요.",
     rules: [
-      ["출처", "책·연설·편지·당대 기록 등 1차 출처만 인정합니다. 인용 사이트와 백과사전은 근거가 되지 못합니다."],
+      ["출처", "근거가 그 시대의 기록(책·편지·연설·당시 기사)까지 이어지고, 위치(쪽·날짜·장)를 댈 수 있어야 합니다. 원문을 직접 대조하거나, 원문 위치를 짚어 인용한 믿을 만한 자료로 확인합니다. 출처 없는 명언 사이트와 오귀속 판정이 난 문장은 근거가 되지 못합니다."],
       ["상한", `한국어 ${MAX_KO}자, 영어 ${MAX_EN}자. 화면이 감당하는 최대치일 뿐 품질 기준이 아닙니다. 통과했다고 좋은 명언이 아닙니다.`],
       ["짧게", "기본은 한국어 40자 안쪽입니다. 넘길 수는 있지만 그 길이가 필요한 이유가 있어야 합니다. 한 줄은 눈에 박히고 여섯 줄은 훑게 됩니다."],
       ["번역", "의역 금지. 원문의 주장을 그대로 옮깁니다."],
@@ -165,7 +165,7 @@ const UI = {
     tabs: { collect: "Collect", review: "Pending", approved: "Approved", guide: "Standards", all: "All quotes" },
     collectH: "New quote",
     collectLede:
-      "Only quotes verified against a primary source. Both Korean and English are required so the quote appears in both languages.",
+      "Only quotes whose evidence reaches a record from the time. Both Korean and English are required so the quote appears in both languages.",
     labels: {
       textKo: "Quote (Korean)",
       textEn: "Quote (English)",
@@ -209,7 +209,7 @@ const UI = {
     allMissing: "Could not read quotes.js.",
     allFallback: "Could not load the quotes. Try a hard refresh.",
     rules: [
-      ["Source", "Primary sources only — books, speeches, letters, contemporary records. Quote sites and encyclopedias are not evidence."],
+      ["Source", "The evidence must reach a record from the time — a book, letter, speech or contemporary report — with a citable location (page, date, chapter). Check it against the original, or through a reliable source that cites the original's location. Unsourced quote sites and quotes ruled misattributed are not evidence."],
       ["Ceiling", `Korean ${MAX_KO} characters, English ${MAX_EN}. This is what the screen can hold — not a quality bar. Passing it does not make a quote good.`],
       ["Keep it short", "Aim for under 40 Korean characters. You may go over, but you need a reason. One line lands; six lines get skimmed."],
       ["Translation", "No paraphrase. Carry the claim of the original across."],

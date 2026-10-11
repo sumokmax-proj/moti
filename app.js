@@ -722,6 +722,9 @@ quoteBlockEl.addEventListener("pointerup", (e) => {
 quoteBlockEl.addEventListener("pointercancel", () => {
   swipeStart = null;
 });
+// 글자가 선택된 채로 마우스로 밀면 브라우저가 선택한 글자를 끌어 옮기기
+// 시작하고(pointercancel), 밀기가 사라진다. 명언을 끌어 옮길 일은 없으니 막는다.
+quoteBlockEl.addEventListener("dragstart", (e) => e.preventDefault());
 
 /* 키보드: ← 한 장 되돌아가기, → 다음(Shift+→ 주르륵). 즐겨찾기 화면에서는 끈다. */
 document.addEventListener("keydown", (e) => {

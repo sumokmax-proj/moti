@@ -83,10 +83,14 @@ async function longPress(p, ms = 480) {
   await p.mouse.down();
   await p.waitForTimeout(ms);
 }
+// 클릭이 끝났다고 페이드가 이미 시작됐다는 보장은 없다. 그 사이에 idle 을 보면
+// 곧바로 통과해 버려, 다음 손짓이 페이드 한가운데 떨어진다(그러면 앱이 옳게
+// 무시한다). 그래서 명언이 실제로 바뀔 때까지 기다린다.
 async function tapNext(p) {
   await idle(p);
+  const before = await qid(p);
   await p.click("#next-btn");
-  await idle(p);
+  await p.waitForFunction((b) => !turning && !isRiffling() && currentQuote.id !== b, before, { timeout: 5000 });
 }
 async function freshPage(browser, opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, ...opts });
@@ -296,10 +300,26 @@ async function suiteBack(browser) {
   report.check("새로고침 뒤에도 지난번 마지막 명언으로", (await qid(p)) === lastSeen);
 
   await tapNext(p);
-  const D = await qid(p);
+  let D = await qid(p);
   await swipe(p, 10, 250);
   await p.waitForTimeout(60);
   report.check("가장자리 24px 에서 시작한 밀기는 무시", (await sheetCount(p)) === 0 && (await qid(p)) === D);
+
+  // 글자를 선택해 둔 채 그 위를 마우스로 밀어도 밀기로 본다(선택한 글자 끌기가 아니라).
+  await idle(p);
+  await tapNext(p);
+  await p.evaluate(() => {
+    const r = document.createRange();
+    r.selectNodeContents(document.getElementById("quote-text"));
+    getSelection().removeAllRanges();
+    getSelection().addRange(r);
+  });
+  const ty = (await p.locator("#quote-text").boundingBox()).y + 10;
+  await swipe(p, 120, 320, ty);
+  await idle(p);
+  report.check("글자를 선택한 채 밀어도 되돌아감", (await qid(p)) === D);
+  await tapNext(p);
+  D = await qid(p);
 
   await idle(p);
   await p.keyboard.press("ArrowRight");
@@ -319,10 +339,12 @@ async function suiteBack(browser) {
   await tapNext(p);
   await swipe(p, 120, 320);
   await p.waitForTimeout(30);
-  const rmBack = (await sheetCount(p)) === 0 && (await qid(p)) === F;
+  const backSheets = await sheetCount(p), backId = await qid(p);
   await swipe(p, 120, 320);
   await p.waitForTimeout(30);
-  report.check("동작 줄이기: 되돌아가기 즉시, 반동 생략", rmBack && (await sheetCount(p)) === 0);
+  const bounceSheets = await sheetCount(p);
+  report.check("동작 줄이기: 되돌아가기 즉시, 반동 생략", backSheets === 0 && backId === F && bounceSheets === 0,
+    `낱장 ${backSheets}/${bounceSheets}, 명언 ${backId} (기대 ${F})`);
   await p.context().close();
 }
 
