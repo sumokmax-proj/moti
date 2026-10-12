@@ -6,8 +6,9 @@
 //
 // 항목 { text, author, via, reviewed }
 //   text      베트남어 명언
-//   author    베트남어 위키백과의 그 인물 문서 제목. 문서가 없으면 중국 인물은
-//             한월(Hán-Việt) 독음, 그 밖에는 author.en 그대로.
+//   author    한국어·영어와 같은 이름을 베트남어 관례로(QUOTE_STANDARDS.md 8장).
+//             중국 인물은 그 이름의 한월(Hán-Việt) 독음, 한국 인물은 author.en,
+//             서양 인물은 베트남어 위키백과 문서 제목(없으면 author.en).
 //   via       무엇을 보고 옮겼나 — "original"(원문에서) | "en"(영어를 거쳐서)
 //             원문에서 옮기고, 한/영 번역과 정본 영역은 대조용으로만 본다.
 //             원문을 확신 있게 읽을 수 없을 때만 "en" 으로 적는다.
@@ -24,7 +25,7 @@ const QUOTES_VI = {
   21: { text: "Đừng cố trở thành người thành công, mà hãy cố trở thành người có giá trị.", author: "Albert Einstein", via: "original", reviewed: false },
   30: { text: "Ngay khi bạn tin vào chính mình, bạn sẽ biết cách sống.", author: "Johann Wolfgang von Goethe", via: "original", reviewed: false },
   37: { text: "Trong lĩnh vực quan sát, sự tình cờ chỉ ưu ái những trí óc đã được chuẩn bị.", author: "Louis Pasteur", via: "original", reviewed: false },
-  41: { text: "Quyết chết thì sống, quyết sống thì chết.", author: "Lý Thuấn Thần", via: "original", reviewed: false },
+  41: { text: "Quyết chết thì sống, quyết sống thì chết.", author: "Yi Sun-sin", via: "original", reviewed: false },
   42: { text: "Một ngày không đọc sách, trong miệng mọc gai góc.", author: "An Jung-geun", via: "original", reviewed: false },
   43: { text: "Có thể đoạt tướng của ba quân, nhưng không thể đoạt chí của một người thường.", author: "Khổng Tử", via: "original", reviewed: false },
   44: { text: "Khi trời sắp giao trọng trách cho người nào, ắt trước hết làm khổ tâm chí người ấy, làm nhọc gân cốt người ấy.", author: "Mạnh Tử", via: "original", reviewed: false },
@@ -72,10 +73,20 @@ const QUOTES_VI = {
   88: { text: "Hãy chịu đựng và kiên gan! Nỗi đau này một ngày kia sẽ có ích cho bạn.", author: "Ovidius", via: "original", reviewed: false },
   89: { text: "Những điều làm ta sợ hãi nhiều hơn những điều đè nặng lên ta; và ta thường khổ sở vì tưởng tượng hơn là vì thực tế.", author: "Seneca", via: "original", reviewed: false },
   90: { text: "Có lỗi mà không sửa, đó mới gọi là lỗi.", author: "Khổng Tử", via: "original", reviewed: false },
-  91: { text: "Người khác làm một lần được, ta làm trăm lần; người khác làm mười lần được, ta làm nghìn lần.", author: "Khổng Cấp", via: "original", reviewed: false },
+  91: { text: "Người khác làm một lần được, ta làm trăm lần; người khác làm mười lần được, ta làm nghìn lần.", author: "Tử Tư", via: "original", reviewed: false },
   92: { text: "Thất bại chỉ là cơ hội để bắt đầu lại một cách thông minh hơn.", author: "Henry Ford", via: "original", reviewed: false },
   93: { text: "Chướng ngại trên con đường lại giúp ta tiến bước trên chính con đường ấy.", author: "Marcus Aurelius", via: "original", reviewed: false },
   94: { text: "Tôi không sợ bão tố, vì tôi đang học cách lái con thuyền của mình.", author: "Louisa May Alcott", via: "original", reviewed: false },
-  105: { text: "Nếu thật sự một ngày đổi mới được, thì hãy ngày ngày đổi mới, lại ngày ngày đổi mới.", author: "Thành Thang", via: "original", reviewed: false },
+  95: { text: "Chúng ta sống để làm gì, nếu không phải để làm cho cuộc đời bớt khó khăn cho nhau?", author: "George Eliot", via: "original", reviewed: false },
+  96: { text: "Chưa từng có điều vĩ đại nào đạt được mà không có nhiệt huyết.", author: "Ralph Waldo Emerson", via: "original", reviewed: false },
+  97: { text: "Thắng người là có sức, tự thắng mình là mạnh.", author: "Lão Tử", via: "original", reviewed: false },
+  98: { text: "Điều lớn lao nhất trên đời là biết thuộc về chính mình.", author: "Michel de Montaigne", via: "original", reviewed: false },
+  99: { text: "Lạc quan là niềm tin dẫn đến thành tựu; không có hy vọng thì chẳng làm được gì.", author: "Helen Keller", via: "original", reviewed: false },
+  100: { text: "Phúc thay cho người đã tìm thấy công việc của mình; người ấy chớ cầu phúc nào khác.", author: "Thomas Carlyle", via: "original", reviewed: false },
+  101: { text: "Ai không dám nắm lấy gai thì chớ bao giờ khao khát hoa hồng.", author: "Anne Brontë", via: "original", reviewed: false },
+  102: { text: "Không biết khi nào bình minh sẽ đến, tôi mở mọi cánh cửa.", author: "Emily Dickinson", via: "original", reviewed: false },
+  103: { text: "Thất bại thì khó khăn, nhưng chưa từng cố gắng để thành công còn tệ hơn.", author: "Theodore Roosevelt", via: "original", reviewed: false },
+  104: { text: "Không gì giúp tâm trí yên tĩnh bằng một mục đích vững vàng.", author: "Mary Shelley", via: "original", reviewed: false },
+  105: { text: "Nếu thật sự một ngày đổi mới được, thì hãy ngày ngày đổi mới, lại ngày ngày đổi mới.", author: "Vua Thang", via: "original", reviewed: false },
   129: { text: "Con đường hôm qua tôi đã đi, hôm nay tôi lại sẽ đi: con đường của tôi, con đường mới.", author: "Yun Dong-ju", via: "original", reviewed: false },
 };
