@@ -98,6 +98,11 @@
 //        놓지 마라」로, 출처의 「편지」를 「말」로 바로잡았다(떠나며 한 말이다).
 //     60 정약용: 규칙 위반은 아니나 수령의 몸가짐 수칙이라 동기부여와 가장 멀다.
 //        같은 조에 더 나은 대체 문장이 없어 그대로 둔다 — 가장 약한 카드로 기록.
+//   (2026-10-12, v1.9 「원문에 충실한 것이 짧은 것보다 앞선다」) 짧게 쓰려고 뜻을
+//     덜어낸 한국어판을 고쳤다. 51 「오직 그렇게 해야만」, 57 「독립된 의지를 지닌」을
+//     되살리고, 70 「…가 아니라」를 원문의 비교 「…보다는」으로. 81 은 문장 중간
+//     「whatever the line of it may be」를 생략 표시 없이 뺐었는데, 되살리면 201자로
+//     영어 상한을 넘어 혼자 서는 둘째 문장을 발췌했다(original 도 그 구간으로).
 
 const QUOTES = [
   {
@@ -382,7 +387,7 @@ const QUOTES = [
   {
     id: 51,
     text: {
-      ko: "네 안에서 「너는 화가가 아니다」라고 말하거든 바로 그때 그려라. 그 소리도 잠잠해진다.",
+      ko: "네 안에서 「너는 화가가 아니다」라고 말하거든 바로 그때 그려라, 친구여. 그러면 그 목소리도 잠잠해진다. 오직 그렇게 해야만.",
       en: "If something in you yourself says ‘you aren’t a painter’ — IT’S THEN THAT YOU SHOULD PAINT, old chap, and that voice will be silenced too, but precisely because of that.",
     },
     author: {
@@ -492,7 +497,7 @@ const QUOTES = [
   {
     id: 57,
     text: {
-      ko: "나는 새가 아니다. 어떤 그물도 나를 가두지 못한다. 나는 자유로운 인간이다.",
+      ko: "나는 새가 아니다. 어떤 그물도 나를 가두지 못한다. 나는 독립된 의지를 지닌 자유로운 인간이다.",
       en: "I am no bird; and no net ensnares me; I am a free human being with an independent will.",
     },
     author: {
@@ -708,7 +713,7 @@ const QUOTES = [
   {
     id: 70,
     text: {
-      ko: "성공은 그가 오른 자리가 아니라, 성공하려 애쓰며 넘어선 장애물로 재야 한다.",
+      ko: "성공은 그가 오른 자리보다는, 성공하려 애쓰며 넘어선 장애물로 재야 한다.",
       en: "I have learned that success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome while trying to succeed.",
     },
     author: {
@@ -899,14 +904,14 @@ const QUOTES = [
   {
     id: 81,
     text: {
-      ko: "제 배움의 끝을 걱정하지 마라. 일하는 시간마다 성실히 바쁘다면, 마지막 결과는 저절로 되도록 맡겨도 좋다.",
-      en: "Let no youth have any anxiety about the upshot of his education. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
+      ko: "일하는 날의 매시간을 성실히 바쁘게 보낸다면, 마지막 결과는 저절로 되도록 맡겨 두어도 좋다.",
+      en: "If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
     },
     author: {
       ko: "윌리엄 제임스",
       en: "William James",
     },
-    original: "Let no youth have any anxiety about the upshot of his education, whatever the line of it may be. If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
+    original: "If he keep faithfully busy each hour of the working day, he may safely leave the final result to itself.",
     lang: "en",
     source: "『교사에게 하는 심리학 강의』 8장 「습관의 법칙」",
     year: 1899,
