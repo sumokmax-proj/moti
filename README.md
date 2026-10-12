@@ -1,91 +1,187 @@
 # moti
 
-명언 앱 **motimoti** 와 명언을 등재하는 **수집기**.
+**motimoti** — a bilingual (English / Korean) quote app, and the **collector** used to admit quotes into it.
 
-- 앱: https://sumokmax-proj.github.io/moti/
-- 수집기: https://sumokmax-proj.github.io/moti/collector/ (읽기·시험용. 등재는 아래 참고)
+Every quote is traced to a primary source before it ships. No "attributed to", no quote-site copy-paste.
 
-## 앱
+- **App** — https://sumokmax-proj.github.io/moti/
+- **Collector** — https://sumokmax-proj.github.io/moti/collector/ (read-only on Pages; see [Collector](#collector))
+- **한국어 문서** — [README.ko.md](README.ko.md)
 
-정적 페이지다. 빌드가 없고 `index.html` 을 열면 그대로 돈다.
-
-- `quotes.js` — 명언 데이터. 등재 기준은 [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md).
-- `style.css` / `tokens.css` — 확정 디자인(시안 E). 색과 간격은 전부 `tokens.css` 의 토큰이고, 수집기도 같은 파일을 쓴다.
-- `.design/` — 확정안 5화면과 시안 A~G. `canvas.json` 이 배치를 갖고 있다.
-
-한국어·영어를 지원한다. 모든 명언은 `text` 와 `author` 에 `{ ko, en }` 을 모두 가져야 한다. 한쪽이 없으면 그 언어에서 명언이 빠진다.
-
-## 수집기
-
-`collector/` 에 있다. 저장 위치가 두 가지고, 열 때 백엔드를 찾아보고 스스로 정한다. 어느 쪽인지는 화면 맨 위에 늘 표시된다.
-
-### 백엔드 모드 — 등재까지 하려면 이쪽
-
-```
-npm run collector      # http://127.0.0.1:3001/collector/
-```
-
-- 검증 대기 목록은 `collector/data/pending-quotes.json` 에 저장된다.
-- **승인하면 서버가 `quotes.js` 에 직접 등재한다.** id 는 파일 상단 `// 다음 id: N` 주석에서 받아 쓰고 주석을 하나 올린다.
-- 등재 후 변경분을 확인하고 커밋하는 것은 사람이 한다.
-
-로컬 전용 도구다. 인증이 없어서 `127.0.0.1` 에만 바인딩한다. 공개된 곳에 띄우지 말 것.
-
-### 정적 모드 — GitHub Pages 등
-
-백엔드가 없으면 브라우저 `localStorage` 에만 쌓인다. 승인해도 `quotes.js` 는 바뀌지 않는다. 대신 각 항목의 **코드 복사**와 승인 목록의 **전체를 quotes.js 코드로 복사**로 붙여넣을 코드를 얻는다.
-
-### 넣는 방법 두 가지
-
-- **폼** — 한 편씩 입력한다.
-- **JSON 일괄 등록** — 배열이나 단일 객체를 붙여넣는다. 통과한 것만 들어가고, 걸린 항목은 몇 번째가 왜 걸렸는지 알려준다.
-
-```json
-[
-  {
-    "text": { "ko": "…", "en": "…" },
-    "author": { "ko": "…", "en": "…" },
-    "original": "…",
-    "lang": "en",
-    "source": "…",
-    "year": 1758,
-    "sourceUrl": "https://…",
-    "tags": ["challenge"],
-    "translator": "James Legge",
-    "translatorUrl": "https://…"
-  }
-]
-```
-
-`translator` 는 공개된 정본 영역을 쓴 경우에만 적는다. 적었으면 `translatorUrl` 이 반드시 있어야 한다. 없으면 자체 번역으로 기록된다.
-
-검사는 화면과 서버 양쪽에서 똑같이 한다 — 필수 항목, 길이 상한, `sourceUrl` 이 http(s) 인지, 태그가 아는 값인지, 같은 한국어 명언이 이미 있는지.
-
-### 길이 — 상한과 편집 원칙은 다른 것이다
-
-**상한(한국어 100자 / 영어 200자)은 화면이 감당하는 최대치다.** 지원하는 가장 작은 기기(375×667)에서 재서 정했고, 품질과는 무관하다. 더 작은 320×568 에서는 `app.js` 의 `fitQuoteText` 가 본문을 한 눈금씩 줄여 맞춘다 — 그래서 상한만 지키면 화면이 깨지지 않는다. 15px 까지 줄여도 넘치면 거기서 멈추고 스크롤을 허용한다.
-
-**엄선은 [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) 의 편집 원칙이 한다** — 한국어 40자 안쪽이 기본이고, 넘길 때는 이유가 있어야 한다. 숫자 하나가 두 일을 다 하려 들면 둘 다 어설퍼진다.
-
-## 점검 도구 — `tools/`
-
-명언을 넣거나 고친 뒤, 커밋하기 전에 돌린다. 기준값(길이 상한, 태그, 저자당 상한)은 `collector/server.js` 에서 읽으므로 따로 맞출 것이 없다.
-
-| 명령 | 하는 일 | 걸리는 시간 |
+| App (English) | App (Korean) | Favorites |
 |---|---|---|
-| `npm run check` | 데이터 점검 — id 중복·삭제 id 재사용·「다음 id」, 필수 필드·길이·태그, 저자당 상한, 머리 주석의 번역 경로 개수·목록, 수집기 승인 기록 | 1초, 네트워크 없음 |
-| `npm run verify:sources` | 출처 원문 대조 — 기록된 `sourceUrl` 을 실제로 열어 `original` 이 있는지, `translator.enUrl` 에 `text.en` 이 있는지 본다. `-- --ids 59,63` · `-- --from 124` 로 좁힐 수 있다 | 전체 10초 남짓 |
-| `npm run test:app` | 앱 동작 — 화면 그리기, 최근 20% 피하기, 주르륵 넘김, 뒤로 가기·반동, 즐겨찾기가 고친 문구를 따라가는지, 더 자주 펼치기, 페이지 오류 | 30초 남짓 |
+| ![Main screen in English](docs/screenshot-main-en.png) | ![Main screen in Korean](docs/screenshot-main-ko.png) | ![Favorites screen](docs/screenshot-favorites.png) |
+
+---
+
+## Features
+
+**Reading**
+
+- One quote at a time, drawn at random. **Next** cross-fades to another.
+- **Recently-seen avoidance** — the last 20% of the pool (20 quotes out of 100) is skipped, and the list is **persisted across sessions**, so yesterday's last quote isn't today's first.
+- **Riffle** — hold **Next** for 400 ms (or swipe left on the quote) and 4–7 paper sheets flip past, thumb-riffle style, speeding up then settling over 800 ms. Tap anywhere to pin it mid-flight. Keyboard: `Shift` + `→`.
+- **Back one page** — swipe right (or `←`) un-folds the previous sheet from the spine. Exactly one page back, and it survives a reload. At the dead end the page lifts 22 px and settles with a slight overshoot, so the limit is felt rather than silent.
+- **Auto-fit** — on small screens the body text steps down 1 px at a time until the quote fits, down to a 15 px floor. It measures real overflow rather than counting characters.
+
+**Keeping**
+
+- **Favorites** — a heart on each quote; the favorites view lists them with a count and per-item remove. Favorites are stored by id, so a later wording fix or a language switch follows automatically.
+- **Show more often** — a toggle in the favorites header. On by default; favorited quotes are drawn twice as often, applied *after* the recently-seen filter so a favorite still never repeats back-to-back.
+- **Share** — `navigator.share` where available, clipboard copy with a toast everywhere else.
+
+**Both languages**
+
+- EN / KO toggle in the header. Browser language is sniffed only until you pick once; after that your choice wins.
+- Every quote carries both `ko` and `en`. The toggle switches the quote text, the author name, and all UI copy.
+
+**Details**
+
+- Dark mode via `prefers-color-scheme`, and `prefers-reduced-motion` degrades the riffle to a plain fade.
+- Keyboard navigation: `←` back, `→` next, `Shift`+`→` riffle.
+- Swipes that start on the heart or share button are ignored, as are swipes within 24 px of a screen edge, so they don't fight the browser's own back-gesture.
+- The **motimoti** logo is the (unadvertised) link to the collector.
+
+---
+
+## Quotes and sourcing
+
+**100 quotes**, ids 3–136, in 11 source languages — English 54, Literary Chinese 18, Latin 9, German 4, Ancient Greek 4, Korean 4, French 3, Spanish / Italian / Dutch / Chinese 1 each.
+
+The bar, in full, is [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md). In short, evidence must be **specific** (you can name the work *and* a location — page, date, chapter, letter number), **contemporaneous** (the author's own writing, a transcribed speech or interview, or a direct witness), and **not already adjudicated** fake or unsourced. Beyond sourcing, a quote must stand alone with no context and must leave the reader a way forward; at most 3 quotes per author.
+
+### Data shape
+
+`quotes.js` is a plain array. One entry:
+
+```js
+{
+  id: 4,
+  text:   { ko: "천 리 길도 발밑 한 걸음에서 시작된다.",
+            en: "The journey of a thousand li commenced with a single step." },
+  author: { ko: "노자", en: "Laozi" },
+  translator: { en: "James Legge",                    // canonical published translation
+                enUrl: "https://www.gutenberg.org/cache/epub/216/pg216.txt" },
+  original: "千里之行，始於足下",
+  lang: "lzh",
+  source: "『도덕경』 제64장 (왕필본)",
+  year: -400,                                          // negative = BCE
+  sourceUrl: "https://zh.wikisource.org/...",
+  tags: ["challenge", "energy"],
+}
+```
+
+| Field | Notes |
+|---|---|
+| `id` | **Never reused.** Favorites match on id alone, so recycling one would silently hand a reader someone else's saved quote. Deleted ids are listed in the header comment; new ids come from `// 다음 id: N` there, never from the max. |
+| `text`, `author` | Both `ko` and `en` are required. `text.ko` is translated from `original`, never paraphrased in a way that changes the claim. |
+| `original` | The source-language wording, verbatim. This is what re-verification collates against. |
+| `translator` | Present **only** when `text.en` is a published canonical translation; then `enUrl` is mandatory. Its absence means the English is in-house — that is the rule, not an omission. |
+| `tags` | 1–3 of: `despair` `failure` `challenge` `fear` `energy` `hope` `meaning` `perseverance` `freedom` `passion` `success` `preparation` `oriental`. (`failure_acceptance`, `dream`, `warning` are legacy — still accepted, not used for new entries.) |
+
+Length caps are **100 chars (ko) / 200 chars (en)**. These are what the smallest supported screen can take, measured on 375×667 — not a quality bar. Selectivity is a separate, human judgement documented in QUOTE_STANDARDS.md (Korean under 40 chars is the default; going longer needs a reason).
+
+---
+
+## Running locally
+
+There is **no build step**. Open `index.html` and the app runs.
+
+```bash
+# or serve it, if you prefer a real origin
+python3 -m http.server 8000
+```
+
+The only external dependency is the Google Fonts webfont (Hahmlet); it falls back to Nanum Myeongjo / serif, so the app works fully offline.
+
+---
+
+## Collector
+
+A local tool for proposing, reviewing and admitting quotes, in `collector/`. It picks its own storage mode at load and always shows which one is active at the top of the screen.
+
+### Backend mode — needed to actually admit a quote
+
+```bash
+npm install          # first time only
+npm run collector    # http://127.0.0.1:3001/collector/
+```
+
+- The review queue lives in `collector/data/pending-quotes.json`.
+- **Approving writes the entry straight into `quotes.js`** — taking the id from the `// 다음 id: N` comment and bumping it, writing atomically via temp-file + rename.
+- Reviewing the diff and committing is left to a human.
+
+> This is a local tool with **no authentication**, so it binds to `127.0.0.1` only. Don't expose it.
+
+### Static mode — GitHub Pages
+
+Without a backend, everything stays in browser `localStorage` and approving does **not** change `quotes.js`. Instead you get **copy as code** per item, and a bulk **copy all as quotes.js code** on the approved list, to paste in by hand.
+
+### Two ways in
+
+A **form**, one quote at a time, or a **JSON bulk paste** of an array or a single object — only the entries that pass are taken, and anything rejected is reported by position with a reason. Validation is identical in the browser and on the server: required fields, length caps, `sourceUrl` must be http(s), tags must be known, and the Korean text must not already exist.
+
+In collector input, `translator` and `translatorUrl` are two flat strings (they become `translator: { en, enUrl }` once stored). Fill them in only for a published canonical translation; leave them out and the entry is recorded as an in-house translation.
+
+---
+
+## Checks — `tools/`
+
+Run these after adding or editing quotes, before committing. Shared constants (length caps, tag vocabulary, per-author cap) are read out of `collector/server.js`, so there is nothing to keep in sync.
+
+| Command | What it checks | Time |
+|---|---|---|
+| `npm run check` | Data integrity — duplicate ids, reuse of a deleted id, the `// 다음 id` value, required fields, length caps, tags, the per-author cap, and that the header comment's translation-provenance counts and id lists match reality | ~1 s, offline |
+| `npm run verify:sources` | Provenance — opens every `sourceUrl` and looks for `original`; where a `translator` exists, collates `text.en` against `translator.enUrl`. Narrow it with `-- --ids 59,63` or `-- --from 124` | ~10 s |
+| `npm run test:app` | Behaviour in a real browser — rendering at 390×844 and 320×568, the recent-20% rule, riffle, back-and-bounce, favorites following edits, the weighting toggle, and page errors | ~30 s |
 | `npm test` | `check` + `test:app` | |
 
-`test:app` 은 Playwright 를 쓴다. 처음 한 번 `npm install` 이 필요하다(전역에 깔려 있으면 `NODE_PATH=$(npm root -g)` 로도 된다). 하나라도 실패하면 종료 코드 1.
+`test:app` drives Playwright Chromium (`npm install` once). Any failure exits non-zero.
 
-## 배포
+---
 
-`main` 에 푸시하면 GitHub Pages 가 자동으로 배포한다. 별도 워크플로 파일은 없고 Pages 기본 빌드를 쓴다.
+## Project structure
 
-### css/js 를 고쳤으면 `?v=` 를 올린다
+```
+index.html          App markup — single page, two views
+app.js              All app behaviour: quotes, gestures, favorites, language, fit
+quotes.js           The 100 quotes + the curation rules in its header comment
+style.css           Layout and components
+tokens.css          Colour / type / spacing tokens — shared with the collector
+QUOTE_STANDARDS.md  What may be admitted, and why
+collector/          Quote intake and review (static + backend modes)
+tools/              check-data · verify-sources · test-app
+.design/            Design artboards (final screens + explorations A–G)
+docs/               Screenshots used by this README
+```
 
-`index.html` 과 `collector/index.html` 이 로컬 css/js 를 `?v=날짜` 로 불러온다. Pages 가 이 파일들을 10분간 캐시하기 때문에, 값을 올리지 않으면 돌아온 사람의 브라우저가 **새 HTML 과 옛 js 를 섞어 쓴다.** 실제로 한 번 겪었다 — 「전체 명언」 탭이 배지 0, 빈 목록, 오류 메시지도 없이 조용히 비어 있었다.
+Browser storage, all under `localStorage`:
 
-두 파일의 `?v=` 를 같은 값으로 올리면 URL 이 바뀌어 캐시가 무효가 된다. **`quotes.js` 에도 붙어 있으므로 명언을 등재한 뒤에도 올려야 한다.** 안 올리면 새 명언이 최대 10분간 안 보인다.
+| Key | Holds |
+|---|---|
+| `motimoti-favorites` | Saved quotes — id plus a fallback text/author snapshot |
+| `motimoti-lang` | `"en"` or `"ko"`; its presence disables browser-language detection |
+| `motimoti-recent` | Recently-seen ids, capped at 20% of the pool; also backs "go back one page" |
+| `motimoti-favorites-weight` | `"on"` / `"off"` for *Show more often* |
+
+---
+
+## Deployment
+
+Push to `main`; GitHub Pages builds it. There is no workflow file — it uses the default branch build.
+
+### Bump `?v=` whenever you touch css/js
+
+`index.html` and `collector/index.html` load local css/js as `?v=<date>` (currently `20261011b`). Pages caches those files for about ten minutes, so without a bump a returning visitor **mixes new HTML with old JS** — which has already happened once, silently emptying a collector tab with no error.
+
+Bump both files to the same value. **`quotes.js` carries it too**, so bump after adding quotes as well, or new quotes stay invisible for up to ten minutes.
+
+---
+
+## Design
+
+`.design/` holds the final five screens and explorations A–G as self-contained artboards, with `canvas.json` carrying the layout and the written rationale. They are references, not build inputs — the chosen design (E) lives in `tokens.css` and `style.css`. Colours were picked against WCAG AA: terracotta `#B4593A` is graphics-only at 3.97:1, and text and borders use `#9C4529` at 5.3:1.
+
+## License
+
+MIT.
