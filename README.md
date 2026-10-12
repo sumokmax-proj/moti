@@ -10,6 +10,7 @@
 정적 페이지다. 빌드가 없고 `index.html` 을 열면 그대로 돈다.
 
 - `quotes.js` — 명언 데이터. 등재 기준은 [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md).
+- `quotes-vi.js` — 베트남어 베타(AI 번역, 원어민 검수 전). 명언 id 별로 붙는다. 기준은 QUOTE_STANDARDS.md 8장.
 - `style.css` / `tokens.css` — 확정 디자인(시안 E). 색과 간격은 전부 `tokens.css` 의 토큰이고, 수집기도 같은 파일을 쓴다.
 - `.design/` — 확정안 5화면과 시안 A~G. `canvas.json` 이 배치를 갖고 있다.
 

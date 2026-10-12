@@ -12,6 +12,7 @@ const ROOT = path.join(__dirname, "..");
 const QUOTES_FILE = process.env.MOTI_QUOTES_FILE || path.join(ROOT, "quotes.js");
 const SERVER_FILE = path.join(ROOT, "collector", "server.js");
 const DATA_FILE = path.join(ROOT, "collector", "data", "pending-quotes.json");
+const VI_FILE = process.env.MOTI_VI_FILE || path.join(ROOT, "quotes-vi.js");
 
 /* quotes.js 는 브라우저용 `const QUOTES = [...]` 다. 모듈이 아니므로
    브라우저와 같은 방식으로 한 번 실행해서 배열을 꺼낸다. */
@@ -27,6 +28,20 @@ function loadQuotes(file = QUOTES_FILE) {
     process.exit(1);
   }
   return { quotes: mod.exports, source };
+}
+
+/* quotes-vi.js(베트남어 베타)도 같은 방식으로 읽는다. */
+function loadVietnamese(file = VI_FILE) {
+  const source = fs.readFileSync(file, "utf8");
+  const mod = { exports: null };
+  try {
+    new Function("module", `${source}\n;module.exports = QUOTES_VI;`)(mod);
+  } catch (err) {
+    console.error(`\n✗ ${path.relative(ROOT, file)} 를 읽지 못했습니다 — 문법 오류: ${err.message}\n`);
+    process.exit(1);
+  }
+  const max = Number((source.match(/길이 상한 (\d+)자/) || [])[1]);
+  return { vi: mod.exports, source, maxVi: max };
 }
 
 function readServerRules() {
@@ -74,4 +89,4 @@ function createReport(title) {
   };
 }
 
-module.exports = { ROOT, QUOTES_FILE, loadQuotes, readServerRules, readCollectorData, createReport };
+module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, readServerRules, readCollectorData, createReport };

@@ -106,12 +106,12 @@ const pageErrors = [];
 /* ── 화면 ─────────────────────────────────────────── */
 async function suiteRender(browser) {
   for (const [w, h] of [[390, 844], [320, 568]]) {
-    for (const lang of ["ko", "en"]) {
+    for (const lang of ["ko", "en", "vi"]) {
       const p = await freshPage(browser, { viewport: { width: w, height: h } });
       const r = await p.evaluate((L) => {
         setLang(L);
         const out = [];
-        for (const q of QUOTES) {
+        for (const q of QUOTES.filter((x) => x.text[L])) {
           renderQuote(q);
           const nb = document.getElementById("next-btn").getBoundingClientRect();
           const te = document.getElementById("quote-text");
@@ -489,6 +489,55 @@ async function suiteStable(browser) {
   await p.context().close();
 }
 
+/* ── 베트남어 (베타) ──────────────────────────────── */
+async function suiteVietnamese(browser) {
+  // 베트남어 기기라도 기본은 영어다(베타라서).
+  const p = await freshPage(browser, { locale: "vi-VN" });
+  report.check("베트남어 기기 — 기본은 영어", (await p.evaluate(() => lang)) === "en");
+  const vi = p.locator(".app-header .lang-btn[data-lang=vi]");
+  const label = await vi.getAttribute("aria-label");
+  report.check("VI 버튼 — β 표시와 베타 안내", (await vi.isVisible()) && (await vi.textContent()).includes("β") && /beta/i.test(label), label);
+
+  await vi.click();
+  await idle(p);
+  const r = await p.evaluate(() => ({
+    html: document.documentElement.lang,
+    text: document.getElementById("quote-text").textContent,
+    vi: currentQuote.text.vi,
+    note: document.querySelector(".quote-meta .beta-note").textContent,
+    noteShown: !document.querySelector(".quote-meta .beta-note").hidden,
+  }));
+  report.check("VI 로 바꾸면 베트남어 명언 + 「AI 번역 · 검수 전」", r.html === "vi" && r.text === r.vi && r.noteShown && r.note.includes("chưa hiệu đính"), r.note);
+
+  const pool = await p.evaluate(() => {
+    let cur = currentQuote, bad = 0;
+    for (let i = 0; i < 200; i++) { cur = turnPage(cur.id); if (!cur.text.vi) bad++; }
+    return { bad, size: QUOTES.filter((q) => q.text.vi).length };
+  });
+  report.check("VI 에서는 베트남어가 있는 명언만 나옴", pool.bad === 0, `베트남어 ${pool.size}편, 200번 중 없는 것 ${pool.bad}`);
+
+  await p.click("#favorites-nav-btn");
+  const favNote = await p.locator(".favorites-beta-note").isVisible();
+  await p.locator("#favorites-view .lang-btn[data-lang=en]").click();
+  const favNoteEn = await p.locator(".favorites-beta-note").isVisible();
+  await p.click("#back-btn");
+  const mainNoteEn = await p.locator(".quote-meta .beta-note").isVisible();
+  report.check("베타 안내는 VI 일 때만 (즐겨찾기 화면 포함)", favNote && !favNoteEn && !mainNoteEn);
+
+  // 저장된 선택이 vi 인데 베트남어 데이터가 없으면 영어로 시작하고 버튼을 숨긴다.
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  await ctx.route("**/quotes-vi.js*", (route) => route.fulfill({ contentType: "text/javascript", body: "const QUOTES_VI = {};" }));
+  const q = await ctx.newPage();
+  q.on("pageerror", (e) => pageErrors.push(e.message));
+  await q.goto(appUrl, { waitUntil: "networkidle" });
+  await q.evaluate(() => localStorage.setItem("motimoti-lang", "vi"));
+  await q.reload({ waitUntil: "networkidle" });
+  const fallback = await q.evaluate(() => ({ lang, hidden: document.querySelector(".app-header .lang-btn[data-lang=vi]").hidden }));
+  report.check("베트남어 데이터가 없으면 VI 숨김, 영어로 시작", fallback.lang === "en" && fallback.hidden);
+  await ctx.close();
+  await p.context().close();
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { proc, url } = await startServer();
@@ -497,7 +546,7 @@ async function suiteStable(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese]]) {
       try {
         await suite(browser);
       } catch (err) {

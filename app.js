@@ -2,7 +2,23 @@ const FAVORITES_KEY = "motimoti-favorites";
 const LANG_KEY = "motimoti-lang";
 const RECENT_KEY = "motimoti-recent";
 const WEIGHT_KEY = "motimoti-favorites-weight";
-const LANGS = ["en", "ko"];
+const LANGS = ["en", "ko", "vi"];
+// 베트남어는 베타다 — AI 번역, 원어민 검수 전. 화면에 그렇게 표시한다.
+const BETA_LANGS = ["vi"];
+// 베타 표시 문구는 그 언어로 적는다 — 그 언어로 읽고 있는 사람에게 하는 말이다.
+const BETA_NOTE = { vi: "Bản dịch AI · chưa hiệu đính" };
+
+// 베트남어(베타)는 quotes-vi.js 에 따로 있다. 시작할 때 id 로 명언에 붙여 두면
+// 나머지 코드는 text[lang] 하나로 읽는다. 베트남어가 없는 명언은 베트남어
+// 화면에서 저절로 빠진다(hasLang).
+if (typeof QUOTES_VI !== "undefined") {
+  for (const q of QUOTES) {
+    const vi = QUOTES_VI[q.id];
+    if (!vi) continue;
+    q.text.vi = vi.text;
+    q.author.vi = vi.author;
+  }
+}
 
 const UI = {
   en: {
@@ -21,6 +37,7 @@ const UI = {
       share: "Share",
       back: "Back",
       language: "Language",
+      vi: "Vietnamese (beta · AI translation, not yet reviewed)",
     },
   },
   ko: {
@@ -39,6 +56,26 @@ const UI = {
       share: "공유하기",
       back: "메인으로 돌아가기",
       language: "언어",
+      vi: "베트남어 (베타 · AI 번역, 검수 전)",
+    },
+  },
+  vi: {
+    next: "Tiếp",
+    favorites: "Yêu thích",
+    remove: "Xóa",
+    count: (n) => `${n} câu`,
+    empty: "Chưa lưu câu nào.",
+    weight: "Hiện thường hơn",
+    weightHint: "Câu đã lưu sẽ xuất hiện nhiều gấp đôi",
+    copied: "Đã sao chép",
+    shareUnsupported: "Trình duyệt này không hỗ trợ chia sẻ",
+    aria: {
+      openFavorites: "Mở danh sách yêu thích",
+      favorite: "Yêu thích",
+      share: "Chia sẻ",
+      back: "Quay lại",
+      language: "Ngôn ngữ",
+      vi: "Tiếng Việt (beta · bản dịch AI, chưa hiệu đính)",
     },
   },
 };
@@ -62,6 +99,7 @@ const weightBtn = document.getElementById("weight-btn");
 const toastEl = document.getElementById("toast");
 const appHeaderEl = document.querySelector(".app-header");
 const langBtns = Array.from(document.querySelectorAll(".lang-btn"));
+const betaNoteEls = Array.from(document.querySelectorAll(".beta-note"));
 
 let currentQuote = null;
 let toastTimer = null;
@@ -71,7 +109,7 @@ let lang = resolveInitialLang();
 
 function resolveInitialLang() {
   const stored = localStorage.getItem(LANG_KEY);
-  if (LANGS.includes(stored)) return stored;
+  if (LANGS.includes(stored) && langAvailable(stored)) return stored;
   // 저장된 선택이 없을 때만 브라우저 언어를 본다. 한 번이라도 고르면
   // 그 뒤로는 감지하지 않는다.
   const preferred = navigator.languages || [navigator.language || ""];
@@ -95,8 +133,14 @@ function hasLang(quote, code) {
   return Boolean(quote.text && quote.text[code]);
 }
 
+// 그 언어로 된 명언이 하나라도 있어야 고를 수 있다. 베타 데이터 파일이 빠졌거나
+// 비어 있으면 버튼을 숨기고, 저장된 선택도 따르지 않는다.
+function langAvailable(code) {
+  return QUOTES.some((q) => hasLang(q, code));
+}
+
 function setLang(next) {
-  if (!LANGS.includes(next) || next === lang) return;
+  if (!LANGS.includes(next) || next === lang || !langAvailable(next)) return;
   lang = next;
   localStorage.setItem(LANG_KEY, lang);
   stopRiffle(); // 넘어가던 낱장은 옛 언어로 그려져 있다
@@ -124,6 +168,20 @@ function applyLang() {
   langBtns.forEach((btn) => {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
     btn.classList.toggle("active", btn.dataset.lang === lang);
+    const available = langAvailable(btn.dataset.lang);
+    btn.hidden = !available;
+    // 앞의 「·」 도 함께 숨긴다.
+    const sep = btn.previousElementSibling;
+    if (sep && sep.classList.contains("lang-sep")) sep.hidden = !available;
+    if (ui.aria[btn.dataset.lang]) {
+      btn.setAttribute("aria-label", ui.aria[btn.dataset.lang]);
+      btn.title = ui.aria[btn.dataset.lang];
+    }
+  });
+  const beta = BETA_LANGS.includes(lang);
+  betaNoteEls.forEach((el) => {
+    el.hidden = !beta;
+    el.textContent = beta ? BETA_NOTE[lang] : "";
   });
 }
 

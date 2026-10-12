@@ -12,7 +12,10 @@
 /* 토큰은 tokens.css 에 있다 (수집기와 공유). index.html 에서 먼저 불러온다. */
 
 
-html[lang="en"] {
+/* 베트남어는 라틴 문자라 영어와 같은 크기·자간을 쓴다. 성조 부호가 위아래로
+   쌓여도 줄 간격 1.85 안에 들어간다(시험에서 잰다). */
+html[lang="en"],
+html[lang="vi"] {
   --tracking-btn: 0.1em;
   --tracking-meta: 0.05em;
   --quote-size: 22px;
@@ -97,6 +100,20 @@ body {
 
 .lang-btn.active {
   color: var(--ink);
+}
+
+/* 베타 표시 — 버튼 글자 옆에 작게. 자간을 물려받지 않게 0 으로 둔다. */
+.beta-mark {
+  font-size: 8px;
+  letter-spacing: 0;
+  margin-left: 1px;
+  vertical-align: 5px;
+  line-height: 0;
+}
+
+.lang-btn[hidden],
+.lang-sep[hidden] {
+  display: none;
 }
 
 .lang-sep {
@@ -270,6 +287,22 @@ body {
   color: var(--ink-soft);
   letter-spacing: var(--tracking-meta);
   margin: 0;
+}
+
+/* 「AI 번역 · 검수 전」. 저자 아래에 메타 정보처럼 조용히 둔다. */
+.beta-note {
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin: -6px 0 0;
+}
+
+.beta-note[hidden] {
+  display: none;
+}
+
+.favorites-beta-note {
+  margin: 10px 0 0;
 }
 
 .quote-actions {
@@ -521,8 +554,19 @@ body {
     --quote-size: 20px;
   }
 
+  /* 언어 버튼이 셋이라 로고와 붙는다. 버튼 사이만 좁힌다 — 터치 높이는 그대로. */
+  .lang-btn {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .lang-toggle {
+    gap: 0;
+  }
+
   /* html[lang="en"] 이 :root 보다 특정도가 높으므로 여기서도 따로 덮는다. */
-  html[lang="en"] {
+  html[lang="en"],
+  html[lang="vi"] {
     --quote-size: 21px;
   }
 }
@@ -532,7 +576,8 @@ body {
     --quote-size: 23px;
   }
 
-  html[lang="en"] {
+  html[lang="en"],
+  html[lang="vi"] {
     --quote-size: 24px;
   }
 

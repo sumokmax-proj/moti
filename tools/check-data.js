@@ -14,10 +14,12 @@
  * - 같은 text.ko 중복 없음
  * - quotes.js 머리 주석의 번역 경로 개수·목록이 실제 데이터와 맞음
  * - 수집기 기록(pending-quotes.json)의 승인 id 가 quotes.js 에 있음
+ * - 베트남어 베타(quotes-vi.js): id 가 quotes.js 에 있음, 필드 모양, 길이 상한,
+ *   NFC 표기. 몇 편이 번역됐고 검수됐는지는 참고로 보여 준다
  *
  * 기준값은 collector/server.js 에서 읽는다(tools/lib.js). */
 
-const { loadQuotes, readServerRules, readCollectorData, createReport } = require("./lib");
+const { loadQuotes, loadVietnamese, readServerRules, readCollectorData, createReport } = require("./lib");
 
 const { quotes, source } = loadQuotes();
 const rules = readServerRules();
@@ -105,6 +107,42 @@ const orphan = (data.approved || []).filter((q) => !known.has(q.id)).map((q) => 
 report.check("수집기 승인 기록의 id 가 모두 quotes.js 에 있음", orphan.length === 0,
   orphan.length ? `없음: ${orphan.join(", ")}` : `승인 기록 ${(data.approved || []).length}건`);
 report.note("검증 대기", `${(data.pending || []).length}건`);
+
+/* ── 베트남어 (베타) ──────────────────────────────── */
+const { vi, maxVi } = loadVietnamese();
+const viIds = Object.keys(vi).map(Number);
+const viOrphan = viIds.filter((id) => !known.has(id));
+report.check("베트남어: id 가 모두 quotes.js 에 있음", viOrphan.length === 0, viOrphan.length ? `없음: ${viOrphan.join(", ")}` : "");
+const viProblems = [];
+for (const id of viIds) {
+  const v = vi[id];
+  const p = (msg) => viProblems.push(`id ${id}: ${msg}`);
+  if (!v.text) p("text 없음");
+  else {
+    if (v.text.length > maxVi) p(`text ${v.text.length}자 > ${maxVi}`);
+    if (v.text !== v.text.normalize("NFC")) p("text 가 NFC 가 아님");
+  }
+  if (!v.author) p("author 없음");
+  else if (v.author !== v.author.normalize("NFC")) p("author 가 NFC 가 아님");
+  if (!["original", "en"].includes(v.via)) p(`via 는 original | en — ${v.via}`);
+  if (typeof v.reviewed !== "boolean") p("reviewed 는 true | false");
+}
+report.check(`베트남어: 필드 · 길이 상한 ${maxVi} · NFC`, Number.isInteger(maxVi) && viProblems.length === 0,
+  !Number.isInteger(maxVi) ? "quotes-vi.js 머리 주석에서 「길이 상한 N자」 를 찾지 못함" : viProblems.join(" | "));
+// 같은 저자는 언제나 같은 베트남어 이름이어야 한다.
+const viNames = new Map();
+for (const id of viIds) {
+  const q = quotes.find((x) => x.id === id);
+  if (!q) continue;
+  const names = viNames.get(q.author.ko) || new Set();
+  names.add(vi[id].author);
+  viNames.set(q.author.ko, names);
+}
+const viNameClash = [...viNames].filter(([, s]) => s.size > 1).map(([a, s]) => `${a}: ${[...s].join(" / ")}`);
+report.check("베트남어: 같은 저자는 같은 이름", viNameClash.length === 0, viNameClash.join(" | "));
+const reviewed = viIds.filter((id) => vi[id].reviewed).length;
+const viaEn = viIds.filter((id) => vi[id].via === "en");
+report.note("베트남어 진행", `번역 ${viIds.length}/${quotes.length} · 검수 ${reviewed}${viaEn.length ? ` · 영어 경유 ${viaEn.join(", ")}` : ""}`);
 
 /* ── 참고: 수집기가 「(기존)」 으로 표시한 태그 사용 ─── */
 const legacy = ["failure_acceptance", "dream", "warning"];
