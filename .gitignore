@@ -1,3 +1,6 @@
 # 디자인 캔버스 빌드 산출물 (2MB+ 에디터 페이로드가 통째로 들어있음).
 # 원본은 .design/*.dc.html 과 .design/canvas.json 이고, 이 파일은 거기서 다시 생성된다.
 .design/motimoti-design.html
+
+# Node 의존성 (수집기 백엔드는 표준 라이브러리만 쓰지만, 실수로 들어오는 것을 막는다)
+node_modules/
