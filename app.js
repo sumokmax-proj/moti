@@ -2,11 +2,12 @@ const FAVORITES_KEY = "motimoti-favorites";
 const LANG_KEY = "motimoti-lang";
 const RECENT_KEY = "motimoti-recent";
 const WEIGHT_KEY = "motimoti-favorites-weight";
+const BETA_SEEN_KEY = "motimoti-beta-seen";
 const LANGS = ["en", "ko", "vi"];
-// 베트남어는 베타다 — AI 번역, 원어민 검수 전. 화면에 그렇게 표시한다.
+// 베트남어는 베타다 — AI 번역, 원어민 검수 전. 화면에는 버튼의 β 만 늘 두고,
+// 무슨 뜻인지는 처음 고를 때 한 번만 알린다(토스트). 명언마다 안내문을 붙이면
+// 읽는 화면이 산만해진다.
 const BETA_LANGS = ["vi"];
-// 베타 표시 문구는 그 언어로 적는다 — 그 언어로 읽고 있는 사람에게 하는 말이다.
-const BETA_NOTE = { vi: "Bản dịch AI · chưa hiệu đính" };
 
 // 베트남어(베타)는 quotes-vi.js 에 따로 있다. 시작할 때 id 로 명언에 붙여 두면
 // 나머지 코드는 text[lang] 하나로 읽는다. 베트남어가 없는 명언은 베트남어
@@ -31,6 +32,7 @@ const UI = {
     weightHint: "Saved quotes turn up twice as often",
     copied: "Copied to clipboard",
     shareUnsupported: "Sharing isn’t supported in this browser",
+    betaVi: "Vietnamese is an AI-translated beta · not yet reviewed",
     aria: {
       openFavorites: "Open favorites",
       favorite: "Add to favorites",
@@ -50,6 +52,7 @@ const UI = {
     weightHint: "저장한 명언이 두 배 자주 펼쳐집니다",
     copied: "클립보드에 복사되었습니다",
     shareUnsupported: "공유하기를 지원하지 않는 브라우저입니다",
+    betaVi: "베트남어는 AI 번역 베타입니다 · 검수 전",
     aria: {
       openFavorites: "즐겨찾기 목록 열기",
       favorite: "즐겨찾기",
@@ -69,6 +72,7 @@ const UI = {
     weightHint: "Câu đã lưu sẽ xuất hiện nhiều gấp đôi",
     copied: "Đã sao chép",
     shareUnsupported: "Trình duyệt này không hỗ trợ chia sẻ",
+    betaVi: "Tiếng Việt là bản dịch AI thử nghiệm · chưa hiệu đính",
     aria: {
       openFavorites: "Mở danh sách yêu thích",
       favorite: "Yêu thích",
@@ -99,7 +103,6 @@ const weightBtn = document.getElementById("weight-btn");
 const toastEl = document.getElementById("toast");
 const appHeaderEl = document.querySelector(".app-header");
 const langBtns = Array.from(document.querySelectorAll(".lang-btn"));
-const betaNoteEls = Array.from(document.querySelectorAll(".beta-note"));
 
 let currentQuote = null;
 let toastTimer = null;
@@ -141,6 +144,7 @@ function langAvailable(code) {
 
 function setLang(next) {
   if (!LANGS.includes(next) || next === lang || !langAvailable(next)) return;
+  const prevUi = t();
   lang = next;
   localStorage.setItem(LANG_KEY, lang);
   stopRiffle(); // 넘어가던 낱장은 옛 언어로 그려져 있다
@@ -151,6 +155,7 @@ function setLang(next) {
   }
   renderQuote(currentQuote);
   if (!favoritesView.classList.contains("hidden")) renderFavoritesList();
+  noticeBeta(next, prevUi);
 }
 
 function applyLang() {
@@ -177,11 +182,6 @@ function applyLang() {
       btn.setAttribute("aria-label", ui.aria[btn.dataset.lang]);
       btn.title = ui.aria[btn.dataset.lang];
     }
-  });
-  const beta = BETA_LANGS.includes(lang);
-  betaNoteEls.forEach((el) => {
-    el.hidden = !beta;
-    el.textContent = beta ? BETA_NOTE[lang] : "";
   });
 }
 
@@ -821,13 +821,27 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-function showToast(message) {
+function showToast(message, ms = 2000) {
   toastEl.textContent = message;
   toastEl.classList.remove("hidden");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
     toastEl.classList.add("hidden");
-  }, 2000);
+  }, ms);
+}
+
+// 베타 언어를 처음 고를 때 한 번만 알린다. 고르기 전 언어로 말한다 — 고른
+// 언어를 아직 못 읽는 사람이 누른 것일 수 있다.
+function noticeBeta(next, prevUi) {
+  if (!BETA_LANGS.includes(next)) return;
+  let seen = false;
+  try {
+    seen = localStorage.getItem(BETA_SEEN_KEY) === "1";
+    localStorage.setItem(BETA_SEEN_KEY, "1");
+  } catch {
+    // 저장이 막히면 매번 알린다 — 모르고 지나치는 것보다 낫다.
+  }
+  if (!seen) showToast(prevUi.betaVi, 3500);
 }
 
 async function shareCurrentQuote() {

@@ -496,18 +496,34 @@ async function suiteVietnamese(browser) {
   report.check("베트남어 기기 — 기본은 영어", (await p.evaluate(() => lang)) === "en");
   const vi = p.locator(".app-header .lang-btn[data-lang=vi]");
   const label = await vi.getAttribute("aria-label");
-  report.check("VI 버튼 — β 표시와 베타 안내", (await vi.isVisible()) && (await vi.textContent()).includes("β") && /beta/i.test(label), label);
+  report.check("VN 버튼 — β 표시와 베타 안내(aria)", (await vi.isVisible()) && (await vi.textContent()).replace("β", "") === "VN" && /beta/i.test(label), label);
 
+  // 처음 고르면 고르기 전 언어(영어)로 한 번 알린다. 명언 화면에 안내문은 없다.
   await vi.click();
   await idle(p);
+  const toast1 = await p.evaluate(() => ({ shown: !document.getElementById("toast").classList.contains("hidden"), text: document.getElementById("toast").textContent }));
   const r = await p.evaluate(() => ({
     html: document.documentElement.lang,
     text: document.getElementById("quote-text").textContent,
     vi: currentQuote.text.vi,
-    note: document.querySelector(".quote-meta .beta-note").textContent,
-    noteShown: !document.querySelector(".quote-meta .beta-note").hidden,
+    notes: document.querySelectorAll(".beta-note").length,
   }));
-  report.check("VI 로 바꾸면 베트남어 명언 + 「AI 번역 · 검수 전」", r.html === "vi" && r.text === r.vi && r.noteShown && r.note.includes("chưa hiệu đính"), r.note);
+  report.check("VN 으로 바꾸면 베트남어 명언, 화면에 안내문 없음", r.html === "vi" && r.text === r.vi && r.notes === 0);
+  report.check("VN 을 처음 고르면 고르기 전 언어로 베타 안내 한 번", toast1.shown && /beta/i.test(toast1.text) && /AI/.test(toast1.text), toast1.text);
+  await p.evaluate(() => document.getElementById("toast").classList.add("hidden"));
+  await p.locator(".app-header .lang-btn[data-lang=en]").click();
+  await vi.click();
+  const toast2 = await p.evaluate(() => !document.getElementById("toast").classList.contains("hidden"));
+  report.check("두 번째부터는 안내하지 않음", !toast2);
+  // 긴 안내도 좁은 화면 밖으로 나가지 않는다.
+  await p.setViewportSize({ width: 320, height: 568 });
+  const fits = await p.evaluate(() => {
+    showToast(UI.ko.betaVi);
+    const r = document.getElementById("toast").getBoundingClientRect();
+    return r.left >= 0 && r.right <= innerWidth;
+  });
+  report.check("긴 안내 토스트도 320px 안에 들어감", fits);
+  await p.setViewportSize({ width: 390, height: 844 });
 
   const pool = await p.evaluate(() => {
     let cur = currentQuote, bad = 0;
@@ -515,14 +531,6 @@ async function suiteVietnamese(browser) {
     return { bad, size: QUOTES.filter((q) => q.text.vi).length };
   });
   report.check("VI 에서는 베트남어가 있는 명언만 나옴", pool.bad === 0, `베트남어 ${pool.size}편, 200번 중 없는 것 ${pool.bad}`);
-
-  await p.click("#favorites-nav-btn");
-  const favNote = await p.locator(".favorites-beta-note").isVisible();
-  await p.locator("#favorites-view .lang-btn[data-lang=en]").click();
-  const favNoteEn = await p.locator(".favorites-beta-note").isVisible();
-  await p.click("#back-btn");
-  const mainNoteEn = await p.locator(".quote-meta .beta-note").isVisible();
-  report.check("베타 안내는 VI 일 때만 (즐겨찾기 화면 포함)", favNote && !favNoteEn && !mainNoteEn);
 
   // 저장된 선택이 vi 인데 베트남어 데이터가 없으면 영어로 시작하고 버튼을 숨긴다.
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });

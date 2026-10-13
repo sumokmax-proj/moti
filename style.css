@@ -289,22 +289,6 @@ body {
   margin: 0;
 }
 
-/* 「AI 번역 · 검수 전」. 저자 아래에 메타 정보처럼 조용히 둔다. */
-.beta-note {
-  font-size: 11px;
-  color: var(--ink-soft);
-  letter-spacing: 0.04em;
-  margin: -6px 0 0;
-}
-
-.beta-note[hidden] {
-  display: none;
-}
-
-.favorites-beta-note {
-  margin: 10px 0 0;
-}
-
 .quote-actions {
   display: flex;
   gap: 6px;
@@ -535,7 +519,12 @@ body {
   font-family: var(--font-kr);
   font-size: 13px;
   letter-spacing: 0.06em;
-  white-space: nowrap;
+  /* 베타 안내처럼 긴 문구는 줄을 바꾼다. 좁은 화면에서도 양옆 16px 을 남긴다. */
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  word-break: keep-all;   /* 한글이 낱자로 끊기지 않게 */
+  text-wrap: balance;     /* 두 줄이면 길이를 고르게 */
   transition: opacity 0.2s ease;
   z-index: 10;
 }
