@@ -10,9 +10,10 @@
 
 /* ── 상황 태그 ─────────────────────────────────────────
    quotes.js 의 tags 가 쓰는 값이다. 여기서 바꾸면 기존 데이터와 어긋나므로
-   키는 고정하고 이름만 손본다. */
+   키는 고정하고 이름만 손본다. 태그는 편집용 기록이다 — 명언을 모을 때 어떤
+   상황이 모자란지 보는 데 쓰고, 앱 화면은 쓰지 않는다(QUOTE_STANDARDS.md 4장). */
 const SITUATION_TAGS = [
-  // QUOTE_STANDARDS.md 4장의 표를 그대로 옮긴 것이 앞의 13개다.
+  // QUOTE_STANDARDS.md 4장의 표를 그대로 옮긴 12개.
   { key: "despair", ko: "절망할 때", en: "In despair" },
   { key: "failure", ko: "실패했을 때", en: "After failure" },
   { key: "challenge", ko: "도전할 때", en: "Starting out" },
@@ -25,13 +26,6 @@ const SITUATION_TAGS = [
   { key: "passion", ko: "열정·사랑", en: "Passion" },
   { key: "success", ko: "성공·가치", en: "Success, worth" },
   { key: "preparation", ko: "준비·노력", en: "Preparation" },
-  { key: "oriental", ko: "동양 고전", en: "Eastern classics" },
-
-  // 아래 셋은 표에 없지만 quotes.js 가 이미 쓰고 있다. 빼면 기존 명언을
-  // 수집기로 다시 넣을 때 "모르는 태그" 로 걸린다. 새 명언에는 위를 쓴다.
-  { key: "failure_acceptance", ko: "실패 수용 (기존)", en: "Accepting failure (legacy)" },
-  { key: "dream", ko: "꿈 (기존)", en: "Dream (legacy)" },
-  { key: "warning", ko: "경계 (기존)", en: "Caution (legacy)" },
 ];
 
 

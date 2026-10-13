@@ -144,9 +144,9 @@ const reviewed = viIds.filter((id) => vi[id].reviewed).length;
 const viaEn = viIds.filter((id) => vi[id].via === "en");
 report.note("베트남어 진행", `번역 ${viIds.length}/${quotes.length} · 검수 ${reviewed}${viaEn.length ? ` · 영어 경유 ${viaEn.join(", ")}` : ""}`);
 
-/* ── 참고: 수집기가 「(기존)」 으로 표시한 태그 사용 ─── */
-const legacy = ["failure_acceptance", "dream", "warning"];
-const legacyUse = quotes.filter((q) => q.tags.some((t) => legacy.includes(t))).map((q) => `${q.id}[${q.tags.filter((t) => legacy.includes(t))}]`);
-report.note("「(기존)」 태그 사용 (참고 — 상황별 기능 때 정리 예정)", legacyUse.join(" ") || "없음");
+/* ── 참고: 태그별 편수 — 명언을 모을 때 모자란 상황을 보는 용도 ── */
+const tagCount = {};
+quotes.forEach((q) => q.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
+report.note("태그별 편수 (편집용)", [...rules.tags].map((t) => `${t} ${tagCount[t] || 0}`).join(" · "));
 
 process.exitCode = report.print() > 0 ? 1 : 0;

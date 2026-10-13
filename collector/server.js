@@ -30,12 +30,11 @@ const HOST = "127.0.0.1";
 
 const MAX_BODY = 1024 * 1024; // 1MB. 명언 몇 편에 이보다 더 필요할 일이 없다.
 
-/* QUOTE_STANDARDS.md 의 표 13개 + quotes.js 가 이미 쓰는 legacy 3개.
-   legacy 를 빼면 기존 명언을 다시 넣을 때 "모르는 태그" 로 걸린다. */
+/* QUOTE_STANDARDS.md 4장의 표 12개. 태그는 편집용 기록이다 — 앱은 쓰지 않는다.
+   예전 태그(failure_acceptance·dream·warning)와 oriental 은 v1.10 에서 정리했다. */
 const TAG_KEYS = new Set([
   "despair", "failure", "challenge", "fear", "energy", "hope", "meaning",
-  "perseverance", "freedom", "passion", "success", "preparation", "oriental",
-  "failure_acceptance", "dream", "warning",
+  "perseverance", "freedom", "passion", "success", "preparation",
 ]);
 
 /* 길이 상한 — "화면이 감당하는 최대치" 다. 엄선 기준이 아니다.

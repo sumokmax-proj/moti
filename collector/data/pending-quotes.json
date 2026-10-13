@@ -323,8 +323,7 @@
       "year": 736,
       "sourceUrl": "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
       "tags": [
-        "challenge",
-        "oriental"
+        "challenge"
       ],
       "id": 79,
       "approvedAt": "2026-09-13T05:42:11.310Z"
@@ -346,8 +345,7 @@
       "year": -450,
       "sourceUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
       "tags": [
-        "preparation",
-        "oriental"
+        "preparation"
       ],
       "translator": "James Legge",
       "translatorUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
@@ -579,8 +577,7 @@
       "year": -450,
       "sourceUrl": "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E8%A1%9E%E9%9D%88%E5%85%AC%E7%AC%AC%E5%8D%81%E4%BA%94",
       "tags": [
-        "failure",
-        "oriental"
+        "failure"
       ],
       "translator": "James Legge",
       "translatorUrl": "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
@@ -604,8 +601,7 @@
       "year": -400,
       "sourceUrl": "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
       "tags": [
-        "perseverance",
-        "oriental"
+        "perseverance"
       ],
       "id": 91,
       "approvedAt": "2026-10-09T03:22:50.325Z"
@@ -743,8 +739,7 @@
       "year": -400,
       "sourceUrl": "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
       "tags": [
-        "challenge",
-        "oriental"
+        "challenge"
       ],
       "translator": "James Legge",
       "translatorUrl": "https://www.gutenberg.org/cache/epub/216/pg216.txt",
@@ -932,8 +927,7 @@
       "sourceUrl": "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E5%A4%A7%E5%AD%B8",
       "tags": [
         "energy",
-        "challenge",
-        "oriental"
+        "challenge"
       ],
       "translator": "James Legge",
       "translatorUrl": "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_1/The_Great_Learning",
@@ -957,8 +951,7 @@
       "year": -300,
       "sourceUrl": "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E9%9B%A2%E5%A9%81%E4%B8%8B",
       "tags": [
-        "preparation",
-        "oriental"
+        "preparation"
       ],
       "id": 106,
       "approvedAt": "2026-10-09T05:54:07.446Z"
@@ -1352,8 +1345,8 @@
       "year": 1868,
       "sourceUrl": "https://www.gutenberg.org/cache/epub/514/pg514.txt",
       "tags": [
-        "dream",
-        "passion"
+        "passion",
+        "challenge"
       ],
       "id": 123,
       "approvedAt": "2026-10-09T06:05:46.766Z"
@@ -1516,8 +1509,7 @@
       "sourceUrl": "https://zh.wikisource.org/zh-hant/%E8%A1%8C%E8%B7%AF%E9%9B%A3_(%E9%87%91%E6%A8%BD%E6%B8%85%E9%85%92%E6%96%97%E5%8D%81%E5%8D%83)",
       "tags": [
         "hope",
-        "dream",
-        "oriental"
+        "challenge"
       ],
       "id": 130,
       "approvedAt": "2026-10-09T06:41:31.578Z"

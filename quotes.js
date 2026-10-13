@@ -310,7 +310,7 @@ const QUOTES = [
     source: "단편소설 「고향(故鄕)」, 『신청년』 제9권 제1호",
     year: 1921,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E6%95%85%E9%84%89",
-    tags: ["failure_acceptance", "challenge"],
+    tags: ["hope", "challenge"],
   },
   {
     id: 46,
@@ -348,7 +348,7 @@ const QUOTES = [
     source: "『월든』 결론장",
     year: 1854,
     sourceUrl: "https://www.gutenberg.org/files/205/205-h/205-h.htm",
-    tags: ["challenge", "dream"],
+    tags: ["challenge", "hope"],
   },
   {
     id: 48,
@@ -560,7 +560,7 @@ const QUOTES = [
     source: "『목민심서』 율기 제1조 칙궁",
     year: 1818,
     sourceUrl: "https://ko.wikisource.org/wiki/%EB%AA%A9%EB%AF%BC%EC%8B%AC%EC%84%9C/%EC%9C%A8%EA%B8%B0",
-    tags: ["oriental", "energy"],
+    tags: ["energy"],
   },
   {
     id: 61,
@@ -878,7 +878,7 @@ const QUOTES = [
     source: "『전당시』 권216 「망악(望嶽)」",
     year: 736,
     sourceUrl: "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
-    tags: ["challenge", "oriental"],
+    tags: ["challenge"],
   },
   {
     id: 80,
@@ -899,7 +899,7 @@ const QUOTES = [
     source: "『논어』 술이편 21",
     year: -450,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
-    tags: ["preparation", "oriental"],
+    tags: ["preparation"],
   },
   {
     id: 81,
@@ -1077,7 +1077,7 @@ const QUOTES = [
     source: "『논어』 위령공편 29",
     year: -450,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E8%A1%9E%E9%9D%88%E5%85%AC%E7%AC%AC%E5%8D%81%E4%BA%94",
-    tags: ["failure", "oriental"],
+    tags: ["failure"],
   },
   {
     id: 91,
@@ -1094,7 +1094,7 @@ const QUOTES = [
     source: "『중용』 20장",
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
-    tags: ["perseverance", "oriental"],
+    tags: ["perseverance"],
   },
   {
     id: 92,
@@ -1204,7 +1204,7 @@ const QUOTES = [
     source: "『도덕경』 제33장 (왕필본)",
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
-    tags: ["challenge", "oriental"],
+    tags: ["challenge"],
   },
   {
     id: 98,
@@ -1348,7 +1348,7 @@ const QUOTES = [
     source: "『대학』 전2장 (탕왕의 세숫대야에 새긴 글)",
     year: -1600,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E5%A4%A7%E5%AD%B8",
-    tags: ["energy", "challenge", "oriental"],
+    tags: ["energy", "challenge"],
   },
   {
     id: 106,
@@ -1365,7 +1365,7 @@ const QUOTES = [
     source: "『맹자』 이루하 8",
     year: -300,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E9%9B%A2%E5%A9%81%E4%B8%8B",
-    tags: ["preparation", "oriental"],
+    tags: ["preparation"],
   },
   {
     id: 107,
@@ -1666,7 +1666,7 @@ const QUOTES = [
     source: "『작은 아씨들』 13장 「공중누각」, 조의 대사",
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/514/pg514.txt",
-    tags: ["dream", "passion"],
+    tags: ["passion", "challenge"],
   },
   {
     id: 124,
@@ -1789,7 +1789,7 @@ const QUOTES = [
     source: "「행로난(行路難)」 제1수",
     year: 744,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%A1%8C%E8%B7%AF%E9%9B%A3_(%E9%87%91%E6%A8%BD%E6%B8%85%E9%85%92%E6%96%97%E5%8D%81%E5%8D%83)",
-    tags: ["hope", "dream", "oriental"],
+    tags: ["hope", "challenge"],
   },
   {
     id: 131,
