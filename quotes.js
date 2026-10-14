@@ -6,14 +6,14 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 147
+// 다음 id: 157
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (61개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (67개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
@@ -21,7 +21,7 @@
 //      93 아우렐리우스도 같다. 134 엘리엇은 첫머리 접속사 「But」 를 떼고
 //      대문자로 올렸다.)
 //
-//  2) 공개된 정본 영역 (25개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (26개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -48,10 +48,11 @@
 //       id 133 아우렐리우스 George Long
 //       id 141 노자      James Legge
 //       id 142 맹자      James Legge
+//       id 154 증자      James Legge
 //
-//  3) 자체 번역 (24개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (27개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91,106,107,114,115,124,125,126,128,129,130,146. (59·114·115·129 는
+//     87,88,91,106,107,114,115,124,125,126,128,129,130,146,147,149,151. (59·114·115·129 는
 //     한국어 원문이라 text.en 만 자체 번역이다.)
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
@@ -62,7 +63,7 @@
 //
 // ── 검증 상태 ────────────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~146
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~156
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
@@ -78,7 +79,9 @@
 //      에디슨 생전(1910)에 나온 전기에 실렸다(v1.6 근거 2 「직접 들은 사람의 기록」).
 //      138 루스벨트·142 맹자는 혼자 서는 구간을 발췌했다(v1.9). 138 은 문장 중간이라
 //      첫 글자를 대문자로 올렸고, 142 는 앞 구절(有為者辟若掘井)까지 넣으면 Legge
-//      영역이 205자로 영어 상한을 넘었다. 145 제임스는 작품 속 인물(스트레더)의 말이다.)
+//      영역이 205자로 영어 상한을 넘었다. 145 제임스는 작품 속 인물(스트레더)의 말이다.
+//      149 괴테는 Taylor 영역 2부를 찾지 못해 자체 번역이다(30·119 는 Taylor 1부). 151 안데르센은
+//      동화 속 나비의 말, 155 프랭클린은 113 처럼 「가난한 리처드」 격언 인용이다.)
 // [B] 인용 확인(QUOTE_STANDARDS.md v1.6 ②) — 원문이 온라인에 없거나 이 환경에서
 //     열리지 않아, 원문 위치를 짚어 인용한 2차 자료로 문구를 대조한 항목:
 //     6(스탠퍼드 연설 2005.6.12), 21(LIFE 1955.5.2), 41(『난중일기』 1597.9.15),
@@ -2081,5 +2084,179 @@ const QUOTES = [
     year: 812,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%80%B2%E5%AD%B8%E8%A7%A3",
     tags: ["preparation", "perseverance"],
+  },
+  {
+    id: 147,
+    text: {
+      ko: "자기 자신의 지성을 사용할 용기를 가져라!",
+      en: "Have the courage to use your own understanding!",
+    },
+    author: {
+      ko: "임마누엘 칸트",
+      en: "Immanuel Kant",
+    },
+    original: "Habe Muth dich deines eigenen Verstandes zu bedienen!",
+    lang: "de",
+    source: "「계몽이란 무엇인가에 대한 답변」",
+    year: 1784,
+    sourceUrl: "https://de.wikisource.org/wiki/Beantwortung_der_Frage:_Was_ist_Aufkl%C3%A4rung%3F",
+    tags: ["freedom", "challenge"],
+  },
+  {
+    id: 148,
+    text: {
+      ko: "무엇보다도, 양심에 따라 알고 말하고 자유롭게 논할 자유를 내게 달라.",
+      en: "Give me the liberty to know, to utter, and to argue freely according to conscience, above all liberties.",
+    },
+    author: {
+      ko: "존 밀턴",
+      en: "John Milton",
+    },
+    original: "Give me the liberty to know, to utter, and to argue freely according to conscience, above all liberties.",
+    lang: "en",
+    source: "『아레오파기티카』",
+    year: 1644,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/608/pg608.txt",
+    tags: ["freedom", "meaning"],
+  },
+  {
+    id: 149,
+    text: {
+      ko: "날마다 쟁취해야 하는 사람만이 자유와 삶을 누릴 자격이 있다.",
+      en: "Only he deserves freedom and life who must conquer them every day.",
+    },
+    author: {
+      ko: "요한 볼프강 폰 괴테",
+      en: "Johann Wolfgang von Goethe",
+    },
+    original: "Nur der verdient sich Freiheit wie das Leben, / Der täglich sie erobern muß.",
+    lang: "de",
+    source: "『파우스트』 2부 5막, 파우스트의 마지막 독백",
+    year: 1832,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2230/pg2230.txt",
+    tags: ["freedom", "perseverance"],
+  },
+  {
+    id: 150,
+    text: {
+      ko: "여러분은 한 사람이 어떻게 노예가 되었는지 보았다. 이제 한 노예가 어떻게 사람이 되는지 보게 될 것이다.",
+      en: "You have seen how a man was made a slave; you shall see how a slave was made a man.",
+    },
+    author: {
+      ko: "프레더릭 더글러스",
+      en: "Frederick Douglass",
+    },
+    original: "You have seen how a man was made a slave; you shall see how a slave was made a man.",
+    lang: "en",
+    source: "『프레더릭 더글러스의 삶 이야기』 10장",
+    year: 1845,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/23/pg23.txt",
+    tags: ["freedom", "challenge"],
+  },
+  {
+    id: 151,
+    text: {
+      ko: "사는 것만으로는 부족해! 햇빛과 자유, 그리고 작은 꽃 한 송이가 있어야 해!",
+      en: "Living is not enough! One must have sunshine, freedom, and a little flower!",
+    },
+    author: {
+      ko: "한스 크리스티안 안데르센",
+      en: "Hans Christian Andersen",
+    },
+    original: "„leve er ikke nok!” sagde han, „Solskin, Frihed og en lille Blomst maa man have!”",
+    lang: "da",
+    source: "동화 「나비」, 나비의 말",
+    year: 1861,
+    sourceUrl: "https://da.wikisource.org/wiki/Sommerfuglen",
+    tags: ["passion", "freedom"],
+  },
+  {
+    id: 152,
+    text: {
+      ko: "나와 함께 늙어 가자! 가장 좋은 날은 아직 오지 않았으니.",
+      en: "Grow old along with me! The best is yet to be.",
+    },
+    author: {
+      ko: "로버트 브라우닝",
+      en: "Robert Browning",
+    },
+    original: "Grow old along with me! / The best is yet to be,",
+    lang: "en",
+    source: "「랍비 벤 에즈라」, 『극적 인물들』",
+    year: 1864,
+    sourceUrl: "https://en.wikisource.org/wiki/Dramatis_Person%C3%A6/Rabbi_Ben_Ezra",
+    tags: ["hope", "passion"],
+  },
+  {
+    id: 153,
+    text: {
+      ko: "밭을 가는 일에도 시를 쓰는 일만큼 존엄이 있음을 배우기 전까지, 어떤 민족도 번영할 수 없다.",
+      en: "No race can prosper till it learns that there is as much dignity in tilling a field as in writing a poem.",
+    },
+    author: {
+      ko: "부커 T. 워싱턴",
+      en: "Booker T. Washington",
+    },
+    original: "No race can prosper till it learns that there is as much dignity in tilling a field as in writing a poem.",
+    lang: "en",
+    source: "『노예에서 일어서서(Up from Slavery)』 14장, 애틀랜타 박람회 연설(1895)",
+    year: 1901,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
+    tags: ["passion", "preparation"],
+  },
+  {
+    id: 154,
+    text: {
+      ko: "선비는 뜻이 넓고 굳세지 않으면 안 된다. 짐은 무겁고 길은 멀기 때문이다.",
+      en: "The officer may not be without breadth of mind and vigorous endurance. His burden is heavy and his course is long.",
+    },
+    author: {
+      ko: "증자",
+      en: "Zengzi",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    },
+    original: "士不可以不弘毅，任重而道遠",
+    lang: "lzh",
+    source: "『논어』 태백편 7",
+    year: -450,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    tags: ["perseverance", "meaning"],
+  },
+  {
+    id: 155,
+    text: {
+      ko: "잃어버린 시간은 다시 찾을 수 없다.",
+      en: "Lost time is never found again.",
+    },
+    author: {
+      ko: "벤저민 프랭클린",
+      en: "Benjamin Franklin",
+    },
+    original: "Lost time is never found again",
+    lang: "en",
+    source: "『부자가 되는 길(The Way to Wealth)』, 「가난한 리처드」의 격언(속담 인용)",
+    year: 1758,
+    sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
+    tags: ["preparation", "energy"],
+  },
+  {
+    id: 156,
+    text: {
+      ko: "해를 잃었다고 눈물 흘리면, 별들도 놓치고 만다.",
+      en: "If you shed tears when you miss the sun, you also miss the stars.",
+    },
+    author: {
+      ko: "라빈드라나트 타고르",
+      en: "Rabindranath Tagore",
+    },
+    original: "If you shed tears when you miss the sun, you also miss the stars.",
+    lang: "en",
+    source: "『길 잃은 새(Stray Birds)』 6",
+    year: 1916,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/6524/pg6524.txt",
+    tags: ["despair", "hope"],
   },
 ];
