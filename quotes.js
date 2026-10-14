@@ -6,14 +6,14 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 137
+// 다음 id: 147
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (54개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (61개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
@@ -21,7 +21,7 @@
 //      93 아우렐리우스도 같다. 134 엘리엇은 첫머리 접속사 「But」 를 떼고
 //      대문자로 올렸다.)
 //
-//  2) 공개된 정본 영역 (23개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (25개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -46,10 +46,12 @@
 //       id 119 괴테      Bayard Taylor
 //       id 127 단테      Henry Wadsworth Longfellow
 //       id 133 아우렐리우스 George Long
+//       id 141 노자      James Legge
+//       id 142 맹자      James Legge
 //
-//  3) 자체 번역 (23개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (24개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91,106,107,114,115,124,125,126,128,129,130. (59·114·115·129 는
+//     87,88,91,106,107,114,115,124,125,126,128,129,130,146. (59·114·115·129 는
 //     한국어 원문이라 text.en 만 자체 번역이다.)
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
@@ -60,7 +62,7 @@
 //
 // ── 검증 상태 ────────────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~136
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~146
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
@@ -71,7 +73,12 @@
 //      text.ko 는 표준 표기 「우러러」「한 점」으로 적었다.
 //      130 이백은 91 처럼 이문 주석 「浪 一作波」를 빼고 대조했고, zh-hant 페이지가
 //      보여주는 「掛」로 적었다(원 위키텍스트는 「挂」). 133 아우렐리우스는 위키문헌
-//      전사가 「ἄνδραδιαλέγεσθαι」로 붙여 쓴 것을 띄어 적고 글자 단위로 대조했다.)
+//      전사가 「ἄνδραδιαλέγεσθαι」로 붙여 쓴 것을 띄어 적고 글자 단위로 대조했다.
+//      137 에디슨은 에디슨이 쓴 글이 아니라 곁에서 들은 월터 맬러리의 증언이다 —
+//      에디슨 생전(1910)에 나온 전기에 실렸다(v1.6 근거 2 「직접 들은 사람의 기록」).
+//      138 루스벨트·142 맹자는 혼자 서는 구간을 발췌했다(v1.9). 138 은 문장 중간이라
+//      첫 글자를 대문자로 올렸고, 142 는 앞 구절(有為者辟若掘井)까지 넣으면 Legge
+//      영역이 205자로 영어 상한을 넘었다. 145 제임스는 작품 속 인물(스트레더)의 말이다.)
 // [B] 인용 확인(QUOTE_STANDARDS.md v1.6 ②) — 원문이 온라인에 없거나 이 환경에서
 //     열리지 않아, 원문 위치를 짚어 인용한 2차 자료로 문구를 대조한 항목:
 //     6(스탠퍼드 연설 2005.6.12), 21(LIFE 1955.5.2), 41(『난중일기』 1597.9.15),
@@ -1896,5 +1903,183 @@ const QUOTES = [
     year: 1600,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1524/pg1524.txt",
     tags: ["freedom", "meaning"],
+  },
+  {
+    id: 137,
+    text: {
+      ko: "결과라니! 이보게, 결과는 많이 얻었네! 안 되는 방법을 수천 가지나 알게 됐으니.",
+      en: "Results! Why, man, I have gotten a lot of results! I know several thousand things that won't work.",
+    },
+    author: {
+      ko: "토머스 에디슨",
+      en: "Thomas Edison",
+    },
+    original: "Results! Why, man, I have gotten a lot of results! I know several thousand things that won't work.",
+    lang: "en",
+    source: "『에디슨: 그의 생애와 발명』(다이어·마틴) — 축전지 실험 중 월터 S. 맬러리에게 한 말, 맬러리의 증언",
+    year: 1910,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/820/pg820.txt",
+    tags: ["failure", "perseverance"],
+  },
+  {
+    id: 138,
+    text: {
+      ko: "실수와 부족함이 없는 노력은 없다.",
+      en: "There is no effort without error and shortcoming.",
+    },
+    author: {
+      ko: "시어도어 루스벨트",
+      en: "Theodore Roosevelt",
+    },
+    original: "there is no effort without error and shortcoming",
+    lang: "en",
+    source: "「공화국의 시민권」 연설(「경기장의 사나이」), 파리 소르본 (4월 23일)",
+    year: 1910,
+    sourceUrl: "https://en.wikisource.org/wiki/Citizenship_in_a_Republic",
+    tags: ["failure", "challenge"],
+  },
+  {
+    id: 139,
+    text: {
+      ko: "나는 실패를 두려워한 적이 없다. 가장 위대한 이들 가운데 들지 못하느니 차라리 실패하겠다.",
+      en: "I was never afraid of failure; for I would sooner fail than not be among the greatest.",
+    },
+    author: {
+      ko: "존 키츠",
+      en: "John Keats",
+    },
+    original: "I was never afraid of failure; for I would sooner fail than not be among the greatest",
+    lang: "en",
+    source: "제임스 헤시에게 보낸 편지 (10월 8일)",
+    year: 1818,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/35698/pg35698.txt",
+    tags: ["failure", "passion"],
+  },
+  {
+    id: 140,
+    text: {
+      ko: "위인들이 올라 지켜 낸 높은 곳은 단숨에 날아올라 닿은 것이 아니다. 동료들이 잠든 사이, 그들은 밤새 위로 애써 오르고 있었다.",
+      en: "The heights by great men reached and kept were not attained by sudden flight, but they, while their companions slept, were toiling upward in the night.",
+    },
+    author: {
+      ko: "헨리 워즈워스 롱펠로",
+      en: "Henry Wadsworth Longfellow",
+    },
+    original: "The heights by great men reached and kept / Were not attained by sudden flight, / But they, while their companions slept, / Were toiling upward in the night.",
+    lang: "en",
+    source: "「성 아우구스티누스의 사다리」, 『철새들』",
+    year: 1858,
+    sourceUrl: "https://en.wikisource.org/wiki/Birds_of_Passage_(Collection)/The_Ladder_of_St._Augustine",
+    tags: ["success", "perseverance"],
+  },
+  {
+    id: 141,
+    text: {
+      ko: "큰 그릇은 늦게 이루어진다.",
+      en: "A vessel great, it is the slowest made.",
+    },
+    author: {
+      ko: "노자",
+      en: "Laozi",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+    },
+    original: "大器晚成",
+    lang: "lzh",
+    source: "『도덕경』 제41장 (왕필본)",
+    year: -400,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
+    tags: ["success", "perseverance"],
+  },
+  {
+    id: 142,
+    text: {
+      ko: "우물을 아홉 길이나 파고도 샘에 닿기 전에 그만두면, 결국 버린 우물이다.",
+      en: "To dig the well to a depth of seventy-two cubits, and stop without reaching the spring, is after all throwing away the well.",
+    },
+    author: {
+      ko: "맹자",
+      en: "Mencius",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_2/The_Works_of_Mencius/chapter13",
+    },
+    original: "掘井九軔而不及泉，猶為棄井也",
+    lang: "lzh",
+    source: "『맹자』 진심상 29",
+    year: -300,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E7%9B%A1%E5%BF%83%E4%B8%8A",
+    tags: ["perseverance", "success"],
+  },
+  {
+    id: 143,
+    text: {
+      ko: "네 삶을 사랑하라, 그것이 아무리 초라할지라도.",
+      en: "Love your life, poor as it is.",
+    },
+    author: {
+      ko: "헨리 데이비드 소로",
+      en: "Henry David Thoreau",
+    },
+    original: "Love your life, poor as it is.",
+    lang: "en",
+    source: "『월든』 「맺음말」",
+    year: 1854,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/205/pg205.txt",
+    tags: ["passion", "meaning"],
+  },
+  {
+    id: 144,
+    text: {
+      ko: "한 사람의 마음이 무너지는 것을 막을 수 있다면, 나는 헛되이 사는 것이 아니리.",
+      en: "If I can stop one heart from breaking, I shall not live in vain.",
+    },
+    author: {
+      ko: "에밀리 디킨슨",
+      en: "Emily Dickinson",
+    },
+    original: "If I can stop one heart from breaking, / I shall not live in vain;",
+    lang: "en",
+    source: "『에밀리 디킨슨 시집』 「삶」 6",
+    year: 1890,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
+    tags: ["meaning", "passion"],
+  },
+  {
+    id: 145,
+    text: {
+      ko: "할 수 있는 한 마음껏 살아라. 그러지 않는 것은 실수다.",
+      en: "Live all you can; it's a mistake not to.",
+    },
+    author: {
+      ko: "헨리 제임스",
+      en: "Henry James",
+    },
+    original: "Live all you can; it’s a mistake not to.",
+    lang: "en",
+    source: "『대사들(The Ambassadors)』 5부 2장, 스트레더의 말",
+    year: 1903,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/432/pg432.txt",
+    tags: ["passion", "energy"],
+  },
+  {
+    id: 146,
+    text: {
+      ko: "학업은 부지런함으로 정밀해지고 놀이로 황폐해지며, 행실은 생각으로 이루어지고 되는 대로 함으로 무너진다.",
+      en: "Learning is perfected by diligence and ruined by play; conduct is formed by thought and destroyed by drifting.",
+    },
+    author: {
+      ko: "한유",
+      en: "Han Yu",
+    },
+    original: "業精於勤，荒於嬉；行成於思，毀於隨",
+    lang: "lzh",
+    source: "「진학해(進學解)」",
+    year: 812,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%80%B2%E5%AD%B8%E8%A7%A3",
+    tags: ["preparation", "perseverance"],
   },
 ];
