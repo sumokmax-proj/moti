@@ -6,14 +6,14 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 157
+// 다음 id: 167
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (67개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (73개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
@@ -21,7 +21,7 @@
 //      93 아우렐리우스도 같다. 134 엘리엇은 첫머리 접속사 「But」 를 떼고
 //      대문자로 올렸다.)
 //
-//  2) 공개된 정본 영역 (26개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (27개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -49,10 +49,11 @@
 //       id 141 노자      James Legge
 //       id 142 맹자      James Legge
 //       id 154 증자      James Legge
+//       id 158 몽테뉴     Charles Cotton
 //
-//  3) 자체 번역 (27개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (30개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91,106,107,114,115,124,125,126,128,129,130,146,147,149,151. (59·114·115·129 는
+//     87,88,91,106,107,114,115,124,125,126,128,129,130,146,147,149,151,163,165,166. (59·114·115·129 는
 //     한국어 원문이라 text.en 만 자체 번역이다.)
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
@@ -63,7 +64,7 @@
 //
 // ── 검증 상태 ────────────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~156
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~166
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
@@ -81,7 +82,10 @@
 //      첫 글자를 대문자로 올렸고, 142 는 앞 구절(有為者辟若掘井)까지 넣으면 Legge
 //      영역이 205자로 영어 상한을 넘었다. 145 제임스는 작품 속 인물(스트레더)의 말이다.
 //      149 괴테는 Taylor 영역 2부를 찾지 못해 자체 번역이다(30·119 는 Taylor 1부). 151 안데르센은
-//      동화 속 나비의 말, 155 프랭클린은 113 처럼 「가난한 리처드」 격언 인용이다.)
+//      동화 속 나비의 말, 155 프랭클린은 113 처럼 「가난한 리처드」 격언 인용이다.
+//      157 루스벨트·164 켈러는 문장 중간이라 첫 글자를 대문자로 올렸다. 159 존슨은 소설 속
+//      장인의 대사로, 그는 뒤에 날다가 호수에 떨어진다 — 맥락은 풍자지만 문장 자체를 실었다.
+//      165 이백은 위키문헌의 이문 주석(「一作…」)을 빼고 본문 그대로 대조했다.)
 // [B] 인용 확인(QUOTE_STANDARDS.md v1.6 ②) — 원문이 온라인에 없거나 이 환경에서
 //     열리지 않아, 원문 위치를 짚어 인용한 2차 자료로 문구를 대조한 항목:
 //     6(스탠퍼드 연설 2005.6.12), 21(LIFE 1955.5.2), 41(『난중일기』 1597.9.15),
@@ -2258,5 +2262,179 @@ const QUOTES = [
     year: 1916,
     sourceUrl: "https://www.gutenberg.org/cache/epub/6524/pg6524.txt",
     tags: ["despair", "hope"],
+  },
+  {
+    id: 157,
+    text: {
+      ko: "우리가 두려워해야 할 유일한 것은 두려움 그 자체다.",
+      en: "The only thing we have to fear is fear itself.",
+    },
+    author: {
+      ko: "프랭클린 D. 루스벨트",
+      en: "Franklin D. Roosevelt",
+    },
+    original: "the only thing we have to fear is fear itself",
+    lang: "en",
+    source: "대통령 취임 연설 (3월 4일)",
+    year: 1933,
+    sourceUrl: "https://en.wikisource.org/wiki/Franklin_Roosevelt%27s_First_Inaugural_Address",
+    tags: ["fear", "challenge"],
+  },
+  {
+    id: 158,
+    text: {
+      ko: "고통받을까 두려워하는 사람은 이미 그 두려움으로 고통받고 있다.",
+      en: "He who fears he shall suffer, already suffers what he fears.",
+    },
+    author: {
+      ko: "미셸 드 몽테뉴",
+      en: "Michel de Montaigne",
+    },
+    translator: {
+      en: "Charles Cotton",
+      enUrl: "https://www.gutenberg.org/cache/epub/3600/pg3600.txt",
+    },
+    original: "Qui craint de souffrir, il souffre desjà de ce qu’il craint.",
+    lang: "fr",
+    source: "『에세』 3권 13장 「경험에 대하여」",
+    year: 1588,
+    sourceUrl: "https://fr.wikisource.org/wiki/Essais/Livre_III/Chapitre_13",
+    tags: ["fear", "despair"],
+  },
+  {
+    id: 159,
+    text: {
+      ko: "생길 수 있는 반대를 모두 넘어서야 한다면, 아무것도 시도되지 않을 것이다.",
+      en: "Nothing will ever be attempted if all possible objections must be first overcome.",
+    },
+    author: {
+      ko: "새뮤얼 존슨",
+      en: "Samuel Johnson",
+    },
+    original: "“Nothing,” replied the artist, “will ever be attempted if all possible objections must be first overcome.",
+    lang: "en",
+    source: "『라셀라스』 6장, 나는 장치를 만드는 장인의 말",
+    year: 1759,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/652/pg652.txt",
+    tags: ["challenge", "fear"],
+  },
+  {
+    id: 160,
+    text: {
+      ko: "지나간 날을 슬피 돌아보지 마라. 그것은 다시 오지 않는다. 지금을 슬기롭게 가꾸어라. 지금은 너의 것이다. 어스름한 미래를 두려움 없이, 굳센 마음으로 맞으러 나아가라.",
+      en: "Look not mournfully into the Past. It comes not back again. Wisely improve the Present. It is thine. Go forth to meet the shadowy Future, without fear, and with a manly heart.",
+    },
+    author: {
+      ko: "헨리 워즈워스 롱펠로",
+      en: "Henry Wadsworth Longfellow",
+    },
+    original: "Look not mournfully into the Past. It comes not back again. Wisely improve the Present. It is thine. Go forth to meet the shadowy Future, without fear, and with a manly heart.",
+    lang: "en",
+    source: "『하이페리온』 4권 8장 「천사의 발자국」, 묘비의 글",
+    year: 1839,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/5436/pg5436.txt",
+    tags: ["despair", "fear"],
+  },
+  {
+    id: 161,
+    text: {
+      ko: "모든 고귀한 일은 처음에는 불가능해 보인다.",
+      en: "Every noble work is at first impossible.",
+    },
+    author: {
+      ko: "토머스 칼라일",
+      en: "Thomas Carlyle",
+    },
+    original: "Every noble work is at first impossible.",
+    lang: "en",
+    source: "『과거와 현재(Past and Present)』 3권 11장 「노동」",
+    year: 1843,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
+    tags: ["success", "challenge"],
+  },
+  {
+    id: 162,
+    text: {
+      ko: "선한 대의를 위한 실패는 그래도 명예롭다. 악한 대의에서의 성공은 그저 수치일 뿐이다.",
+      en: "Failure in any good cause is, however, honourable, whilst success in any bad cause is merely infamous.",
+    },
+    author: {
+      ko: "새뮤얼 스마일스",
+      en: "Samuel Smiles",
+    },
+    original: "Failure in any good cause is, however, honourable, whilst success in any bad cause is merely infamous.",
+    lang: "en",
+    source: "『자조론(Self-Help)』 머리말",
+    year: 1859,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/935/pg935.txt",
+    tags: ["failure", "success"],
+  },
+  {
+    id: 163,
+    text: {
+      ko: "곤궁할수록 더욱 굳세어져, 높은 뜻을 떨어뜨리지 않는다.",
+      en: "In hardship, grow ever firmer, and never let your lofty aim fall.",
+    },
+    author: {
+      ko: "왕발",
+      en: "Wang Bo",
+    },
+    original: "窮且益堅，不墜青雲之志",
+    lang: "lzh",
+    source: "「등왕각서(滕王閣序)」",
+    year: 675,
+    sourceUrl: "https://zh.wikisource.org/wiki/%E6%BB%95%E7%8E%8B%E9%96%A3%E5%BA%8F",
+    tags: ["failure", "perseverance"],
+  },
+  {
+    id: 164,
+    text: {
+      ko: "세상에 기쁨만 있다면 우리는 결코 용감해지는 법도, 참는 법도 배우지 못할 것이다.",
+      en: "We could never learn to be brave and patient, if there were only joy in the world.",
+    },
+    author: {
+      ko: "헬렌 켈러",
+      en: "Helen Keller",
+    },
+    original: "we could never learn to be brave and patient, if there were only joy in the world.",
+    lang: "en",
+    source: "올리버 웬델 홈스에게 보낸 편지 (3월 1일), 『내가 살아온 이야기』 수록",
+    year: 1890,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/2397/pg2397.txt",
+    tags: ["despair", "perseverance"],
+  },
+  {
+    id: 165,
+    text: {
+      ko: "하늘이 나를 낳았으니, 내 재능은 반드시 쓰일 데가 있다.",
+      en: "Heaven gave me my talents; they will surely find their use.",
+    },
+    author: {
+      ko: "이백",
+      en: "Li Bai",
+    },
+    original: "天生我材必有用",
+    lang: "lzh",
+    source: "「장진주(將進酒)」",
+    year: 752,
+    sourceUrl: "https://zh.wikisource.org/wiki/%E5%B0%87%E9%80%B2%E9%85%92_(%E6%9D%8E%E7%99%BD)",
+    tags: ["hope", "despair"],
+  },
+  {
+    id: 166,
+    text: {
+      ko: "담박하지 않으면 뜻을 밝힐 수 없고, 고요하지 않으면 멀리 이를 수 없다.",
+      en: "Without simplicity one cannot make one's purpose clear; without calm one cannot reach far.",
+    },
+    author: {
+      ko: "제갈량",
+      en: "Zhuge Liang",
+    },
+    original: "非澹泊無以明志，非寧靜無以致遠",
+    lang: "lzh",
+    source: "「계자서(誡子書)」, 아들에게 남긴 글",
+    year: 234,
+    sourceUrl: "https://zh.wikisource.org/wiki/%E8%AA%A1%E5%AD%90%E6%9B%B8",
+    tags: ["preparation", "meaning"],
   },
 ];
