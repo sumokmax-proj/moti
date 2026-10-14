@@ -6,14 +6,14 @@
 // id 규칙: app.js의 즐겨찾기가 id로만 매칭하므로 id는 절대 재사용하지 않는다.
 // 삭제된 id: 1,2,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,
 //            27,28,29,31,32,33,34,35,36,38,39,40,49,62
-// 다음 id: 167
+// 다음 id: 177
 //
 // ── 이중 언어 ────────────────────────────────────────────────────────────
 // text 와 author 는 { ko, en } 이다. 화면은 q.text[lang] 으로 읽는다.
 //
 // text.en 은 세 가지 경로로 만들어졌다.
 //
-//  1) original 그대로 (73개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
+//  1) original 그대로 (78개) — lang 이 "en" 인 항목. 이미 1차 출처와 문자
 //     그대로 대조를 마친 문장이라 번역을 거치지 않는 것이 가장 정확하다.
 //     예외는 id 54 처칠과 id 4 노자 — 각각 연설과 문장의 중간을 잘라온 것이라
 //     소문자로 시작해서, 화면에 단독으로 놓이는 만큼 첫 글자만 대문자로 올렸다.
@@ -21,7 +21,7 @@
 //      93 아우렐리우스도 같다. 134 엘리엇은 첫머리 접속사 「But」 를 떼고
 //      대문자로 올렸다.)
 //
-//  2) 공개된 정본 영역 (27개) — translator 필드가 있는 항목. 번역자와 그
+//  2) 공개된 정본 영역 (29개) — translator 필드가 있는 항목. 번역자와 그
 //     번역문을 직접 열어 대조한 URL을 함께 기록한다.
 //       id 4  노자      James Legge
 //       id 30 괴테      Bayard Taylor
@@ -50,10 +50,12 @@
 //       id 142 맹자      James Legge
 //       id 154 증자      James Legge
 //       id 158 몽테뉴     Charles Cotton
+//       id 168 자공      James Legge
+//       id 173 자하      James Legge
 //
-//  3) 자체 번역 (30개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
+//  3) 자체 번역 (33개) — translator 가 없는 항목. 공개된 정본 영역을 찾지
 //     못해 original 에서 직접 옮겼다. id 41,42,45,56,59,60,63,64,71,79,
-//     87,88,91,106,107,114,115,124,125,126,128,129,130,146,147,149,151,163,165,166. (59·114·115·129 는
+//     87,88,91,106,107,114,115,124,125,126,128,129,130,146,147,149,151,163,165,166,167,169,172. (59·114·115·129 는
 //     한국어 원문이라 text.en 만 자체 번역이다.)
 //     정본을 찾으면 여기서 2)로 승급시킨다.
 //
@@ -64,7 +66,7 @@
 //
 // ── 검증 상태 ────────────────────────────────────────────────────────
 // [A] sourceUrl을 직접 열어 original이 문자 그대로 있음을 대조 완료:
-//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~166
+//     3, 4, 30, 37, 43, 44, 45, 46, 47, 48, 51, 53, 54, 56~61, 63~71, 82~176
 //     (82~91 은 sourceUrl 을 받아 original 이 페이지에 있는지 기계로 대조했다.
 //      90 의 Legge 영역은 구텐베르크 평문의 "--" 를 "—" 로, 91 은 위키문헌이
 //      본문 사이에 끼운 이문 주석 「己 一作已」을 빼고 저본 己 로 대조했다.
@@ -85,7 +87,9 @@
 //      동화 속 나비의 말, 155 프랭클린은 113 처럼 「가난한 리처드」 격언 인용이다.
 //      157 루스벨트·164 켈러는 문장 중간이라 첫 글자를 대문자로 올렸다. 159 존슨은 소설 속
 //      장인의 대사로, 그는 뒤에 날다가 호수에 떨어진다 — 맥락은 풍자지만 문장 자체를 실었다.
-//      165 이백은 위키문헌의 이문 주석(「一作…」)을 빼고 본문 그대로 대조했다.)
+//      165 이백은 위키문헌의 이문 주석(「一作…」)을 빼고 본문 그대로 대조했다.
+//      171 엘리엇은 맺음말 문장의 앞부분을 발췌했다(v1.9). 174 키츠는 원문의 「--」를 「—」로,
+//      뒤 문장 머리의 대문자(Even·Proverb·Life)를 소문자로 적었다.)
 // [B] 인용 확인(QUOTE_STANDARDS.md v1.6 ②) — 원문이 온라인에 없거나 이 환경에서
 //     열리지 않아, 원문 위치를 짚어 인용한 2차 자료로 문구를 대조한 항목:
 //     6(스탠퍼드 연설 2005.6.12), 21(LIFE 1955.5.2), 41(『난중일기』 1597.9.15),
@@ -2436,5 +2440,183 @@ const QUOTES = [
     year: 234,
     sourceUrl: "https://zh.wikisource.org/wiki/%E8%AA%A1%E5%AD%90%E6%9B%B8",
     tags: ["preparation", "meaning"],
+  },
+  {
+    id: 167,
+    text: {
+      ko: "누구나 잘못할 수 있다. 그러나 잘못을 고집하는 것은 어리석은 자뿐이다.",
+      en: "Any man can err; only a fool persists in his error.",
+    },
+    author: {
+      ko: "키케로",
+      en: "Cicero",
+    },
+    original: "Cuiusvis hominis est errare, nullius nisi insipientis in errore perseverare.",
+    lang: "la",
+    source: "『필리포스 탄핵 연설』 12편 5절",
+    year: -43,
+    sourceUrl: "https://la.wikisource.org/wiki/Philippicae/Oratio_XII",
+    tags: ["failure", "challenge"],
+  },
+  {
+    id: 168,
+    text: {
+      ko: "군자의 허물은 일식이나 월식과 같다. 잘못하면 모두가 보고, 고치면 모두가 우러러본다.",
+      en: "The faults of the superior man are like the eclipses of the sun and moon. He has his faults, and all men see them; he changes again, and all men look up to him.",
+    },
+    author: {
+      ko: "자공",
+      en: "Zigong",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    },
+    original: "君子之過也，如日月之食焉：過也，人皆見之；更也，人皆仰之",
+    lang: "lzh",
+    source: "『논어』 자장편 21",
+    year: -450,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    tags: ["failure", "meaning"],
+  },
+  {
+    id: 169,
+    text: {
+      ko: "무슨 일이든 미리 준비하면 서고, 준비하지 않으면 무너진다.",
+      en: "In all things, what is prepared stands; what is unprepared falls.",
+    },
+    author: {
+      ko: "자사",
+      en: "Zisi",
+    },
+    original: "凡事豫則立，不豫則廢",
+    lang: "lzh",
+    source: "『중용』 20장",
+    year: -400,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
+    tags: ["preparation", "success"],
+  },
+  {
+    id: 170,
+    text: {
+      ko: "누군가의 짐을 덜어 주는 사람은 이 세상에서 결코 쓸모없는 사람이 아니다.",
+      en: "No one is useless in this world who lightens the burden of it for any one else.",
+    },
+    author: {
+      ko: "찰스 디킨스",
+      en: "Charles Dickens",
+    },
+    original: "‘No one is useless in this world,’ retorted the Secretary, ‘who lightens the burden of it for any one else.’",
+    lang: "en",
+    source: "『우리 서로의 친구(Our Mutual Friend)』 3부 9장, 존 로크스미스의 말",
+    year: 1865,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/883/pg883.txt",
+    tags: ["meaning", "passion"],
+  },
+  {
+    id: 171,
+    text: {
+      ko: "세상에 선이 자라나는 것은 얼마간, 역사에 기록되지 않는 행동들에 달려 있다.",
+      en: "The growing good of the world is partly dependent on unhistoric acts.",
+    },
+    author: {
+      ko: "조지 엘리엇",
+      en: "George Eliot",
+    },
+    original: "the growing good of the world is partly dependent on unhistoric acts",
+    lang: "en",
+    source: "『미들마치』 맺음말",
+    year: 1872,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/145/pg145.txt",
+    tags: ["meaning", "passion"],
+  },
+  {
+    id: 172,
+    text: {
+      ko: "배움은 멈출 수 없다. 푸른 물감은 쪽에서 얻지만 쪽보다 더 푸르고, 얼음은 물로 되지만 물보다 더 차다.",
+      en: "Learning must never stop. Blue is taken from the indigo plant, yet it is bluer than the plant; ice is made of water, yet it is colder than water.",
+    },
+    author: {
+      ko: "순자",
+      en: "Xunzi",
+    },
+    original: "學不可以已。青，取之於藍而青於藍；冰，水為之而寒於水。",
+    lang: "lzh",
+    source: "『순자』 권학편",
+    year: -250,
+    sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%8D%80%E5%AD%90/%E5%8B%B8%E5%AD%B8%E7%AF%87",
+    tags: ["preparation", "perseverance"],
+  },
+  {
+    id: 173,
+    text: {
+      ko: "날마다 모르던 것을 알아 가고 달마다 할 줄 알게 된 것을 잊지 않으면, 배우기를 좋아한다고 할 만하다.",
+      en: "He, who from day to day recognises what he has not yet, and from month to month does not forget what he has attained to, may be said indeed to love to learn.",
+    },
+    author: {
+      ko: "자하",
+      en: "Zixia",
+    },
+    translator: {
+      en: "James Legge",
+      enUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    },
+    original: "日知其所亡，月無忘其所能，可謂好學也已矣",
+    lang: "lzh",
+    source: "『논어』 자장편 5",
+    year: -450,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
+    tags: ["preparation", "perseverance"],
+  },
+  {
+    id: 174,
+    text: {
+      ko: "무엇이든 겪어 보기 전에는 진짜가 되지 않는다. 속담조차, 네 삶이 그것을 보여 주기 전까지는 속담이 아니다.",
+      en: "Nothing ever becomes real till it is experienced—even a proverb is no proverb to you till your life has illustrated it.",
+    },
+    author: {
+      ko: "존 키츠",
+      en: "John Keats",
+    },
+    original: "Nothing ever becomes real till it is experienced--Even a Proverb is no proverb to you till your Life has illustrated it.",
+    lang: "en",
+    source: "조지·조지애나 키츠 부부에게 보낸 편지 (2~5월)",
+    year: 1819,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/35698/pg35698.txt",
+    tags: ["preparation", "meaning"],
+  },
+  {
+    id: 175,
+    text: {
+      ko: "가장 가까이 놓인 의무, 네가 의무임을 아는 그것을 하라! 그러면 두 번째 의무는 이미 더 또렷해져 있을 것이다.",
+      en: "Do the Duty which lies nearest thee, which thou knowest to be a Duty! Thy second Duty will already have become clearer.",
+    },
+    author: {
+      ko: "토머스 칼라일",
+      en: "Thomas Carlyle",
+    },
+    original: "Do the Duty which lies nearest thee, which thou knowest to be a Duty! Thy second Duty will already have become clearer.",
+    lang: "en",
+    source: "『의상 철학(Sartor Resartus)』 2권 9장 「영원한 긍정」",
+    year: 1836,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/1051/pg1051.txt",
+    tags: ["preparation", "challenge"],
+  },
+  {
+    id: 176,
+    text: {
+      ko: "삶을 고여 있게 두지 마라. 흐르지 않으면 탁해진다. 다시 세상의 물결에 몸을 맡겨라.",
+      en: "Do not suffer life to stagnate: it will grow muddy for want of motion; commit yourself again to the current of the world.",
+    },
+    author: {
+      ko: "새뮤얼 존슨",
+      en: "Samuel Johnson",
+    },
+    original: "Do not suffer life to stagnate: it will grow muddy for want of motion; commit yourself again to the current of the world;",
+    lang: "en",
+    source: "『라셀라스』 35장, 슬픔에 잠긴 공주에게 임락이 하는 말",
+    year: 1759,
+    sourceUrl: "https://www.gutenberg.org/cache/epub/652/pg652.txt",
+    tags: ["energy", "despair"],
   },
 ];
