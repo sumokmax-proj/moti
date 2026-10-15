@@ -2250,7 +2250,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『에디슨: 그의 생애와 발명』(다이어·마틴) — 축전지 실험 중 월터 S. 맬러리에게 한 말, 맬러리의 증언",
+      en: "Recalled by Walter S. Mallory, during the storage-battery experiments — Dyer & Martin, *Edison: His Life and Inventions*",
     },
+    kind: "testimony",
     year: 1910,
     sourceUrl: "https://www.gutenberg.org/cache/epub/820/pg820.txt",
     tags: ["failure", "perseverance"],
@@ -2269,7 +2271,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "「공화국의 시민권」 연설(「경기장의 사나이」), 파리 소르본 (4월 23일)",
+      en: "\"Citizenship in a Republic\" (\"The Man in the Arena\"), the Sorbonne, Paris, April 23",
     },
+    kind: "speech",
     year: 1910,
     sourceUrl: "https://en.wikisource.org/wiki/Citizenship_in_a_Republic",
     tags: ["failure", "challenge"],
@@ -2288,7 +2292,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "제임스 헤시에게 보낸 편지 (10월 8일)",
+      en: "Letter to James Hessey, October 8",
     },
+    kind: "letter",
     year: 1818,
     sourceUrl: "https://www.gutenberg.org/cache/epub/35698/pg35698.txt",
     tags: ["failure", "passion"],
@@ -2307,6 +2313,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "「성 아우구스티누스의 사다리」, 『철새들』",
+      en: "\"The Ladder of Saint Augustine\" — *Birds of Passage*",
     },
     year: 1858,
     sourceUrl: "https://en.wikisource.org/wiki/Birds_of_Passage_(Collection)/The_Ladder_of_St._Augustine",
@@ -2330,6 +2337,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『도덕경』 제41장 (왕필본)",
+      en: "*Tao Te Ching*, ch. 41 (Wang Bi edition)",
     },
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
@@ -2353,6 +2361,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『맹자』 진심상 29",
+      en: "*Mencius* 7A.29 (Jin Xin, Part I)",
     },
     year: -300,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E7%9B%A1%E5%BF%83%E4%B8%8A",
@@ -2372,6 +2381,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『월든』 「맺음말」",
+      en: "*Walden*, Conclusion",
     },
     year: 1854,
     sourceUrl: "https://www.gutenberg.org/cache/epub/205/pg205.txt",
@@ -2391,6 +2401,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『에밀리 디킨슨 시집』 「삶」 6",
+      en: "*Poems by Emily Dickinson*, \"Life\" 6",
     },
     year: 1890,
     sourceUrl: "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
@@ -2410,6 +2421,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『대사들(The Ambassadors)』 5부 2장, 스트레더의 말",
+      en: "*The Ambassadors*, Book 5, ch. 2 — Strether",
     },
     year: 1903,
     sourceUrl: "https://www.gutenberg.org/cache/epub/432/pg432.txt",
@@ -2429,6 +2441,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "「진학해(進學解)」",
+      en: "\"An Explanation of Advancing in Learning\" (Jin Xue Jie)",
     },
     year: 812,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%80%B2%E5%AD%B8%E8%A7%A3",
@@ -2448,6 +2461,7 @@ const QUOTES = [
     lang: "de",
     source: {
       ko: "「계몽이란 무엇인가에 대한 답변」",
+      en: "\"An Answer to the Question: What Is Enlightenment?\"",
     },
     year: 1784,
     sourceUrl: "https://de.wikisource.org/wiki/Beantwortung_der_Frage:_Was_ist_Aufkl%C3%A4rung%3F",
@@ -2467,6 +2481,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『아레오파기티카』",
+      en: "*Areopagitica*",
     },
     year: 1644,
     sourceUrl: "https://www.gutenberg.org/cache/epub/608/pg608.txt",
@@ -2486,6 +2501,7 @@ const QUOTES = [
     lang: "de",
     source: {
       ko: "『파우스트』 2부 5막, 파우스트의 마지막 독백",
+      en: "*Faust*, Part Two, Act 5 — Faust's last monologue",
     },
     year: 1832,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2230/pg2230.txt",
@@ -2505,6 +2521,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『프레더릭 더글러스의 삶 이야기』 10장",
+      en: "*Narrative of the Life of Frederick Douglass*, ch. 10",
     },
     year: 1845,
     sourceUrl: "https://www.gutenberg.org/cache/epub/23/pg23.txt",
@@ -2524,6 +2541,7 @@ const QUOTES = [
     lang: "da",
     source: {
       ko: "동화 「나비」, 나비의 말",
+      en: "\"The Butterfly,\" a fairy tale — the butterfly's words",
     },
     year: 1861,
     sourceUrl: "https://da.wikisource.org/wiki/Sommerfuglen",
@@ -2543,6 +2561,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "「랍비 벤 에즈라」, 『극적 인물들』",
+      en: "\"Rabbi Ben Ezra\" — *Dramatis Personae*",
     },
     year: 1864,
     sourceUrl: "https://en.wikisource.org/wiki/Dramatis_Person%C3%A6/Rabbi_Ben_Ezra",
@@ -2561,8 +2580,10 @@ const QUOTES = [
     original: "No race can prosper till it learns that there is as much dignity in tilling a field as in writing a poem.",
     lang: "en",
     source: {
-      ko: "『노예에서 일어서서(Up from Slavery)』 14장, 애틀랜타 박람회 연설(1895)",
+      ko: "애틀랜타 박람회 연설(1895) — 『노예에서 일어서서(Up from Slavery)』 14장 수록",
+      en: "Atlanta Exposition Address (1895) — *Up from Slavery*, ch. 14",
     },
+    kind: "speech",
     year: 1901,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
     tags: ["passion", "preparation"],
@@ -2585,6 +2606,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『논어』 태백편 7",
+      en: "*Analects* 8.7 (Tai Bo)",
     },
     year: -450,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
@@ -2604,6 +2626,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『부자가 되는 길(The Way to Wealth)』, 「가난한 리처드」의 격언(속담 인용)",
+      en: "*The Way to Wealth* — a Poor Richard maxim, quoting a proverb",
     },
     year: 1758,
     sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
@@ -2623,6 +2646,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『길 잃은 새(Stray Birds)』 6",
+      en: "*Stray Birds* 6",
     },
     year: 1916,
     sourceUrl: "https://www.gutenberg.org/cache/epub/6524/pg6524.txt",
@@ -2642,7 +2666,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "대통령 취임 연설 (3월 4일)",
+      en: "First Inaugural Address, March 4",
     },
+    kind: "speech",
     year: 1933,
     sourceUrl: "https://en.wikisource.org/wiki/Franklin_Roosevelt%27s_First_Inaugural_Address",
     tags: ["fear", "challenge"],
@@ -2665,6 +2691,7 @@ const QUOTES = [
     lang: "fr",
     source: {
       ko: "『에세』 3권 13장 「경험에 대하여」",
+      en: "*Essays*, Book 3, ch. 13, \"Of Experience\"",
     },
     year: 1588,
     sourceUrl: "https://fr.wikisource.org/wiki/Essais/Livre_III/Chapitre_13",
@@ -2684,6 +2711,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『라셀라스』 6장, 나는 장치를 만드는 장인의 말",
+      en: "*Rasselas*, ch. 6 — the artist who builds a flying machine",
     },
     year: 1759,
     sourceUrl: "https://www.gutenberg.org/cache/epub/652/pg652.txt",
@@ -2703,6 +2731,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『하이페리온』 4권 8장 「천사의 발자국」, 묘비의 글",
+      en: "*Hyperion*, Book 4, ch. 8, \"Footprints of Angels\" — words on a gravestone",
     },
     year: 1839,
     sourceUrl: "https://www.gutenberg.org/cache/epub/5436/pg5436.txt",
@@ -2722,6 +2751,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『과거와 현재(Past and Present)』 3권 11장 「노동」",
+      en: "*Past and Present*, Book 3, ch. 11, \"Labour\"",
     },
     year: 1843,
     sourceUrl: "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
