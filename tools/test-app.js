@@ -704,6 +704,28 @@ async function suiteColophon(browser) {
   });
   report.check("메인으로 돌아가면 판권면이 닫힘", back);
 
+  // 끌어내리기 — 손가락을 따라오고, 조금 끌다 놓으면 제자리, 튕기면 닫힌다.
+  const t = await freshPage(browser, { hasTouch: true, isMobile: true });
+  await t.evaluate(() => { openFavoritesView(); openColophon(); });
+  await t.waitForTimeout(400);
+  const cdp = await t.context().newCDPSession(t);
+  const touch = (type, y) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x: 200, y }] });
+  const ty = () => t.evaluate(() => new DOMMatrix(getComputedStyle(colophonEl).transform).m42);
+  await touch("touchStart", 200);
+  for (let y = 205; y <= 260; y += 5) { await touch("touchMove", y); await t.waitForTimeout(30); }
+  const follow = await ty();
+  await touch("touchEnd");
+  await t.waitForTimeout(400);
+  const settled = await t.evaluate(() => ({ open: paperEl === colophonEl, y: new DOMMatrix(getComputedStyle(colophonEl).transform).m42 }));
+  report.check("끌면 종이가 손가락을 따라오고, 조금 끌다 놓으면 제자리", follow > 30 && settled.open && settled.y === 0, `끈 거리 ${Math.round(follow)}px`);
+  await touch("touchStart", 200);
+  for (let y = 210; y <= 330; y += 30) { await touch("touchMove", y); await t.waitForTimeout(8); }
+  await touch("touchEnd");
+  await t.waitForTimeout(450);
+  const flung = await t.evaluate(() => ({ paper: paperEl, hidden: colophonEl.hidden, veil: document.getElementById("note-veil").hidden, style: colophonEl.getAttribute("style") }));
+  report.check("빠르게 튕기면 이어서 떨어져 닫힘", !flung.paper && flung.hidden && flung.veil && !flung.style);
+  await t.context().close();
+
   const q = await freshPage(browser, { viewport: { width: 320, height: 568 } });
   const fit = await q.evaluate(() => {
     openFavoritesView();

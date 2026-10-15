@@ -921,8 +921,8 @@ document.addEventListener("keydown", (e) => {
      「출처 확인 자료」라고 밝힌다 — 원전처럼 보이게 하지 않는다.
    - 닫기: 바깥을 누르거나, 쪽지를 아래로 밀거나, Esc. 「다음」·밀기·즐겨찾기
      화면으로 가면 저절로 닫힌다. */
-const NOTE_MS = 320;
-const NOTE_SWIPE_PX = 60;
+const NOTE_CLOSE_MS = 240; // 닫힘 — style.css 의 .source-note:not(.on) 과 같은 값
+const NOTE_FLING_V = 0.5;  // px/ms — 이보다 빠르게 튕기면 짧게 끌어도 닫힌다
 let noteOpen = false;
 
 // 구텐베르크는 평문(.txt)을 열어 대조했다. 읽는 사람에게는 책 소개 쪽이 낫다.
@@ -1000,9 +1000,17 @@ let paperEl = null;      // 지금 떠 있는 종이
 let paperTrigger = null; // 그 종이를 연 버튼 — 닫으면 초점이 돌아간다
 let paperHideTimer = null;
 
+function clearPaperDrag(el) {
+  el.style.transition = "";
+  el.style.transform = "";
+  noteVeilEl.style.transition = "";
+  noteVeilEl.style.opacity = "";
+}
+
 function openPaper(el, trigger) {
   closePaper(true);
   clearTimeout(paperHideTimer);
+  clearPaperDrag(el);
   el.scrollTop = 0;
   el.hidden = false;
   noteVeilEl.hidden = false;
@@ -1016,7 +1024,11 @@ function openPaper(el, trigger) {
   el.focus({ preventScroll: true });
 }
 
-function closePaper(instant = false) {
+/* 닫힘은 열림의 거울상이 아니다. 열릴 때는 빠르게 나와 천천히 자리 잡고,
+   닫힐 때는 무게를 받아 점점 빨라지며 떨어진다(시험판에서 아이폰으로 고름).
+   fling: 손가락으로 끌어내리다 놓았을 때의 자리(y)와 속도(v, px/ms) —
+   그 자리에서 그 속도로 이어서 떨어진다. */
+function closePaper(instant = false, fling = null) {
   if (!paperEl) return;
   const el = paperEl;
   const trigger = paperTrigger;
@@ -1025,16 +1037,28 @@ function closePaper(instant = false) {
   noteOpen = false;
   trigger.setAttribute("aria-expanded", "false");
   const hadFocus = el.contains(document.activeElement);
+  let ms = NOTE_CLOSE_MS;
+  if (fling && !instant) {
+    const rest = Math.max(0, el.offsetHeight - fling.y);
+    ms = Math.round(Math.min(260, Math.max(140, rest / Math.max(fling.v, 1.4))));
+    el.style.transition = `transform ${ms}ms cubic-bezier(0.25, 0.6, 0.5, 1)`;
+    noteVeilEl.style.transition = `opacity ${ms}ms linear`;
+    el.style.transform = "translateY(105%)";
+    noteVeilEl.style.opacity = "0";
+  } else {
+    clearPaperDrag(el);
+  }
   el.classList.remove("on");
   noteVeilEl.classList.remove("on");
   const hide = () => {
     if (paperEl === el) return; // 그사이 다시 열렸다
     el.hidden = true;
+    clearPaperDrag(el);
     if (!paperEl) noteVeilEl.hidden = true;
   };
   clearTimeout(paperHideTimer);
   if (instant || reduceMotion.matches) hide();
-  else paperHideTimer = setTimeout(hide, NOTE_MS);
+  else paperHideTimer = setTimeout(hide, ms + 20);
   if (hadFocus && !instant) trigger.focus({ preventScroll: true });
 }
 
@@ -1065,14 +1089,53 @@ noteVeilEl.addEventListener("click", () => closePaper());
       stops[(at + step + stops.length) % stops.length].focus();
     }
   });
-  // 아래로 밀면 닫힌다. 종이가 길어 스크롤된 상태면 스크롤이 먼저다.
-  let touchY = null;
+  /* 끌어내리기 — 종이가 손가락을 따라 내려오고, 뒤의 막도 그만큼 옅어진다.
+     놓을 때 화면 높이의 1/4 넘게 끌었거나 빠르게 튕겼으면 그 속도로 이어서
+     떨어지고, 아니면 제자리로 돌아간다. 종이가 길어 스크롤된 상태면 스크롤이
+     먼저다 — 맨 위에서 아래로 끌 때만 종이가 움직인다. */
+  let drag = null;
   el.addEventListener("touchstart", (e) => {
-    touchY = el.scrollTop <= 0 ? e.touches[0].clientY : null;
+    if (paperEl !== el) return;
+    const y = e.touches[0].clientY;
+    drag = { y0: y, top: el.scrollTop <= 0, dy: 0, active: false, pts: [{ y, t: e.timeStamp }] };
   }, { passive: true });
-  el.addEventListener("touchend", (e) => {
-    if (touchY !== null && e.changedTouches[0].clientY - touchY > NOTE_SWIPE_PX) closePaper();
-    touchY = null;
+  el.addEventListener("touchmove", (e) => {
+    if (!drag) return;
+    const y = e.touches[0].clientY;
+    if (!drag.active) {
+      if (!drag.top || el.scrollTop > 0 || y - drag.y0 <= 4) return; // 위로 밀기·스크롤은 브라우저에 맡긴다
+      drag.active = true;
+      drag.y0 = y; // 여기서부터 잰다 — 종이가 툭 튀지 않게
+    }
+    e.preventDefault();
+    drag.dy = Math.max(0, y - drag.y0);
+    drag.pts.push({ y, t: e.timeStamp });
+    if (drag.pts.length > 6) drag.pts.shift();
+    el.style.transition = "none";
+    noteVeilEl.style.transition = "none";
+    el.style.transform = `translateY(${drag.dy}px)`;
+    noteVeilEl.style.opacity = String(Math.max(0, 1 - drag.dy / el.offsetHeight));
+  }, { passive: false });
+  el.addEventListener("touchend", () => {
+    const d = drag;
+    drag = null;
+    if (!d || !d.active || paperEl !== el) return;
+    const a = d.pts[0];
+    const b = d.pts[d.pts.length - 1];
+    const v = b.t > a.t ? (b.y - a.y) / (b.t - a.t) : 0; // 아래가 +
+    if (d.dy > window.innerHeight / 4 || v > NOTE_FLING_V) {
+      closePaper(false, { y: d.dy, v });
+    } else {
+      el.style.transition = "transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)";
+      noteVeilEl.style.transition = "opacity 0.3s ease";
+      el.style.transform = "";
+      noteVeilEl.style.opacity = "";
+      setTimeout(() => { if (paperEl === el) clearPaperDrag(el); }, 320);
+    }
+  }, { passive: true });
+  el.addEventListener("touchcancel", () => {
+    if (drag && drag.active && paperEl === el) clearPaperDrag(el);
+    drag = null;
   }, { passive: true });
 });
 

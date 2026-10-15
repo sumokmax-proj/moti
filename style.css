@@ -594,6 +594,16 @@ body {
   transform: none;
 }
 
+/* 닫힘 — 열림의 거울상이 아니라 무게를 받아 빨라지며 떨어진다(0.24초).
+   손가락으로 끌어내렸다 놓으면 app.js 가 그 속도에 맞춰 시간을 다시 정한다. */
+.source-note:not(.on) {
+  transition: transform 0.24s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.note-veil:not(.on) {
+  transition: opacity 0.24s linear;
+}
+
 .note-veil[hidden],
 .source-note[hidden],
 .source-note [hidden] {
@@ -850,7 +860,9 @@ body {
   .primary-btn,
   .toast,
   .note-veil,
-  .source-note {
+  .note-veil:not(.on),
+  .source-note,
+  .source-note:not(.on) {
     transition: none;
   }
 }
