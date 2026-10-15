@@ -686,6 +686,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『여성의 권리 옹호』 4장",
+      en: "*A Vindication of the Rights of Woman*, ch. 4",
     },
     year: 1792,
     sourceUrl: "https://www.gutenberg.org/cache/epub/3420/pg3420.txt",
@@ -705,6 +706,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『한비자』 유로편",
+      en: "*Han Feizi*, \"Illustrations of Laozi\" (Yu Lao)",
     },
     year: -233,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9F%93%E9%9D%9E%E5%AD%90/%E5%96%BB%E8%80%81",
@@ -724,6 +726,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "「이소(離騷)」",
+      en: "\"Li Sao\" (Encountering Sorrow)",
     },
     year: -300,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%9B%A2%E9%A8%B7",
@@ -743,6 +746,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『작은 아씨들』 15장 「전보」, 떠나며 딸들에게 한 마치 부인의 말",
+      en: "*Little Women*, ch. 15, \"A Telegram\" — Mrs. March, leaving her daughters",
     },
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/37106/pg37106.txt",
@@ -766,6 +770,7 @@ const QUOTES = [
     },
     source: {
       ko: "『명상록』 5권 16",
+      en: "*Meditations* 5.16",
     },
     year: 180,
     sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
@@ -789,6 +794,7 @@ const QUOTES = [
     },
     source: {
       ko: "『엥케이리디온』 5",
+      en: "*Enchiridion* 5",
     },
     year: 125,
     sourceUrl: "https://el.wikisource.org/wiki/%CE%95%CE%B3%CF%87%CE%B5%CE%B9%CF%81%CE%AF%CE%B4%CE%B9%CE%BF%CE%BD",
@@ -812,6 +818,7 @@ const QUOTES = [
     },
     source: {
       ko: "『우상의 황혼』 잠언과 화살 12",
+      en: "*Twilight of the Idols*, \"Maxims and Arrows\" 12",
     },
     year: 1889,
     sourceUrl: "https://www.gutenberg.org/cache/epub/7203/pg7203.txt",
@@ -831,6 +838,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『자기 신뢰(Self-Reliance)』",
+      en: "\"Self-Reliance\" — *Essays: First Series*",
     },
     year: 1841,
     sourceUrl: "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
@@ -850,6 +858,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『노예에서 일어서서(Up from Slavery)』 3장",
+      en: "*Up from Slavery*, ch. 3",
     },
     year: 1901,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2376/pg2376.txt",
@@ -869,7 +878,9 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『한서』 권62 사마천전 「보임안서」",
+      en: "Letter to Ren An — *Book of Han*, vol. 62, Biography of Sima Qian",
     },
+    kind: "letter",
     year: -93,
     sourceUrl: "https://zh.wikisource.org/wiki/%E6%BC%A2%E6%9B%B8/%E5%8D%B7062",
     tags: ["despair", "meaning"],
@@ -888,6 +899,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『시집(Poems)』 「인빅터스」",
+      en: "\"Invictus\" — *Poems*",
     },
     year: 1888,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1568/pg1568.txt",
@@ -907,6 +919,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『실낙원』 1권",
+      en: "*Paradise Lost*, Book 1",
     },
     year: 1667,
     sourceUrl: "https://www.gutenberg.org/cache/epub/26/pg26.txt",
@@ -926,6 +939,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『자에는 자로』 1막 4장, 루치오의 대사",
+      en: "*Measure for Measure*, Act 1, Scene 4 — Lucio",
     },
     year: 1604,
     sourceUrl: "https://www.gutenberg.org/cache/epub/100/pg100.txt",
@@ -945,6 +959,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『윈더미어 부인의 부채』 3막, 달링턴 경의 대사",
+      en: "*Lady Windermere's Fan*, Act 3 — Lord Darlington",
     },
     year: 1892,
     sourceUrl: "https://www.gutenberg.org/cache/epub/790/pg790.txt",
@@ -964,6 +979,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『자유론』 1장",
+      en: "*On Liberty*, ch. 1",
     },
     year: 1859,
     sourceUrl: "https://www.gutenberg.org/cache/epub/34901/pg34901.txt",
@@ -983,6 +999,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『라셀라스』 13장",
+      en: "*Rasselas*, ch. 13",
     },
     year: 1759,
     sourceUrl: "https://www.gutenberg.org/cache/epub/652/pg652.txt",
@@ -1002,6 +1019,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "「안드레아 델 사르토」",
+      en: "\"Andrea del Sarto\" — *Men and Women*",
     },
     year: 1855,
     sourceUrl: "https://www.gutenberg.org/cache/epub/50954/pg50954.txt",
@@ -1021,6 +1039,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『전당시』 권216 「망악(望嶽)」",
+      en: "\"Gazing at the Mountain\" (Wang Yue) — *Complete Tang Poems*, vol. 216",
     },
     year: 736,
     sourceUrl: "https://zh.wikisource.org/wiki/%E6%9C%9B%E5%B6%BD_(%E5%B2%B1%E5%AE%97%E5%A4%AB%E5%A6%82%E4%BD%95)",
@@ -1044,6 +1063,7 @@ const QUOTES = [
     },
     source: {
       ko: "『논어』 술이편 21",
+      en: "*Analects* 7.21 (Shu Er)",
     },
     year: -450,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
@@ -1063,6 +1083,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『교사에게 하는 심리학 강의』 8장 「습관의 법칙」",
+      en: "*Talks to Teachers on Psychology*, ch. 8, \"The Laws of Habit\"",
     },
     year: 1899,
     sourceUrl: "https://www.gutenberg.org/cache/epub/16287/pg16287.txt",
@@ -1082,6 +1103,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『아메리카의 위기(The American Crisis)』 제1호",
+      en: "*The American Crisis*, No. 1",
     },
     year: 1776,
     sourceUrl: "https://www.gutenberg.org/cache/epub/3741/pg3741.txt",
@@ -1101,6 +1123,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『자조론(Self-Help)』 11장",
+      en: "*Self-Help*, ch. 11",
     },
     year: 1859,
     sourceUrl: "https://www.gutenberg.org/cache/epub/935/pg935.txt",
@@ -1120,6 +1143,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『젊은이들을 위하여(Virginibus Puerisque)』 「엘도라도」",
+      en: "\"El Dorado\" — *Virginibus Puerisque*",
     },
     year: 1881,
     sourceUrl: "https://www.gutenberg.org/cache/epub/386/pg386.txt",
@@ -1139,6 +1163,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『시집(Poems)』 「율리시스」",
+      en: "\"Ulysses\" — *Poems*",
     },
     year: 1842,
     sourceUrl: "https://www.gutenberg.org/cache/epub/8601/pg8601.txt",
@@ -1158,6 +1183,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『밤의 목소리(Voices of the Night)』 「인생 찬가(A Psalm of Life)」",
+      en: "\"A Psalm of Life\" — *Voices of the Night*",
     },
     year: 1839,
     sourceUrl: "https://en.wikisource.org/wiki/Voices_of_the_Night/A_Psalm_of_Life",
