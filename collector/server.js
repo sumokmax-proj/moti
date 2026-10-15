@@ -134,7 +134,9 @@ function toEntry(quote, id) {
   lines.push("    },");
   if (quote.kind) lines.push(`    kind: ${jsString(quote.kind)},`);
   lines.push(`    year: ${Number(quote.year)},`);
+  if (quote.circa) lines.push("    circa: true,");
   lines.push(`    sourceUrl: ${jsString(quote.sourceUrl)},`);
+  if (quote.cited) lines.push("    cited: true,");
   lines.push(`    tags: [${quote.tags.map(jsString).join(", ")}],`);
   lines.push("  },");
   return lines.join("\n");
@@ -278,6 +280,8 @@ function normalize(quote) {
     tags: quote.tags.slice(),
   };
   if (str(quote.kind)) out.kind = str(quote.kind);
+  if (quote.circa === true) out.circa = true;
+  if (quote.cited === true) out.cited = true;
   const tr = flatTranslator(quote);
   if (str(tr.translator)) {
     out.translator = str(tr.translator);

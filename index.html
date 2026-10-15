@@ -8,18 +8,18 @@
        svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
        apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
        투명한 모서리는 검게 칠해버린다. -->
-  <link rel="icon" href="favicon.svg?v=20261015b" type="image/svg+xml" />
-  <link rel="icon" href="favicon-32.png?v=20261015b" sizes="32x32" type="image/png" />
-  <link rel="icon" href="favicon-16.png?v=20261015b" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015b" />
+  <link rel="icon" href="favicon.svg?v=20261015c" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png?v=20261015c" sizes="32x32" type="image/png" />
+  <link rel="icon" href="favicon-16.png?v=20261015c" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015c" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
   <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
        파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
        섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
-  <link rel="stylesheet" href="tokens.css?v=20261015b" />
-  <link rel="stylesheet" href="style.css?v=20261015b" />
+  <link rel="stylesheet" href="tokens.css?v=20261015c" />
+  <link rel="stylesheet" href="style.css?v=20261015c" />
 </head>
 <body>
   <div class="app">
@@ -50,7 +50,8 @@
         </div>
 
         <div class="quote-meta">
-          <p class="quote-author" id="quote-author"></p>
+          <!-- 작가 이름을 누르면 출처 쪽지가 올라온다(숨은 장치). 겉모습은 글자 그대로다. -->
+          <button type="button" class="quote-author" id="quote-author" aria-haspopup="dialog" aria-controls="source-note" aria-expanded="false"></button>
           <div class="quote-actions">
             <button id="favorite-btn" class="icon-btn" aria-label="Add to favorites" aria-pressed="false">
               <svg class="heart-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7.6a4.5 4.5 0 0 1 7.5 2.9c0 5.3-7.5 10-7.5 10Z"/></svg>
@@ -94,9 +95,21 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="quotes.js?v=20261015b"></script>
+  <!-- 출처 쪽지 — 책 사이에 끼워 둔 쪽지처럼 아래에서 올라온다. -->
+  <div id="note-veil" class="note-veil" hidden></div>
+  <section id="source-note" class="source-note" role="dialog" aria-modal="true" aria-labelledby="note-title" tabindex="-1" hidden>
+    <div class="note-grip" aria-hidden="true"></div>
+    <p class="note-kind" id="note-kind"></p>
+    <p class="note-title" id="note-title"></p>
+    <p class="note-orig" id="note-orig"><span class="note-orig-label" id="note-orig-label"></span><span id="note-orig-text"></span></p>
+    <p class="note-line" id="note-tr"></p>
+    <p class="note-line" id="note-cited"></p>
+    <a class="note-link" id="note-link" target="_blank" rel="noopener"><span class="note-link-label" id="note-link-label"></span><span class="note-host" id="note-host"></span></a>
+  </section>
+
+  <script src="quotes.js?v=20261015c"></script>
   <!-- 베트남어(베타). 정식 데이터와 섞지 않으려고 따로 둔다. -->
-  <script src="quotes-vi.js?v=20261015b"></script>
-  <script src="app.js?v=20261015b"></script>
+  <script src="quotes-vi.js?v=20261015c"></script>
+  <script src="app.js?v=20261015c"></script>
 </body>
 </html>

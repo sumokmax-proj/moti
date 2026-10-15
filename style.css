@@ -281,12 +281,26 @@ body {
   gap: 14px;
 }
 
+/* 작가 이름은 출처 쪽지를 여는 버튼이지만 겉으로는 글자 그대로다(숨은 장치).
+   밑줄도 화살표도 없다. 누르는 자리만 위아래로 넓혀 둔다. */
 .quote-author {
+  font-family: inherit;
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-soft);
   letter-spacing: var(--tracking-meta);
-  margin: 0;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 12px 0;
+  margin: -12px 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quote-author:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
 }
 
 .quote-actions {
@@ -535,6 +549,137 @@ body {
   pointer-events: none;
 }
 
+/* ── 출처 쪽지 ────────────────────────────────────────
+   작가 이름을 누르면 아래에서 올라온다. 명언이 나온 책·편지·연설을 적은
+   쪽지다 — 종류와 연도, 출처, 원문, 그리고 원전으로 가는 링크. */
+.note-veil {
+  position: fixed;
+  inset: 0;
+  background: var(--veil);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 20;
+}
+
+.note-veil.on {
+  opacity: 1;
+}
+
+.source-note {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 21;
+  max-width: 480px;
+  margin: 0 auto;
+  max-height: 78vh;
+  max-height: 78dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -8px 30px var(--note-shadow);
+  padding: 10px var(--pad) calc(32px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  transform: translateY(105%);
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none;
+}
+
+.source-note.on {
+  transform: none;
+}
+
+.note-veil[hidden],
+.source-note[hidden],
+.source-note [hidden] {
+  display: none;
+}
+
+.note-grip {
+  align-self: center;
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--hairline);
+  margin-bottom: 6px;
+}
+
+.note-kind {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  /* 대문자로 바꾸지 않는다 — 「c. 450 BC」 의 c. 가 「C.」 가 된다. */
+  color: var(--accent-text);
+}
+
+.note-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+
+.note-orig {
+  margin: 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--hairline);
+  font-size: 15px;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+
+.note-orig-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+}
+
+.note-line {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  word-break: keep-all;
+}
+
+.note-link {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-block: 6px;
+  color: var(--accent-text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.note-link:hover .note-link-label {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.note-link:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.note-host {
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
 /* ── 좁은 화면 ────────────────────────────────────────── */
 
 @media (max-width: 359px) {
@@ -579,7 +724,9 @@ body {
   .quote-block,
   .icon-btn,
   .primary-btn,
-  .toast {
+  .toast,
+  .note-veil,
+  .source-note {
     transition: none;
   }
 }

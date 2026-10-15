@@ -553,3 +553,15 @@ select:focus {
     transform: none;
   }
 }
+
+/* 체크 상자 한 줄 — 연도 대략(circa)·인용 확인(cited). */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.check + .check { margin-top: 8px; }
+.check input { margin-top: 4px; accent-color: var(--field-focus); }

@@ -79,6 +79,8 @@ const UI = {
       source: "출처 (한국어)",
       sourceEn: "출처 (영어)",
       kind: "출처 종류",
+      circa: "연도가 대략이다 (고대·중세 저작 — 「~년경」으로 보인다)",
+      cited: "원문 대신, 원문 위치를 짚어 인용한 자료로 확인했다",
       sourceUrl: "출처 URL",
       translator: "영역 번역자",
       translatorUrl: "번역 근거 URL",
@@ -175,6 +177,8 @@ const UI = {
       source: "Source (Korean)",
       sourceEn: "Source (English)",
       kind: "Source kind",
+      circa: "The year is approximate (ancient or medieval work — shown as “c.”)",
+      cited: "Checked against a source that cites the original, not the original itself",
       sourceUrl: "Source URL",
       translator: "English translator",
       translatorUrl: "Translation URL",
@@ -504,6 +508,8 @@ function normalize(quote) {
     tags: quote.tags.slice(),
   };
   if (str(quote.kind)) out.kind = str(quote.kind);
+  if (quote.circa === true) out.circa = true;
+  if (quote.cited === true) out.cited = true;
   if (str(quote.translator)) {
     out.translator = str(quote.translator);
     out.translatorUrl = str(quote.translatorUrl);
@@ -559,7 +565,9 @@ function toEntry(quote, id) {
   lines.push("    },");
   if (quote.kind) lines.push(`    kind: ${jsString(quote.kind)},`);
   lines.push(`    year: ${Number(quote.year)},`);
+  if (quote.circa) lines.push("    circa: true,");
   lines.push(`    sourceUrl: ${jsString(quote.sourceUrl)},`);
+  if (quote.cited) lines.push("    cited: true,");
   lines.push(`    tags: [${quote.tags.map(jsString).join(", ")}],`);
   lines.push("  },");
   return lines.join("\n");
@@ -893,6 +901,8 @@ function applyLang() {
   setLabel("l-source-en", ui.labels.sourceEn);
   $("l-kind").textContent = ui.labels.kind;
   $("h-source-en").textContent = ui.hints.sourceEn;
+  $("l-circa").textContent = ui.labels.circa;
+  $("l-cited").textContent = ui.labels.cited;
   renderKindSelect();
   setLabel("l-source-url", ui.labels.sourceUrl);
   setLabel("l-translator-url", ui.labels.translatorUrl);
@@ -941,6 +951,8 @@ function readForm() {
     sourceEn: val("source_en"),
     kind: val("kind"),
     year: val("year"),
+    circa: document.getElementById("f-circa").checked,
+    cited: document.getElementById("f-cited").checked,
     sourceUrl: val("sourceUrl"),
     translator: val("translator"),
     translatorUrl: val("translatorUrl"),
@@ -1012,6 +1024,8 @@ async function onBulk() {
       ...flatSource(item),
       kind: item.kind,
       year: item.year,
+      circa: item.circa === true,
+      cited: item.cited === true,
       sourceUrl: item.sourceUrl,
       ...flatTranslator(item),
       tags: item.tags,

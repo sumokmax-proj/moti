@@ -30,6 +30,14 @@ const UI = {
     weightHint: "Saved quotes turn up twice as often",
     copied: "Copied to clipboard",
     shareUnsupported: "Sharing isn’t supported in this browser",
+    note: {
+      kinds: { speech: "Speech", letter: "Letter", diary: "Diary", interview: "Interview", calligraphy: "Calligraphy", inscription: "Inscription", testimony: "Account" },
+      links: { work: "Read the original", speech: "Read the speech", letter: "Read the letter", diary: "Read the diary", interview: "Read the interview", calligraphy: "See the calligraphy", inscription: "Read the text", testimony: "Read the account", cited: "Source evidence" },
+      year: (y, circa) => (y < 0 ? `${circa ? "c. " : ""}${-y} BC` : `${circa ? "c. " : ""}${y}`),
+      original: "Original",
+      translator: (name) => `English translation by ${name}`,
+      cited: "Checked against a source that cites the original and where it appears.",
+    },
     aria: {
       openFavorites: "Open favorites",
       favorite: "Add to favorites",
@@ -37,6 +45,7 @@ const UI = {
       back: "Back",
       language: "Language",
       vi: "Vietnamese (beta)",
+      source: "source",
     },
   },
   ko: {
@@ -49,6 +58,14 @@ const UI = {
     weightHint: "저장한 명언이 두 배 자주 펼쳐집니다",
     copied: "클립보드에 복사되었습니다",
     shareUnsupported: "공유하기를 지원하지 않는 브라우저입니다",
+    note: {
+      kinds: { speech: "연설", letter: "편지", diary: "일기", interview: "인터뷰", calligraphy: "유묵", inscription: "새긴 글", testimony: "증언" },
+      links: { work: "원전 읽기", speech: "연설문 읽기", letter: "편지 읽기", diary: "일기 읽기", interview: "인터뷰 읽기", calligraphy: "유묵 보기", inscription: "원문 읽기", testimony: "증언 읽기", cited: "출처 확인 자료" },
+      year: (y, circa) => `${y < 0 ? `기원전 ${-y}` : y}년${circa ? "경" : ""}`,
+      original: "원문",
+      translator: (name) => `영역 ${name}`,
+      cited: "원문 대신, 원문과 그 위치를 밝혀 인용한 자료로 확인한 문장입니다.",
+    },
     aria: {
       openFavorites: "즐겨찾기 목록 열기",
       favorite: "즐겨찾기",
@@ -56,6 +73,7 @@ const UI = {
       back: "메인으로 돌아가기",
       language: "언어",
       vi: "베트남어 (베타)",
+      source: "출처",
     },
   },
   vi: {
@@ -68,6 +86,14 @@ const UI = {
     weightHint: "Câu đã lưu sẽ xuất hiện nhiều gấp đôi",
     copied: "Đã sao chép",
     shareUnsupported: "Trình duyệt này không hỗ trợ chia sẻ",
+    note: {
+      kinds: { speech: "Diễn văn", letter: "Thư", diary: "Nhật ký", interview: "Phỏng vấn", calligraphy: "Thư pháp", inscription: "Văn khắc", testimony: "Lời kể" },
+      links: { work: "Đọc nguyên tác", speech: "Đọc diễn văn", letter: "Đọc bức thư", diary: "Đọc nhật ký", interview: "Đọc bài phỏng vấn", calligraphy: "Xem thư pháp", inscription: "Đọc văn bản", testimony: "Đọc lời kể", cited: "Tài liệu đối chiếu" },
+      year: (y, circa) => `${circa ? "khoảng " : ""}${y < 0 ? `${-y} TCN` : y}`,
+      original: "Nguyên văn",
+      translator: (name) => `Bản dịch tiếng Anh: ${name}`,
+      cited: "Đã đối chiếu qua tài liệu có trích dẫn nguyên văn và vị trí của nó.",
+    },
     aria: {
       openFavorites: "Mở danh sách yêu thích",
       favorite: "Yêu thích",
@@ -75,6 +101,7 @@ const UI = {
       back: "Quay lại",
       language: "Ngôn ngữ",
       vi: "Tiếng Việt (beta)",
+      source: "nguồn",
     },
   },
 };
@@ -97,6 +124,8 @@ const favoritesTitleEl = document.getElementById("favorites-title");
 const weightBtn = document.getElementById("weight-btn");
 const toastEl = document.getElementById("toast");
 const appHeaderEl = document.querySelector(".app-header");
+const noteEl = document.getElementById("source-note");
+const noteVeilEl = document.getElementById("note-veil");
 const langBtns = Array.from(document.querySelectorAll(".lang-btn"));
 
 let currentQuote = null;
@@ -163,6 +192,7 @@ function applyLang() {
   favoriteBtn.setAttribute("aria-label", ui.aria.favorite);
   shareBtn.setAttribute("aria-label", ui.aria.share);
   backBtn.setAttribute("aria-label", ui.aria.back);
+  if (noteOpen) fillNote(currentQuote);
   langBtns.forEach((btn) => {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
     btn.classList.toggle("active", btn.dataset.lang === lang);
@@ -398,6 +428,7 @@ function renderQuote(quote) {
   if (!quote) return;
   quoteTextEl.textContent = localized(quote.text);
   quoteAuthorEl.textContent = localized(quote.author);
+  quoteAuthorEl.setAttribute("aria-label", `${localized(quote.author)} — ${t().aria.source}`);
   updateFavoriteButton();
   fitQuoteText();
 }
@@ -408,6 +439,7 @@ let turning = false;
 
 function showNextQuote() {
   if (turning) return;
+  closeNote(true);
   turning = true;
   const nextQuote = turnPage(currentQuote ? currentQuote.id : null);
   quoteBlockEl.classList.add("fade");
@@ -514,6 +546,7 @@ function stopRiffle() {
 
 function riffleToNextQuote() {
   if (turning) return;
+  closeNote(true);
   if (reduceMotion.matches) {
     showNextQuote();
     return;
@@ -641,6 +674,7 @@ function snapshotSheet() {
 
 function goBack() {
   if (turning || isRiffling()) return;
+  closeNote(true);
   const prev = previousQuote();
   if (!prev) {
     bounce();
@@ -768,10 +802,11 @@ function bounce() {
      가장자리에서 오른쪽으로 쓸면 「뒤로 가기」로 앱을 떠나 버리는데, 그 손짓은
      앱이 막을 수 없다. 겹치지 않게 비켜 서는 것까지가 할 수 있는 일이다.
    - 즐겨찾기·공유 버튼에서 시작한 손짓은 넘김으로 보지 않는다 — 버튼 누르다
-     손이 미끄러진 것을 넘김으로 착각하면 안 된다. */
+     손이 미끄러진 것을 넘김으로 착각하면 안 된다. 작가 이름은 예외다. 겉으로는
+     글자라서(출처 쪽지는 숨은 장치) 그 위에서 밀어도 다른 글자처럼 넘어가야 한다. */
 let swipeStart = null;
 quoteBlockEl.addEventListener("pointerdown", (e) => {
-  const fromButton = e.target.closest("button") && !isRiffling();
+  const fromButton = e.target.closest("button:not(.quote-author)") && !isRiffling();
   const fromEdge = e.clientX < EDGE_GUARD_PX || e.clientX > window.innerWidth - EDGE_GUARD_PX;
   swipeStart = fromButton || (fromEdge && !isRiffling()) ? null : { x: e.clientX, y: e.clientY };
 });
@@ -802,7 +837,7 @@ quoteBlockEl.addEventListener("dragstart", (e) => e.preventDefault());
 /* 키보드: ← 한 장 되돌아가기, → 다음(Shift+→ 주르륵). 즐겨찾기 화면에서는 끈다. */
 document.addEventListener("keydown", (e) => {
   if (e.altKey || e.ctrlKey || e.metaKey) return;
-  if (mainView.classList.contains("hidden")) return;
+  if (mainView.classList.contains("hidden") || noteOpen) return;
   if (e.key === "ArrowLeft") {
     e.preventDefault();
     goBack();
@@ -813,6 +848,150 @@ document.addEventListener("keydown", (e) => {
     else showNextQuote();
   }
 });
+
+/* ── 출처 쪽지 (숨은 장치) ─────────────────────────────
+   작가 이름을 누르면 책 사이에 끼워 둔 쪽지처럼 아래에서 올라온다.
+   명언 한 줄이 그 문장이 나온 책으로 이어지는 문이다(PLANNING.md 「모토와
+   궁극적인 목표」). 명언을 보는 것이 주인공이라 화면에 표시하지 않는다.
+
+   - 종류와 연도: 책·시는 종류를 적지 않는다. 연설·편지 같은 기록만 적는다.
+     연도가 대략인 고대·중세 저작(circa)은 「~년경」.
+   - 출처: 영어는 책 제목을 *별표* 로 적어 두었고 여기서 기울임으로 바꾼다.
+     베트남어 화면은 영어 출처를 쓴다.
+   - 원문: 화면의 문장과 다를 때만(영어 원문을 영어로 볼 때는 같은 문장이다).
+   - 링크: 원전으로 간다. 원문 대신 인용한 자료로 확인한 명언(cited)은
+     「출처 확인 자료」라고 밝힌다 — 원전처럼 보이게 하지 않는다.
+   - 닫기: 바깥을 누르거나, 쪽지를 아래로 밀거나, Esc. 「다음」·밀기·즐겨찾기
+     화면으로 가면 저절로 닫힌다. */
+const NOTE_MS = 320;
+const NOTE_SWIPE_PX = 60;
+let noteOpen = false;
+let noteHideTimer = null;
+
+// 구텐베르크는 평문(.txt)을 열어 대조했다. 읽는 사람에게는 책 소개 쪽이 낫다.
+function readableUrl(url) {
+  const g = String(url).match(/^https?:\/\/(?:www\.)?gutenberg\.org\/(?:cache\/epub|files)\/(\d+)\//);
+  return g ? `https://www.gutenberg.org/ebooks/${g[1]}` : url;
+}
+
+function hostOf(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+// *제목* 을 기울임으로. innerHTML 을 쓰지 않고 글자 노드로 짓는다.
+function setItalicText(el, text) {
+  el.textContent = "";
+  String(text).split(/(\*[^*]+\*)/).forEach((part) => {
+    if (!part) return;
+    if (part.startsWith("*") && part.endsWith("*") && part.length > 2) {
+      const i = document.createElement("i");
+      i.textContent = part.slice(1, -1);
+      el.appendChild(i);
+    } else {
+      el.appendChild(document.createTextNode(part));
+    }
+  });
+}
+
+const sameWords = (a, b) => {
+  const norm = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
+  return norm(a) === norm(b);
+};
+
+function fillNote(quote) {
+  if (!quote) return;
+  const ui = t().note;
+  const kind = quote.kind && ui.kinds[quote.kind];
+  const year = ui.year(quote.year, quote.circa === true);
+  document.getElementById("note-kind").textContent = kind ? `${kind} · ${year}` : year;
+  setItalicText(document.getElementById("note-title"), localized(quote.source));
+
+  const orig = document.getElementById("note-orig");
+  const showOrig = quote.original && !sameWords(quote.original, localized(quote.text));
+  orig.hidden = !showOrig;
+  if (showOrig) {
+    document.getElementById("note-orig-label").textContent = ui.original;
+    const text = document.getElementById("note-orig-text");
+    text.textContent = quote.original;
+    text.lang = quote.lang === "lzh" ? "zh-Hant" : quote.lang || "";
+  }
+
+  const tr = document.getElementById("note-tr");
+  const translator = lang === "en" && quote.translator && quote.translator.en;
+  tr.hidden = !translator;
+  if (translator) tr.textContent = ui.translator(translator);
+
+  const cited = document.getElementById("note-cited");
+  cited.hidden = quote.cited !== true;
+  cited.textContent = ui.cited;
+
+  const url = readableUrl(quote.sourceUrl);
+  const link = document.getElementById("note-link");
+  link.href = url;
+  document.getElementById("note-link-label").textContent =
+    `${quote.cited ? ui.links.cited : ui.links[quote.kind] || ui.links.work} →`;
+  document.getElementById("note-host").textContent = hostOf(url);
+}
+
+function openNote() {
+  if (noteOpen || !currentQuote || turning || isRiffling()) return;
+  clearTimeout(noteHideTimer);
+  fillNote(currentQuote);
+  noteEl.scrollTop = 0;
+  noteEl.hidden = false;
+  noteVeilEl.hidden = false;
+  noteEl.getBoundingClientRect(); // 숨김을 푼 자리에서 올라오게 한 번 그린다
+  noteEl.classList.add("on");
+  noteVeilEl.classList.add("on");
+  noteOpen = true;
+  quoteAuthorEl.setAttribute("aria-expanded", "true");
+  noteEl.focus({ preventScroll: true });
+}
+
+function closeNote(instant = false) {
+  if (!noteOpen) return;
+  noteOpen = false;
+  quoteAuthorEl.setAttribute("aria-expanded", "false");
+  const hadFocus = noteEl.contains(document.activeElement);
+  noteEl.classList.remove("on");
+  noteVeilEl.classList.remove("on");
+  const hide = () => {
+    if (noteOpen) return;
+    noteEl.hidden = true;
+    noteVeilEl.hidden = true;
+  };
+  clearTimeout(noteHideTimer);
+  if (instant || reduceMotion.matches) hide();
+  else noteHideTimer = setTimeout(hide, NOTE_MS);
+  if (hadFocus && !instant) quoteAuthorEl.focus({ preventScroll: true });
+}
+
+quoteAuthorEl.addEventListener("click", () => (noteOpen ? closeNote() : openNote()));
+noteVeilEl.addEventListener("click", () => closeNote());
+noteEl.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    e.preventDefault();
+    closeNote();
+  } else if (e.key === "Tab") {
+    // 쪽지 안에서만 돈다: 쪽지 ↔ 링크.
+    e.preventDefault();
+    const link = document.getElementById("note-link");
+    (document.activeElement === link ? noteEl : link).focus();
+  }
+});
+// 쪽지를 아래로 밀면 닫힌다. 쪽지가 길어 스크롤된 상태면 스크롤이 먼저다.
+let noteTouchY = null;
+noteEl.addEventListener("touchstart", (e) => {
+  noteTouchY = noteEl.scrollTop <= 0 ? e.touches[0].clientY : null;
+}, { passive: true });
+noteEl.addEventListener("touchend", (e) => {
+  if (noteTouchY !== null && e.changedTouches[0].clientY - noteTouchY > NOTE_SWIPE_PX) closeNote();
+  noteTouchY = null;
+}, { passive: true });
 
 function showToast(message, ms = 2000) {
   toastEl.textContent = message;
@@ -879,6 +1058,7 @@ function renderFavoritesList() {
 
 function openFavoritesView() {
   stopRiffle();
+  closeNote(true);
   renderFavoritesList();
   appHeaderEl.classList.add("hidden");
   mainView.classList.add("hidden");

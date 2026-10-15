@@ -54,6 +54,8 @@ for (const q of quotes) {
   if (!q.lang) p("lang 없음");
   if (!(q.source && typeof q.source === "object" && q.source.ko && q.source.en)) p("source 는 { ko, en } 이어야 함");
   if (q.kind !== undefined && !rules.kinds.has(q.kind)) p(`모르는 출처 종류 ${q.kind}`);
+  if (q.circa !== undefined && q.circa !== true) p("circa 는 true 이거나 없어야 함");
+  if (q.cited !== undefined && q.cited !== true) p("cited 는 true 이거나 없어야 함");
   if (!Number.isInteger(q.year)) p("year 가 정수가 아님");
   if (!isUrl(q.sourceUrl)) p("sourceUrl 이 http(s) 주소가 아님");
   if (q.translator !== undefined && !(q.translator && q.translator.en && isUrl(q.translator.enUrl))) {
@@ -150,6 +152,15 @@ report.note("베트남어 진행", `번역 ${viIds.length}/${quotes.length} · �
 const tagCount = {};
 quotes.forEach((q) => q.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
 report.note("태그별 편수 (편집용)", [...rules.tags].map((t) => `${t} ${tagCount[t] || 0}`).join(" · "));
+
+/* ── 인용 확인 — 머리 주석 [B] 목록과 cited: true 가 같아야 한다.
+   쪽지는 cited 를 보고 링크를 「출처 확인 자료」로 바꾼다. ── */
+const bBlock = source.slice(source.indexOf("// [B]"), source.indexOf("// [C]"));
+const bIds = new Set([...bBlock.matchAll(/(\d+)\(/g)].map((m) => Number(m[1])));
+const citedIds = new Set(quotes.filter((q) => q.cited).map((q) => q.id));
+const citedDiff = [...bIds].filter((id) => !citedIds.has(id)).concat([...citedIds].filter((id) => !bIds.has(id)));
+report.check("인용 확인 — [B] 목록과 cited 가 같음", bIds.size > 0 && citedDiff.length === 0,
+  citedDiff.length ? `어긋남: ${citedDiff.join(", ")}` : `${bIds.size}편`);
 
 /* ── 참고: 출처 종류별 편수 — 책·시 같은 저작은 kind 가 없다 ── */
 const kindCount = {};

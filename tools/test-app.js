@@ -17,6 +17,8 @@
  *   되돌아가기 한 장 · 반동(정점 22px) · 다시 나아갔다 돌아오기 · 새로고침 뒤 · 가장자리
  *             · 키보드 · 동작 줄이기
  *   즐겨찾기  고친 명언은 지금 문장으로, 삭제된 명언은 저장해 둔 문장으로
+ *   출처 쪽지 작가 이름으로 열기 · Esc·바깥으로 닫기 · 화살표 막기 · 넘기면 닫힘 · 모든 명언 × 세 언어의
+ *             내용·링크·인용 확인 · 연도 「~년경」 · 원문 · 기울임 · 320x568 에서 화면 안
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const { spawn } = require("child_process");
@@ -529,6 +531,137 @@ async function suiteVietnamese(browser) {
   await p.context().close();
 }
 
+/* ── 출처 쪽지 ─────────────────────────────────────── */
+async function suiteNote(browser) {
+  const p = await freshPage(browser);
+  await idle(p);
+  const shown = () => p.evaluate(() => ({
+    open: noteOpen,
+    on: document.getElementById("source-note").classList.contains("on"),
+    hidden: document.getElementById("source-note").hidden,
+    expanded: document.getElementById("quote-author").getAttribute("aria-expanded"),
+  }));
+
+  await p.click("#quote-author");
+  await p.waitForTimeout(400);
+  let s = await shown();
+  const focused = await p.evaluate(() => document.activeElement.id);
+  report.check("작가 이름을 누르면 쪽지가 올라옴", s.open && s.on && !s.hidden && s.expanded === "true" && focused === "source-note");
+
+  // 쪽지가 떠 있는 동안 화살표는 넘기지 않는다.
+  const before = await qid(p);
+  await p.keyboard.press("ArrowRight");
+  await p.waitForTimeout(300);
+  report.check("쪽지가 떠 있으면 화살표로 넘어가지 않음", (await qid(p)) === before);
+
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(400);
+  s = await shown();
+  const back = await p.evaluate(() => document.activeElement.id);
+  report.check("Esc 로 닫히고 초점이 작가 이름으로", !s.open && s.hidden && s.expanded === "false" && back === "quote-author");
+
+  await p.click("#quote-author");
+  await p.waitForTimeout(400);
+  await p.mouse.click(195, 120); // 쪽지 위쪽 — 가라앉은 바탕
+  await p.waitForTimeout(400);
+  s = await shown();
+  report.check("바깥을 누르면 닫힘", !s.open && s.hidden);
+
+  // 작가 이름은 겉으로 글자다 — 그 위에서 밀어도 넘어가고, 쪽지는 열리지 않는다.
+  await tapNext(p);
+  const ab = await p.locator("#quote-author").boundingBox();
+  const id0 = await qid(p);
+  // 이름이 짧아(「공자」) 왼쪽으로는 밀 거리가 없다. 오른쪽(되돌아가기)으로 민다.
+  await swipe(p, ab.x + Math.min(ab.width / 2, 20), ab.x + 220, ab.y + ab.height / 2);
+  await p.waitForTimeout(200);
+  await idle(p);
+  report.check("작가 이름 위에서 밀어도 넘어가고 쪽지는 안 열림", (await qid(p)) !== id0 && !(await p.evaluate(() => noteOpen)));
+
+  // 「다음」·되돌아가기·즐겨찾기 화면으로 가면 닫힌다.
+  const closes = await p.evaluate(async () => {
+    const out = {};
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    openNote(); showNextQuote(); out.next = !noteOpen && document.getElementById("source-note").hidden;
+    await wait(400);
+    openNote(); openFavoritesView(); out.fav = !noteOpen && document.getElementById("source-note").hidden;
+    closeFavoritesView();
+    return out;
+  });
+  report.check("「다음」·즐겨찾기 화면으로 가면 쪽지가 닫힘", closes.next && closes.fav);
+
+  // 모든 명언 × 세 언어: 내용이 비지 않고, 별표가 남지 않고, 링크가 맞다.
+  const all = await p.evaluate(() => {
+    const bad = [];
+    const counts = { orig: 0, cited: 0, circa: 0 };
+    for (const L of ["ko", "en", "vi"]) {
+      setLang(L);
+      for (const q of QUOTES.filter((x) => x.text[L])) {
+        currentQuote = q;
+        fillNote(q);
+        const g = (id) => document.getElementById(id);
+        const title = g("note-title");
+        const label = g("note-link-label").textContent;
+        const href = g("note-link").getAttribute("href");
+        const problems = [];
+        if (!title.textContent.trim() || title.textContent.includes("*")) problems.push("출처");
+        if (!g("note-kind").textContent.trim()) problems.push("연도");
+        if (!/^https?:\/\//.test(href) || /gutenberg\.org\/(cache|files)\//.test(href)) problems.push("링크");
+        if (q.cited ? label !== `${UI[L].note.links.cited} →` : label === `${UI[L].note.links.cited} →`) problems.push("인용 확인");
+        if (q.kind && !g("note-kind").textContent.startsWith(UI[L].note.kinds[q.kind])) problems.push("종류");
+        if (!g("note-host").textContent) problems.push("주소");
+        if (problems.length) bad.push(`${L}:${q.id}(${problems.join("·")})`);
+        if (L === "ko") {
+          if (!g("note-orig").hidden) counts.orig++;
+          if (q.cited) counts.cited++;
+          if (g("note-kind").textContent.includes("경")) counts.circa++;
+        }
+      }
+    }
+    setLang("ko");
+    return { bad, counts };
+  });
+  report.check("모든 명언 · 세 언어 — 쪽지 내용과 링크", all.bad.length === 0,
+    all.bad.length ? all.bad.slice(0, 6).join(", ") : `원문 표시 ${all.counts.orig}편 · 인용 확인 ${all.counts.cited}편 · 「~년경」 ${all.counts.circa}편`);
+
+  // 견본: 연도·원문·기울임.
+  const sample = await p.evaluate(() => {
+    const pick = (id, L) => {
+      setLang(L);
+      const q = QUOTES.find((x) => x.id === id);
+      fillNote(q);
+      const g = (x) => document.getElementById(x);
+      return { kind: g("note-kind").textContent, orig: !g("note-orig").hidden, italic: g("note-title").querySelectorAll("i").length };
+    };
+    return { a: pick(177, "ko"), b: pick(177, "en"), c: pick(54, "en"), d: pick(54, "ko"), e: pick(51, "ko") };
+  });
+  report.check("연도 「기원전 450년경」·「c. 450 BC」, 대략이 아니면 「~경」 없음",
+    sample.a.kind === "기원전 450년경" && sample.b.kind === "c. 450 BC" && sample.e.kind === "편지 · 1883년", `${sample.a.kind} / ${sample.b.kind} / ${sample.e.kind}`);
+  report.check("원문은 화면 문장과 다를 때만 (처칠 영어 X, 한국어 O)", !sample.c.orig && sample.d.orig && sample.a.orig);
+  report.check("영어 출처의 책 제목은 기울임", sample.b.italic === 2);
+
+  // 가장 작은 화면에서 쪽지가 화면 안에 있고 옆으로 넘치지 않는다.
+  const q = await freshPage(browser, { viewport: { width: 320, height: 568 } });
+  const fit = await q.evaluate(async () => {
+    const bad = [];
+    for (const L of ["ko", "en", "vi"]) {
+      setLang(L);
+      for (const x of QUOTES.filter((y) => y.text[L])) {
+        currentQuote = x;
+        openNote();
+        const n = document.getElementById("source-note");
+        n.style.transition = "none";
+        const r = n.getBoundingClientRect();
+        if (n.scrollWidth > n.clientWidth + 1 || r.top < 0 || r.bottom > innerHeight + 1) bad.push(`${L}:${x.id}`);
+        closeNote(true);
+      }
+    }
+    return { bad, wide: document.documentElement.scrollWidth - innerWidth };
+  });
+  report.check("320x568 — 쪽지가 화면 안, 옆 넘침 없음", fit.bad.length === 0 && fit.wide <= 0, fit.bad.slice(0, 6).join(", "));
+  await q.context().close();
+  await p.context().close();
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { proc, url } = await startServer();
@@ -537,7 +670,7 @@ async function suiteVietnamese(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote]]) {
       try {
         await suite(browser);
       } catch (err) {
