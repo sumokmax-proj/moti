@@ -1737,6 +1737,7 @@ const QUOTES = [
     },
     source: {
       ko: "『돈키호테』 1부 21장, 돈키호테의 대사(속담 인용)",
+      en: "*Don Quixote*, Part One, ch. 21 — Don Quixote, quoting a proverb",
     },
     year: 1605,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2000/pg2000.txt",
@@ -1756,6 +1757,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『부자가 되는 길(The Way to Wealth)』, 에이브러햄 영감의 연설(속담 인용)",
+      en: "*The Way to Wealth* — Father Abraham's speech, quoting a proverb",
     },
     year: 1758,
     sourceUrl: "https://en.wikisource.org/wiki/Way_to_wealth_(1)",
@@ -1775,6 +1777,7 @@ const QUOTES = [
     lang: "ko",
     source: {
       ko: "『님의 침묵』 「님의 침묵」",
+      en: "\"The Silence of Love\" — *The Silence of Love* (Nim-ui Chimmuk)",
     },
     year: 1926,
     sourceUrl: "https://ko.wikisource.org/wiki/%EB%8B%98%EC%9D%98_%EC%B9%A8%EB%AC%B5/%EB%8B%98%EC%9D%98_%EC%B9%A8%EB%AC%B5",
@@ -1794,6 +1797,7 @@ const QUOTES = [
     lang: "ko",
     source: {
       ko: "『하늘과 바람과 별과 시』(1948 초판) 「서시」",
+      en: "\"Prologue\" (Seosi) — *Sky, Wind, Stars and Poems* (first edition, 1948)",
     },
     year: 1941,
     sourceUrl: "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%84%9C%EC%8B%9C",
@@ -1813,6 +1817,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『천국과 지옥의 결혼』 「악마의 목소리」",
+      en: "*The Marriage of Heaven and Hell*, \"The Voice of the Devil\"",
     },
     year: 1790,
     sourceUrl: "https://www.gutenberg.org/cache/epub/45315/pg45315.txt",
@@ -1832,6 +1837,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『산의 막간(Mountain Interval)』 「가지 않은 길」",
+      en: "\"The Road Not Taken\" — *Mountain Interval*",
     },
     year: 1916,
     sourceUrl: "https://www.gutenberg.org/cache/epub/29345/pg29345.txt",
@@ -1851,6 +1857,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "「서풍에 부치는 노래(Ode to the West Wind)」",
+      en: "\"Ode to the West Wind\"",
     },
     year: 1820,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4800/pg4800.txt",
@@ -1874,6 +1881,7 @@ const QUOTES = [
     },
     source: {
       ko: "『파우스트』 1부 「천상의 서곡」, 주님의 대사",
+      en: "*Faust*, Part One, \"Prologue in Heaven\" — the Lord",
     },
     year: 1808,
     sourceUrl: "https://de.wikisource.org/wiki/Faust_-_Der_Trag%C3%B6die_erster_Teil",
@@ -1893,6 +1901,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『예언자』 「일에 대하여」",
+      en: "*The Prophet*, \"On Work\"",
     },
     year: 1923,
     sourceUrl: "https://www.gutenberg.org/cache/epub/58585/pg58585.txt",
@@ -1912,6 +1921,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『자기 신뢰(Self-Reliance)』",
+      en: "\"Self-Reliance\" — *Essays: First Series*",
     },
     year: 1841,
     sourceUrl: "https://www.gutenberg.org/cache/epub/16643/pg16643.txt",
@@ -1931,6 +1941,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『인간론(An Essay on Man)』 제1서간",
+      en: "*An Essay on Man*, Epistle 1",
     },
     year: 1733,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2428/pg2428.txt",
@@ -1950,6 +1961,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『작은 아씨들』 13장 「공중누각」, 조의 대사",
+      en: "*Little Women*, ch. 13, \"Castles in the Air\" — Jo",
     },
     year: 1868,
     sourceUrl: "https://www.gutenberg.org/cache/epub/514/pg514.txt",
@@ -1969,6 +1981,7 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『아이네이스』 5권 231행",
+      en: "*Aeneid* 5.231",
     },
     year: -19,
     sourceUrl: "https://la.wikisource.org/wiki/Aeneis/Liber_V",
@@ -1988,6 +2001,7 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『송가(Carmina)』 1권 11편",
+      en: "*Odes* 1.11",
     },
     year: -23,
     sourceUrl: "https://la.wikisource.org/wiki/Carmina_(Horatius)/Liber_I/Carmen_XI",
@@ -2007,6 +2021,7 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『흑해에서 보낸 편지(Epistulae ex Ponto)』 4권 10편 5행",
+      en: "*Letters from the Black Sea* (Epistulae ex Ponto) 4.10.5",
     },
     year: 13,
     sourceUrl: "https://la.wikisource.org/wiki/Epistulae_ex_Ponto/Liber_IV",
@@ -2030,6 +2045,7 @@ const QUOTES = [
     },
     source: {
       ko: "『신곡』 지옥편 26곡, 율리시스의 대사",
+      en: "*Divine Comedy*, *Inferno*, Canto 26 — Ulysses",
     },
     year: 1320,
     sourceUrl: "https://it.wikisource.org/wiki/Divina_Commedia/Inferno/Canto_XXVI",
@@ -2049,6 +2065,7 @@ const QUOTES = [
     lang: "fr",
     source: {
       ko: "『우화』 6권 10 「토끼와 거북」",
+      en: "*Fables*, Book 6, no. 10, \"The Hare and the Tortoise\"",
     },
     year: 1668,
     sourceUrl: "https://fr.wikisource.org/wiki/Fables_de_La_Fontaine_(%C3%A9d._1874)/Le_Li%C3%A8vre_et_la_Tortue",
@@ -2068,6 +2085,7 @@ const QUOTES = [
     lang: "ko",
     source: {
       ko: "『하늘과 바람과 별과 시』(1948 초판) 「새로운 길」",
+      en: "\"New Road\" (Saeroun Gil) — *Sky, Wind, Stars and Poems* (first edition, 1948)",
     },
     year: 1938,
     sourceUrl: "https://ko.wikisource.org/wiki/%ED%95%98%EB%8A%98%EA%B3%BC_%EB%B0%94%EB%9E%8C%EA%B3%BC_%EB%B3%84%EA%B3%BC_%EC%8B%9C_(1948%EB%85%84)/%EC%83%88%EB%A1%9C%EC%9A%B4_%EA%B8%B8",
@@ -2087,6 +2105,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "「행로난(行路難)」 제1수",
+      en: "\"The Hard Road\" (Xing Lu Nan), no. 1",
     },
     year: 744,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%A1%8C%E8%B7%AF%E9%9B%A3_(%E9%87%91%E6%A8%BD%E6%B8%85%E9%85%92%E6%96%97%E5%8D%81%E5%8D%83)",
@@ -2106,6 +2125,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『오만과 편견』 31장, 엘리자베스의 대사",
+      en: "*Pride and Prejudice*, ch. 31 — Elizabeth",
     },
     year: 1813,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
@@ -2125,7 +2145,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "쿠퍼 유니언 연설, 뉴욕 (2월 27일)",
+      en: "Cooper Union Address, New York, February 27",
     },
+    kind: "speech",
     year: 1860,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2657/pg2657.txt",
     tags: ["challenge", "fear"],
@@ -2148,6 +2170,7 @@ const QUOTES = [
     },
     source: {
       ko: "『명상록』 10권 16",
+      en: "*Meditations* 10.16",
     },
     year: 180,
     sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/10",
@@ -2167,6 +2190,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『미들마치』 51장",
+      en: "*Middlemarch*, ch. 51",
     },
     year: 1872,
     sourceUrl: "https://www.gutenberg.org/cache/epub/145/pg145.txt",
@@ -2186,6 +2210,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『월든』 2장 「내가 살았던 곳, 그리고 살았던 이유」",
+      en: "*Walden*, ch. 2, \"Where I Lived, and What I Lived For\"",
     },
     year: 1854,
     sourceUrl: "https://www.gutenberg.org/cache/epub/205/pg205.txt",
@@ -2205,6 +2230,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『햄릿』 1막 3장, 폴로니어스의 대사",
+      en: "*Hamlet*, Act 1, Scene 3 — Polonius",
     },
     year: 1600,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1524/pg1524.txt",
