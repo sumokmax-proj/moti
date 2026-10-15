@@ -54,12 +54,16 @@ function readServerRules() {
   const tagBlock = src.match(/const TAG_KEYS = new Set\(\[([\s\S]*?)\]\);/);
   if (!tagBlock) throw new Error("collector/server.js 에서 TAG_KEYS 를 찾지 못했습니다");
   const tags = new Set([...tagBlock[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]));
+  const kindBlock = src.match(/const SOURCE_KINDS = new Set\(\[([\s\S]*?)\]\);/);
+  if (!kindBlock) throw new Error("collector/server.js 에서 SOURCE_KINDS 를 찾지 못했습니다");
+  const kinds = new Set([...kindBlock[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]));
   return {
     maxKo: num("MAX_KO"),
     maxEn: num("MAX_EN"),
     // 저자당 상한은 전체 편수에 따라 정해진다(전체의 3%, 최소 3).
     authorCap: (total) => Math.max(num("AUTHOR_CAP_MIN"), Math.floor(total * num("AUTHOR_CAP_RATIO"))),
     tags,
+    kinds,
   };
 }
 

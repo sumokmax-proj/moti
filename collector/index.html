@@ -8,18 +8,18 @@
        svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
        apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
        투명한 모서리는 검게 칠해버린다. -->
-  <link rel="icon" href="../favicon.svg?v=20261015a" type="image/svg+xml" />
-  <link rel="icon" href="../favicon-32.png?v=20261015a" sizes="32x32" type="image/png" />
-  <link rel="icon" href="../favicon-16.png?v=20261015a" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=20261015a" />
+  <link rel="icon" href="../favicon.svg?v=20261015b" type="image/svg+xml" />
+  <link rel="icon" href="../favicon-32.png?v=20261015b" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../favicon-16.png?v=20261015b" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=20261015b" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
   <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
        파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
        섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
-  <link rel="stylesheet" href="../tokens.css?v=20261015a" />
-  <link rel="stylesheet" href="collector.css?v=20261015a" />
+  <link rel="stylesheet" href="../tokens.css?v=20261015b" />
+  <link rel="stylesheet" href="collector.css?v=20261015b" />
 </head>
 <body>
   <div class="wrap">
@@ -100,8 +100,19 @@
         </div>
 
         <div class="field">
-          <label for="f-source" id="l-source">출처<span class="req">*</span></label>
+          <label for="f-source" id="l-source">출처 (한국어)<span class="req">*</span></label>
           <textarea id="f-source" name="source" placeholder="『도덕경』 64장"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="f-source-en" id="l-source-en">출처 (영어)<span class="req">*</span></label>
+          <textarea id="f-source-en" name="source_en" placeholder="*Tao Te Ching*, ch. 64"></textarea>
+          <p class="hint" id="h-source-en">책 제목은 *별표*로 감쌉니다 — 출처 시트에서 기울임으로 보입니다. 연도는 적지 않습니다.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-kind" id="l-kind">출처 종류</label>
+          <select id="f-kind" name="kind"></select>
         </div>
 
         <div class="field">
@@ -134,7 +145,7 @@
       <p class="lede" id="bulk-lede">Claude가 QUOTE_STANDARDS.md 기준으로 수집해 준 JSON을 그대로 붙여넣습니다. 배열 또는 단일 객체를 받습니다.</p>
       <div class="field">
         <label for="f-bulk" id="l-bulk">JSON</label>
-        <textarea id="f-bulk" class="tall" spellcheck="false" placeholder='[{"text":{"ko":"…","en":"…"},"author":{"ko":"…","en":"…"},"original":"…","lang":"en","source":"…","year":1758,"sourceUrl":"https://…","tags":["challenge"]}]'></textarea>
+        <textarea id="f-bulk" class="tall" spellcheck="false" placeholder='[{"text":{"ko":"…","en":"…"},"author":{"ko":"…","en":"…"},"original":"…","lang":"en","source":{"ko":"…","en":"…"},"year":1758,"sourceUrl":"https://…","tags":["challenge"]}]'></textarea>
       </div>
       <div class="btn-row">
         <button type="button" class="btn" id="bulk-btn">일괄 등록</button>
@@ -188,7 +199,7 @@
   <p class="toast" id="toast" role="status" hidden></p>
 
   <!-- 앱과 같은 파일을 읽는다. 사본을 두면 언젠가 서로 어긋난다. -->
-  <script src="../quotes.js?v=20261015a"></script>
-  <script src="collector.js?v=20261015a"></script>
+  <script src="../quotes.js?v=20261015b"></script>
+  <script src="collector.js?v=20261015b"></script>
 </body>
 </html>

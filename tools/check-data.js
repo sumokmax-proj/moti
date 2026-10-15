@@ -52,7 +52,8 @@ for (const q of quotes) {
   if (!(q.author && q.author.ko && q.author.en)) p("author.ko/en 없음");
   if (!q.original) p("original 없음");
   if (!q.lang) p("lang 없음");
-  if (!q.source) p("source 없음");
+  if (!(q.source && typeof q.source === "object" && q.source.ko)) p("source 는 { ko, en } 이어야 함");
+  if (q.kind !== undefined && !rules.kinds.has(q.kind)) p(`모르는 출처 종류 ${q.kind}`);
   if (!Number.isInteger(q.year)) p("year 가 정수가 아님");
   if (!isUrl(q.sourceUrl)) p("sourceUrl 이 http(s) 주소가 아님");
   if (q.translator !== undefined && !(q.translator && q.translator.en && isUrl(q.translator.enUrl))) {
@@ -149,5 +150,13 @@ report.note("베트남어 진행", `번역 ${viIds.length}/${quotes.length} · �
 const tagCount = {};
 quotes.forEach((q) => q.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
 report.note("태그별 편수 (편집용)", [...rules.tags].map((t) => `${t} ${tagCount[t] || 0}`).join(" · "));
+
+/* ── 참고: 영어 출처 진행 — 출처 시트(작가 이름을 누르면 열린다)에 쓴다.
+   다 채우면 이 줄을 「항목마다」 검사로 옮겨 빠진 것을 실패로 친다. ── */
+const noSourceEn = quotes.filter((q) => !(q.source && q.source.en)).map((q) => q.id);
+const kindCount = {};
+quotes.forEach((q) => q.kind && (kindCount[q.kind] = (kindCount[q.kind] || 0) + 1));
+report.note("영어 출처 진행", `${quotes.length - noSourceEn.length}/${quotes.length}` +
+  (Object.keys(kindCount).length ? ` · 종류 ${Object.entries(kindCount).map(([k, n]) => `${k} ${n}`).join(" · ")}` : ""));
 
 process.exitCode = report.print() > 0 ? 1 : 0;

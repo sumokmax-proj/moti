@@ -76,7 +76,9 @@ const UI = {
       original: "원문",
       lang: "원문 언어",
       year: "연도",
-      source: "출처",
+      source: "출처 (한국어)",
+      sourceEn: "출처 (영어)",
+      kind: "출처 종류",
       sourceUrl: "출처 URL",
       translator: "영역 번역자",
       translatorUrl: "번역 근거 URL",
@@ -85,6 +87,7 @@ const UI = {
     },
     hints: {
       year: "음수는 기원전입니다.",
+      sourceEn: "책 제목은 *별표*로 감쌉니다 — 출처 시트에서 기울임으로 보입니다. 연도는 적지 않습니다.",
       sourceUrl: "위키문헌·구텐베르크 등 직접 열람할 수 있는 곳이어야 합니다.",
       translator: "공개된 정본 영역을 쓴 경우에만 적습니다. 비우면 자체 번역으로 기록됩니다.",
       translatorUrl: "번역자를 적었으면 그 번역문을 연 URL이 있어야 합니다.",
@@ -148,6 +151,7 @@ const UI = {
       url: (label) => `${label} — http(s) 주소여야 합니다.`,
       tags: "상황 태그 — 최소 하나를 고르세요.",
       unknownTag: (t) => `상황 태그 — 모르는 값입니다: ${t}`,
+      unknownKind: (k) => `출처 종류 — 모르는 값입니다: ${k}`,
       translatorUrl: "번역 근거 URL — 번역자를 적었으면 함께 적어야 합니다.",
       duplicate: "이미 같은 한국어 명언이 등록돼 있습니다.",
     },
@@ -168,7 +172,9 @@ const UI = {
       original: "Original text",
       lang: "Original language",
       year: "Year",
-      source: "Source",
+      source: "Source (Korean)",
+      sourceEn: "Source (English)",
+      kind: "Source kind",
       sourceUrl: "Source URL",
       translator: "English translator",
       translatorUrl: "Translation URL",
@@ -177,6 +183,7 @@ const UI = {
     },
     hints: {
       year: "Negative means BCE.",
+      sourceEn: "Wrap book titles in *asterisks* — the source sheet shows them in italics. Leave out the year.",
       sourceUrl: "Somewhere you can open and read — Wikisource, Gutenberg, an official site.",
       translator: "Only for a published public-domain translation. Leave empty for our own translation.",
       translatorUrl: "If you name a translator, the translation you read must have a URL.",
@@ -240,6 +247,7 @@ const UI = {
       url: (label) => `${label} — must be an http(s) address.`,
       tags: "Situation tags — pick at least one.",
       unknownTag: (t) => `Situation tags — unknown value: ${t}`,
+      unknownKind: (k) => `Source kind — unknown value: ${k}`,
       translatorUrl: "Translation URL — required once you name a translator.",
       duplicate: "That Korean quote is already registered.",
     },
@@ -402,6 +410,18 @@ async function rejectQuote(tempId, from) {
 
 const TAG_KEYS = new Set(SITUATION_TAGS.map((x) => x.key));
 
+/* 출처의 종류 — collector/server.js 의 SOURCE_KINDS 와 같아야 한다.
+   책·시 같은 저작은 비워 둔다. */
+const SOURCE_KINDS = ["speech", "letter", "diary", "interview", "calligraphy", "inscription", "testimony"];
+
+/* source 는 quotes.js 처럼 { ko, en } 이다. 예전 데이터와 손으로 적은 JSON 은
+   한국어 문자열 하나에 sourceEn 을 따로 둘 수 있어 둘 다 받는다. */
+function flatSource(item) {
+  const s = item.source;
+  if (s && typeof s === "object") return { source: s.ko, sourceEn: s.en };
+  return { source: s, sourceEn: item.sourceEn };
+}
+
 function isHttpUrl(value) {
   try {
     const u = new URL(value);
@@ -423,6 +443,7 @@ function validate(quote, existing) {
   const authorEn = str(quote.author && quote.author.en);
   const original = str(quote.original);
   const source = str(quote.source);
+  const sourceEn = str(quote.sourceEn);
   const sourceUrl = str(quote.sourceUrl);
   const translator = str(quote.translator);
   const translatorUrl = str(quote.translatorUrl);
@@ -436,6 +457,8 @@ function validate(quote, existing) {
   if (!original) errors.push(e.required(L.original));
   if (!str(quote.lang)) errors.push(e.required(L.lang));
   if (!source) errors.push(e.required(L.source));
+  if (!sourceEn) errors.push(e.required(L.sourceEn));
+  if (quote.kind && !SOURCE_KINDS.includes(quote.kind)) errors.push(e.unknownKind(quote.kind));
 
   if (quote.year === "" || quote.year === null || quote.year === undefined) {
     errors.push(e.required(L.year));
@@ -475,11 +498,12 @@ function normalize(quote) {
     author: { ko: str(quote.author.ko), en: str(quote.author.en) },
     original: str(quote.original),
     lang: str(quote.lang),
-    source: str(quote.source),
+    source: { ko: str(quote.source), en: str(quote.sourceEn) },
     year: Number(quote.year),
     sourceUrl: str(quote.sourceUrl),
     tags: quote.tags.slice(),
   };
+  if (str(quote.kind)) out.kind = str(quote.kind);
   if (str(quote.translator)) {
     out.translator = str(quote.translator);
     out.translatorUrl = str(quote.translatorUrl);
@@ -528,7 +552,12 @@ function toEntry(quote, id) {
     lines.push(`      enUrl: ${jsString(quote.translatorUrl)},`);
     lines.push("    },");
   }
-  lines.push(`    source: ${jsString(quote.source)},`);
+  lines.push("    source: {");
+  const src = flatSource(quote);
+  lines.push(`      ko: ${jsString(src.source)},`);
+  lines.push(`      en: ${jsString(src.sourceEn)},`);
+  lines.push("    },");
+  if (quote.kind) lines.push(`    kind: ${jsString(quote.kind)},`);
   lines.push(`    year: ${Number(quote.year)},`);
   lines.push(`    sourceUrl: ${jsString(quote.sourceUrl)},`);
   lines.push(`    tags: [${quote.tags.map(jsString).join(", ")}],`);
@@ -601,6 +630,34 @@ function renderLangSelect() {
   sel.value = keep;
 }
 
+/* 출처 종류 이름 — 수집기 화면용. 앱의 출처 시트는 자기 문구를 따로 갖는다. */
+const KIND_NAMES = {
+  speech: ["연설", "Speech"],
+  letter: ["편지", "Letter"],
+  diary: ["일기", "Diary"],
+  interview: ["인터뷰", "Interview"],
+  calligraphy: ["유묵", "Calligraphy"],
+  inscription: ["새긴 글", "Inscription"],
+  testimony: ["증언", "Testimony"],
+};
+
+function renderKindSelect() {
+  const sel = $("f-kind");
+  const keep = sel.value;
+  sel.innerHTML = "";
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = lang === "ko" ? "책·시 등 저작" : "Book, poem or other work";
+  sel.appendChild(blank);
+  SOURCE_KINDS.forEach((kind) => {
+    const opt = document.createElement("option");
+    opt.value = kind;
+    opt.textContent = KIND_NAMES[kind][lang === "ko" ? 0 : 1];
+    sel.appendChild(opt);
+  });
+  sel.value = keep;
+}
+
 function itemNode(quote, panel) {
   const li = document.createElement("li");
   li.className = "item";
@@ -613,7 +670,8 @@ function itemNode(quote, panel) {
   const meta = document.createElement("p");
   meta.className = "item-meta";
   const author = quote.author[lang] || quote.author.ko;
-  meta.textContent = `${author} · ${quote.source} · ${quote.year}`;
+  const src = flatSource(quote);
+  meta.textContent = `${author} · ${(lang === "en" && src.sourceEn) || src.source} · ${quote.year}`;
   li.appendChild(meta);
 
   if (quote.translator) {
@@ -832,6 +890,10 @@ function applyLang() {
   setLabel("l-lang", ui.labels.lang);
   setLabel("l-year", ui.labels.year);
   setLabel("l-source", ui.labels.source);
+  setLabel("l-source-en", ui.labels.sourceEn);
+  $("l-kind").textContent = ui.labels.kind;
+  $("h-source-en").textContent = ui.hints.sourceEn;
+  renderKindSelect();
   setLabel("l-source-url", ui.labels.sourceUrl);
   setLabel("l-translator-url", ui.labels.translatorUrl);
   $("l-translator").textContent = ui.labels.translator;
@@ -876,6 +938,8 @@ function readForm() {
     original: val("original"),
     lang: val("lang"),
     source: val("source"),
+    sourceEn: val("source_en"),
+    kind: val("kind"),
     year: val("year"),
     sourceUrl: val("sourceUrl"),
     translator: val("translator"),
@@ -945,7 +1009,8 @@ async function onBulk() {
       author: item.author || {},
       original: item.original,
       lang: item.lang,
-      source: item.source,
+      ...flatSource(item),
+      kind: item.kind,
       year: item.year,
       sourceUrl: item.sourceUrl,
       ...flatTranslator(item),

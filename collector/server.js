@@ -48,6 +48,12 @@ const TAG_KEYS = new Set([
    엄선까지 하려 들면 둘 다 어설퍼진다 — 실제로 그랬다. 한국어 60자는
    느슨해서 아무것도 거르지 못했고(최대가 53자였다), 영어 170자는 가장 작은
    화면에서 이미 넘치고 있었다. */
+/* 출처의 종류 — 출처 시트(작가 이름을 누르면 열린다)가 링크 문구를 고르는 데 쓴다.
+   책·시·희곡·에세이 같은 저작은 kind 를 적지 않는다. 그 밖의 기록만 적는다. */
+const SOURCE_KINDS = new Set([
+  "speech", "letter", "diary", "interview", "calligraphy", "inscription", "testimony",
+]);
+
 const MAX_KO = 100;
 const MAX_EN = 200;
 
@@ -121,7 +127,12 @@ function toEntry(quote, id) {
     lines.push(`      enUrl: ${jsString(quote.translatorUrl)},`);
     lines.push("    },");
   }
-  lines.push(`    source: ${jsString(quote.source)},`);
+  lines.push("    source: {");
+  const src = flatSource(quote);
+  lines.push(`      ko: ${jsString(src.ko)},`);
+  lines.push(`      en: ${jsString(src.en)},`);
+  lines.push("    },");
+  if (quote.kind) lines.push(`    kind: ${jsString(quote.kind)},`);
   lines.push(`    year: ${Number(quote.year)},`);
   lines.push(`    sourceUrl: ${jsString(quote.sourceUrl)},`);
   lines.push(`    tags: [${quote.tags.map(jsString).join(", ")}],`);
@@ -174,6 +185,14 @@ function flatTranslator(quote) {
   return { translator: t, translatorUrl: quote.translatorUrl };
 }
 
+/* source 는 quotes.js 처럼 { ko, en } 이다. 예전 수집 데이터와 손으로 적은 JSON 은
+   한국어 문자열 하나일 수 있어 둘 다 받는다(그때는 sourceEn 을 따로 읽는다). */
+function flatSource(quote) {
+  const s = quote.source;
+  if (s && typeof s === "object") return { ko: s.ko, en: s.en };
+  return { ko: s, en: quote.sourceEn };
+}
+
 /* quotes.js 를 실행하지 않고 author.ko 만 읽는다. 등재 코드(toEntry)가 늘
    `author: {` 다음 줄에 JSON 문자열로 ko 를 쓰므로 그 모양에 기댄다. */
 function registeredAuthorCounts() {
@@ -201,7 +220,10 @@ function validate(quote, existing, authorCounts) {
   if (!str(quote.author && quote.author.en)) errors.push("author.en 누락");
   if (!str(quote.original)) errors.push("original 누락");
   if (!str(quote.lang)) errors.push("lang 누락");
-  if (!str(quote.source)) errors.push("source 누락");
+  const src = flatSource(quote);
+  if (!str(src.ko)) errors.push("source.ko 누락");
+  if (!str(src.en)) errors.push("source.en 누락");
+  if (quote.kind && !SOURCE_KINDS.has(quote.kind)) errors.push(`모르는 출처 종류: ${quote.kind}`);
   if (!Number.isInteger(Number(quote.year))) errors.push("year 가 정수가 아닙니다");
   if (!isHttpUrl(str(quote.sourceUrl))) errors.push("sourceUrl 이 http(s) 주소가 아닙니다");
 
@@ -250,11 +272,12 @@ function normalize(quote) {
     author: { ko: str(quote.author.ko), en: str(quote.author.en) },
     original: str(quote.original),
     lang: str(quote.lang),
-    source: str(quote.source),
+    source: { ko: str(flatSource(quote).ko), en: str(flatSource(quote).en) },
     year: Number(quote.year),
     sourceUrl: str(quote.sourceUrl),
     tags: quote.tags.slice(),
   };
+  if (str(quote.kind)) out.kind = str(quote.kind);
   const tr = flatTranslator(quote);
   if (str(tr.translator)) {
     out.translator = str(tr.translator);
