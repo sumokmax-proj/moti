@@ -323,8 +323,8 @@ const QUOTES = [
     original: "三軍可奪帥也，匹夫不可奪志也",
     lang: "lzh",
     source: {
-      ko: "『논어』 자한편 26",
-      en: "*Analects* 9.26 (Zi Han)",
+      ko: "『논어』 자한편 25",
+      en: "*Analects* 9.25 (Zi Han)",
     },
     year: -450,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E5%AD%90%E7%BD%95%E7%AC%AC%E4%B9%9D",
