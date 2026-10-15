@@ -8,26 +8,26 @@
        svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
        apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
        투명한 모서리는 검게 칠해버린다. -->
-  <link rel="icon" href="favicon.svg?v=20261015e" type="image/svg+xml" />
-  <link rel="icon" href="favicon-32.png?v=20261015e" sizes="32x32" type="image/png" />
-  <link rel="icon" href="favicon-16.png?v=20261015e" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015e" />
+  <link rel="icon" href="favicon.svg?v=20261015f" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png?v=20261015f" sizes="32x32" type="image/png" />
+  <link rel="icon" href="favicon-16.png?v=20261015f" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015f" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
   <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
        파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
        섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
-  <link rel="stylesheet" href="tokens.css?v=20261015e" />
-  <link rel="stylesheet" href="style.css?v=20261015e" />
+  <link rel="stylesheet" href="tokens.css?v=20261015f" />
+  <link rel="stylesheet" href="style.css?v=20261015f" />
 </head>
 <body>
   <div class="app">
     <header class="app-header">
-      <!-- 로고가 수집기로 가는 숨은 입구다. 겉모습은 로고 그대로고 링크처럼
-           보이지 않는다 (밑줄·색 변화·손가락 커서 없음). 아이콘을 다시 꺼낼
-           때는 이 a 를 풀고 header-right 에 톱니 링크를 되살리면 된다. -->
-      <h1 class="logo"><a class="logo-link" href="collector/index.html">motimoti</a></h1>
+      <!-- 로고는 그냥 로고다. 예전에는 수집기로 가는 숨은 입구였다 — 책을 펼치러
+           온 사람이 작업실로 들어가지 않게 없앴다(2026-10-15). 수집기는
+           collector/ 주소로 직접 연다. -->
+      <h1 class="logo">motimoti</h1>
       <div class="header-right">
         <div class="lang-toggle" role="group" aria-label="Language">
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="true">EN</button>
@@ -128,9 +128,9 @@
     <dl class="colophon-table" id="colophon-table"></dl>
   </section>
 
-  <script src="quotes.js?v=20261015e"></script>
+  <script src="quotes.js?v=20261015f"></script>
   <!-- 베트남어(베타). 정식 데이터와 섞지 않으려고 따로 둔다. -->
-  <script src="quotes-vi.js?v=20261015e"></script>
-  <script src="app.js?v=20261015e"></script>
+  <script src="quotes-vi.js?v=20261015f"></script>
+  <script src="app.js?v=20261015f"></script>
 </body>
 </html>
