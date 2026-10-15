@@ -2771,6 +2771,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『자조론(Self-Help)』 머리말",
+      en: "*Self-Help*, Preface",
     },
     year: 1859,
     sourceUrl: "https://www.gutenberg.org/cache/epub/935/pg935.txt",
@@ -2790,6 +2791,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "「등왕각서(滕王閣序)」",
+      en: "\"Preface to the Pavilion of Prince Teng\" (Teng Wang Ge Xu)",
     },
     year: 675,
     sourceUrl: "https://zh.wikisource.org/wiki/%E6%BB%95%E7%8E%8B%E9%96%A3%E5%BA%8F",
@@ -2809,7 +2811,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "올리버 웬델 홈스에게 보낸 편지 (3월 1일), 『내가 살아온 이야기』 수록",
+      en: "Letter to Oliver Wendell Holmes, March 1 — in *The Story of My Life*",
     },
+    kind: "letter",
     year: 1890,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2397/pg2397.txt",
     tags: ["despair", "perseverance"],
@@ -2828,6 +2832,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "「장진주(將進酒)」",
+      en: "\"Bring In the Wine\" (Qiang Jin Jiu)",
     },
     year: 752,
     sourceUrl: "https://zh.wikisource.org/wiki/%E5%B0%87%E9%80%B2%E9%85%92_(%E6%9D%8E%E7%99%BD)",
@@ -2847,7 +2852,9 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "「계자서(誡子書)」, 아들에게 남긴 글",
+      en: "\"Admonition to His Son\" (Jie Zi Shu)",
     },
+    kind: "letter",
     year: 234,
     sourceUrl: "https://zh.wikisource.org/wiki/%E8%AA%A1%E5%AD%90%E6%9B%B8",
     tags: ["preparation", "meaning"],
@@ -2866,7 +2873,9 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『필리포스 탄핵 연설』 12편 5절",
+      en: "*Philippics* 12.5",
     },
+    kind: "speech",
     year: -43,
     sourceUrl: "https://la.wikisource.org/wiki/Philippicae/Oratio_XII",
     tags: ["failure", "challenge"],
@@ -2889,6 +2898,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『논어』 자장편 21",
+      en: "*Analects* 19.21 (Zi Zhang)",
     },
     year: -450,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
@@ -2908,6 +2918,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『중용』 20장",
+      en: "*Doctrine of the Mean*, ch. 20",
     },
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
@@ -2927,6 +2938,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『우리 서로의 친구(Our Mutual Friend)』 3부 9장, 존 로크스미스의 말",
+      en: "*Our Mutual Friend*, Book 3, ch. 9 — John Rokesmith",
     },
     year: 1865,
     sourceUrl: "https://www.gutenberg.org/cache/epub/883/pg883.txt",
@@ -2946,6 +2958,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『미들마치』 맺음말",
+      en: "*Middlemarch*, Finale",
     },
     year: 1872,
     sourceUrl: "https://www.gutenberg.org/cache/epub/145/pg145.txt",
@@ -2965,6 +2978,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『순자』 권학편",
+      en: "*Xunzi*, \"Encouraging Learning\" (Quan Xue)",
     },
     year: -250,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%8D%80%E5%AD%90/%E5%8B%B8%E5%AD%B8%E7%AF%87",
@@ -2988,6 +3002,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『논어』 자장편 5",
+      en: "*Analects* 19.5 (Zi Zhang)",
     },
     year: -450,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
@@ -3007,7 +3022,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "조지·조지애나 키츠 부부에게 보낸 편지 (2~5월)",
+      en: "Letter to George and Georgiana Keats, February–May",
     },
+    kind: "letter",
     year: 1819,
     sourceUrl: "https://www.gutenberg.org/cache/epub/35698/pg35698.txt",
     tags: ["preparation", "meaning"],
@@ -3026,6 +3043,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『의상 철학(Sartor Resartus)』 2권 9장 「영원한 긍정」",
+      en: "*Sartor Resartus*, Book 2, ch. 9, \"The Everlasting Yea\"",
     },
     year: 1836,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1051/pg1051.txt",
@@ -3045,6 +3063,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『라셀라스』 35장, 슬픔에 잠긴 공주에게 임락이 하는 말",
+      en: "*Rasselas*, ch. 35 — Imlac, to the grieving princess",
     },
     year: 1759,
     sourceUrl: "https://www.gutenberg.org/cache/epub/652/pg652.txt",
@@ -3068,6 +3087,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『논어』 학이편 1 — 『논어』의 첫 구절, motimoti 의 모토",
+      en: "*Analects* 1.1 (Xue Er) — the opening line of the *Analects*, and motimoti's motto",
     },
     year: -450,
     sourceUrl: "https://www.gutenberg.org/cache/epub/4094/pg4094.txt",
