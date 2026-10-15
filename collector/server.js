@@ -52,9 +52,14 @@ const MAX_KO = 100;
 const MAX_EN = 200;
 
 /* 저자당 상한 — QUOTE_STANDARDS.md 「저자당 상한」. author.ko 가 같으면 같은 저자다.
+   고정 숫자가 아니라 전체의 3% 다(최소 3). 처음 정할 때 100편에 3편이었고, 같은
+   비율이면 명언이 늘어도 「같은 목소리가 반복되지 않는다」는 뜻이 그대로 지켜진다
+   (최근 20% 피하기를 비율로 둔 것과 같은 이유). 140편이면 4, 167편이면 5.
    quotes.js 등재분과 검증 대기분을 합쳐 센다. approved 기록은 이미 quotes.js 에
    들어가 있으므로 따로 세지 않는다. */
-const MAX_PER_AUTHOR = 3;
+const AUTHOR_CAP_RATIO = 0.03;
+const AUTHOR_CAP_MIN = 3;
+const authorCap = (total) => Math.max(AUTHOR_CAP_MIN, Math.floor(total * AUTHOR_CAP_RATIO));
 
 /* ── 데이터 파일 ───────────────────────────────────────*/
 
@@ -216,8 +221,12 @@ function validate(quote, existing, authorCounts) {
   }
 
   const authorKo = str(quote.author && quote.author.ko);
-  if (authorKo && authorCounts && (authorCounts.get(authorKo) || 0) >= MAX_PER_AUTHOR) {
-    errors.push(`${authorKo} 의 명언이 이미 ${MAX_PER_AUTHOR}개입니다 (저자당 상한)`);
+  if (authorKo && authorCounts) {
+    const total = [...authorCounts.values()].reduce((a, b) => a + b, 0);
+    const cap = authorCap(total);
+    if ((authorCounts.get(authorKo) || 0) >= cap) {
+      errors.push(`${authorKo} 의 명언이 이미 ${cap}개입니다 (저자당 상한 — 전체의 3%)`);
+    }
   }
 
   return errors;

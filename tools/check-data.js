@@ -70,9 +70,10 @@ report.check("같은 text.ko 중복 없음", koDup.length === 0, koDup.join(" | 
 /* ── 저자당 상한 ──────────────────────────────────── */
 const byAuthor = new Map();
 quotes.forEach((q) => byAuthor.set(q.author.ko, (byAuthor.get(q.author.ko) || 0) + 1));
-const over = [...byAuthor].filter(([, n]) => n > rules.maxPerAuthor);
-const atCap = [...byAuthor].filter(([, n]) => n === rules.maxPerAuthor).map(([a]) => a);
-report.check(`저자당 상한 ${rules.maxPerAuthor}`, over.length === 0,
+const cap = rules.authorCap(quotes.length);
+const over = [...byAuthor].filter(([, n]) => n > cap);
+const atCap = [...byAuthor].filter(([, n]) => n === cap).map(([a]) => a);
+report.check(`저자당 상한 ${cap} (전체 ${quotes.length}편의 3%, 최소 3)`, over.length === 0,
   over.length ? `초과: ${over.map(([a, n]) => `${a} ${n}`).join(", ")}` : `저자 ${byAuthor.size}명, 상한에 닿은 저자: ${atCap.join(", ") || "없음"}`);
 
 /* ── 머리 주석의 번역 경로 기록 ────────────────────── */

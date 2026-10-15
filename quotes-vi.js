@@ -159,4 +159,5 @@ const QUOTES_VI = {
   174: { text: "Không gì trở nên thật cho đến khi được trải nghiệm — ngay cả một câu tục ngữ cũng chẳng phải tục ngữ với bạn cho đến khi cuộc đời bạn minh họa nó.", author: "John Keats", via: "original", reviewed: false },
   175: { text: "Hãy làm bổn phận gần nhất với mình, điều mà bạn biết là bổn phận! Bổn phận thứ hai sẽ tự trở nên rõ ràng hơn.", author: "Thomas Carlyle", via: "original", reviewed: false },
   176: { text: "Đừng để cuộc đời tù đọng: không chảy thì sẽ vẩn đục; hãy lại hòa mình vào dòng chảy của thế gian.", author: "Samuel Johnson", via: "original", reviewed: false },
+  177: { text: "Học rồi thường xuyên ôn luyện, chẳng phải cũng vui sao?", author: "Khổng Tử", via: "original", reviewed: false },
 };

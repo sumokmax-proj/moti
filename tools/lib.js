@@ -47,7 +47,7 @@ function loadVietnamese(file = VI_FILE) {
 function readServerRules() {
   const src = fs.readFileSync(SERVER_FILE, "utf8");
   const num = (name) => {
-    const m = src.match(new RegExp(`const ${name} = (\\d+);`));
+    const m = src.match(new RegExp(`const ${name} = ([\\d.]+);`));
     if (!m) throw new Error(`collector/server.js 에서 ${name} 를 찾지 못했습니다`);
     return Number(m[1]);
   };
@@ -57,7 +57,8 @@ function readServerRules() {
   return {
     maxKo: num("MAX_KO"),
     maxEn: num("MAX_EN"),
-    maxPerAuthor: num("MAX_PER_AUTHOR"),
+    // 저자당 상한은 전체 편수에 따라 정해진다(전체의 3%, 최소 3).
+    authorCap: (total) => Math.max(num("AUTHOR_CAP_MIN"), Math.floor(total * num("AUTHOR_CAP_RATIO"))),
     tags,
   };
 }
