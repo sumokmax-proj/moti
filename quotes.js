@@ -1203,6 +1203,7 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『아이네이스』 1권 203행",
+      en: "*Aeneid* 1.203",
     },
     year: -19,
     sourceUrl: "https://la.wikisource.org/wiki/Aeneis/Liber_I",
@@ -1222,6 +1223,7 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『사랑의 노래(Amores)』 3권 11a편",
+      en: "*Amores* 3.11a",
     },
     year: -16,
     sourceUrl: "https://la.wikisource.org/wiki/Amores/3.11a",
@@ -1245,6 +1247,7 @@ const QUOTES = [
     },
     source: {
       ko: "『도덕서한(Epistulae Morales)』 13편 4절",
+      en: "*Moral Letters to Lucilius*, 13.4",
     },
     year: 65,
     sourceUrl: "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_II",
@@ -1268,6 +1271,7 @@ const QUOTES = [
     },
     source: {
       ko: "『논어』 위령공편 29",
+      en: "*Analects* 15.29 (Wei Ling Gong)",
     },
     year: -450,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E8%AB%96%E8%AA%9E/%E8%A1%9E%E9%9D%88%E5%85%AC%E7%AC%AC%E5%8D%81%E4%BA%94",
@@ -1287,6 +1291,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『중용』 20장",
+      en: "*Doctrine of the Mean*, ch. 20",
     },
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E4%B8%AD%E5%BA%B8",
@@ -1306,6 +1311,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『나의 삶과 일(My Life and Work)』 서문",
+      en: "*My Life and Work*, Introduction",
     },
     year: 1922,
     sourceUrl: "https://www.gutenberg.org/cache/epub/7213/pg7213.txt",
@@ -1329,6 +1335,7 @@ const QUOTES = [
     },
     source: {
       ko: "『명상록』 5권 20",
+      en: "*Meditations* 5.20",
     },
     year: 180,
     sourceUrl: "https://el.wikisource.org/wiki/%CE%A4%CE%B1_%CE%B5%CE%B9%CF%82_%CE%B5%CE%B1%CF%85%CF%84%CF%8C%CE%BD/5",
@@ -1348,6 +1355,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『작은 아씨들』 44장 (에이미의 대사)",
+      en: "*Little Women*, ch. 44 — Amy",
     },
     year: 1869,
     sourceUrl: "https://www.gutenberg.org/cache/epub/514/pg514.txt",
@@ -1367,6 +1375,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『미들마치』 72장 (도러시아의 대사)",
+      en: "*Middlemarch*, ch. 72 — Dorothea",
     },
     year: 1872,
     sourceUrl: "https://www.gutenberg.org/cache/epub/145/pg145.txt",
@@ -1386,6 +1395,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『에세이 1집』 「원(Circles)」",
+      en: "\"Circles\" — *Essays: First Series*",
     },
     year: 1841,
     sourceUrl: "https://www.gutenberg.org/cache/epub/2944/pg2944.txt",
@@ -1409,6 +1419,7 @@ const QUOTES = [
     },
     source: {
       ko: "『도덕경』 제33장 (왕필본)",
+      en: "*Tao Te Ching*, ch. 33 (Wang Bi edition)",
     },
     year: -400,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E9%81%93%E5%BE%B7%E7%B6%93_(%E7%8E%8B%E5%BC%BC%E6%9C%AC)",
@@ -1432,6 +1443,7 @@ const QUOTES = [
     },
     source: {
       ko: "『에세』 1권 39장 「고독에 대하여」",
+      en: "*Essays*, Book 1, ch. 39, \"Of Solitude\"",
     },
     year: 1580,
     sourceUrl: "https://fr.wikisource.org/wiki/Essais/Livre_I/Chapitre_39",
@@ -1451,6 +1463,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "에세이 『낙관론(Optimism)』",
+      en: "*Optimism*, an essay",
     },
     year: 1903,
     sourceUrl: "https://www.gutenberg.org/cache/epub/31622/pg31622.txt",
@@ -1470,6 +1483,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『과거와 현재(Past and Present)』 3권 11장 「노동」",
+      en: "*Past and Present*, Book 3, ch. 11, \"Labour\"",
     },
     year: 1843,
     sourceUrl: "https://www.gutenberg.org/cache/epub/26159/pg26159.txt",
@@ -1489,6 +1503,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "시 「좁은 길(The Narrow Way)」",
+      en: "\"The Narrow Way\"",
     },
     year: 1848,
     sourceUrl: "https://en.wikisource.org/wiki/The_Complete_Poems_of_Anne_Bront%C3%AB/The_Narrow_Way",
@@ -1508,6 +1523,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『시집 제3집(Poems, Third Series)』 「새벽(Dawn)」",
+      en: "\"Dawn\" — *Poems*, Third Series",
     },
     year: 1896,
     sourceUrl: "https://www.gutenberg.org/cache/epub/12242/pg12242.txt",
@@ -1527,7 +1543,9 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "「분투하는 삶(The Strenuous Life)」 해밀턴 클럽 연설, 시카고 (4월 10일)",
+      en: "\"The Strenuous Life,\" speech to the Hamilton Club, Chicago, April 10",
     },
+    kind: "speech",
     year: 1899,
     sourceUrl: "https://www.gutenberg.org/cache/epub/58821/pg58821.txt",
     tags: ["failure", "challenge"],
@@ -1546,6 +1564,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『프랑켄슈타인』 (1818년 초판) 월턴의 첫 번째 편지",
+      en: "*Frankenstein* (1818 edition), Walton's first letter",
     },
     year: 1818,
     sourceUrl: "https://www.gutenberg.org/cache/epub/41445/pg41445.txt",
@@ -1569,7 +1588,9 @@ const QUOTES = [
     },
     source: {
       ko: "『대학』 전2장 (탕왕의 세숫대야에 새긴 글)",
+      en: "Inscription on King Tang's washbasin — *The Great Learning*, commentary ch. 2",
     },
+    kind: "inscription",
     year: -1600,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E7%A6%AE%E8%A8%98/%E5%A4%A7%E5%AD%B8",
     tags: ["energy", "challenge"],
@@ -1588,6 +1609,7 @@ const QUOTES = [
     lang: "lzh",
     source: {
       ko: "『맹자』 이루하 8",
+      en: "*Mencius* 4B.8 (Li Lou, Part II)",
     },
     year: -300,
     sourceUrl: "https://zh.wikisource.org/zh-hant/%E5%AD%9F%E5%AD%90/%E9%9B%A2%E5%A9%81%E4%B8%8B",
@@ -1607,6 +1629,7 @@ const QUOTES = [
     lang: "la",
     source: {
       ko: "『서간집(Epistulae)』 1권 2편 40행",
+      en: "*Epistles* 1.2.40",
     },
     year: -20,
     sourceUrl: "https://la.wikisource.org/wiki/Epistulae_(Horatius)/Liber_I/Epistula_II",
@@ -1626,6 +1649,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『얼간이 윌슨(Pudd'nhead Wilson)』 12장 「얼간이 윌슨의 달력」",
+      en: "*Pudd'nhead Wilson*, ch. 12, \"Pudd'nhead Wilson's Calendar\"",
     },
     year: 1894,
     sourceUrl: "https://www.gutenberg.org/cache/epub/102/pg102.txt",
@@ -1645,6 +1669,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『줄리어스 시저』 2막 2장, 시저의 대사",
+      en: "*Julius Caesar*, Act 2, Scene 2 — Caesar",
     },
     year: 1599,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1522/pg1522.txt",
@@ -1664,6 +1689,7 @@ const QUOTES = [
     lang: "en",
     source: {
       ko: "『제인 에어』 6장, 헬렌 번스의 대사",
+      en: "*Jane Eyre*, ch. 6 — Helen Burns",
     },
     year: 1847,
     sourceUrl: "https://www.gutenberg.org/cache/epub/1260/pg1260.txt",
@@ -1687,6 +1713,7 @@ const QUOTES = [
     },
     source: {
       ko: "『도덕서한(Epistulae Morales)』 1편 3절",
+      en: "*Moral Letters to Lucilius*, 1.3",
     },
     year: 65,
     sourceUrl: "https://la.wikisource.org/wiki/Epistulae_morales_ad_Lucilium/Liber_I",
