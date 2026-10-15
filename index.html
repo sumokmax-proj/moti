@@ -8,18 +8,18 @@
        svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
        apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
        투명한 모서리는 검게 칠해버린다. -->
-  <link rel="icon" href="favicon.svg?v=20261015c" type="image/svg+xml" />
-  <link rel="icon" href="favicon-32.png?v=20261015c" sizes="32x32" type="image/png" />
-  <link rel="icon" href="favicon-16.png?v=20261015c" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015c" />
+  <link rel="icon" href="favicon.svg?v=20261015d" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png?v=20261015d" sizes="32x32" type="image/png" />
+  <link rel="icon" href="favicon-16.png?v=20261015d" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015d" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
   <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
        파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
        섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
-  <link rel="stylesheet" href="tokens.css?v=20261015c" />
-  <link rel="stylesheet" href="style.css?v=20261015c" />
+  <link rel="stylesheet" href="tokens.css?v=20261015d" />
+  <link rel="stylesheet" href="style.css?v=20261015d" />
 </head>
 <body>
   <div class="app">
@@ -90,6 +90,8 @@
       </div>
       <ul id="favorites-list" class="favorites-list"></ul>
       <p id="favorites-empty" class="favorites-empty hidden">Nothing saved yet.</p>
+      <!-- 책의 맨 뒤 — 판권면을 여는 한 줄. -->
+      <button type="button" id="about-btn" class="about-btn" aria-haspopup="dialog" aria-controls="colophon" aria-expanded="false">About this book</button>
     </section>
   </div>
 
@@ -107,9 +109,28 @@
     <a class="note-link" id="note-link" target="_blank" rel="noopener"><span class="note-link-label" id="note-link-label"></span><span class="note-host" id="note-host"></span></a>
   </section>
 
-  <script src="quotes.js?v=20261015c"></script>
+  <!-- 판권면 — 출처 쪽지와 같은 종이에, 책의 맨 뒤 한 쪽을 적는다. -->
+  <section id="colophon" class="source-note colophon" role="dialog" aria-modal="true" aria-labelledby="colophon-title" tabindex="-1" hidden>
+    <div class="note-grip" aria-hidden="true"></div>
+    <div class="colophon-head">
+      <div class="rule" aria-hidden="true"></div>
+      <h2 class="colophon-title" id="colophon-title">motimoti</h2>
+      <div class="colophon-motto">
+        <p class="colophon-motto-orig" lang="zh-Hant">學而時習之 不亦說乎</p>
+        <p class="colophon-motto-tr" id="colophon-motto-tr"></p>
+        <p class="colophon-motto-src" id="colophon-motto-src"></p>
+      </div>
+    </div>
+    <div class="colophon-text">
+      <p id="colophon-text-1"></p>
+      <p id="colophon-text-2"></p>
+    </div>
+    <dl class="colophon-table" id="colophon-table"></dl>
+  </section>
+
+  <script src="quotes.js?v=20261015d"></script>
   <!-- 베트남어(베타). 정식 데이터와 섞지 않으려고 따로 둔다. -->
-  <script src="quotes-vi.js?v=20261015c"></script>
-  <script src="app.js?v=20261015c"></script>
+  <script src="quotes-vi.js?v=20261015d"></script>
+  <script src="app.js?v=20261015d"></script>
 </body>
 </html>

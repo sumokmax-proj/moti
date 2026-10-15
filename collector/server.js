@@ -147,6 +147,15 @@ function toEntry(quote, id) {
  * 즐겨찾기가 id 로만 매칭하므로 재사용하면 남의 즐겨찾기가 다른 명언을 가리킨다. */
 const NEXT_ID_RE = /^\/\/ 다음 id: (\d+)$/m;
 
+/* 판권면의 펴낸 날. 명언이 새로 실리는 날이 곧 새로 펴낸 날이다. */
+const EDITION_DATE_RE = /^(const EDITION = \{ date: ")(\d{4}-\d{2}-\d{2})(")/m;
+
+function today() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 function appendToQuotesFile(quote) {
   const source = fs.readFileSync(QUOTES_FILE, "utf8");
 
@@ -169,7 +178,12 @@ function appendToQuotesFile(quote) {
     "\n" +
     source.slice(close + 1);
 
-  writeFileAtomic(QUOTES_FILE, updated.replace(NEXT_ID_RE, `// 다음 id: ${id + 1}`));
+  writeFileAtomic(
+    QUOTES_FILE,
+    updated
+      .replace(NEXT_ID_RE, `// 다음 id: ${id + 1}`)
+      .replace(EDITION_DATE_RE, `$1${today()}$3`)
+  );
   return id;
 }
 

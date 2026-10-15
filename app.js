@@ -30,6 +30,24 @@ const UI = {
     weightHint: "Saved quotes turn up twice as often",
     copied: "Copied to clipboard",
     shareUnsupported: "Sharing isn’t supported in this browser",
+    about: "About this book",
+    colophon: {
+      mottoSource: "*Analects* 1.1, tr. James Legge",
+      text1: (n) => `This book holds ${n} quotes. Every one was checked against the text it comes from; a line with no source we could point to was left out.`,
+      text2: "Tap an author's name to open the page the line comes from.",
+      person: (year, name) => `${name}, ${year}`,
+      languageNames: { en: "English", lzh: "Classical Chinese", la: "Latin", de: "German", fr: "French", grc: "Ancient Greek", ko: "Korean", zh: "Chinese", nl: "Dutch", es: "Spanish", it: "Italian", da: "Danish" },
+      rows: {
+        quotes: "Quotes", quotesValue: (n, a) => `${n} · ${a} authors`,
+        span: "Span", spanValue: (a, b) => `${a} to ${b}`,
+        languages: "Originals", languagesValue: (n) => `${n} languages`,
+        english: "English", englishValue: (o, p, s) => `${o} in the original · ${p} in published translations · ${s} translated for this book`,
+        translators: "Translators",
+        korean: "Korean", koreanValue: (o, s) => `${o} in the original · ${s} translated for this book`,
+        editor: "Edited by",
+        date: "Published", dateValue: (d) => { const [y, m, day] = d.split("-").map(Number); return `${day} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][m - 1]} ${y}`; },
+      },
+    },
     note: {
       kinds: { speech: "Speech", letter: "Letter", diary: "Diary", interview: "Interview", calligraphy: "Calligraphy", inscription: "Inscription", testimony: "Account" },
       links: { work: "Read the original", speech: "Read the speech", letter: "Read the letter", diary: "Read the diary", interview: "Read the interview", calligraphy: "See the calligraphy", inscription: "Read the text", testimony: "Read the account", cited: "Source evidence" },
@@ -58,6 +76,24 @@ const UI = {
     weightHint: "저장한 명언이 두 배 자주 펼쳐집니다",
     copied: "클립보드에 복사되었습니다",
     shareUnsupported: "공유하기를 지원하지 않는 브라우저입니다",
+    about: "이 책에 대하여",
+    colophon: {
+      mottoSource: "『논어』 학이편 1",
+      text1: (n) => `이 책에는 명언 ${n}편이 실려 있습니다. 모든 명언은 그 문장이 나온 원문에서 확인했고, 출처를 댈 수 없는 문장은 싣지 않았습니다.`,
+      text2: "작가 이름을 누르면 그 문장이 나온 곳이 펼쳐집니다.",
+      person: (year, name) => `${year} ${name}`,
+      languageNames: { en: "영어", lzh: "한문", la: "라틴어", de: "독일어", fr: "프랑스어", grc: "고대 그리스어", ko: "한국어", zh: "중국어", nl: "네덜란드어", es: "스페인어", it: "이탈리아어", da: "덴마크어" },
+      rows: {
+        quotes: "실린 명언", quotesValue: (n, a) => `${n}편 · 저자 ${a}명`,
+        span: "시대", spanValue: (a, b) => `${a}부터 ${b}까지`,
+        languages: "원문", languagesValue: (n) => `${n}개 언어`,
+        english: "영어", englishValue: (o, p, s) => `원문 그대로 ${o}편 · 공개된 정본 영역 ${p}편 · 자체 번역 ${s}편`,
+        translators: "영역",
+        korean: "한국어", koreanValue: (o, s) => `원문 그대로 ${o}편 · 자체 번역 ${s}편`,
+        editor: "엮은이",
+        date: "펴낸 날", dateValue: (d) => { const [y, m, day] = d.split("-").map(Number); return `${y}년 ${m}월 ${day}일`; },
+      },
+    },
     note: {
       kinds: { speech: "연설", letter: "편지", diary: "일기", interview: "인터뷰", calligraphy: "유묵", inscription: "새긴 글", testimony: "증언" },
       links: { work: "원전 읽기", speech: "연설문 읽기", letter: "편지 읽기", diary: "일기 읽기", interview: "인터뷰 읽기", calligraphy: "유묵 보기", inscription: "원문 읽기", testimony: "증언 읽기", cited: "출처 확인 자료" },
@@ -86,6 +122,24 @@ const UI = {
     weightHint: "Câu đã lưu sẽ xuất hiện nhiều gấp đôi",
     copied: "Đã sao chép",
     shareUnsupported: "Trình duyệt này không hỗ trợ chia sẻ",
+    about: "Về cuốn sách này",
+    colophon: {
+      mottoSource: "Luận Ngữ, Học Nhi 1",
+      text1: (n) => `Cuốn sách này có ${n} câu. Mỗi câu đều đã được đối chiếu với văn bản gốc; câu nào không chỉ ra được nguồn thì không đưa vào.`,
+      text2: "Chạm vào tên tác giả để mở nơi câu ấy xuất hiện.",
+      person: (year, name) => `${name} (${year})`,
+      languageNames: { en: "tiếng Anh", lzh: "Hán văn", la: "tiếng Latinh", de: "tiếng Đức", fr: "tiếng Pháp", grc: "tiếng Hy Lạp cổ", ko: "tiếng Hàn", zh: "tiếng Trung", nl: "tiếng Hà Lan", es: "tiếng Tây Ban Nha", it: "tiếng Ý", da: "tiếng Đan Mạch" },
+      rows: {
+        quotes: "Số câu", quotesValue: (n, a) => `${n} câu · ${a} tác giả`,
+        span: "Thời đại", spanValue: (a, b) => `từ ${a} đến ${b}`,
+        languages: "Nguyên văn", languagesValue: (n) => `${n} ngôn ngữ`,
+        english: "Tiếng Anh", englishValue: (o, p, s) => `${o} câu nguyên văn · ${p} câu theo bản dịch đã xuất bản · ${s} câu tự dịch`,
+        translators: "Người dịch",
+        korean: "Tiếng Hàn", koreanValue: (o, s) => `${o} câu nguyên văn · ${s} câu tự dịch`,
+        editor: "Biên soạn",
+        date: "Ngày xuất bản", dateValue: (d) => { const [y, m, day] = d.split("-").map(Number); return `${day}/${m}/${y}`; },
+      },
+    },
     note: {
       kinds: { speech: "Diễn văn", letter: "Thư", diary: "Nhật ký", interview: "Phỏng vấn", calligraphy: "Thư pháp", inscription: "Văn khắc", testimony: "Lời kể" },
       links: { work: "Đọc nguyên tác", speech: "Đọc diễn văn", letter: "Đọc bức thư", diary: "Đọc nhật ký", interview: "Đọc bài phỏng vấn", calligraphy: "Xem thư pháp", inscription: "Đọc văn bản", testimony: "Đọc lời kể", cited: "Tài liệu đối chiếu" },
@@ -126,6 +180,8 @@ const toastEl = document.getElementById("toast");
 const appHeaderEl = document.querySelector(".app-header");
 const noteEl = document.getElementById("source-note");
 const noteVeilEl = document.getElementById("note-veil");
+const colophonEl = document.getElementById("colophon");
+const aboutBtn = document.getElementById("about-btn");
 const langBtns = Array.from(document.querySelectorAll(".lang-btn"));
 
 let currentQuote = null;
@@ -192,7 +248,9 @@ function applyLang() {
   favoriteBtn.setAttribute("aria-label", ui.aria.favorite);
   shareBtn.setAttribute("aria-label", ui.aria.share);
   backBtn.setAttribute("aria-label", ui.aria.back);
+  aboutBtn.textContent = ui.about;
   if (noteOpen) fillNote(currentQuote);
+  if (paperEl === colophonEl) fillColophon();
   langBtns.forEach((btn) => {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
     btn.classList.toggle("active", btn.dataset.lang === lang);
@@ -866,7 +924,6 @@ document.addEventListener("keydown", (e) => {
 const NOTE_MS = 320;
 const NOTE_SWIPE_PX = 60;
 let noteOpen = false;
-let noteHideTimer = null;
 
 // 구텐베르크는 평문(.txt)을 열어 대조했다. 읽는 사람에게는 책 소개 쪽이 낫다.
 function readableUrl(url) {
@@ -937,61 +994,163 @@ function fillNote(quote) {
   document.getElementById("note-host").textContent = hostOf(url);
 }
 
-function openNote() {
-  if (noteOpen || !currentQuote || turning || isRiffling()) return;
-  clearTimeout(noteHideTimer);
-  fillNote(currentQuote);
-  noteEl.scrollTop = 0;
-  noteEl.hidden = false;
+/* 쪽지와 판권면은 같은 종이다 — 아래에서 올라오고, 한 번에 하나만 뜬다.
+   여는 함수는 내용을 채우고 openPaper 를 부른다. */
+let paperEl = null;      // 지금 떠 있는 종이
+let paperTrigger = null; // 그 종이를 연 버튼 — 닫으면 초점이 돌아간다
+let paperHideTimer = null;
+
+function openPaper(el, trigger) {
+  closePaper(true);
+  clearTimeout(paperHideTimer);
+  el.scrollTop = 0;
+  el.hidden = false;
   noteVeilEl.hidden = false;
-  noteEl.getBoundingClientRect(); // 숨김을 푼 자리에서 올라오게 한 번 그린다
-  noteEl.classList.add("on");
+  el.getBoundingClientRect(); // 숨김을 푼 자리에서 올라오게 한 번 그린다
+  el.classList.add("on");
   noteVeilEl.classList.add("on");
-  noteOpen = true;
-  quoteAuthorEl.setAttribute("aria-expanded", "true");
-  noteEl.focus({ preventScroll: true });
+  paperEl = el;
+  paperTrigger = trigger;
+  noteOpen = el === noteEl;
+  trigger.setAttribute("aria-expanded", "true");
+  el.focus({ preventScroll: true });
+}
+
+function closePaper(instant = false) {
+  if (!paperEl) return;
+  const el = paperEl;
+  const trigger = paperTrigger;
+  paperEl = null;
+  paperTrigger = null;
+  noteOpen = false;
+  trigger.setAttribute("aria-expanded", "false");
+  const hadFocus = el.contains(document.activeElement);
+  el.classList.remove("on");
+  noteVeilEl.classList.remove("on");
+  const hide = () => {
+    if (paperEl === el) return; // 그사이 다시 열렸다
+    el.hidden = true;
+    if (!paperEl) noteVeilEl.hidden = true;
+  };
+  clearTimeout(paperHideTimer);
+  if (instant || reduceMotion.matches) hide();
+  else paperHideTimer = setTimeout(hide, NOTE_MS);
+  if (hadFocus && !instant) trigger.focus({ preventScroll: true });
+}
+
+function openNote() {
+  if (paperEl || !currentQuote || turning || isRiffling()) return;
+  fillNote(currentQuote);
+  openPaper(noteEl, quoteAuthorEl);
 }
 
 function closeNote(instant = false) {
-  if (!noteOpen) return;
-  noteOpen = false;
-  quoteAuthorEl.setAttribute("aria-expanded", "false");
-  const hadFocus = noteEl.contains(document.activeElement);
-  noteEl.classList.remove("on");
-  noteVeilEl.classList.remove("on");
-  const hide = () => {
-    if (noteOpen) return;
-    noteEl.hidden = true;
-    noteVeilEl.hidden = true;
-  };
-  clearTimeout(noteHideTimer);
-  if (instant || reduceMotion.matches) hide();
-  else noteHideTimer = setTimeout(hide, NOTE_MS);
-  if (hadFocus && !instant) quoteAuthorEl.focus({ preventScroll: true });
+  if (noteOpen) closePaper(instant);
 }
 
 quoteAuthorEl.addEventListener("click", () => (noteOpen ? closeNote() : openNote()));
-noteVeilEl.addEventListener("click", () => closeNote());
-noteEl.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    e.preventDefault();
-    closeNote();
-  } else if (e.key === "Tab") {
-    // 쪽지 안에서만 돈다: 쪽지 ↔ 링크.
-    e.preventDefault();
-    const link = document.getElementById("note-link");
-    (document.activeElement === link ? noteEl : link).focus();
-  }
+noteVeilEl.addEventListener("click", () => closePaper());
+
+[noteEl, colophonEl].forEach((el) => {
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closePaper();
+    } else if (e.key === "Tab") {
+      // 종이 안에서만 돈다: 종이 → 링크들 → 종이.
+      e.preventDefault();
+      const stops = [el, ...el.querySelectorAll("a[href]")];
+      const at = stops.indexOf(document.activeElement);
+      const step = e.shiftKey ? -1 : 1;
+      stops[(at + step + stops.length) % stops.length].focus();
+    }
+  });
+  // 아래로 밀면 닫힌다. 종이가 길어 스크롤된 상태면 스크롤이 먼저다.
+  let touchY = null;
+  el.addEventListener("touchstart", (e) => {
+    touchY = el.scrollTop <= 0 ? e.touches[0].clientY : null;
+  }, { passive: true });
+  el.addEventListener("touchend", (e) => {
+    if (touchY !== null && e.changedTouches[0].clientY - touchY > NOTE_SWIPE_PX) closePaper();
+    touchY = null;
+  }, { passive: true });
 });
-// 쪽지를 아래로 밀면 닫힌다. 쪽지가 길어 스크롤된 상태면 스크롤이 먼저다.
-let noteTouchY = null;
-noteEl.addEventListener("touchstart", (e) => {
-  noteTouchY = noteEl.scrollTop <= 0 ? e.touches[0].clientY : null;
-}, { passive: true });
-noteEl.addEventListener("touchend", (e) => {
-  if (noteTouchY !== null && e.changedTouches[0].clientY - noteTouchY > NOTE_SWIPE_PX) closeNote();
-  noteTouchY = null;
-}, { passive: true });
+
+/* ── 판권면 ────────────────────────────────────────────
+   즐겨찾기 화면 맨 아래 「이 책에 대하여」. 책의 맨 뒤 한 쪽처럼 모토와 이 책에
+   실린 것, 고른 기준, 번역, 엮은이, 펴낸 날을 적는다. 숫자는 모두 QUOTES 에서
+   센다 — 명언을 더해도 고칠 것이 없다. 펴낸 날과 엮은이만 quotes.js 의 EDITION.
+   「작가 이름을 누르면…」 한 줄이 숨은 출처 쪽지의 유일한 안내다. */
+const MOTTO_ID = 177;
+
+function editionStats() {
+  const authors = new Set(QUOTES.map((q) => q.author.ko));
+  const byYear = [...QUOTES].sort((a, b) => a.year - b.year);
+  const langs = {};
+  QUOTES.forEach((q) => (langs[q.lang] = (langs[q.lang] || 0) + 1));
+  const translators = {};
+  QUOTES.filter((q) => q.translator).forEach((q) => {
+    translators[q.translator.en] = (translators[q.translator.en] || 0) + 1;
+  });
+  return {
+    total: QUOTES.length,
+    authors: authors.size,
+    first: byYear[0],
+    last: byYear[byYear.length - 1],
+    langs: Object.entries(langs).sort((a, b) => b[1] - a[1]),
+    enOriginal: QUOTES.filter((q) => q.lang === "en").length,
+    enPublished: QUOTES.filter((q) => q.translator).length,
+    enOwn: QUOTES.filter((q) => q.lang !== "en" && !q.translator).length,
+    koOriginal: QUOTES.filter((q) => q.lang === "ko").length,
+    translators: Object.entries(translators).sort((a, b) => b[1] - a[1]).map(([name]) => name),
+  };
+}
+
+function fillColophon() {
+  const ui = t().colophon;
+  const s = editionStats();
+  const motto = QUOTES.find((q) => q.id === MOTTO_ID);
+  document.getElementById("colophon-motto-tr").textContent = motto ? localized(motto.text) : "";
+  setItalicText(document.getElementById("colophon-motto-src"), ui.mottoSource);
+  document.getElementById("colophon-text-1").textContent = ui.text1(s.total);
+  document.getElementById("colophon-text-2").textContent = ui.text2;
+
+  const year = (q) => t().note.year(q.year, q.circa === true);
+  const rows = [
+    [ui.rows.quotes, ui.rows.quotesValue(s.total, s.authors)],
+    [ui.rows.span, ui.rows.spanValue(ui.person(year(s.first), localized(s.first.author)), ui.person(year(s.last), localized(s.last.author)))],
+    [ui.rows.languages, ui.rows.languagesValue(s.langs.length), s.langs.map(([code, n]) => `${ui.languageNames[code] || code} ${n}`).join(" · ")],
+    [ui.rows.english, ui.rows.englishValue(s.enOriginal, s.enPublished, s.enOwn)],
+    [ui.rows.translators, s.translators.join(", ")],
+    [ui.rows.korean, ui.rows.koreanValue(s.koOriginal, s.total - s.koOriginal)],
+    [ui.rows.editor, typeof EDITION !== "undefined" ? EDITION.editor : ""],
+    [ui.rows.date, typeof EDITION !== "undefined" ? ui.rows.dateValue(EDITION.date) : ""],
+  ];
+  const table = document.getElementById("colophon-table");
+  table.textContent = "";
+  rows.forEach(([label, value, sub]) => {
+    if (!value) return;
+    const dt = document.createElement("dt");
+    dt.textContent = label;
+    const dd = document.createElement("dd");
+    dd.textContent = value;
+    if (sub) {
+      const span = document.createElement("span");
+      span.className = "colophon-sub";
+      span.textContent = sub;
+      dd.appendChild(span);
+    }
+    table.append(dt, dd);
+  });
+}
+
+function openColophon() {
+  if (paperEl) return;
+  fillColophon();
+  openPaper(colophonEl, aboutBtn);
+}
+
+aboutBtn.addEventListener("click", openColophon);
 
 function showToast(message, ms = 2000) {
   toastEl.textContent = message;
@@ -1025,6 +1184,8 @@ function renderFavoritesList() {
   const ui = t();
   favoritesListEl.innerHTML = "";
   favoritesEmptyEl.classList.toggle("hidden", favorites.length > 0);
+  // 빈 목록이 남은 높이를 다 차지하면 「아직 저장한 명언이 없어요」가 화면 맨 아래로 밀린다.
+  favoritesListEl.classList.toggle("hidden", favorites.length === 0);
   favoritesCountRowEl.classList.toggle("hidden", favorites.length === 0);
   favoritesCountEl.textContent = ui.count(favorites.length);
 
@@ -1058,7 +1219,7 @@ function renderFavoritesList() {
 
 function openFavoritesView() {
   stopRiffle();
-  closeNote(true);
+  closePaper(true);
   renderFavoritesList();
   appHeaderEl.classList.add("hidden");
   mainView.classList.add("hidden");
@@ -1066,6 +1227,7 @@ function openFavoritesView() {
 }
 
 function closeFavoritesView() {
+  closePaper(true);
   appHeaderEl.classList.remove("hidden");
   favoritesView.classList.add("hidden");
   mainView.classList.remove("hidden");

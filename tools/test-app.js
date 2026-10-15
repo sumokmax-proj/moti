@@ -16,6 +16,7 @@
  *             · 휴대폰 메뉴 막기 · 넘김 중 언어 전환 · 동작 줄이기
  *   되돌아가기 한 장 · 반동(정점 22px) · 다시 나아갔다 돌아오기 · 새로고침 뒤 · 가장자리
  *             · 키보드 · 동작 줄이기
+ *   판권면    즐겨찾기 화면에서 열기 · 데이터에서 센 숫자·엮은이·펴낸 날 · 언어 전환 · 닫기 · 320x568
  *   즐겨찾기  고친 명언은 지금 문장으로, 삭제된 명언은 저장해 둔 문장으로
  *   출처 쪽지 작가 이름으로 열기 · Esc·바깥으로 닫기 · 화살표 막기 · 넘기면 닫힘 · 모든 명언 × 세 언어의
  *             내용·링크·인용 확인 · 연도 「~년경」 · 원문 · 기울임 · 320x568 에서 화면 안
@@ -662,6 +663,66 @@ async function suiteNote(browser) {
   await p.context().close();
 }
 
+/* ── 판권면 ───────────────────────────────────────── */
+async function suiteColophon(browser) {
+  const p = await freshPage(browser);
+  await p.click("#favorites-nav-btn");
+  const btn = p.locator("#about-btn");
+  report.check("즐겨찾기 화면 맨 아래 「이 책에 대하여」", (await btn.isVisible()) && (await btn.textContent()) === "About this book");
+  await btn.click();
+  await p.waitForTimeout(400);
+  const r = await p.evaluate(() => ({
+    open: paperEl === colophonEl && !colophonEl.hidden,
+    focus: document.activeElement.id,
+    table: document.getElementById("colophon-table").textContent,
+    text: document.getElementById("colophon-text-1").textContent,
+    motto: document.getElementById("colophon-motto-tr").textContent,
+    total: QUOTES.length,
+    authors: new Set(QUOTES.map((q) => q.author.ko)).size,
+    edition: EDITION,
+  }));
+  report.check("판권면이 올라오고 초점이 종이로", r.open && r.focus === "colophon");
+  report.check("판권면 숫자는 데이터에서 — 편수·저자·엮은이·펴낸 날",
+    r.text.includes(String(r.total)) && r.table.includes(`${r.authors} authors`) && r.table.includes(r.edition.editor) && r.table.includes("2026") && r.motto.length > 0,
+    `${r.total}편 · 저자 ${r.authors}명 · ${r.edition.editor} · ${r.edition.date}`);
+
+  const ko = await p.evaluate(() => {
+    setLang("ko");
+    return { table: document.getElementById("colophon-table").textContent, about: document.getElementById("about-btn").textContent };
+  });
+  report.check("언어를 바꾸면 판권면도 바뀜", ko.table.includes("엮은이") && ko.table.includes("펴낸 날") && ko.about === "이 책에 대하여");
+
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(400);
+  const closed = await p.evaluate(() => ({ paper: paperEl, hidden: colophonEl.hidden, veil: document.getElementById("note-veil").hidden, focus: document.activeElement.id }));
+  report.check("Esc 로 닫히고 초점이 「이 책에 대하여」로", !closed.paper && closed.hidden && closed.veil && closed.focus === "about-btn");
+
+  const back = await p.evaluate(() => {
+    openColophon();
+    closeFavoritesView();
+    return !paperEl && colophonEl.hidden && document.getElementById("note-veil").hidden;
+  });
+  report.check("메인으로 돌아가면 판권면이 닫힘", back);
+
+  const q = await freshPage(browser, { viewport: { width: 320, height: 568 } });
+  const fit = await q.evaluate(() => {
+    openFavoritesView();
+    const out = [];
+    for (const L of ["ko", "en", "vi"]) {
+      setLang(L);
+      openColophon();
+      colophonEl.style.transition = "none";
+      const rect = colophonEl.getBoundingClientRect();
+      if (colophonEl.scrollWidth > colophonEl.clientWidth + 1 || rect.top < 0 || rect.bottom > innerHeight + 1) out.push(L);
+      closePaper(true);
+    }
+    return { out, wide: document.documentElement.scrollWidth - innerWidth };
+  });
+  report.check("320x568 — 판권면이 화면 안, 옆 넘침 없음", fit.out.length === 0 && fit.wide <= 0, fit.out.join(", "));
+  await q.context().close();
+  await p.context().close();
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { proc, url } = await startServer();
@@ -670,7 +731,7 @@ async function suiteNote(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["판권면", suiteColophon]]) {
       try {
         await suite(browser);
       } catch (err) {

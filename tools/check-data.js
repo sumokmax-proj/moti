@@ -153,6 +153,19 @@ const tagCount = {};
 quotes.forEach((q) => q.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
 report.note("태그별 편수 (편집용)", [...rules.tags].map((t) => `${t} ${tagCount[t] || 0}`).join(" · "));
 
+function localToday() {
+  // 한국 시간 아침에는 UTC 날짜가 하루 늦다. 수집기가 쓰는 날짜와 같은 기준(기기 시간)으로 본다.
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+/* ── 판권 — 판권면의 펴낸 날과 엮은이. 수집기가 승인할 때 날짜를 고친다. ── */
+const edition = source.match(/^const EDITION = \{ date: "(\d{4}-\d{2}-\d{2})", editor: "([^"]+)" \};$/m);
+const editionOk = edition && !Number.isNaN(Date.parse(edition[1])) && edition[1] <= localToday();
+report.check("판권 — 펴낸 날·엮은이", Boolean(editionOk),
+  edition ? `${edition[1]} · ${edition[2]}` : "quotes.js 에서 「const EDITION = { date, editor }」 한 줄을 찾지 못함");
+
 /* ── 인용 확인 — 머리 주석 [B] 목록과 cited: true 가 같아야 한다.
    쪽지는 cited 를 보고 링크를 「출처 확인 자료」로 바꾼다. ── */
 const bBlock = source.slice(source.indexOf("// [B]"), source.indexOf("// [C]"));
