@@ -74,7 +74,8 @@ motimoti 는 잠깐 힘을 얻고 사라지는 동기부여가 아니라, **오�
 | | 출처 쪽지 — 작가 이름을 누르면 출처·원문·원전 링크가 아래에서 올라온다. 시험판에서 아래 시트·그 자리 펼침·책장 뒷면을 비교해 고름 |
 | | 판권면 — 즐겨찾기 화면 맨 아래 「이 책에 대하여」. 엮은이 Max K. 펴낸 날은 명언을 실을 때 함께 고친다 |
 | | 로고에 있던 수집기 숨은 입구를 없앰 — 책을 펼치러 온 사람이 작업실로 들어가지 않게 |
-| 2026-10-16 | 수집기를 보관만 하기로 — 개발할 때 더는 맞추지 않는다. 기계 규칙은 `tools/rules.js` 로, 앱 시험은 작은 정적 서버로 옮김 |
+| 2026-10-16 | 스테이징 — `staging` 브랜치를 …/moti/staging/ 에 함께 올린다(GitHub Actions). 실험 기능은 여기서 먼저 써 본다 |
+| | 수집기를 보관만 하기로 — 개발할 때 더는 맞추지 않는다. 기계 규칙은 `tools/rules.js` 로, 앱 시험은 작은 정적 서버로 옮김 |
 
 자세한 결정 이유는 [PLANNING.md](PLANNING.md), 기준의 변경 이력은 [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) 마지막 장에 있다.
 
@@ -107,7 +108,15 @@ Claude 와 대화하며 모은다. 후보를 원문에서 찾아 대조하고(`n
 
 ## 배포
 
-`main` 에 푸시하면 GitHub Pages 가 자동으로 배포한다. 별도 워크플로 파일은 없고 Pages 기본 빌드를 쓴다.
+`main` 이나 `staging` 에 푸시하면 GitHub Actions(`.github/workflows/pages.yml`)가 두 브랜치를 한 사이트로 묶어 Pages 에 올린다.
+
+| 브랜치 | 주소 | 용도 |
+|---|---|---|
+| `main` | https://sumokmax-proj.github.io/moti/ | 본 앱 |
+| `staging` | https://sumokmax-proj.github.io/moti/staging/ | 실험 기능을 아이폰에서 미리 써 보는 곳. 로고 옆에 STG, 검색 제외(noindex), 저장 키에 `stg-` 를 붙여 본 앱의 즐겨찾기와 섞이지 않는다 |
+
+흐름: `staging` 에서 만들어 써 보고, 마음에 들면 `main` 에 합친다. 버리면 `staging` 을 `main` 으로 되돌린다.
+저장소 Settings → Pages → Source 가 「GitHub Actions」여야 이 워크플로가 배포한다.
 
 ### css/js 를 고쳤으면 `?v=` 를 올린다
 

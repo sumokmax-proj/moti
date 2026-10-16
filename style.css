@@ -130,6 +130,19 @@ body {
   margin: 0;
 }
 
+/* 스테이징 표시 — …/staging/ 에서만 로고 옆에 작게. 본 앱에는 보이지 않는다. */
+.staging .logo::after {
+  content: "STG";
+  margin-left: 8px;
+  padding: 1px 5px;
+  border: 1px solid var(--accent-text);
+  border-radius: var(--radius);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--accent-text);
+  vertical-align: 2px;
+}
+
 .view {
   flex: 1;
   display: flex;

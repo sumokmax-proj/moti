@@ -1,0 +1,77 @@
+# GitHub Pages — 본 앱과 스테이징을 한 사이트에 함께 올린다.
+#
+#   main    → https://sumokmax-proj.github.io/moti/
+#   staging → https://sumokmax-proj.github.io/moti/staging/   (실험 기능을 미리 써 보는 곳)
+#
+# 저장소 Settings → Pages → Build and deployment → Source 가 「GitHub Actions」여야 한다.
+# 스테이징 쪽 index.html 에는 검색에 걸리지 않게 noindex 를 넣는다.
+# 앱은 주소에 /staging/ 이 있으면 저장 키 앞에 stg- 를 붙인다(app.js) — 즐겨찾기가 섞이지 않는다.
+
+name: Pages
+
+on:
+  push:
+    branches: [main, staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: main 가져오기
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-src
+
+      - name: staging 이 있는지 보기
+        id: stg
+        run: |
+          if git ls-remote --exit-code --heads "https://github.com/${{ github.repository }}" staging >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: staging 가져오기
+        if: steps.stg.outputs.exists == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+          path: staging-src
+
+      - name: 사이트 묶기
+        run: |
+          mkdir _site
+          cp -a main-src/. _site/
+          rm -rf _site/.git _site/.github _site/node_modules
+          if [ -d staging-src ]; then
+            mkdir -p _site/staging
+            cp -a staging-src/. _site/staging/
+            rm -rf _site/staging/.git _site/staging/.github _site/staging/node_modules _site/staging/collector
+            sed -i 's|<head>|<head>\n  <meta name="robots" content="noindex, nofollow" />|' _site/staging/index.html
+          fi
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

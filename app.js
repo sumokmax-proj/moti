@@ -1,7 +1,13 @@
-const FAVORITES_KEY = "motimoti-favorites";
-const LANG_KEY = "motimoti-lang";
-const RECENT_KEY = "motimoti-recent";
-const WEIGHT_KEY = "motimoti-favorites-weight";
+/* 스테이징(…/moti/staging/)은 실험 기능을 미리 써 보는 곳이다. 본 앱과 같은
+   사이트라 기기 저장소를 함께 쓰므로, 저장 키 앞에 stg- 를 붙여 즐겨찾기·최근
+   목록이 섞이지 않게 한다. 로고 옆에 작게 STG 를 띄워 어느 쪽인지 알게 한다. */
+const IS_STAGING = /\/staging\//.test(location.pathname);
+const KEY_PREFIX = IS_STAGING ? "stg-" : "";
+const FAVORITES_KEY = `${KEY_PREFIX}motimoti-favorites`;
+const LANG_KEY = `${KEY_PREFIX}motimoti-lang`;
+const RECENT_KEY = `${KEY_PREFIX}motimoti-recent`;
+const WEIGHT_KEY = `${KEY_PREFIX}motimoti-favorites-weight`;
+if (IS_STAGING) document.documentElement.classList.add("staging");
 const LANGS = ["en", "ko", "vi"];
 // 베트남어는 베타다 — AI 번역, 원어민 검수 전. 화면에는 버튼의 β 하나만 둔다.
 // 안내문은 붙이지 않는다(사용자 결정, 2026-10-13).
