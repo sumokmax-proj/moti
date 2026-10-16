@@ -632,6 +632,26 @@ async function suiteNote(browser) {
   report.check("원문은 화면 문장과 다를 때만 (처칠 영어 X, 한국어 O)", !sample.c.orig && sample.d.orig && sample.a.orig);
   report.check("영어 출처의 책 제목은 기울임", sample.b.italic === 2);
 
+  // 문맥 해설 — 있는 명언에만, 세 언어(베트남어는 영어).
+  const ctx = await p.evaluate(() => {
+    if (typeof QUOTES_CONTEXT === "undefined") return null;
+    const id = Number(Object.keys(QUOTES_CONTEXT)[0]);
+    const without = QUOTES.find((q) => !QUOTES_CONTEXT[q.id]);
+    const out = {};
+    for (const L of ["ko", "en", "vi"]) {
+      setLang(L);
+      fillNote(QUOTES.find((q) => q.id === id));
+      out[L] = { shown: !document.getElementById("note-context").hidden, text: document.getElementById("note-context-text").textContent };
+    }
+    fillNote(without);
+    out.without = document.getElementById("note-context").hidden;
+    setLang("ko");
+    out.ko0 = QUOTES_CONTEXT[id].ko;
+    out.en0 = QUOTES_CONTEXT[id].en.replace(/\*/g, "");
+    return out;
+  });
+  if (ctx) report.check("문맥 해설 — 있는 명언에만, 한·영, 베트남어는 영어", ctx.ko.shown && ctx.ko.text === ctx.ko0 && ctx.en.text === ctx.en0 && ctx.vi.text === ctx.en0 && ctx.without);
+
   // 가장 작은 화면에서 쪽지가 화면 안에 있고 옆으로 넘치지 않는다.
   const q = await freshPage(browser, { viewport: { width: 320, height: 568 } });
   const fit = await q.evaluate(async () => {

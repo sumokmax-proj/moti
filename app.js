@@ -59,6 +59,7 @@ const UI = {
       links: { work: "Read the original", speech: "Read the speech", letter: "Read the letter", diary: "Read the diary", interview: "Read the interview", calligraphy: "See the calligraphy", inscription: "Read the text", testimony: "Read the account", cited: "Source evidence" },
       year: (y, circa) => (y < 0 ? `${circa ? "c. " : ""}${-y} BC` : `${circa ? "c. " : ""}${y}`),
       original: "Original",
+      context: "Where this comes from",
       translator: (name) => `English translation by ${name}`,
       cited: "Checked against a source that cites the original and where it appears.",
     },
@@ -105,6 +106,7 @@ const UI = {
       links: { work: "원전 읽기", speech: "연설문 읽기", letter: "편지 읽기", diary: "일기 읽기", interview: "인터뷰 읽기", calligraphy: "유묵 보기", inscription: "원문 읽기", testimony: "증언 읽기", cited: "출처 확인 자료" },
       year: (y, circa) => `${y < 0 ? `기원전 ${-y}` : y}년${circa ? "경" : ""}`,
       original: "원문",
+      context: "이 문장이 나온 자리",
       translator: (name) => `영역 ${name}`,
       cited: "원문 대신, 원문과 그 위치를 밝혀 인용한 자료로 확인한 문장입니다.",
     },
@@ -151,6 +153,7 @@ const UI = {
       links: { work: "Đọc nguyên tác", speech: "Đọc diễn văn", letter: "Đọc bức thư", diary: "Đọc nhật ký", interview: "Đọc bài phỏng vấn", calligraphy: "Xem thư pháp", inscription: "Đọc văn bản", testimony: "Đọc lời kể", cited: "Tài liệu đối chiếu" },
       year: (y, circa) => `${circa ? "khoảng " : ""}${y < 0 ? `${-y} TCN` : y}`,
       original: "Nguyên văn",
+      context: "Câu nói này đến từ đâu",
       translator: (name) => `Bản dịch tiếng Anh: ${name}`,
       cited: "Đã đối chiếu qua tài liệu có trích dẫn nguyên văn và vị trí của nó.",
     },
@@ -972,6 +975,15 @@ function fillNote(quote) {
   const year = ui.year(quote.year, quote.circa === true);
   document.getElementById("note-kind").textContent = kind ? `${kind} · ${year}` : year;
   setItalicText(document.getElementById("note-title"), localized(quote.source));
+
+  // 이 문장이 나온 자리(문맥 해설). 베트남어 화면은 영어를 보여 준다.
+  const ctxBox = document.getElementById("note-context");
+  const ctx = typeof QUOTES_CONTEXT !== "undefined" && QUOTES_CONTEXT[quote.id];
+  ctxBox.hidden = !ctx;
+  if (ctx) {
+    document.getElementById("note-context-label").textContent = ui.context;
+    setItalicText(document.getElementById("note-context-text"), ctx[lang] || ctx.en);
+  }
 
   const orig = document.getElementById("note-orig");
   const showOrig = quote.original && !sameWords(quote.original, localized(quote.text));

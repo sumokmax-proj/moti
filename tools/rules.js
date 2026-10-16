@@ -31,4 +31,8 @@ const SOURCE_KINDS = new Set([
   "speech", "letter", "diary", "interview", "calligraphy", "inscription", "testimony",
 ]);
 
-module.exports = { MAX_KO, MAX_EN, AUTHOR_CAP_RATIO, AUTHOR_CAP_MIN, authorCap, TAG_KEYS, SOURCE_KINDS };
+/* 문맥 해설(quotes-context.js) 길이 상한 — 쪽지에서 대여섯 줄이 넘지 않게. */
+const MAX_CONTEXT_KO = 230;
+const MAX_CONTEXT_EN = 480;
+
+module.exports = { MAX_CONTEXT_KO, MAX_CONTEXT_EN, MAX_KO, MAX_EN, AUTHOR_CAP_RATIO, AUTHOR_CAP_MIN, authorCap, TAG_KEYS, SOURCE_KINDS };

@@ -8,6 +8,7 @@ const ROOT = path.join(__dirname, "..");
 // MOTI_QUOTES_FILE 로 다른 파일을 가리킬 수 있다 — 도구 자체를 시험할 때 쓴다.
 const QUOTES_FILE = process.env.MOTI_QUOTES_FILE || path.join(ROOT, "quotes.js");
 const VI_FILE = process.env.MOTI_VI_FILE || path.join(ROOT, "quotes-vi.js");
+const CONTEXT_FILE = path.join(ROOT, "quotes-context.js");
 
 /* quotes.js 는 브라우저용 `const QUOTES = [...]` 다. 모듈이 아니므로
    브라우저와 같은 방식으로 한 번 실행해서 배열을 꺼낸다. */
@@ -39,6 +40,14 @@ function loadVietnamese(file = VI_FILE) {
   return { vi: mod.exports, source, maxVi: max };
 }
 
+/* quotes-context.js(문맥 해설)도 같은 방식으로 읽는다. 파일이 없으면 null. */
+function loadContext(file = CONTEXT_FILE) {
+  if (!fs.existsSync(file)) return null;
+  const mod = { exports: null };
+  new Function("module", `${fs.readFileSync(file, "utf8")}\n;module.exports = QUOTES_CONTEXT;`)(mod);
+  return mod.exports;
+}
+
 /* 기계 규칙은 tools/rules.js 하나에 있다. */
 function readRules() {
   const r = require("./rules");
@@ -68,4 +77,4 @@ function createReport(title) {
   };
 }
 
-module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, readRules, createReport };
+module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, loadContext, readRules, createReport };

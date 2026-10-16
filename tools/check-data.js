@@ -20,7 +20,8 @@
  *
  * 기준값은 tools/rules.js 에 있다. */
 
-const { loadQuotes, loadVietnamese, readRules, createReport } = require("./lib");
+const { loadQuotes, loadVietnamese, loadContext, readRules, createReport } = require("./lib");
+const ruleValues = require("./rules");
 
 const { quotes, source } = loadQuotes();
 const rules = readRules();
@@ -168,6 +169,24 @@ const citedIds = new Set(quotes.filter((q) => q.cited).map((q) => q.id));
 const citedDiff = [...bIds].filter((id) => !citedIds.has(id)).concat([...citedIds].filter((id) => !bIds.has(id)));
 report.check("인용 확인 — [B] 목록과 cited 가 같음", bIds.size > 0 && citedDiff.length === 0,
   citedDiff.length ? `어긋남: ${citedDiff.join(", ")}` : `${bIds.size}편`);
+
+/* ── 문맥 해설 (quotes-context.js) ─────────────────── */
+const ctx = loadContext();
+if (ctx) {
+  const ctxProblems = [];
+  for (const [key, c] of Object.entries(ctx)) {
+    const id = Number(key);
+    if (!ids.includes(id)) ctxProblems.push(`${id}: quotes.js 에 없음`);
+    if (!c.ko || !c.en) ctxProblems.push(`${id}: ko·en 둘 다 있어야 함`);
+    else {
+      if (c.ko.length > ruleValues.MAX_CONTEXT_KO) ctxProblems.push(`${id}: ko ${c.ko.length}자 > ${ruleValues.MAX_CONTEXT_KO}`);
+      if (c.en.length > ruleValues.MAX_CONTEXT_EN) ctxProblems.push(`${id}: en ${c.en.length}자 > ${ruleValues.MAX_CONTEXT_EN}`);
+      if (c.ko !== c.ko.normalize("NFC") || c.en !== c.en.normalize("NFC")) ctxProblems.push(`${id}: NFC 아님`);
+    }
+  }
+  report.check(`문맥 해설 — id·두 언어·길이(한 ${ruleValues.MAX_CONTEXT_KO} / 영 ${ruleValues.MAX_CONTEXT_EN})`, ctxProblems.length === 0,
+    ctxProblems.length ? ctxProblems.join(" | ") : `${Object.keys(ctx).length}/${quotes.length}편`);
+}
 
 /* ── 참고: 출처 종류별 편수 — 책·시 같은 저작은 kind 가 없다 ── */
 const kindCount = {};

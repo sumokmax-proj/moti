@@ -634,6 +634,15 @@ body {
   text-wrap: pretty;
 }
 
+/* 이 문장이 나온 자리 — 쪽지에서 가장 긴 글이라 본문 크기로, 줄 간격을 넉넉히. */
+.note-context p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.85;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+
 .note-orig {
   margin: 0;
   padding-left: 14px;
