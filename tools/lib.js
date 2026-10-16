@@ -1,8 +1,5 @@
-/* 검증 도구들이 함께 쓰는 것.
- *
- * 기준값(길이 상한, 태그 목록, 저자당 상한)은 여기 따로 적지 않고
- * collector/server.js 에서 읽는다. 수집기 검증기와 이 도구가 서로 다른
- * 숫자를 들고 있으면, 한쪽만 고쳤을 때 아무도 모르게 어긋난다. */
+/* 검증 도구들이 함께 쓰는 것. 기준값(길이 상한, 태그, 저자당 상한, 출처 종류)은
+ * tools/rules.js 에 있다. */
 
 const fs = require("fs");
 const path = require("path");
@@ -10,8 +7,6 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 // MOTI_QUOTES_FILE 로 다른 파일을 가리킬 수 있다 — 도구 자체를 시험할 때 쓴다.
 const QUOTES_FILE = process.env.MOTI_QUOTES_FILE || path.join(ROOT, "quotes.js");
-const SERVER_FILE = path.join(ROOT, "collector", "server.js");
-const DATA_FILE = path.join(ROOT, "collector", "data", "pending-quotes.json");
 const VI_FILE = process.env.MOTI_VI_FILE || path.join(ROOT, "quotes-vi.js");
 
 /* quotes.js 는 브라우저용 `const QUOTES = [...]` 다. 모듈이 아니므로
@@ -44,31 +39,10 @@ function loadVietnamese(file = VI_FILE) {
   return { vi: mod.exports, source, maxVi: max };
 }
 
-function readServerRules() {
-  const src = fs.readFileSync(SERVER_FILE, "utf8");
-  const num = (name) => {
-    const m = src.match(new RegExp(`const ${name} = ([\\d.]+);`));
-    if (!m) throw new Error(`collector/server.js 에서 ${name} 를 찾지 못했습니다`);
-    return Number(m[1]);
-  };
-  const tagBlock = src.match(/const TAG_KEYS = new Set\(\[([\s\S]*?)\]\);/);
-  if (!tagBlock) throw new Error("collector/server.js 에서 TAG_KEYS 를 찾지 못했습니다");
-  const tags = new Set([...tagBlock[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]));
-  const kindBlock = src.match(/const SOURCE_KINDS = new Set\(\[([\s\S]*?)\]\);/);
-  if (!kindBlock) throw new Error("collector/server.js 에서 SOURCE_KINDS 를 찾지 못했습니다");
-  const kinds = new Set([...kindBlock[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]));
-  return {
-    maxKo: num("MAX_KO"),
-    maxEn: num("MAX_EN"),
-    // 저자당 상한은 전체 편수에 따라 정해진다(전체의 3%, 최소 3).
-    authorCap: (total) => Math.max(num("AUTHOR_CAP_MIN"), Math.floor(total * num("AUTHOR_CAP_RATIO"))),
-    tags,
-    kinds,
-  };
-}
-
-function readCollectorData() {
-  return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+/* 기계 규칙은 tools/rules.js 하나에 있다. */
+function readRules() {
+  const r = require("./rules");
+  return { maxKo: r.MAX_KO, maxEn: r.MAX_EN, authorCap: r.authorCap, tags: r.TAG_KEYS, kinds: r.SOURCE_KINDS };
 }
 
 /* 출력용: 통과/실패 줄을 모아 마지막에 한 번에 보여 준다. */
@@ -94,4 +68,4 @@ function createReport(title) {
   };
 }
 
-module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, readServerRules, readCollectorData, createReport };
+module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, readRules, createReport };

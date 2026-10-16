@@ -6,8 +6,8 @@
  * 처음 한 번: npm install && npx playwright install chromium
  * (Chromium 이 이미 있으면 PLAYWRIGHT_CHROMIUM_PATH 로 그 경로를 알려 줘도 된다.)
  *
- * 수집기 서버(collector/server.js)를 빈 포트에 띄워 앱을 열고, 끝나면 내린다.
- * 서버는 읽기만 한다 — 이 시험은 명언 데이터를 바꾸지 않는다.
+ * 저장소 폴더를 내주는 작은 정적 서버를 빈 포트에 띄워 앱을 열고, 끝나면 내린다.
+ * 읽기만 한다 — 이 시험은 명언 데이터를 바꾸지 않는다.
  *
  * 시험하는 것
  *   화면      전체 명언 x 한/영 x 390x844 · 320x568 — 넘침 없음, 「다음」 버튼이 화면 안
@@ -22,8 +22,8 @@
  *             내용·링크·인용 확인 · 연도 「~년경」 · 원문 · 기울임 · 320x568 에서 화면 안
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
-const { spawn } = require("child_process");
-const net = require("net");
+const fs = require("fs");
+const http = require("http");
 const path = require("path");
 const { ROOT, loadQuotes, createReport } = require("./lib");
 
@@ -38,32 +38,24 @@ try {
 const report = createReport("앱 동작 시험");
 const QUOTE_COUNT = loadQuotes().quotes.length;
 
-/* ── 서버 ─────────────────────────────────────────── */
-function freePort() {
-  return new Promise((resolve) => {
-    const s = net.createServer().listen(0, "127.0.0.1", () => {
-      const { port } = s.address();
-      s.close(() => resolve(port));
-    });
-  });
-}
+/* ── 서버 ─────────────────────────────────────────
+   앱은 정적 파일뿐이다(GitHub Pages 와 같다). 저장소 폴더를 그대로 내준다. */
+const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".json": "application/json" };
 
-async function startServer() {
-  const port = await freePort();
-  const proc = spawn(process.execPath, [path.join(ROOT, "collector", "server.js")], {
-    env: { ...process.env, PORT: String(port) },
-    stdio: "ignore",
+function startServer() {
+  const server = http.createServer((req, res) => {
+    const pathname = decodeURIComponent(new URL(req.url, "http://x").pathname);
+    const file = path.join(ROOT, pathname.endsWith("/") ? `${pathname}index.html` : pathname);
+    if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+      res.writeHead(404).end();
+      return;
+    }
+    res.writeHead(200, { "content-type": TYPES[path.extname(file)] || "application/octet-stream" });
+    fs.createReadStream(file).pipe(res);
   });
-  const url = `http://127.0.0.1:${port}/`;
-  for (let i = 0; i < 50; i++) {
-    try {
-      const res = await fetch(`${url}api/health`);
-      if (res.ok) return { proc, url };
-    } catch {}
-    await new Promise((r) => setTimeout(r, 200));
-  }
-  proc.kill();
-  throw new Error("수집기 서버가 뜨지 않았습니다");
+  return new Promise((resolve) => {
+    server.listen(0, "127.0.0.1", () => resolve({ server, url: `http://127.0.0.1:${server.address().port}/` }));
+  });
 }
 
 /* ── 도우미 ───────────────────────────────────────── */
@@ -747,7 +739,7 @@ async function suiteColophon(browser) {
 
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
-  const { proc, url } = await startServer();
+  const { server, url } = await startServer();
   appUrl = url;
   const launchOpts = process.env.PLAYWRIGHT_CHROMIUM_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH } : {};
   let browser;
@@ -763,7 +755,7 @@ async function suiteColophon(browser) {
     report.check("페이지 에러 없음", pageErrors.length === 0, pageErrors.slice(0, 3).join(" | "));
   } finally {
     if (browser) await browser.close();
-    proc.kill();
+    server.close();
   }
   process.exitCode = report.print() > 0 ? 1 : 0;
 })();

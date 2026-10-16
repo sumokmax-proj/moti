@@ -9,20 +9,21 @@
  * 재는 것
  * - id: 정수, 중복 없음, 삭제된 id 재사용 없음, 「// 다음 id」 가 최대 id 보다 큼
  * - 항목마다 필수 필드, 길이 상한(한/영), 연도 정수, URL 모양, translator 모양
- * - 태그가 수집기 검증기의 목록 안에 있음
+ * - 태그·출처 종류가 정해진 목록 안에 있음
  * - 저자당 상한
  * - 같은 text.ko 중복 없음
  * - quotes.js 머리 주석의 번역 경로 개수·목록이 실제 데이터와 맞음
- * - 수집기 기록(pending-quotes.json)의 승인 id 가 quotes.js 에 있음
+ * - 출처 { ko, en }, circa·cited 모양, 인용 확인 목록 [B] 와 cited 가 같음
+ * - 판권(EDITION): 펴낸 날·엮은이
  * - 베트남어 베타(quotes-vi.js): id 가 quotes.js 에 있음, 필드 모양, 길이 상한,
  *   NFC 표기. 몇 편이 번역됐고 검수됐는지는 참고로 보여 준다
  *
- * 기준값은 collector/server.js 에서 읽는다(tools/lib.js). */
+ * 기준값은 tools/rules.js 에 있다. */
 
-const { loadQuotes, loadVietnamese, readServerRules, readCollectorData, createReport } = require("./lib");
+const { loadQuotes, loadVietnamese, readRules, createReport } = require("./lib");
 
 const { quotes, source } = loadQuotes();
-const rules = readServerRules();
+const rules = readRules();
 const report = createReport(`명언 데이터 점검 — ${quotes.length}편`);
 const isUrl = (v) => typeof v === "string" && /^https?:\/\/\S+$/.test(v);
 
@@ -104,17 +105,10 @@ const selfMissing = self.map((q) => q.id).filter((id) => !selfListed.has(id));
 report.check("머리 주석 3) 목록에 자체 번역 항목이 모두 있음", selfMissing.length === 0,
   selfMissing.length ? `빠짐: ${selfMissing.join(", ")}` : "");
 
-/* ── 수집기 기록 ──────────────────────────────────── */
-const data = readCollectorData();
-const known = new Set(ids);
-const orphan = (data.approved || []).filter((q) => !known.has(q.id)).map((q) => q.id);
-report.check("수집기 승인 기록의 id 가 모두 quotes.js 에 있음", orphan.length === 0,
-  orphan.length ? `없음: ${orphan.join(", ")}` : `승인 기록 ${(data.approved || []).length}건`);
-report.note("검증 대기", `${(data.pending || []).length}건`);
-
 /* ── 베트남어 (베타) ──────────────────────────────── */
 const { vi, maxVi } = loadVietnamese();
 const viIds = Object.keys(vi).map(Number);
+const known = new Set(ids);
 const viOrphan = viIds.filter((id) => !known.has(id));
 report.check("베트남어: id 가 모두 quotes.js 에 있음", viOrphan.length === 0, viOrphan.length ? `없음: ${viOrphan.join(", ")}` : "");
 const viProblems = [];
@@ -154,13 +148,13 @@ quotes.forEach((q) => q.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 
 report.note("태그별 편수 (편집용)", [...rules.tags].map((t) => `${t} ${tagCount[t] || 0}`).join(" · "));
 
 function localToday() {
-  // 한국 시간 아침에는 UTC 날짜가 하루 늦다. 수집기가 쓰는 날짜와 같은 기준(기기 시간)으로 본다.
+  // 한국 시간 아침에는 UTC 날짜가 하루 늦다. 기기 시간으로 본다.
   const d = new Date();
   const pad = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-/* ── 판권 — 판권면의 펴낸 날과 엮은이. 수집기가 승인할 때 날짜를 고친다. ── */
+/* ── 판권 — 판권면의 펴낸 날과 엮은이. 명언을 실을 때 날짜를 함께 고친다. ── */
 const edition = source.match(/^const EDITION = \{ date: "(\d{4}-\d{2}-\d{2})", editor: "([^"]+)" \};$/m);
 const editionOk = edition && !Number.isNaN(Date.parse(edition[1])) && edition[1] <= localToday();
 report.check("판권 — 펴낸 날·엮은이", Boolean(editionOk),
