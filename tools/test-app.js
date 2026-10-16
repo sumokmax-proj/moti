@@ -675,6 +675,45 @@ async function suiteNote(browser) {
   await p.context().close();
 }
 
+/* ── 즐겨찾기에서 출처 쪽지 ─────────────────────────── */
+async function suiteFavoriteNote(browser) {
+  const p = await freshPage(browser);
+  // 해설이 있는 명언 하나와, 데이터에서 지워진 명언(저장해 둔 문장만 남은 것) 하나를 저장해 둔다.
+  const ids = await p.evaluate(() => {
+    const withCtx = typeof QUOTES_CONTEXT !== "undefined" ? Number(Object.keys(QUOTES_CONTEXT)[0]) : QUOTES[0].id;
+    const q = QUOTES.find((x) => x.id === withCtx);
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify([
+      { id: q.id, text: q.text, author: q.author },
+      { id: 999999, text: { ko: "지워진 명언", en: "A removed quote" }, author: { ko: "옛 저자", en: "Old author" } },
+    ]));
+    openFavoritesView();
+    return { id: q.id, hasCtx: typeof QUOTES_CONTEXT !== "undefined" };
+  });
+  const authors = p.locator(".favorite-item-author");
+  const tags = await authors.evaluateAll((els) => els.map((e) => e.tagName));
+  report.check("즐겨찾기 — 실린 명언의 작가 이름만 누를 수 있음(지워진 명언은 글자)", tags[0] === "BUTTON" && tags[1] === "P", tags.join(", "));
+
+  await authors.first().click();
+  await p.waitForTimeout(400);
+  const r = await p.evaluate((id) => ({
+    open: noteOpen && !document.getElementById("source-note").hidden,
+    same: noteQuote && noteQuote.id === id,
+    title: document.getElementById("note-title").textContent,
+    expected: localized(QUOTES.find((q) => q.id === id).source),
+    ctx: !document.getElementById("note-context").hidden,
+  }), ids.id);
+  report.check("즐겨찾기에서 작가 이름을 누르면 그 명언의 쪽지(출처·해설)", r.open && r.same && r.title === r.expected.replace(/\*/g, "") && (!ids.hasCtx || r.ctx));
+
+  const lang = await p.evaluate(() => { setLang("en"); return document.getElementById("note-title").textContent === localized(noteQuote.source).replace(/\*/g, ""); });
+  report.check("쪽지가 열린 채 언어를 바꾸면 그 언어로", lang);
+
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(400);
+  const closed = await p.evaluate(() => ({ open: noteOpen, hidden: document.getElementById("source-note").hidden, fav: !document.getElementById("favorites-view").classList.contains("hidden") }));
+  report.check("닫으면 즐겨찾기 목록 그대로", !closed.open && closed.hidden && closed.fav);
+  await p.context().close();
+}
+
 /* ── 판권면 ───────────────────────────────────────── */
 async function suiteColophon(browser) {
   const p = await freshPage(browser);
@@ -765,7 +804,7 @@ async function suiteColophon(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["판권면", suiteColophon]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon]]) {
       try {
         await suite(browser);
       } catch (err) {

@@ -258,7 +258,7 @@ function applyLang() {
   shareBtn.setAttribute("aria-label", ui.aria.share);
   backBtn.setAttribute("aria-label", ui.aria.back);
   aboutBtn.textContent = ui.about;
-  if (noteOpen) fillNote(currentQuote);
+  if (noteOpen) fillNote(noteQuote);
   if (paperEl === colophonEl) fillColophon();
   langBtns.forEach((btn) => {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
@@ -1080,10 +1080,21 @@ function closePaper(instant = false, fling = null) {
   if (hadFocus && !instant) trigger.focus({ preventScroll: true });
 }
 
+// 쪽지에 지금 적힌 명언. 메인에서는 지금 펼친 명언, 즐겨찾기에서는 누른 명언이다.
+let noteQuote = null;
+
 function openNote() {
   if (paperEl || !currentQuote || turning || isRiffling()) return;
-  fillNote(currentQuote);
-  openPaper(noteEl, quoteAuthorEl);
+  openNoteFor(currentQuote, quoteAuthorEl);
+}
+
+/* 즐겨찾기 목록에서도 작가 이름을 누르면 같은 쪽지가 열린다(스테이징, 2026-10-16).
+   저장한 명언일수록 「이 말이 어디서 나왔을까」가 궁금해진다 — 익힘(習)의 자리다. */
+function openNoteFor(quote, trigger) {
+  if (paperEl || !quote) return;
+  noteQuote = quote;
+  fillNote(quote);
+  openPaper(noteEl, trigger);
 }
 
 function closeNote(instant = false) {
@@ -1283,9 +1294,20 @@ function renderFavoritesList() {
     const footer = document.createElement("div");
     footer.className = "favorite-item-footer";
 
-    const author = document.createElement("p");
+    // 데이터에 남아 있는 명언이면 작가 이름이 출처 쪽지를 연다(겉모습은 글자 그대로).
+    // 데이터에서 지워진 명언은 저장해 둔 문장뿐이라 출처가 없다 — 그냥 글자로 둔다.
+    const hasSource = live !== saved && live.source;
+    const author = document.createElement(hasSource ? "button" : "p");
     author.className = "favorite-item-author";
     author.textContent = localized(live.author);
+    if (hasSource) {
+      author.type = "button";
+      author.setAttribute("aria-haspopup", "dialog");
+      author.setAttribute("aria-controls", "source-note");
+      author.setAttribute("aria-expanded", "false");
+      author.setAttribute("aria-label", `${localized(live.author)} — ${ui.aria.source}`);
+      author.addEventListener("click", () => openNoteFor(live, author));
+    }
 
     const removeBtn = document.createElement("button");
     removeBtn.className = "remove-btn";
