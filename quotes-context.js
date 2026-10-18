@@ -54,17 +54,77 @@ const QUOTES_CONTEXT = {
     ko: "세네카는 말년에 시칠리아에 있던 친구 루킬리우스에게 백여 통의 편지를 보냈다. 104번째 편지는 열병을 앓다 로마를 떠나 시골 별장으로 간 이야기로 시작해, 어디로 떠나든 마음은 따라온다는 이야기로 이어진다. 그 뒷부분에 이 문장이 있다. 편지라지만 처음부터 읽힐 것을 생각하고 쓴 글이라, 오늘 읽어도 한 통 한 통이 짧은 에세이 같다.",
     en: "Late in life Seneca sent more than a hundred letters to his friend Lucilius in Sicily. Letter 104 begins with him leaving Rome for his country house to shake off a fever, and moves on to how your mind comes with you wherever you go. This line comes in its later part. They are letters, but written to be read by others, and each still reads like a short essay today.",
   },
+  47: {
+    ko: "소로는 월든 호숫가에 오두막을 짓고 2년 2개월을 혼자 살았다. 무엇이 정말 필요한지 몸으로 따져 보려는 실험이었다. 『월든』의 맺음말은 그 실험에서 얻은 것을 이렇게 시작한다. 「적어도 이것 하나는 배웠다.」 그리고 이 문장이 이어진다. 거창한 결심보다, 2년을 살아 보고 나서 한 말이라 무게가 다르다.",
+    en: "Thoreau built a cabin by Walden Pond and lived there alone for two years and two months — an experiment to find out in his own life what was truly necessary. The Conclusion of *Walden* sums up what he gained this way: \"I learned this, at least, by my experiment,\" and then comes this sentence. It carries a different weight coming after two years of actually living it, rather than from a grand resolution.",
+  },
+  48: {
+    ko: "헬렌 켈러는 생후 19개월에 병으로 보고 듣는 힘을 잃었다. 일곱 살에 설리번 선생님을 만나 손바닥에 쓰는 글자로 세상을 다시 배웠고, 이 글은 래드클리프 대학에 다니던 스물세 살에 썼다. 제목이 『낙관론』인 이 짧은 에세이에서, 그녀는 어둠을 모르는 낙관은 가볍다고 말한다. 그러니 이 문장은 고통을 지나온 사람의 낙관이다.",
+    en: "Helen Keller lost her sight and hearing to an illness at nineteen months. At almost seven she met her teacher Anne Sullivan and learned the world again through letters spelled into her palm; she wrote this at twenty-three, while a student at Radcliffe. In the short essay *Optimism* she says that optimism which has never known darkness is shallow. This sentence is the optimism of someone who has come through suffering.",
+  },
+  50: {
+    ko: "크림 전쟁에서 돌아온 뒤 나이팅게일은 병으로 거의 누워 지냈다. 그래도 그 침대에서 간호 학교를 세우고 병원과 군 위생을 고치는 보고서를 써 냈다. 이 말은 1861년 사촌 힐러리에게 보낸 편지에 있고, 뒷날 그녀의 전기를 쓴 쿡이 그 편지를 책에 옮겨 실었다. 「등불을 든 천사」보다 훨씬 고집스러운 사람이 보인다.",
+    en: "After the Crimean War, Nightingale spent much of her life confined to bed by illness. Yet from that bed she founded a school of nursing and wrote reports that reformed hospitals and army sanitation. These words are from an 1861 letter to her cousin Hilary; her biographer Cook later printed the letter in his book. You see someone far more stubborn than \"the lady with the lamp.\"",
+  },
   51: {
     ko: "1883년 가을, 서른 살의 반 고흐는 네덜란드 북동부 드렌터의 황야에서 홀로 그림을 그리고 있었다. 화가가 되겠다고 마음먹은 지 3년, 그림은 한 점도 팔리지 않았고 동생 테오가 보내 주는 돈으로 살았다. 이 문장은 바로 그 테오에게 쓴 긴 편지 속에 있다. 반 고흐의 편지는 800통 넘게 남아 있는데, 그림만큼이나 좋은 읽을거리다.",
     en: "In the autumn of 1883 Van Gogh, thirty years old, was painting alone on the heaths of Drenthe in the north-east of the Netherlands. Three years after deciding to become an artist he had not sold a single picture, and he lived on money from his brother Theo. These words come from one of his long letters to Theo. More than eight hundred of his letters survive, and they are as rewarding to read as his paintings are to look at.",
+  },
+  52: {
+    ko: "1801년, 서른 살의 베토벤은 고향 본의 오랜 친구 베겔러에게 귀가 점점 들리지 않는다는 비밀을 처음 털어놓았다. 몇 달 뒤 보낸 이 편지에서 그는 사랑하는 사람이 생겼다는 이야기와 함께 이 말을 적었다. 이듬해 그는 절망 속에서 유서를 썼지만 부치지 않았고, 그 뒤로 「영웅」과 「운명」 교향곡을 써 나갔다.",
+    en: "In 1801 Beethoven, thirty, confided to Wegeler, an old friend from his hometown of Bonn, the secret that he was losing his hearing. In this letter a few months later he wrote these words — along with the news that he had fallen in love. The next year, in despair, he wrote a testament he never sent; after it he went on to write the \"Eroica\" and the Fifth Symphony.",
+  },
+  53: {
+    ko: "더글러스는 노예로 태어나 스무 살에 북부로 탈출했다. 1857년, 영국이 서인도 제도의 노예를 해방한 날을 기념하는 자리에서 그는 이 연설을 했다. 이 문장 뒤에는 「소란 없이 자유를 바라는 사람은 땅을 갈지 않고 곡식을 바라는 사람」이라는 말과, 「권력은 요구 없이는 아무것도 내주지 않는다」가 이어진다.",
+    en: "Douglass was born into slavery and escaped to the North at twenty. In 1857 he gave this speech on the anniversary of Britain's emancipation of slaves in the West Indies. Right after this line come two more: those who want freedom without agitation \"want crops without plowing up the ground,\" and \"Power concedes nothing without a demand.\"",
   },
   54: {
     ko: "1941년 10월, 처칠은 모교 해로 스쿨을 찾아 학생들 앞에 섰다. 프랑스가 무너진 뒤 영국이 한동안 홀로 버텨 온 때였고, 미국은 아직 전쟁에 뛰어들기 전이었다. 그런데 이 말에는 뒷부분이 있다. 「크든 작든, 명예와 분별에 따른 신념이 아니라면」. 무조건 버티라는 말이 아니라, 지켜야 할 것을 끝까지 지키라는 말이었던 셈이다.",
     en: "In October 1941 Churchill went back to his old school, Harrow, and stood before the boys. Britain had held out for months after the fall of France, much of that time alone, and America was not yet in the war. And the sentence goes on: \"in nothing, great or small, large or petty — never give in except to convictions of honour and good sense.\" It was never a call to hold on to everything — only to what is worth holding.",
   },
+  55: {
+    ko: "에디슨이 세상을 떠난 이듬해인 1932년, 그의 연구소에서 일했던 로자노프가 『하퍼스』에 「연구소의 에디슨」이라는 회고를 실었다. 거기서 에디슨은 「사람들이 내 말이라며 되풀이하는 걸 들었겠지만」 하고 이 말을 꺼낸다. 이미 1901년부터 그의 말로 신문에 오르내리던 문장이다. 이 책의 다른 에디슨 명언 두 편을 함께 읽으면, 그 「땀」이 어떤 것이었는지 보인다.",
+    en: "In 1932, the year after Edison died, Rosanoff, who had worked in his laboratory, published a memoir in *Harper's*, \"Edison in His Laboratory.\" There Edison brings this up himself: \"You may have heard people repeat what I have said.\" The line had already been in the papers as his since 1901. Read it with the two other Edison quotes in this book and you'll see what that \"perspiration\" looked like.",
+  },
+  56: {
+    ko: "「권학」은 배움을 권하는 글이고, 『순자』의 첫 편이다. 「배움은 그쳐서는 안 된다」로 시작하고, 우리가 아는 「청출어람」도 바로 이 편에서 나왔다. 순자는 사람의 본성이 저절로 선하지 않다고 보았다. 그래서 배움이란 칼로 새기듯 꾸준히 사람을 다듬는 일이라고 말한다. 이 문장이 그 비유의 한가운데에 있다.",
+    en: "\"An Exhortation to Learning\" is the first chapter of the *Xunzi*. It opens with \"Learning must never stop,\" and the saying that the student can surpass the teacher — blue dye bluer than the plant it comes from — also comes from here. Xunzi held that human nature is not good on its own, so learning is the steady work of carving and shaping a person. This sentence sits right in the middle of that image.",
+  },
   57: {
     ko: "『제인 에어』 23장. 가정교사 제인은 고용주 로체스터가 다른 여자와 결혼하려 한다고 믿고, 아일랜드의 새 일자리로 떠나라는 말까지 듣는다. 그 자리에서 제인은 가난하고 신분이 낮아도 영혼은 대등하다고 맞선다. 1847년, 브론테는 이 소설을 「커러 벨」이라는 남자 이름으로 냈다. 여자가 쓴 책은 편견 어린 눈으로 읽히던 시절이었다.",
     en: "*Jane Eyre*, chapter 23. Jane, a governess, believes her employer Mr Rochester is about to marry another woman, and he even talks of sending her to a new post in Ireland. Here she stands up to him: poor and low-born she may be, but her soul is his equal. In 1847 Brontë published the novel under a man's name, \"Currer Bell\" — books by women were read through a haze of prejudice then.",
+  },
+  58: {
+    ko: "디킨슨은 평생 1,800편 가까운 시를 썼지만, 살아서 발표한 것은 열 편 남짓이었다. 그녀가 세상을 떠난 뒤 동생이 서랍에서 시 묶음을 찾아냈고, 몇 해에 걸쳐 시집으로 나왔다. 「희망」이라는 제목도 편집자가 붙인 것이다. 이 시의 마지막 연은 이렇다. 「그래도 아무리 궁할 때에도, 그것은 내게 빵 부스러기 하나 청하지 않았다.」",
+    en: "Dickinson wrote nearly 1,800 poems but published only about ten in her lifetime. After her death her sister found bundles of poems in her drawers, and they came out over several years as books. Even the title \"Hope\" was added by an editor. The poem ends: \"Yet, never, in extremity, / It asked a crumb of me.\"",
+  },
+  59: {
+    ko: "광복 뒤 김구는 『백범일지』에 「나의 소원」이라는 글을 덧붙였다. 그 가운데 「내가 원하는 우리 나라」는 이렇게 시작한다. 「나는 우리나라가 세계에서 가장 아름다운 나라가 되기를 원한다. 가장 부강한 나라가 되기를 원하는 것은 아니다.」 그리고 이 문장이 이어진다. 독립운동에 평생을 바친 사람의 마지막 소원이 문화였다.",
+    en: "After Korea's liberation, Kim Gu added an essay, \"My Wish,\" to his autobiography *Baekbeom Ilji*. Its section \"The Country I Want\" begins: \"I want our country to be the most beautiful country in the world. I do not wish it to be the richest and strongest.\" Then comes this sentence. A man who gave his whole life to the independence movement had, as his last wish, culture.",
+  },
+  60: {
+    ko: "정약용은 전라도 강진에서 18년을 유배객으로 지냈다. 그 긴 시간 동안 책 수백 권을 썼고, 『목민심서』는 유배가 끝나던 해에 마쳤다. 고을을 다스리는 수령이 지켜야 할 일을 적은 책인데, 그 첫머리 「율기」는 남을 다스리기 전에 자기 몸가짐부터 다스리라는 장이다. 그 첫 조목에 이 짧은 두 마디가 있다.",
+    en: "Jeong Yak-yong spent eighteen years in exile at Gangjin, in the far south-west of Korea. In that long time he wrote hundreds of volumes, and *Admonitions on Governing the People* was finished the year the exile ended. It is a book of duties for a county magistrate, and its first part, \"Yulgi,\" asks him to govern his own conduct before governing anyone else. These two short commands are in its very first article.",
+  },
+  61: {
+    ko: "울스턴크래프트는 여자아이는 집에서만 가르치면 된다는 당시의 생각에 맞서 『여성의 권리 옹호』를 썼다. 그녀가 바란 것은 여성이 남성 위에 서는 것이 아니라, 교육을 받아 스스로를 다스리는 것이었다. 그녀는 딸을 낳고 며칠 만에 세상을 떠났는데, 그 딸이 『프랑켄슈타인』을 쓴 메리 셸리다. 이 책에 모녀가 함께 실려 있다.",
+    en: "Wollstonecraft wrote *A Vindication of the Rights of Woman* against the view of her day that girls needed only to be taught at home. What she wanted was not for women to stand above men, but to be educated and so to govern themselves. She died days after giving birth to a daughter — Mary Shelley, who wrote *Frankenstein*. Mother and daughter are both in this book.",
+  },
+  63: {
+    ko: "「유로」는 노자의 말을 이야기로 풀어 쓴 편이다. 「천하의 큰일은 반드시 작은 데서 시작된다」는 노자의 말을, 한비는 둑과 개미구멍으로 보여 준다. 바로 뒤에는 「백 척 높은 집도 굴뚝 틈의 불티 하나로 탄다」가 이어진다. 한비는 순자의 제자였으니, 이 책의 노자와 순자를 함께 떠올리며 읽으면 재미있다.",
+    en: "\"Illustrations of Laozi\" retells Laozi's sayings as stories. Laozi says the great affairs of the world always begin in small things; Han Fei shows it with a dike and an ant hole. Right after comes: \"A hall a hundred feet high burns down from a spark through a crack in the chimney.\" Han Fei was a student of Xunzi, so it's fun to read him with this book's Laozi and Xunzi in mind.",
+  },
+  64: {
+    ko: "굴원은 초나라의 신하였지만 모함을 받아 쫓겨났고, 끝내 멱라강에 몸을 던졌다고 전한다. 「이소」는 「근심을 만나다」라는 뜻으로, 그 억울함과 뜻을 370여 행에 쏟아 낸 긴 노래다. 이 구절은 시인이 하늘 끝까지 뜻 맞는 이를 찾아 길을 떠나는 대목에 나온다. 단오에 먹는 쫑즈가 그를 기리는 데서 왔다는 이야기도 전한다.",
+    en: "Qu Yuan served the state of Chu but was slandered and banished, and he is said in the end to have drowned himself in the Miluo River. \"Li Sao\" means \"Encountering Sorrow\": a long song of some 370 lines pouring out his grief and his ideals. This line comes as the poet sets out to the ends of heaven in search of a kindred spirit. The rice dumplings eaten at the Dragon Boat Festival are said to have begun in his memory.",
+  },
+  65: {
+    ko: "『작은 아씨들』 15장, 남북전쟁에 나간 아버지가 워싱턴에서 앓아누웠다는 전보가 온다. 간호하러 떠나는 마치 부인이 네 딸에게 남긴 말이 이것이다. 「희망을 품고, 바쁘게 지내렴. 무슨 일이 있어도 너희에게 아버지가 없어지는 일은 없다는 걸 기억하고.」 같은 장에서 조는 어머니의 여비를 보태려고 머리카락을 판다.",
+    en: "*Little Women*, chapter 15: a telegram comes saying their father, away in the Civil War, lies ill in Washington. Leaving to nurse him, Mrs. March says this to her four daughters: \"Hope and keep busy, and whatever happens, remember that you never can be fatherless.\" In the same chapter Jo sells her hair to help pay for her mother's journey.",
+  },
+  66: {
+    ko: "로마 황제 마르쿠스 아우렐리우스는 북쪽 국경에서 전쟁을 치르던 막사에서, 그리스어로 자기 자신에게 쓰는 글을 남겼다. 남에게 보이려고 쓴 글이 아니어서 원래 제목도 「자기 자신에게」다. 이 문장 뒤에는 「그러니 이런 생각들로 영혼을 물들여라」가 이어진다. 황제가 아니라, 날마다 마음을 다잡는 한 사람의 수첩이다.",
+    en: "The Roman emperor Marcus Aurelius, fighting on the northern frontier, wrote in Greek notes addressed to himself in his tent. They were never meant for others; the original title is simply \"To Himself.\" After this line comes: \"Dye it, then, with a continuous series of such thoughts.\" Not an emperor's book so much as one man's notebook for steadying his mind each day.",
   },
   71: {
     ko: "사마천은 흉노에 항복한 장수 이릉을 변호하다가 한 무제의 노여움을 사 궁형을 받았다. 이 문장은 훗날 사형을 앞둔 친구 임안에게 보낸 답장에 있다. 그는 죽음 대신 치욕을 견딘 까닭을, 아버지가 남긴 역사서를 끝내기 위해서였다고 털어놓는다. 그렇게 끝낸 책이 『사기』다. 무거운 죽음이란 무엇인지, 그 책이 대답하고 있는 셈이다.",
