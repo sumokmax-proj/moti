@@ -645,14 +645,19 @@ async function suiteNote(browser) {
       fillNote(QUOTES.find((q) => q.id === id));
       out[L] = { shown: !document.getElementById("note-context").hidden, text: document.getElementById("note-context-text").textContent };
     }
-    fillNote(without);
-    out.without = document.getElementById("note-context").hidden;
+    // 모든 명언에 해설이 있으면 「없는 명언에서는 숨김」을 볼 수 없다 — 그때는 전부 있는지 본다.
+    if (without) {
+      fillNote(without);
+      out.without = document.getElementById("note-context").hidden;
+    } else {
+      out.without = QUOTES.every((q) => QUOTES_CONTEXT[q.id]);
+    }
     setLang("ko");
     out.ko0 = QUOTES_CONTEXT[id].ko;
     out.en0 = QUOTES_CONTEXT[id].en.replace(/\*/g, "");
     return out;
   });
-  if (ctx) report.check("문맥 해설 — 있는 명언에만, 한·영, 베트남어는 영어", ctx.ko.shown && ctx.ko.text === ctx.ko0 && ctx.en.text === ctx.en0 && ctx.vi.text === ctx.en0 && ctx.without);
+  if (ctx) report.check("문맥 해설 — 있는 명언에만(전부 있으면 전부), 한·영, 베트남어는 영어", ctx.ko.shown && ctx.ko.text === ctx.ko0 && ctx.en.text === ctx.en0 && ctx.vi.text === ctx.en0 && ctx.without);
 
   // 가장 작은 화면에서 쪽지가 화면 안에 있고 옆으로 넘치지 않는다.
   const q = await freshPage(browser, { viewport: { width: 320, height: 568 } });
