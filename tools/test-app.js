@@ -11,7 +11,7 @@
  *
  * 시험하는 것
  *   화면      전체 명언 x 한/영 x 390x844 · 320x568 — 넘침 없음, 「다음」 버튼이 화면 안
- *   최근 20%  1,000번 넘김에 재등장 0 · 새로고침 뒤 첫 명언 · 저장소 쓰기 차단
+ *   최근 20%  3,000번 넘김에 재등장 0 · 새로고침 뒤 첫 명언 · 저장소 쓰기 차단
  *   주르륵    짧은 탭은 페이드 · 길게 누르기 · 밀기 · Shift · 도중 멈춤(즐겨찾기 오작동 없음)
  *             · 휴대폰 메뉴 막기 · 넘김 중 언어 전환 · 동작 줄이기
  *   되돌아가기 한 장 · 반동(정점 22px) · 다시 나아갔다 돌아오기 · 새로고침 뒤 · 가장자리
@@ -130,7 +130,9 @@ async function suiteRecent(browser) {
     const W = Math.floor(QUOTES.length * 0.2);
     const seen = [currentQuote.id];
     let cur = currentQuote, violations = 0;
-    for (let i = 0; i < 1000; i++) {
+    // 3,000번 — 1,000번이면 141편 중 한 편이 우연히 한 번도 안 나올 확률이 2% 남짓이라
+    // 시험이 가끔 저절로 실패했다(2026-10-19). 3,000번이면 그 확률이 사실상 0 이다.
+    for (let i = 0; i < 3000; i++) {
       cur = turnPage(cur.id);
       if (seen.slice(-W).includes(cur.id)) violations++;
       seen.push(cur.id);
@@ -140,7 +142,7 @@ async function suiteRecent(browser) {
     seen.forEach((id, i) => { if (id in last) minGap = Math.min(minGap, i - last[id]); last[id] = i; });
     return { W, violations, distinct: new Set(seen).size, minGap };
   });
-  report.check("최근 20% — 1,000번 넘김에 재등장 0", r.violations === 0, `피하는 폭 ${r.W}편, 최소 간격 ${r.minGap}`);
+  report.check("최근 20% — 3,000번 넘김에 재등장 0", r.violations === 0, `피하는 폭 ${r.W}편, 최소 간격 ${r.minGap}`);
   report.check("최근 20% — 모든 명언이 언젠가 나옴", r.distinct === QUOTE_COUNT, `${r.distinct}/${QUOTE_COUNT}`);
 
   let reloadOk = true;
