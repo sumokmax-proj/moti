@@ -190,6 +190,66 @@ const QUOTES_CONTEXT = {
     ko: "1776년 겨울, 워싱턴의 군대는 패배를 거듭하며 뉴저지를 가로질러 물러나고 있었다. 그 행렬 속에 있던 페인은 「지금은 사람의 영혼을 시험하는 때다」로 시작하는 이 글을 썼다. 워싱턴은 델라웨어강을 건너 트렌턴을 기습하기 전, 병사들에게 이 글을 읽어 주게 했다고 전한다.",
     en: "In the winter of 1776 Washington's army was retreating across New Jersey after defeat upon defeat. Paine, marching with it, wrote this pamphlet, which begins \"These are the times that try men's souls.\" Washington is said to have had it read to his soldiers before they crossed the Delaware to surprise Trenton.",
   },
+  83: {
+    ko: "『자조론』은 스마일스가 리즈의 젊은 노동자들에게 한 강연에서 시작된 책이다. 1859년에 나와 날개 돋친 듯 팔렸는데, 같은 해에 다윈의 『종의 기원』과, 이 책에도 실린 밀의 『자유론』이 나왔다. 이 문장 바로 뒤에는 「무엇이 안 되는지를 알아내면서, 무엇이 되는지를 알게 된다」가 이어진다. 실패를 지도처럼 쓰라는 이야기다.",
+    en: "*Self-Help* grew out of talks Smiles gave to young working men in Leeds. It came out in 1859 and sold like wildfire — the same year as Darwin's *On the Origin of Species* and Mill's *On Liberty*, which is also in this book. Right after this line comes: \"We often discover what will do, by finding out what will not do.\" Use failure as a map, in other words.",
+  },
+  84: {
+    ko: "「엘도라도」는 전설 속 황금의 도시다. 끝내 아무도 찾지 못한 곳이니, 스티븐슨은 그 이름을 빌려 「닿지 못하는 곳을 향해 가는 즐거움」에 대한 짧은 에세이를 썼다. 이 문장은 그 글의 마지막 문장이다. 그는 평생 폐병을 안고 살면서도 먼 바다와 섬으로 여행을 멈추지 않았고, 사모아에서 생을 마쳤다.",
+    en: "El Dorado is the legendary city of gold that no one ever found. Stevenson borrowed the name for a short essay on the pleasure of heading toward a place you never reach, and this is its last sentence. He lived all his life with weak lungs, yet never stopped travelling to far seas and islands, and he died in Samoa.",
+  },
+  85: {
+    ko: "테니슨은 가장 가까운 친구 아서 핼럼이 스물두 살에 갑자기 세상을 떠난 뒤 이 시를 썼다. 시 속의 율리시스는 긴 방랑 끝에 고향에 돌아왔지만, 늙은 몸으로 다시 바다로 나서려 한다. 이 구절은 그 시의 마지막 줄이다. 테니슨은 단테의 『신곡』에서 율리시스를 빌려 왔는데, 그 단테의 율리시스도 이 책에 실려 있다.",
+    en: "Tennyson wrote this poem after his closest friend, Arthur Hallam, died suddenly at twenty-two. Ulysses has come home to Ithaca after long wandering, yet old as he is, he means to set out to sea again. This is the poem's last line. Tennyson took his Ulysses from Dante's *Divine Comedy* — and Dante's Ulysses is in this book too.",
+  },
+  86: {
+    ko: "롱펠로는 첫 아내를 잃고 몇 해 뒤 이 시를 썼다. 부제는 「젊은이의 마음이 시편 작가에게 한 말」. 삶은 헛된 꿈이라는 탄식에 맞서, 지금 여기서 살아가자고 대답하는 시다. 이 구절은 마지막 연의 첫머리이고, 「애써 일하고, 기다리는 법을 배우자」로 시가 끝난다. 19세기 미국에서 가장 많이 외워진 시 가운데 하나였다.",
+    en: "Longfellow wrote this poem a few years after losing his first wife. Its subtitle: \"What the Heart of the Young Man Said to the Psalmist.\" Against the lament that life is an empty dream, it answers: live here and now. These words open the last stanza, and the poem ends: \"Learn to labor and to wait.\" It was one of the most memorized poems in nineteenth-century America.",
+  },
+  87: {
+    ko: "『아이네이스』 1권, 트로이에서 살아남은 아이네아스의 배들이 폭풍에 흩어지고 몇 척만 겨우 리비아 해안에 닿는다. 지치고 겁먹은 부하들 앞에서, 아이네아스는 속으로는 근심을 감춘 채 이 말로 그들을 북돋운다. 베르길리우스는 이 서사시를 11년 동안 쓰다 끝내지 못하고 세상을 떠났다. 같은 시의 5권 구절도 이 책에 있다.",
+    en: "*Aeneid*, Book 1: the ships of Aeneas, survivors of Troy, are scattered by a storm, and only a few reach the Libyan shore. Before his exhausted, frightened men, hiding his own worry, Aeneas lifts their spirits with these words. Virgil worked on the epic for eleven years and died before finishing it. A line from Book 5 of the same poem is also in this book.",
+  },
+  88: {
+    ko: "뜻밖에도 이 말은 사랑의 시에서 나왔다. 『사랑의 노래』 3권 11편에서, 시인은 자신을 속여 온 연인에게서 이제 마음을 떼어 내려 하며 스스로를 다그친다. 「참고 견뎌라.」 오비디우스는 훗날 황제의 노여움을 사 흑해 끝으로 쫓겨났는데, 그곳에서 쓴 편지시의 구절도 이 책에 실려 있다.",
+    en: "Surprisingly, these words come from a love poem. In *Amores* 3.11 the poet is tearing his heart away from a mistress who has deceived him, and he spurs himself on: \"Be patient and endure.\" Later Ovid angered the emperor and was banished to the far shore of the Black Sea; a line from the verse letters he wrote there is in this book as well.",
+  },
+  89: {
+    ko: "세네카가 친구 루킬리우스에게 보낸 열세 번째 편지는 쓸데없는 두려움에 대한 이야기다. 그는 아직 오지 않은 일, 어쩌면 끝내 오지 않을 일 때문에 미리 괴로워하지 말라고 말한다. 이 책에는 세네카의 편지 세 통에서 나온 문장이 실려 있다. 세 통 모두 친구에게 쓴 글이라, 철학이라기보다 다정한 충고처럼 읽힌다.",
+    en: "Seneca's thirteenth letter to his friend Lucilius is about needless fear. Don't suffer in advance, he says, over what hasn't come yet — and may never come. This book has lines from three of Seneca's letters. All three were written to a friend, so they read less like philosophy than like kind advice.",
+  },
+  90: {
+    ko: "『논어』에는 잘못에 대한 말이 여러 번 나온다. 학이편에는 「잘못하면 고치기를 꺼리지 마라」가 있고, 이 책에 실린 자공의 말은 군자의 잘못을 일식과 월식에 견준다. 모두가 보지만, 고치면 모두가 우러러본다고. 이 문장은 그 이야기들을 한 줄로 줄인 것 같다. 잘못 자체보다, 고치지 않는 것이 진짜 잘못이라는 것이다.",
+    en: "The *Analects* returns to mistakes again and again. In Book 1: \"When you have faults, do not fear to abandon them.\" Zigong's saying in this book compares a gentleman's faults to eclipses of the sun and moon: everyone sees them, and when he corrects them, everyone looks up to him. This line seems to fold all of that into one: the real fault is not the mistake but leaving it uncorrected.",
+  },
+  91: {
+    ko: "『중용』은 공자의 손자 자사가 지었다고 전한다. 20장은 노나라 임금이 나라 다스리는 법을 묻자 공자가 답하는 긴 장인데, 그 끝에 배우고 묻고 생각하고 가리고 행하라는 다섯 가지 공부가 나오고 이 문장이 이어진다. 그리고 이렇게 맺는다. 「이 길을 해낼 수 있다면, 어리석은 이도 반드시 밝아지고 약한 이도 반드시 강해진다.」",
+    en: "The *Doctrine of the Mean* is traditionally attributed to Zisi, Confucius's grandson. Chapter 20 is Confucius's long answer to the Duke of Lu on how to govern. Near its end come five kinds of study — learn widely, inquire, reflect, discern, practise — and then this line. It closes: \"Let a man proceed in this way, and though dull, he will surely become intelligent; though weak, he will surely become strong.\"",
+  },
+  92: {
+    ko: "포드의 첫 자동차 회사는 2년도 못 가 문을 닫았고, 두 번째 회사에서는 투자자들과 부딪혀 나왔다. 1903년에 세운 세 번째 회사가 포드 자동차다. 그리고 몇 해 뒤 모델 T가 나와 자동차를 보통 사람의 물건으로 바꿔 놓았다. 그러니 이 말은 실패를 두 번 겪은 사람이 자서전 첫머리에 적은 말이다.",
+    en: "Ford's first car company folded in less than two years, and he left his second after clashing with its investors. The third, founded in 1903, was the Ford Motor Company — and a few years later the Model T turned the car into an ordinary person's possession. So this is something a man who had failed twice wrote at the start of his autobiography.",
+  },
+  93: {
+    ko: "이 문장은 남들이 내 일을 막아설 때 어떻게 할 것인가를 다룬 대목에 있다. 마르쿠스는 마음이 그 방해를 오히려 일의 재료로 바꿀 수 있다고 말한다. 원문을 그대로 옮기면 「길을 막는 것이 길을 앞으로 나아가게 한다」에 가깝다. 전쟁과 역병 속에서 나라를 다스리던 사람이 막사에서 스스로에게 쓴 말이다.",
+    en: "This line sits in a passage about what to do when others obstruct your work. Marcus says the mind can turn the obstruction itself into material for the work. Rendered closely, the Greek is nearer to \"what stands in the way moves the way forward.\" Words written in a tent, to himself, by a man governing an empire through war and plague.",
+  },
+  94: {
+    ko: "『작은 아씨들』 44장. 막내 에이미와 로리가 결혼하고 집에 돌아온 날, 로리는 식구들 앞에서 결혼 생활을 날씨에 빗대 「결혼하고 나서는 늘 따뜻하고 화창하다」고 너스레를 떤다. 에이미는 「지금까지는 좋은 날씨예요. 얼마나 갈지는 모르지만」 하고 받으며 이 말을 한다. 폭풍은 살면서 닥칠 어려움이고, 배를 모는 건 자기 삶의 키를 스스로 잡는 일이다. 철없던 막내가 그렇게 자랐다.",
+    en: "*Little Women*, chapter 44. The day Amy and Laurie come home married, Laurie teases the family by describing married life as weather — \"altogether salubrious and balmy.\" Amy answers: \"Lovely weather so far. I don't know how long it will last,\" and then says this. The storms are the troubles life will bring; sailing the ship is taking the helm of your own life. The flighty youngest sister has grown up.",
+  },
+  95: {
+    ko: "『미들마치』 72장. 의사 리드게이트가 뇌물 추문에 휘말리자, 도러시아는 그의 결백을 밝혀 주고 싶어 한다. 주변에서는 남의 일에 끼어들지 말라고 말리지만, 저녁 식탁에서 그녀는 다시 그 이야기를 꺼낸다. 이 문장은 그때 나온다. 엘리엇은 이 긴 소설을 「평범한 사람들의 숨은 선함」에 대한 이야기로 맺는데, 그 맺음말도 이 책에 실려 있다.",
+    en: "*Middlemarch*, chapter 72. When the doctor Lydgate is caught up in a bribery scandal, Dorothea wants to clear his name. Those around her tell her not to meddle, but at dinner she brings it up again, and this is what she says. Eliot ends her long novel with the hidden goodness of ordinary lives — and that ending is in this book too.",
+  },
+  96: {
+    ko: "「원」은 우리 삶과 생각이 하나의 원에서 더 큰 원으로 끝없이 넓어진다는 에세이다. 어떤 원도 마지막이 아니고, 어제의 생각은 오늘의 생각에 둘러싸인다. 이 문장은 그 글의 끝머리에 있고, 바로 뒤에 「삶의 길은 놀랍다. 자신을 내맡길 때 열린다」가 이어진다. 이 책에는 같은 에머슨의 「자기 신뢰」 두 줄도 있다.",
+    en: "\"Circles\" is an essay about how our lives and thoughts widen endlessly, from one circle to a larger one; no circle is the last, and yesterday's thought is surrounded by today's. This sentence comes near the end, followed by \"The way of life is wonderful; it is by abandonment.\" This book also has two lines from Emerson's \"Self-Reliance.\"",
+  },
+  97: {
+    ko: "『도덕경』 33장은 짧은 대구 여덟 줄로 되어 있다. 첫 줄은 「남을 아는 이는 슬기롭고, 자기를 아는 이는 밝다」이고, 이 문장 바로 뒤에는 「만족할 줄 아는 이가 부유하다」가 이어진다. 바깥을 이기는 힘보다 안을 다스리는 힘을 더 높이 친다. 한 장이 한 숨에 읽힐 만큼 짧으니, 오늘 한 장만 펼쳐 보자.",
+    en: "Chapter 33 of the *Tao Te Ching* is just eight short paired lines. The first: \"He who knows other men is discerning; he who knows himself is intelligent.\" Right after this line comes \"He who is content is rich.\" It rates the power to govern what is inside above the force to conquer what is outside. A chapter short enough to read in one breath — try opening just one today.",
+  },
   117: {
     ko: "프로스트는 영국에 머물던 시절, 친구인 시인 에드워드 토머스와 자주 숲길을 걸었다. 토머스는 어느 길을 고르든 늘 다른 길을 아쉬워했고, 프로스트는 그 친구를 슬쩍 놀리려고 이 시를 썼다고 했다. 시를 처음부터 읽어 보면 두 길이 「사실 거의 같았다」는 구절이 나온다. 마지막 줄이 조금 다르게 들릴 것이다.",
     en: "While living in England, Frost often walked the woods with his friend the poet Edward Thomas. Whichever path Thomas chose, he always regretted the other one, and Frost said he wrote this poem to tease him gently. Read it from the start and you'll find the two roads were \"really about the same.\" The last lines may sound a little different after that.",
