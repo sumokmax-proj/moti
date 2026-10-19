@@ -126,9 +126,69 @@ const QUOTES_CONTEXT = {
     ko: "로마 황제 마르쿠스 아우렐리우스는 북쪽 국경에서 전쟁을 치르던 막사에서, 그리스어로 자기 자신에게 쓰는 글을 남겼다. 남에게 보이려고 쓴 글이 아니어서 원래 제목도 「자기 자신에게」다. 이 문장 뒤에는 「그러니 이런 생각들로 영혼을 물들여라」가 이어진다. 황제가 아니라, 날마다 마음을 다잡는 한 사람의 수첩이다.",
     en: "The Roman emperor Marcus Aurelius, fighting on the northern frontier, wrote in Greek notes addressed to himself in his tent. They were never meant for others; the original title is simply \"To Himself.\" After this line comes: \"Dye it, then, with a continuous series of such thoughts.\" Not an emperor's book so much as one man's notebook for steadying his mind each day.",
   },
+  67: {
+    ko: "에픽테토스는 노예로 태어나 다리를 절었고, 자유를 얻은 뒤 철학을 가르쳤다. 그는 한 줄도 쓰지 않았고, 제자 아리아노스가 스승의 말을 받아 적어 손에 쥐고 다닐 만한 작은 책으로 엮었다. 그게 「손안의 책」, 『엥케이리디온』이다. 이 문장 뒤로 그는 죽음을 예로 든다. 죽음이 끔찍한 게 아니라, 죽음이 끔찍하다는 생각이 끔찍한 것이라고.",
+    en: "Epictetus was born a slave and walked with a limp; once free, he taught philosophy. He never wrote a line himself — his student Arrian took down his words and boiled them into a little book you could carry in your hand: the *Enchiridion*, \"handbook.\" After this line he takes death as his example: death is not terrible; the belief that death is terrible — that is what's terrible.",
+  },
+  68: {
+    ko: "『우상의 황혼』은 니체가 정신을 놓기 직전인 1888년에 써서, 이듬해 1월에 나왔다. 「잠언과 화살」은 그 첫머리의 짧은 화살 같은 말 마흔네 개다. 사실 이 문장은 이렇게 이어진다. 「사람은 행복을 바라고 애쓰지 않는다. 영국인만 그런다.」 행복을 셈하던 영국 철학자들을 꼬집는 농담인데, 앞부분만 떼어 놓고 보아도 충분히 단단하다.",
+    en: "Nietzsche wrote *Twilight of the Idols* in 1888, just before his mind gave way; it came out the next January. \"Maxims and Arrows\" opens the book with forty-four short, arrow-like sayings. This one actually continues: \"Man does not strive after happiness; only the Englishman does.\" It's a jab at the English philosophers who did sums with happiness — but the first half holds up perfectly well on its own.",
+  },
+  69: {
+    ko: "에머슨은 목사직을 내려놓고 강연과 글로 살아가던 사람이다. 1841년에 나온 「자기 신뢰」는 남의 생각을 따라 사는 대신 자기 안의 목소리를 믿으라는 글이다. 「사람이 되려는 자는 순응하지 않아야 한다」, 「어리석은 일관성은 좁은 마음의 도깨비다」 같은 말이 다 이 글에 있다. 짧은 글이니 통째로 읽어 보길 권한다.",
+    en: "Emerson gave up the ministry and lived by lecturing and writing. \"Self-Reliance,\" published in 1841, tells you to trust the voice within rather than live by other people's opinions. \"Whoso would be a man must be a nonconformist\" and \"A foolish consistency is the hobgoblin of little minds\" are both in it. It's a short essay — worth reading whole.",
+  },
+  70: {
+    ko: "노예로 태어난 워싱턴은 열여섯 살에 햄프턴 학교에 가려고 수백 킬로미터를 걷고 얻어 타며 갔다. 돈이 떨어져 길바닥 판자 밑에서 잠을 자기도 했다. 겨우 도착하자 입학 시험 대신 교실 청소를 맡았고, 그는 세 번 쓸고 네 번 닦았다. 이 문장은 그 이야기가 담긴 3장에 있다. 그는 훗날 터스키기 학교를 세웠다.",
+    en: "Born into slavery, Washington set out at sixteen for Hampton Institute, hundreds of miles away, on foot and by begged rides. When his money ran out he slept under a board sidewalk. On arrival, instead of an entrance exam he was told to clean a classroom — he swept it three times and dusted it four. This line is in chapter 3, which tells that story. He later founded the Tuskegee Institute.",
+  },
   71: {
     ko: "사마천은 흉노에 항복한 장수 이릉을 변호하다가 한 무제의 노여움을 사 궁형을 받았다. 이 문장은 훗날 사형을 앞둔 친구 임안에게 보낸 답장에 있다. 그는 죽음 대신 치욕을 견딘 까닭을, 아버지가 남긴 역사서를 끝내기 위해서였다고 털어놓는다. 그렇게 끝낸 책이 『사기』다. 무거운 죽음이란 무엇인지, 그 책이 대답하고 있는 셈이다.",
     en: "Sima Qian defended the general Li Ling, who had surrendered to the Xiongnu, and Emperor Wu punished him with castration. These words come from a letter he later wrote to his friend Ren An, who was awaiting execution. He explains why he chose disgrace over death: to finish the history his father had left him. That history is the *Records of the Grand Historian* — his own answer to what makes a death weigh as much as a mountain.",
+  },
+  72: {
+    ko: "헨리는 어려서 뼈 결핵을 앓아 한쪽 다리를 잘라 냈고, 남은 다리마저 잃을 뻔했다. 에든버러의 병원에서 외과의 리스터에게 치료받으며 오래 누워 지내던 시절에 이 시를 썼다. 「인빅터스」, 곧 「정복되지 않는 자」라는 제목은 나중에 붙었다. 그의 친구 스티븐슨은 『보물섬』의 외다리 선장 실버를 헨리에게서 떠올렸다고 했다.",
+    en: "As a boy Henley had tuberculosis of the bone and lost one leg below the knee, and nearly lost the other. He wrote this poem during a long stay in an Edinburgh hospital, under the care of the surgeon Joseph Lister. The title \"Invictus\" — \"unconquered\" — was added later. His friend Robert Louis Stevenson said Henley was the inspiration for Long John Silver in *Treasure Island*.",
+  },
+  73: {
+    ko: "『실낙원』 1권, 하늘에서 쫓겨나 지옥 불바다에 떨어진 사탄이 정신을 차리고 처음 하는 말 가운데 하나다. 조금 뒤에는 「하늘에서 섬기느니 지옥에서 다스리는 게 낫다」가 나온다. 그러니 이 말은 사탄의 오기이기도 하다. 밀턴은 앞을 보지 못하게 된 뒤 이 긴 서사시를 입으로 불러 받아 적게 했다.",
+    en: "*Paradise Lost*, Book 1: Satan, cast out of Heaven into a lake of fire, comes to his senses, and this is among the first things he says. A little later comes \"Better to reign in Hell, than serve in Heav'n.\" So the line is also Satan's defiance. Milton, by then blind, composed this long epic by dictating it.",
+  },
+  74: {
+    ko: "『자에는 자로』에서, 젊은 클라우디오는 엄한 법에 걸려 사형 선고를 받는다. 수녀가 되려던 누이 이사벨라는 자기가 나서 봐야 소용없을 거라며 망설인다. 그때 클라우디오의 친구 루치오가 그녀를 떠미는 말이 이것이다. 이사벨라는 결국 법을 쥔 앤젤로에게 찾아가고, 이야기는 거기서부터 뒤틀린다.",
+    en: "In *Measure for Measure* young Claudio is condemned to death under a harsh law. His sister Isabella, about to become a nun, hesitates — what could her pleading do? These are the words with which Claudio's friend Lucio pushes her on. She goes to Angelo, the man who holds the law, and from there the story takes its twist.",
+  },
+  75: {
+    ko: "『윈더미어 부인의 부채』 3막, 밤늦게 달링턴 경의 방에 신사들이 모여 잡담을 나눈다. 사랑에 빠졌다는 달링턴 경이 이 말을 하자, 친구는 「오늘 밤 꽤 낭만적이군」 하고 받아친다. 재치 있는 대사로 가득한 희극 속에서 문득 진심이 새어 나온 한 줄이다. 와일드의 말장난 사이에는 이런 문장이 숨어 있다.",
+    en: "*Lady Windermere's Fan*, Act 3: late at night, gentlemen chatting in Lord Darlington's rooms. Darlington, who is in love, says this, and a friend comes back with \"You are very romantic to-night, Darlington.\" In a comedy full of quips it is a line where sincerity slips through. Lines like this are hidden among Wilde's wordplay.",
+  },
+  76: {
+    ko: "밀은 『자유론』을 아내 해리엇 테일러와 함께 다듬었고, 그녀가 세상을 떠난 이듬해인 1859년에 펴내며 그녀에게 바쳤다. 1장은 사회가 개인에게 간섭해도 되는 선을 긋는 장이다. 이 문장도 끝까지 읽어야 한다. 「다른 사람의 자유를 빼앗거나 그것을 얻으려는 노력을 막지 않는 한에서.」",
+    en: "Mill worked on *On Liberty* with his wife Harriet Taylor; she died in 1858, and he published it the next year with a dedication to her. Chapter 1 draws the line beyond which society may not interfere with the individual. This sentence, too, must be read to the end: \"so long as we do not attempt to deprive others of theirs, or impede their efforts to obtain it.\"",
+  },
+  77: {
+    ko: "존슨은 어머니의 장례비를 마련하려고 『라셀라스』를 일주일 저녁 만에 써냈다고 한다. 13장에서 왕자 라셀라스는 「행복의 골짜기」를 빠져나가려 산에 굴을 파려 한다. 큰일 앞에서 망설이는 그에게 스승 임락이 하는 말이다. 「하루 세 시간씩 힘차게 걸으면, 7년이면 지구 한 바퀴를 도는 거리를 걷게 된다.」",
+    en: "Johnson is said to have written *Rasselas* in the evenings of a single week to pay for his mother's funeral. In chapter 13 Prince Rasselas wants to tunnel through the mountain to escape the Happy Valley. When he hesitates before so great a task, his teacher Imlac says this — and adds: \"He that shall walk with vigour three hours a day will pass in seven years a space equal to the circumference of the globe.\"",
+  },
+  78: {
+    ko: "「안드레아 델 사르토」는 르네상스 화가의 독백이다. 사람들은 그를 「흠 없는 화가」라 불렀지만, 그는 자기 그림에 영혼이 모자라다는 걸 안다. 해 질 녘, 아내 앞에서 라파엘로와 미켈란젤로를 떠올리며 하는 말이 이것이다. 손에 잡히는 데서 멈춘 사람의 아쉬움이라서, 이 말이 더 아프게 들린다.",
+    en: "\"Andrea del Sarto\" is the monologue of a Renaissance painter. People called him \"the faultless painter,\" but he knows his work lacks soul. At dusk, before his wife, thinking of Raphael and Michelangelo, he says this. Coming from a man who stopped at what he could grasp, the line hurts all the more.",
+  },
+  79: {
+    ko: "두보는 스물네 살 무렵 과거에 떨어지고 산동 지방을 떠돌다 태산을 바라보며 이 시를 썼다. 「망악」은 「큰 산을 바라보다」라는 뜻이다. 이 구절은 시의 마지막 두 줄이다. 두보는 평생 높은 자리에 오르지 못하고 떠돌았지만, 훗날 「시성」이라 불리며 시의 정상에 올랐다.",
+    en: "Around the age of twenty-four, after failing the imperial examination, Du Fu was wandering in Shandong when he wrote this poem looking up at Mount Tai. \"Wang Yue\" means \"Gazing at the Great Mountain.\" These are its last two lines. Du Fu never rose to high office and spent his life on the road, yet later generations called him the Sage of Poetry — he reached the summit after all.",
+  },
+  80: {
+    ko: "이 말은 이렇게 이어진다. 「그 좋은 점을 골라 따르고, 좋지 않은 점은 보고 내 것을 고친다.」 그러니 스승은 훌륭한 사람만이 아니다. 나보다 못해 보이는 사람에게서도 배울 것이 있다는 뜻이다. 『논어』에는 이처럼 앞부분만 유명하고 뒷부분은 잘 알려지지 않은 구절이 많다. 뒷부분까지 읽을 때 비로소 온전해진다.",
+    en: "The saying goes on: \"I will select their good qualities and follow them, their bad qualities and avoid them.\" So a teacher is not only someone admirable; there is something to learn even from those who seem lesser than you. The *Analects* is full of lines whose first half is famous and second half forgotten. They only become whole when you read on.",
+  },
+  81: {
+    ko: "윌리엄 제임스는 미국 심리학의 아버지로 불린다. 이 책은 교사들에게 한 강연을 묶은 것이고, 8장은 습관을 다룬다. 이 문장은 이렇게 이어진다. 「그러면 어느 맑은 아침, 자신이 그 세대에서 손꼽히는 실력자가 되어 있음을 알게 될 것이다.」 매일의 작은 습관이 쌓여 사람이 된다는 이야기다.",
+    en: "William James is often called the father of American psychology. This book gathers talks he gave to teachers, and chapter 8 is about habit. The sentence goes on: \"He can with perfect certainty count on waking up some fine morning, to find himself one of the competent ones of his generation.\" A person, in other words, is built from small daily habits.",
+  },
+  82: {
+    ko: "1776년 겨울, 워싱턴의 군대는 패배를 거듭하며 뉴저지를 가로질러 물러나고 있었다. 그 행렬 속에 있던 페인은 「지금은 사람의 영혼을 시험하는 때다」로 시작하는 이 글을 썼다. 워싱턴은 델라웨어강을 건너 트렌턴을 기습하기 전, 병사들에게 이 글을 읽어 주게 했다고 전한다.",
+    en: "In the winter of 1776 Washington's army was retreating across New Jersey after defeat upon defeat. Paine, marching with it, wrote this pamphlet, which begins \"These are the times that try men's souls.\" Washington is said to have had it read to his soldiers before they crossed the Delaware to surprise Trenton.",
   },
   117: {
     ko: "프로스트는 영국에 머물던 시절, 친구인 시인 에드워드 토머스와 자주 숲길을 걸었다. 토머스는 어느 길을 고르든 늘 다른 길을 아쉬워했고, 프로스트는 그 친구를 슬쩍 놀리려고 이 시를 썼다고 했다. 시를 처음부터 읽어 보면 두 길이 「사실 거의 같았다」는 구절이 나온다. 마지막 줄이 조금 다르게 들릴 것이다.",
