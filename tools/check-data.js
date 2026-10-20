@@ -184,7 +184,9 @@ if (ctx) {
       if (c.ko !== c.ko.normalize("NFC") || c.en !== c.en.normalize("NFC")) ctxProblems.push(`${id}: NFC 아님`);
     }
   }
-  report.check(`문맥 해설 — id·두 언어·길이(한 ${ruleValues.MAX_CONTEXT_KO} / 영 ${ruleValues.MAX_CONTEXT_EN})`, ctxProblems.length === 0,
+  // 141편을 다 채운 뒤로는 모든 명언에 해설이 있어야 한다 — 새 명언은 해설과 함께 싣는다.
+  for (const id of ids) if (!ctx[id]) ctxProblems.push(`${id}: 해설 없음`);
+  report.check(`문맥 해설 — 모든 명언·id·두 언어·길이(한 ${ruleValues.MAX_CONTEXT_KO} / 영 ${ruleValues.MAX_CONTEXT_EN})`, ctxProblems.length === 0,
     ctxProblems.length ? ctxProblems.join(" | ") : `${Object.keys(ctx).length}/${quotes.length}편`);
 }
 
