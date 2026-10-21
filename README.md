@@ -36,7 +36,7 @@ motimoti 는 잠깐 힘을 얻고 사라지는 동기부여가 아니라, **오�
 - `quotes-vi.js` — 베트남어(베타). 명언 id 별로 붙고, 베트남어가 있는 명언만 VN 에서 나온다
 - `style.css` / `tokens.css` — 확정 디자인(시안 E). 색과 간격은 전부 `tokens.css` 의 토큰이다(보관 중인 수집기도 이 파일을 읽는다)
 - `.design/` — 확정안 5화면과 시안 A~G
-- [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) — 명언 기준 · [PLANNING.md](PLANNING.md) — 기획과 결정 기록
+- [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) — 명언 기준 · [PLANNING.md](PLANNING.md) — 기획과 결정 기록 · [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) — 출시 점검표
 
 ## 명언 — 141편, 기준은 까다롭게
 
