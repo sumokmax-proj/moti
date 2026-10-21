@@ -239,7 +239,13 @@ function buildGoalSheet(goal) {
   const list = add(not, "ul");
   goal.notDoing.forEach((item) => add(list, "li", "", item));
   add(not, "p", "", goal.why);
-  add(el, "p", "goal-where", "고치는 곳: goal.js 한 줄 · PLANNING.md 1장도 함께");
+  if (goal.firstGoal) {
+    const first = add(el, "div", "goal-first");
+    add(first, "h3", "", "첫 목표");
+    add(first, "p", "goal-first-text", goal.firstGoal);
+    if (goal.firstGoalNote) add(first, "p", "", goal.firstGoalNote);
+  }
+  add(el, "p", "goal-where", "고치는 곳: goal.js · PLANNING.md 1장도 함께");
   document.body.append(el);
   return el;
 }

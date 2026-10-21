@@ -825,11 +825,13 @@ async function suiteGoal(browser) {
     focus: document.activeElement.id,
     sentence: document.getElementById("goal-sentence").textContent,
     items: [...goalEl.querySelectorAll("li")].map((li) => li.textContent),
+    first: goalEl.querySelector(".goal-first-text")?.textContent,
     goal: GOAL,
   }));
   report.check("STG 배지를 누르면 목표 종이가 올라오고 초점이 종이로", r.open && r.focus === "goal-sheet");
   report.check("목표 문장과 「하지 않는 것」은 goal.js 그대로",
     r.sentence === r.goal.sentence && r.items.join("|") === r.goal.notDoing.join("|"), r.sentence);
+  report.check("첫 목표가 따로 보임 — goal.js 그대로", r.first === r.goal.firstGoal, r.first);
   await p.keyboard.press("Escape");
   await p.waitForTimeout(400);
   const closed = await p.evaluate(() => ({ paper: paperEl, hidden: goalEl.hidden, veil: document.getElementById("note-veil").hidden, focus: document.activeElement.className }));

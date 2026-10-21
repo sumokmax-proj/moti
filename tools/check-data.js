@@ -201,6 +201,7 @@ if (goal) {
   const notLine = planning.split("\n").find((l) => l.includes("**하지 않는 것**")) || "";
   const goalProblems = [];
   if (!goal.sentence || !planning.includes(goal.sentence.normalize("NFC"))) goalProblems.push("목표 문장이 PLANNING.md 에 그대로 없음");
+  if (goal.firstGoal && !planning.includes(goal.firstGoal.normalize("NFC"))) goalProblems.push("첫 목표가 PLANNING.md 에 그대로 없음");
   for (const item of goal.notDoing || []) if (!notLine.includes(item)) goalProblems.push(`「${item}」이 PLANNING.md 의 「하지 않는 것」 줄에 없음`);
   report.check("앱의 목표 — goal.js 와 PLANNING.md 가 같음", goalProblems.length === 0,
     goalProblems.length ? goalProblems.join(" | ") : goal.sentence);
