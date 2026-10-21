@@ -20,6 +20,7 @@
  *   즐겨찾기  고친 명언은 지금 문장으로, 삭제된 명언은 저장해 둔 문장으로
  *   출처 쪽지 작가 이름으로 열기 · Esc·바깥으로 닫기 · 화살표 막기 · 넘기면 닫힘 · 모든 명언 × 세 언어의
  *             내용·링크·인용 확인 · 연도 「~년경」 · 원문 · 기울임 · 320x568 에서 화면 안
+ *   앱의 목표 본 앱에는 배지·종이 없음 · 스테이징에서 STG 배지로 열기 · goal.js 문장 · Esc · 320x568
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const fs = require("fs");
@@ -44,7 +45,8 @@ const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/cs
 
 function startServer() {
   const server = http.createServer((req, res) => {
-    const pathname = decodeURIComponent(new URL(req.url, "http://x").pathname);
+    // /staging/ 도 같은 폴더를 내준다 — 앱은 주소로 스테이징인지 안다(STG 배지·목표 종이).
+    const pathname = decodeURIComponent(new URL(req.url, "http://x").pathname).replace(/^\/staging\//, "/");
     const file = path.join(ROOT, pathname.endsWith("/") ? `${pathname}index.html` : pathname);
     if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
       res.writeHead(404).end();
@@ -87,11 +89,11 @@ async function tapNext(p) {
   await p.click("#next-btn");
   await p.waitForFunction((b) => !turning && !isRiffling() && currentQuote.id !== b, before, { timeout: 5000 });
 }
-async function freshPage(browser, opts = {}) {
+async function freshPage(browser, opts = {}, sub = "") {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, ...opts });
   const page = await ctx.newPage();
   page.on("pageerror", (e) => pageErrors.push(e.message));
-  await page.goto(appUrl, { waitUntil: "networkidle" });
+  await page.goto(appUrl + sub, { waitUntil: "networkidle" });
   return page;
 }
 
@@ -803,6 +805,53 @@ async function suiteColophon(browser) {
   await p.context().close();
 }
 
+async function suiteGoal(browser) {
+  const m = await freshPage(browser);
+  const main = await m.evaluate(() => ({
+    badge: document.querySelectorAll(".stg-badge").length,
+    sheet: !!document.getElementById("goal-sheet"),
+    key: FAVORITES_KEY,
+  }));
+  report.check("본 앱 — STG 배지도 목표 종이도 없음", main.badge === 0 && !main.sheet && main.key === "motimoti-favorites");
+  await m.context().close();
+
+  const p = await freshPage(browser, {}, "staging/");
+  const badge = p.locator(".stg-badge");
+  report.check("스테이징 — 로고 옆 STG 배지", (await badge.count()) === 1 && (await badge.isVisible()) && (await badge.textContent()) === "STG");
+  await badge.click();
+  await p.waitForTimeout(400);
+  const r = await p.evaluate(() => ({
+    open: paperEl === goalEl && !goalEl.hidden,
+    focus: document.activeElement.id,
+    sentence: document.getElementById("goal-sentence").textContent,
+    items: [...goalEl.querySelectorAll("li")].map((li) => li.textContent),
+    goal: GOAL,
+  }));
+  report.check("STG 배지를 누르면 목표 종이가 올라오고 초점이 종이로", r.open && r.focus === "goal-sheet");
+  report.check("목표 문장과 「하지 않는 것」은 goal.js 그대로",
+    r.sentence === r.goal.sentence && r.items.join("|") === r.goal.notDoing.join("|"), r.sentence);
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(400);
+  const closed = await p.evaluate(() => ({ paper: paperEl, hidden: goalEl.hidden, veil: document.getElementById("note-veil").hidden, focus: document.activeElement.className }));
+  report.check("Esc 로 닫히고 초점이 배지로", !closed.paper && closed.hidden && closed.veil && closed.focus === "stg-badge");
+  await p.context().close();
+
+  const q = await freshPage(browser, { viewport: { width: 320, height: 568 } }, "staging/");
+  const fit = await q.evaluate(() => {
+    openGoal();
+    goalEl.style.transition = "none";
+    const rect = goalEl.getBoundingClientRect();
+    const header = document.querySelector(".app-header");
+    return {
+      inside: goalEl.scrollWidth <= goalEl.clientWidth + 1 && rect.top >= 0 && rect.bottom <= innerHeight + 1,
+      header: header.scrollWidth <= header.clientWidth + 1,
+      wide: document.documentElement.scrollWidth - innerWidth,
+    };
+  });
+  report.check("320x568 — 목표 종이가 화면 안, 머리줄·옆 넘침 없음", fit.inside && fit.header && fit.wide <= 0);
+  await q.context().close();
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { server, url } = await startServer();
@@ -811,7 +860,7 @@ async function suiteColophon(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal]]) {
       try {
         await suite(browser);
       } catch (err) {

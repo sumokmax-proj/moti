@@ -20,7 +20,9 @@
  *
  * 기준값은 tools/rules.js 에 있다. */
 
-const { loadQuotes, loadVietnamese, loadContext, readRules, createReport } = require("./lib");
+const fs = require("fs");
+const path = require("path");
+const { ROOT, loadQuotes, loadVietnamese, loadContext, loadGoal, readRules, createReport } = require("./lib");
 const ruleValues = require("./rules");
 
 const { quotes, source } = loadQuotes();
@@ -188,6 +190,20 @@ if (ctx) {
   for (const id of ids) if (!ctx[id]) ctxProblems.push(`${id}: 해설 없음`);
   report.check(`문맥 해설 — 모든 명언·id·두 언어·길이(한 ${ruleValues.MAX_CONTEXT_KO} / 영 ${ruleValues.MAX_CONTEXT_EN})`, ctxProblems.length === 0,
     ctxProblems.length ? ctxProblems.join(" | ") : `${Object.keys(ctx).length}/${quotes.length}편`);
+}
+
+/* ── 앱의 목표 (goal.js ↔ PLANNING.md) ─────────────
+   목표는 goal.js 에서 고치고 PLANNING.md 1장에도 같은 문장을 둔다. 한쪽만
+   고치면 스테이징의 STG 종이와 기획서가 서로 다른 목표를 말하게 된다. */
+const goal = loadGoal();
+if (goal) {
+  const planning = fs.readFileSync(path.join(ROOT, "PLANNING.md"), "utf8").normalize("NFC");
+  const notLine = planning.split("\n").find((l) => l.includes("**하지 않는 것**")) || "";
+  const goalProblems = [];
+  if (!goal.sentence || !planning.includes(goal.sentence.normalize("NFC"))) goalProblems.push("목표 문장이 PLANNING.md 에 그대로 없음");
+  for (const item of goal.notDoing || []) if (!notLine.includes(item)) goalProblems.push(`「${item}」이 PLANNING.md 의 「하지 않는 것」 줄에 없음`);
+  report.check("앱의 목표 — goal.js 와 PLANNING.md 가 같음", goalProblems.length === 0,
+    goalProblems.length ? goalProblems.join(" | ") : goal.sentence);
 }
 
 /* ── 참고: 출처 종류별 편수 — 책·시 같은 저작은 kind 가 없다 ── */

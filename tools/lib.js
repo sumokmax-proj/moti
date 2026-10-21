@@ -9,6 +9,7 @@ const ROOT = path.join(__dirname, "..");
 const QUOTES_FILE = process.env.MOTI_QUOTES_FILE || path.join(ROOT, "quotes.js");
 const VI_FILE = process.env.MOTI_VI_FILE || path.join(ROOT, "quotes-vi.js");
 const CONTEXT_FILE = path.join(ROOT, "quotes-context.js");
+const GOAL_FILE = path.join(ROOT, "goal.js");
 
 /* quotes.js 는 브라우저용 `const QUOTES = [...]` 다. 모듈이 아니므로
    브라우저와 같은 방식으로 한 번 실행해서 배열을 꺼낸다. */
@@ -48,6 +49,14 @@ function loadContext(file = CONTEXT_FILE) {
   return mod.exports;
 }
 
+/* goal.js(앱의 목표, 스테이징의 STG 배지)도 같은 방식으로 읽는다. 파일이 없으면 null. */
+function loadGoal(file = GOAL_FILE) {
+  if (!fs.existsSync(file)) return null;
+  const mod = { exports: null };
+  new Function("module", `${fs.readFileSync(file, "utf8")}\n;module.exports = GOAL;`)(mod);
+  return mod.exports;
+}
+
 /* 기계 규칙은 tools/rules.js 하나에 있다. */
 function readRules() {
   const r = require("./rules");
@@ -77,4 +86,4 @@ function createReport(title) {
   };
 }
 
-module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, loadContext, readRules, createReport };
+module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, loadContext, loadGoal, readRules, createReport };

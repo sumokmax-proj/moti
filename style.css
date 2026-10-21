@@ -130,9 +130,12 @@ body {
   margin: 0;
 }
 
-/* 스테이징 표시 — …/staging/ 에서만 로고 옆에 작게. 본 앱에는 보이지 않는다. */
-.staging .logo::after {
-  content: "STG";
+/* 스테이징 표시 — …/staging/ 에서만 로고 옆에 작게. 본 앱에는 보이지 않는다.
+   누르면 앱의 목표(개발용)가 올라온다. 버튼은 app.js 가 스테이징에서만 만든다. */
+.stg-badge {
+  font: inherit;
+  background: none;
+  cursor: pointer;
   margin-left: 8px;
   padding: 1px 5px;
   border: 1px solid var(--accent-text);
@@ -141,6 +144,77 @@ body {
   letter-spacing: 0.12em;
   color: var(--accent-text);
   vertical-align: 2px;
+  position: relative;
+}
+
+/* 글자가 작아 손가락이 닿을 자리를 넓힌다. */
+.stg-badge::before {
+  content: "";
+  position: absolute;
+  inset: -12px -8px;
+}
+
+.stg-badge:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+/* 앱의 목표 — 판권면과 같은 종이. */
+.goal-label {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+.goal-sentence {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.65;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+
+.goal-not {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+}
+
+.goal-not h3 {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.goal-not ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-soft);
+}
+
+.goal-not p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  word-break: keep-all;
+}
+
+.goal-where {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--ink-soft);
 }
 
 .view {

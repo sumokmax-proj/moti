@@ -193,6 +193,57 @@ const colophonEl = document.getElementById("colophon");
 const aboutBtn = document.getElementById("about-btn");
 const langBtns = Array.from(document.querySelectorAll(".lang-btn"));
 
+/* ── 앱의 목표 (스테이징 전용, 개발용) ─────────────────
+   로고 옆 STG 배지를 누르면 goal.js 의 목표 문장과 「하지 않는 것」이 판권면과
+   같은 종이로 올라온다. 본 앱에서는 배지도 종이도 만들지 않는다.
+   개발할 때 보는 것이라 한국어로만 쓴다. */
+const goalBtn = IS_STAGING ? buildStagingBadge() : null;
+const goalEl = goalBtn && typeof GOAL !== "undefined" ? buildGoalSheet(GOAL) : null;
+
+function buildStagingBadge() {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "stg-badge";
+  btn.textContent = "STG";
+  btn.setAttribute("aria-label", "스테이징 — 앱의 목표 보기");
+  btn.setAttribute("aria-haspopup", "dialog");
+  btn.setAttribute("aria-expanded", "false");
+  document.querySelector(".logo").append(btn);
+  return btn;
+}
+
+function buildGoalSheet(goal) {
+  const el = document.createElement("section");
+  el.id = "goal-sheet";
+  el.className = "source-note colophon goal-sheet";
+  el.lang = "ko";
+  el.tabIndex = -1;
+  el.hidden = true;
+  el.setAttribute("role", "dialog");
+  el.setAttribute("aria-modal", "true");
+  el.setAttribute("aria-labelledby", "goal-sentence");
+  const add = (parent, tag, cls, text) => {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text) node.textContent = text;
+    parent.append(node);
+    return node;
+  };
+  add(el, "div", "note-grip").setAttribute("aria-hidden", "true");
+  const head = add(el, "div", "colophon-head");
+  add(head, "div", "rule").setAttribute("aria-hidden", "true");
+  add(head, "p", "goal-label", "앱의 목표 · 개발용");
+  add(head, "p", "goal-sentence", goal.sentence).id = "goal-sentence";
+  const not = add(el, "div", "goal-not");
+  add(not, "h3", "", "하지 않는 것");
+  const list = add(not, "ul");
+  goal.notDoing.forEach((item) => add(list, "li", "", item));
+  add(not, "p", "", goal.why);
+  add(el, "p", "goal-where", "고치는 곳: goal.js 한 줄 · PLANNING.md 1장도 함께");
+  document.body.append(el);
+  return el;
+}
+
 let currentQuote = null;
 let toastTimer = null;
 let lang = resolveInitialLang();
@@ -1104,7 +1155,7 @@ function closeNote(instant = false) {
 quoteAuthorEl.addEventListener("click", () => (noteOpen ? closeNote() : openNote()));
 noteVeilEl.addEventListener("click", () => closePaper());
 
-[noteEl, colophonEl].forEach((el) => {
+[noteEl, colophonEl, goalEl].filter(Boolean).forEach((el) => {
   el.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       e.preventDefault();
@@ -1243,6 +1294,14 @@ function openColophon() {
 }
 
 aboutBtn.addEventListener("click", openColophon);
+
+function openGoal() {
+  if (paperEl || !goalEl) return;
+  stopRiffle();
+  openPaper(goalEl, goalBtn);
+}
+
+if (goalBtn) goalBtn.addEventListener("click", openGoal);
 
 function showToast(message, ms = 2000) {
   toastEl.textContent = message;
