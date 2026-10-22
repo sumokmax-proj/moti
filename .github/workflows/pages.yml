@@ -1,7 +1,10 @@
 # GitHub Pages — 본 앱과 스테이징을 한 사이트에 함께 올린다.
 #
-#   main    → https://sumokmax-proj.github.io/moti/
-#   staging → https://sumokmax-proj.github.io/moti/staging/   (실험 기능을 미리 써 보는 곳)
+#   main    → https://motimoti.page/
+#   staging → https://motimoti.page/staging/   (실험 기능을 미리 써 보는 곳)
+#
+# 도메인은 저장소 Settings → Pages → Custom domain 에 넣는다. Actions 로 배포하므로
+# CNAME 파일은 필요 없다. 옛 주소 sumokmax-proj.github.io/moti/ 는 새 주소로 넘어간다.
 #
 # 저장소 Settings → Pages → Build and deployment → Source 가 「GitHub Actions」여야 한다.
 # 스테이징 쪽 index.html 에는 검색에 걸리지 않게 noindex 를 넣는다.
