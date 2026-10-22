@@ -117,10 +117,11 @@ POC 를 넘어 **출시할 수 있는 베타**다. 명언 141편 원전 대조, 
 
 ### B1. 도메인 연결 (A1 다음)
 - [x] 저장소 Pages 에 도메인 → Cloudflare DNS(A 4·AAAA 4·`www` CNAME, 모두 DNS only) → DNS check 성공, 인증서 발급 (2026-10-22). 순서는 GitHub 문서대로 **도메인을 먼저 넣고 DNS 를 나중에** — 거꾸로 하면 남이 끼어들 틈이 생긴다
-- [ ] Enforce HTTPS 체크
+- [x] Enforce HTTPS 체크 (2026-10-22)
 - [x] 본 앱 motimoti.page 열림 확인 (2026-10-22)
-- [ ] 스테이징 motimoti.page/staging/ · www · 옛 주소에서 넘어가는지 확인
-- [ ] GitHub 프로필 Settings → Pages 에서 도메인 소유 확인(TXT) — 권장
+- [x] 스테이징 motimoti.page/staging/ 열림 확인 (2026-10-22)
+- [ ] www.motimoti.page · 옛 주소(sumokmax-proj.github.io/moti/)가 새 주소로 넘어가는지 확인
+- [x] GitHub 프로필 Settings → Pages 에서 도메인 소유 확인 — **Verified** (2026-10-22). Cloudflare 의 TXT 레코드 `_github-pages-challenge-sumokmax-proj` 는 **지우지 않는다** — GitHub 가 가끔 다시 확인한다
 - [x] README·PLANNING·배포 설정의 주소 바꾸기 (2026-10-22)
 - 메일: `@motimoti.page` 로 메일을 받을 곳은 아직 없다(Cloudflare 가 MX·SPF 를 권하는 알림을 띄운다). 의견 창구(A5)를 정할 때 함께 — 예: Cloudflare Email Routing(무료)으로 받은 메일을 Gmail 로 넘기기
 
