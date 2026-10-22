@@ -120,7 +120,7 @@ Claude 와 대화하며 모은다. 후보를 원문에서 찾아 대조하고(`n
 흐름: `staging` 에서 만들어 써 보고, 마음에 들면 `main` 에 합친다. 버리면 `staging` 을 `main` 으로 되돌린다.
 저장소 Settings → Pages → Source 가 「GitHub Actions」여야 이 워크플로가 배포한다.
 
-도메인 `motimoti.page`(2026-10-22): Cloudflare 에서 샀다(연 $10.20, 자동 갱신). DNS 도 Cloudflare 에 있고 — GitHub Pages 의 A 4개·AAAA 4개, `www` 는 CNAME `sumokmax-proj.github.io` — 모두 회색 구름(DNS only)이어야 GitHub 가 HTTPS 인증서를 낸다. 도메인은 저장소 Settings → Pages → Custom domain 에 넣는다(Actions 배포라 `CNAME` 파일은 필요 없다). 옛 주소 `sumokmax-proj.github.io/moti/` 는 새 주소로 넘어간다.
+도메인 `motimoti.page`(2026-10-22): Cloudflare 에서 샀다(연 $10.20, 자동 갱신). DNS 도 Cloudflare 에 있고 — GitHub Pages 의 A 4개·AAAA 4개, `www` 는 CNAME `sumokmax-proj.github.io` — 모두 회색 구름(DNS only)이어야 GitHub 가 HTTPS 인증서를 낸다. 도메인은 저장소 Settings → Pages → Custom domain 에 넣는다(Actions 배포라 `CNAME` 파일은 필요 없다). 옛 주소 `sumokmax-proj.github.io/moti/` 는 새 주소로 넘어간다. 도메인은 GitHub 계정에 소유 확인(Verified)해 두었다 — 남이 이 도메인을 자기 Pages 에 붙이지 못하게. 그 증거인 TXT 레코드 `_github-pages-challenge-sumokmax-proj` 는 지우지 않는다.
 
 ### css/js 를 고쳤으면 `?v=` 를 올린다
 
