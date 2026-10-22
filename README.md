@@ -7,7 +7,7 @@
 
 motimoti 는 잠깐 힘을 얻고 사라지는 동기부여가 아니라, **오래 곁에 둘 책으로 가는 입구**가 되려 한다. 명언 한 줄에서 시작해 그 문장이 나온 고전과 철학·인문학으로, 진짜 자기 계발로 나아가게 하는 것이 목표다. 그래서 연속 접속 기록·포인트·알림 같은 장치로 사람을 붙잡지 않는다 — 배움(學)과 다시 펼쳐 보는 익힘(習)이면 충분하다.
 
-- 앱: https://sumokmax-proj.github.io/moti/
+- 앱: https://motimoti.page/
 
 ## 앱 — 명언 책을 아무 데나 펼친다
 
@@ -77,6 +77,7 @@ motimoti 는 잠깐 힘을 얻고 사라지는 동기부여가 아니라, **오�
 | 2026-10-16 | 스테이징 — `staging` 브랜치를 …/moti/staging/ 에 함께 올린다(GitHub Actions). 실험 기능은 여기서 먼저 써 본다 |
 | | 수집기를 보관만 하기로 — 개발할 때 더는 맞추지 않는다. 기계 규칙은 `tools/rules.js` 로, 앱 시험은 작은 정적 서버로 옮김 |
 | 2026-10-20 | 문맥 해설 — 출처 쪽지에 「이 문장이 나온 자리」(141편, 원전과 대조). 즐겨찾기에서도 작가 이름을 누르면 쪽지가 열린다. 스테이징에서 처음 써 본 기능 — 기준 v1.13 |
+| 2026-10-22 | 도메인 **motimoti.page** — 「명언 책의 한 쪽」. 스테이징은 motimoti.page/staging/ |
 
 자세한 결정 이유는 [PLANNING.md](PLANNING.md), 기준의 변경 이력은 [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) 마지막 장에 있다.
 
@@ -113,11 +114,13 @@ Claude 와 대화하며 모은다. 후보를 원문에서 찾아 대조하고(`n
 
 | 브랜치 | 주소 | 용도 |
 |---|---|---|
-| `main` | https://sumokmax-proj.github.io/moti/ | 본 앱 |
-| `staging` | https://sumokmax-proj.github.io/moti/staging/ | 실험 기능을 아이폰에서 미리 써 보는 곳. 로고 옆에 STG, 검색 제외(noindex), 저장 키에 `stg-` 를 붙여 본 앱의 즐겨찾기와 섞이지 않는다 |
+| `main` | https://motimoti.page/ | 본 앱 |
+| `staging` | https://motimoti.page/staging/ | 실험 기능을 아이폰에서 미리 써 보는 곳. 로고 옆에 STG, 검색 제외(noindex), 저장 키에 `stg-` 를 붙여 본 앱의 즐겨찾기와 섞이지 않는다 |
 
 흐름: `staging` 에서 만들어 써 보고, 마음에 들면 `main` 에 합친다. 버리면 `staging` 을 `main` 으로 되돌린다.
 저장소 Settings → Pages → Source 가 「GitHub Actions」여야 이 워크플로가 배포한다.
+
+도메인 `motimoti.page`(2026-10-22): Cloudflare 에서 샀다(연 $10.20, 자동 갱신). DNS 도 Cloudflare 에 있고 — GitHub Pages 의 A 4개·AAAA 4개, `www` 는 CNAME `sumokmax-proj.github.io` — 모두 회색 구름(DNS only)이어야 GitHub 가 HTTPS 인증서를 낸다. 도메인은 저장소 Settings → Pages → Custom domain 에 넣는다(Actions 배포라 `CNAME` 파일은 필요 없다). 옛 주소 `sumokmax-proj.github.io/moti/` 는 새 주소로 넘어간다.
 
 ### css/js 를 고쳤으면 `?v=` 를 올린다
 
