@@ -21,6 +21,8 @@
  *   출처 쪽지 작가 이름으로 열기 · Esc·바깥으로 닫기 · 화살표 막기 · 넘기면 닫힘 · 모든 명언 × 세 언어의
  *             내용·링크·인용 확인 · 연도 「~년경」 · 원문 · 기울임 · 320x568 에서 화면 안
  *   앱의 목표 본 앱에는 배지·종이 없음 · 스테이징에서 STG 배지로 열기 · goal.js 문장 · Esc · 320x568
+ *   방문 집계 시험·스테이징에서는 Umami 를 부르지 않음 · 스테이징은 쪽지·원전·공유·5쪽을 미리보기에만
+ *             · 본 앱이었다면 붙일 스크립트의 속성 · 판권면 개인정보 한 줄
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const fs = require("fs");
@@ -824,7 +826,7 @@ async function suiteGoal(browser) {
     open: paperEl === goalEl && !goalEl.hidden,
     focus: document.activeElement.id,
     sentence: document.getElementById("goal-sentence").textContent,
-    items: [...goalEl.querySelectorAll("li")].map((li) => li.textContent),
+    items: [...goalEl.querySelectorAll(".goal-not li")].map((li) => li.textContent),
     first: goalEl.querySelector(".goal-first-text")?.textContent,
     goal: GOAL,
   }));
@@ -854,6 +856,79 @@ async function suiteGoal(browser) {
   await q.context().close();
 }
 
+async function suiteAnalytics(browser) {
+  // 시험 주소(127.0.0.1)에서는 본 앱이든 스테이징이든 Umami 로 아무것도 나가면 안 된다.
+  // (아래에서 일부러 붙여 보는 스크립트 요청은 막고, 여기서도 세지 않는다.)
+  const umamiCalls = [];
+  let probing = false;
+  const watch = (p) => p.on("request", (r) => { if (r.url().includes("umami") && !probing) umamiCalls.push(r.url()); });
+
+  const m = await freshPage(browser);
+  watch(m);
+  const main = await m.evaluate(() => {
+    openNoteFor(currentQuote, quoteAuthorEl);
+    closePaper(true);
+    return {
+      on: ANALYTICS_ON,
+      script: !!document.querySelector('script[src*="umami"]'),
+      log: trackLog.length,
+    };
+  });
+  report.check("시험 주소의 본 앱 — Umami 스크립트 없음, 아무것도 쌓지 않음", !main.on && !main.script && main.log === 0);
+
+  // 본 앱이었다면 붙였을 스크립트 — 실제 요청은 막고 속성만 본다.
+  await m.route(/umami/, (route) => route.abort());
+  probing = true;
+  const attrs = await m.evaluate(() => {
+    startAnalytics();
+    const s = document.querySelector('script[src*="umami"]');
+    return s && { src: s.src, id: s.dataset.websiteId, domains: s.dataset.domains, dnt: s.dataset.doNotTrack };
+  });
+  report.check("본 앱의 집계 스크립트 — 사이트 ID · motimoti.page 에서만 · 「추적 안 함」 존중",
+    attrs && attrs.src === "https://cloud.umami.is/script.js" && attrs.id === "24dd5e2b-477b-4e99-97ee-21c85adf0867" && attrs.domains === "motimoti.page" && attrs.dnt === "true");
+  const colophon = await m.evaluate(() => {
+    openFavoritesView();
+    openColophon();
+    const out = {};
+    for (const L of ["ko", "en", "vi"]) {
+      setLang(L);
+      out[L] = document.getElementById("colophon-text-3").textContent;
+    }
+    return out;
+  });
+  report.check("판권면에 개인정보 한 줄 — 세 언어",
+    colophon.ko.includes("쿠키") && colophon.en.includes("cookies") && colophon.vi.includes("cookie"));
+  await m.context().close();
+  probing = false;
+
+  const s = await freshPage(browser, {}, "staging/");
+  watch(s);
+  const stg = await s.evaluate(() => {
+    const before = trackLog.length;
+    for (let i = 0; i < 4; i++) {
+      currentQuote = turnPage(currentQuote.id);
+      renderQuote(currentQuote);
+    }
+    openNoteFor(currentQuote, quoteAuthorEl);
+    const link = document.getElementById("note-link");
+    link.addEventListener("click", (e) => e.preventDefault(), { once: true });
+    link.click();
+    closePaper(true);
+    shareCurrentQuote();
+    return { on: ANALYTICS_ON, before, names: trackLog.map((e) => e.name), id: currentQuote.id, ids: trackLog.map((e) => e.data && e.data.id) };
+  });
+  report.check("스테이징 — 보내지 않고 쌓기만: 5쪽 · 쪽지 열기 · 원전 링크 · 공유",
+    !stg.on && stg.before === 0 && stg.names.join(",") === "pages-5,note-open,source-click,share" && stg.ids.slice(1).every((id) => id === stg.id),
+    stg.names.join(", "));
+  await s.click(".stg-badge");
+  await s.waitForTimeout(400);
+  const preview = await s.evaluate(() => [...document.querySelectorAll("#goal-track-list li")].map((li) => li.textContent));
+  report.check("STG 종이의 집계 미리보기에 보임", preview[0] === `share · 명언 ${stg.id}` && preview.includes("pages-5"), preview.join(" / "));
+  await s.context().close();
+
+  report.check("시험 중 Umami 로 나간 요청 없음", umamiCalls.length === 0, umamiCalls.slice(0, 2).join(" | "));
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { server, url } = await startServer();
@@ -862,7 +937,7 @@ async function suiteGoal(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["방문 집계", suiteAnalytics]]) {
       try {
         await suite(browser);
       } catch (err) {

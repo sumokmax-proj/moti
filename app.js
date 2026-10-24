@@ -8,6 +8,49 @@ const LANG_KEY = `${KEY_PREFIX}motimoti-lang`;
 const RECENT_KEY = `${KEY_PREFIX}motimoti-recent`;
 const WEIGHT_KEY = `${KEY_PREFIX}motimoti-favorites-weight`;
 if (IS_STAGING) document.documentElement.classList.add("staging");
+
+/* ── 방문 집계 (Umami Cloud, 2026-10-24) ─────────────────
+   쿠키 없이, 누구인지 모르게 숫자만 센다 — 방문(Umami 가 저절로), 쪽지 열기,
+   원전 링크 누르기, 공유 누르기, 한 번에 읽은 쪽 수(5·20·50·100쪽에 닿을 때).
+   본 앱(motimoti.page)에서만 보낸다. 스테이징은 보내지 않고 STG 종이에 보여만
+   주며, 시험(127.0.0.1)에서는 아무것도 하지 않는다. 집계는 track() 하나로만
+   한다 — 도구를 바꿔도 여기만 고친다. 막혀도(광고 차단기 등) 앱은 그대로 돈다.
+   숫자는 보되, 늘리는 것을 목표로 삼지 않는다(PLANNING 1장). */
+const ANALYTICS_ID = "24dd5e2b-477b-4e99-97ee-21c85adf0867";
+const ANALYTICS_ON = location.hostname === "motimoti.page" && !IS_STAGING;
+const trackLog = []; // 스테이징: 보냈을 것들
+const PAGE_MARKS = [5, 20, 50, 100];
+let pagesThisVisit = 0;
+
+function startAnalytics() {
+  const s = document.createElement("script");
+  s.defer = true;
+  s.src = "https://cloud.umami.is/script.js";
+  s.dataset.websiteId = ANALYTICS_ID;
+  s.dataset.domains = "motimoti.page"; // 다른 주소에서는 Umami 스스로도 보내지 않는다
+  s.dataset.doNotTrack = "true";       // 「추적 안 함」을 켠 사람은 세지 않는다
+  document.head.append(s);
+}
+if (ANALYTICS_ON) startAnalytics();
+
+function track(name, data) {
+  if (ANALYTICS_ON) {
+    try {
+      if (window.umami) window.umami.track(name, data);
+    } catch {
+      // 집계가 실패해도 앱은 그대로
+    }
+  } else if (IS_STAGING) {
+    trackLog.push({ name, data });
+  }
+}
+
+// 새 쪽이 펼쳐질 때마다 센다(되돌아가기는 빼고). 정해 둔 쪽 수에 닿을 때만 보낸다.
+function countPage() {
+  pagesThisVisit += 1;
+  if (PAGE_MARKS.includes(pagesThisVisit)) track(`pages-${pagesThisVisit}`);
+}
+
 const LANGS = ["en", "ko", "vi"];
 // 베트남어는 베타다 — AI 번역, 원어민 검수 전. 화면에는 버튼의 β 하나만 둔다.
 // 안내문은 붙이지 않는다(사용자 결정, 2026-10-13).
@@ -41,6 +84,7 @@ const UI = {
       mottoSource: "*Analects* 1.1, tr. James Legge",
       text1: (n) => `This book holds ${n} quotes. Every one was checked against the text it comes from; a line with no source we could point to was left out.`,
       text2: "Tap an author's name to open the page the line comes from.",
+      text3: "Favorites and settings stay on this device. We count visits only: no cookies, nothing that tells us who you are.",
       person: (year, name) => `${name}, ${year}`,
       languageNames: { en: "English", lzh: "Classical Chinese", la: "Latin", de: "German", fr: "French", grc: "Ancient Greek", ko: "Korean", zh: "Chinese", nl: "Dutch", es: "Spanish", it: "Italian", da: "Danish" },
       rows: {
@@ -88,6 +132,7 @@ const UI = {
       mottoSource: "『논어』 학이편 1",
       text1: (n) => `이 책에는 명언 ${n}편이 실려 있습니다. 모든 명언은 그 문장이 나온 원문에서 확인했고, 출처를 댈 수 없는 문장은 싣지 않았습니다.`,
       text2: "작가 이름을 누르면 그 문장이 나온 곳이 펼쳐집니다.",
+      text3: "즐겨찾기와 설정은 이 기기에만 저장됩니다. 쿠키 없이, 누구인지 알 수 없는 방문 수만 셉니다.",
       person: (year, name) => `${year} ${name}`,
       languageNames: { en: "영어", lzh: "한문", la: "라틴어", de: "독일어", fr: "프랑스어", grc: "고대 그리스어", ko: "한국어", zh: "중국어", nl: "네덜란드어", es: "스페인어", it: "이탈리아어", da: "덴마크어" },
       rows: {
@@ -135,6 +180,7 @@ const UI = {
       mottoSource: "Luận Ngữ, Học Nhi 1",
       text1: (n) => `Cuốn sách này có ${n} câu. Mỗi câu đều đã được đối chiếu với văn bản gốc; câu nào không chỉ ra được nguồn thì không đưa vào.`,
       text2: "Chạm vào tên tác giả để mở nơi câu ấy xuất hiện.",
+      text3: "Mục yêu thích và cài đặt chỉ lưu trên thiết bị này. Chúng tôi chỉ đếm lượt truy cập: không cookie, không biết bạn là ai.",
       person: (year, name) => `${name} (${year})`,
       languageNames: { en: "tiếng Anh", lzh: "Hán văn", la: "tiếng Latinh", de: "tiếng Đức", fr: "tiếng Pháp", grc: "tiếng Hy Lạp cổ", ko: "tiếng Hàn", zh: "tiếng Trung", nl: "tiếng Hà Lan", es: "tiếng Tây Ban Nha", it: "tiếng Ý", da: "tiếng Đan Mạch" },
       rows: {
@@ -245,6 +291,10 @@ function buildGoalSheet(goal) {
     add(first, "p", "goal-first-text", goal.firstGoal);
     if (goal.firstGoalNote) add(first, "p", "", goal.firstGoalNote);
   }
+  // 집계 미리보기 — 스테이징은 보내지 않는다. 본 앱이었다면 보냈을 것을 여기 쌓는다.
+  const preview = add(el, "div", "goal-first goal-track");
+  add(preview, "h3", "", "집계 미리보기 · 스테이징은 보내지 않는다");
+  add(preview, "ul", "goal-track-list").id = "goal-track-list";
   add(el, "p", "goal-where", "고치는 곳: goal.js · PLANNING.md 1장도 함께");
   document.body.append(el);
   return el;
@@ -492,7 +542,10 @@ function weightedChoice(candidates) {
    뒤 200ms)에 넣으면, 빠르게 두 번 누를 때 둘 다 같은 목록을 보고 고르게 된다. */
 function turnPage(excludeId) {
   const quote = pickRandomQuote(excludeId);
-  if (quote) rememberShown(quote.id);
+  if (quote) {
+    rememberShown(quote.id);
+    countPage();
+  }
   wentBack = false; // 새 쪽으로 나아가면 다시 한 장 되돌아갈 수 있다
   return quote;
 }
@@ -1152,7 +1205,13 @@ function openNoteFor(quote, trigger) {
   noteQuote = quote;
   fillNote(quote);
   openPaper(noteEl, trigger);
+  track("note-open", { id: quote.id });
 }
+
+// 원전 링크 — 「한 줄에서 책으로」가 실제로 일어난 순간.
+document.getElementById("note-link").addEventListener("click", () => {
+  if (noteQuote) track("source-click", { id: noteQuote.id });
+});
 
 function closeNote(instant = false) {
   if (noteOpen) closePaper(instant);
@@ -1263,6 +1322,7 @@ function fillColophon() {
   setItalicText(document.getElementById("colophon-motto-src"), ui.mottoSource);
   document.getElementById("colophon-text-1").textContent = ui.text1(s.total);
   document.getElementById("colophon-text-2").textContent = ui.text2;
+  document.getElementById("colophon-text-3").textContent = ui.text3;
 
   const year = (q) => t().note.year(q.year, q.circa === true);
   const rows = [
@@ -1304,7 +1364,22 @@ aboutBtn.addEventListener("click", openColophon);
 function openGoal() {
   if (paperEl || !goalEl) return;
   stopRiffle();
+  fillTrackPreview();
   openPaper(goalEl, goalBtn);
+}
+
+function fillTrackPreview() {
+  const list = document.getElementById("goal-track-list");
+  list.replaceChildren();
+  const recent = trackLog.slice(-8).reverse();
+  const lines = recent.length
+    ? recent.map((e) => (e.data && e.data.id ? `${e.name} · 명언 ${e.data.id}` : e.name))
+    : ["아직 없다 — 쪽지를 열거나 원전 링크·공유를 누르면 여기에 쌓인다"];
+  lines.forEach((text) => {
+    const li = document.createElement("li");
+    li.textContent = text;
+    list.append(li);
+  });
 }
 
 if (goalBtn) goalBtn.addEventListener("click", openGoal);
@@ -1320,6 +1395,7 @@ function showToast(message, ms = 2000) {
 
 async function shareCurrentQuote() {
   const shareText = `"${localized(currentQuote.text)}" - ${localized(currentQuote.author)}`;
+  track("share", { id: currentQuote.id });
   if (navigator.share) {
     try {
       await navigator.share({ text: shareText });
