@@ -123,6 +123,7 @@
 
 - 순수 **HTML + CSS + JavaScript** (프레임워크·빌드 도구 없음). `?v=` 로 캐시를 무력화한다 — css·js·데이터를 고치면 `index.html` 에서 올린다
 - 브라우저 API: `localStorage`, `navigator.share`(없으면 클립보드)
+- 방문 집계: Umami Cloud(2026-10-25) — 쿠키 없음, app.js 의 `track()` 한 곳. 본 앱에서만 보낸다(출시 점검표 A2·B2)
 - 배포: GitHub Actions(`.github/workflows/pages.yml`)가 `main` 을 사이트 루트에, `staging` 을 `/staging/` 에 올린다(GitHub Pages). 주소는 **https://motimoti.page/** (2026-10-22 — 「명언 책의 한 쪽」, Cloudflare 에서 연 $10.20, 자동 갱신) 실험 기능은 staging 에서 먼저 써 보고, 확신 있는 작은 수정은 main 에 바로 넣는다
 - 점검: `npm run check`(데이터 — 출처·길이·저자 상한·해설 등), `npm run test:app`(Playwright 로 실제 브라우저에서 눌러 본다)
 - `collector/` 는 보관 중(9장)
