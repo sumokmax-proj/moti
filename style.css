@@ -827,6 +827,27 @@ button.favorite-item-author:focus-visible {
   color: var(--ink-soft);
 }
 
+/* 의견 보내기 — 원전 링크보다 한 단계 낮게. 쪽지의 주인공은 원전이다. */
+.note-feedback {
+  align-self: flex-start;
+  padding-block: 4px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline);
+  text-underline-offset: 4px;
+}
+
+.note-feedback:hover {
+  text-decoration-color: currentColor;
+}
+
+.note-feedback:focus-visible,
+.colophon-feedback a:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
 /* ── 판권면 ───────────────────────────────────────────
    즐겨찾기 화면 맨 아래 「이 책에 대하여」. 책의 맨 뒤 한 쪽처럼 모토와
    이 책에 실린 것, 고른 기준, 번역, 엮은이, 펴낸 날을 적는다. 숫자는
@@ -918,6 +939,13 @@ button.favorite-item-author:focus-visible {
   line-height: 1.85;
   word-break: keep-all;
   text-wrap: pretty;
+}
+
+.colophon-feedback a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  white-space: nowrap; /* 주소가 중간에서 끊기지 않게 통째로 넘긴다 */
 }
 
 /* 개인정보 한 줄 — 본문보다 한 단계 낮게, 책 맨 뒤의 작은 글씨처럼. */

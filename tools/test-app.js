@@ -23,6 +23,7 @@
  *   앱의 목표 본 앱에는 배지·종이 없음 · 스테이징에서 STG 배지로 열기 · goal.js 문장 · Esc · 320x568
  *   방문 집계 시험·스테이징에서는 Umami 를 부르지 않음 · 스테이징은 쪽지·원전·공유·5쪽을 미리보기에만
  *             · 본 앱이었다면 붙일 스크립트의 속성 · 판권면 개인정보 한 줄
+ *   의견 창구 쪽지의 메일 링크(번호·세 언어) · 판권면 한 줄 · HTML 에 주소 없음
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const fs = require("fs");
@@ -856,6 +857,32 @@ async function suiteGoal(browser) {
   await q.context().close();
 }
 
+async function suiteFeedback(browser) {
+  const p = await freshPage(browser);
+  const r = await p.evaluate(() => {
+    const out = {};
+    const q = QUOTES.find((x) => x.source && x.author);
+    for (const L of ["ko", "en", "vi"]) {
+      setLang(L);
+      openNoteFor(q, quoteAuthorEl);
+      const a = document.getElementById("note-feedback");
+      const u = new URL(a.href);
+      out[L] = { text: a.textContent, to: u.pathname, subject: u.searchParams.get("subject"), body: u.searchParams.get("body") };
+      closePaper(true);
+    }
+    openFavoritesView();
+    openColophon();
+    const link = document.querySelector("#colophon-feedback a");
+    return { id: q.id, author: q.author, out, colophon: link && link.getAttribute("href"), colophonText: document.getElementById("colophon-feedback").textContent };
+  });
+  const ok = ["ko", "en", "vi"].every((L) => r.out[L].to === "hello@motimoti.page" && r.out[L].text && r.out[L].subject.includes(String(r.id)) && !r.out[L].body.includes("*"));
+  report.check("쪽지의 의견 보내기 — hello@motimoti.page, 제목에 명언 번호, 세 언어", ok, r.out.ko.subject);
+  report.check("판권면에 의견 창구 한 줄과 메일 링크", r.colophon === "mailto:hello@motimoti.page" && r.colophonText.includes("hello@motimoti.page"));
+  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  report.check("메일 주소는 HTML 에 그대로 적지 않는다", !html.includes("hello@motimoti.page"));
+  await p.context().close();
+}
+
 async function suiteAnalytics(browser) {
   // 시험 주소(127.0.0.1)에서는 본 앱이든 스테이징이든 Umami 로 아무것도 나가면 안 된다.
   // (아래에서 일부러 붙여 보는 스크립트 요청은 막고, 여기서도 세지 않는다.)
@@ -937,7 +964,7 @@ async function suiteAnalytics(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["방문 집계", suiteAnalytics]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics]]) {
       try {
         await suite(browser);
       } catch (err) {

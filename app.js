@@ -84,6 +84,7 @@ const UI = {
       mottoSource: "*Analects* 1.1, tr. James Legge",
       text1: (n) => `This book holds ${n} quotes. Every one was checked against the text it comes from; a line with no source we could point to was left out.`,
       text2: "Tap an author's name to open the page the line comes from.",
+      feedback: ["Found a mistake, or want to say something? Write to ", "."],
       text3: "Favorites and settings stay on this device. We count visits only: no cookies, nothing that tells us who you are.",
       person: (year, name) => `${name}, ${year}`,
       languageNames: { en: "English", lzh: "Classical Chinese", la: "Latin", de: "German", fr: "French", grc: "Ancient Greek", ko: "Korean", zh: "Chinese", nl: "Dutch", es: "Spanish", it: "Italian", da: "Danish" },
@@ -106,6 +107,8 @@ const UI = {
       context: "Where this comes from",
       translator: (name) => `English translation by ${name}`,
       cited: "Checked against a source that cites the original and where it appears.",
+      feedback: "Write to us about this source",
+      feedbackTag: "Quote",
     },
     aria: {
       openFavorites: "Open favorites",
@@ -132,6 +135,7 @@ const UI = {
       mottoSource: "『논어』 학이편 1",
       text1: (n) => `이 책에는 명언 ${n}편이 실려 있습니다. 모든 명언은 그 문장이 나온 원문에서 확인했고, 출처를 댈 수 없는 문장은 싣지 않았습니다.`,
       text2: "작가 이름을 누르면 그 문장이 나온 곳이 펼쳐집니다.",
+      feedback: ["틀린 곳이나 하고 싶은 말이 있다면 ", "로 보내 주세요."],
       text3: "즐겨찾기와 설정은 이 기기에만 저장됩니다. 쿠키 없이, 누구인지 알 수 없는 방문 수만 셉니다.",
       person: (year, name) => `${year} ${name}`,
       languageNames: { en: "영어", lzh: "한문", la: "라틴어", de: "독일어", fr: "프랑스어", grc: "고대 그리스어", ko: "한국어", zh: "중국어", nl: "네덜란드어", es: "스페인어", it: "이탈리아어", da: "덴마크어" },
@@ -154,6 +158,8 @@ const UI = {
       context: "이 문장이 나온 자리",
       translator: (name) => `영역 ${name}`,
       cited: "원문 대신, 원문과 그 위치를 밝혀 인용한 자료로 확인한 문장입니다.",
+      feedback: "이 출처에 의견 보내기",
+      feedbackTag: "명언",
     },
     aria: {
       openFavorites: "즐겨찾기 목록 열기",
@@ -180,6 +186,7 @@ const UI = {
       mottoSource: "Luận Ngữ, Học Nhi 1",
       text1: (n) => `Cuốn sách này có ${n} câu. Mỗi câu đều đã được đối chiếu với văn bản gốc; câu nào không chỉ ra được nguồn thì không đưa vào.`,
       text2: "Chạm vào tên tác giả để mở nơi câu ấy xuất hiện.",
+      feedback: ["Thấy chỗ sai hoặc muốn nhắn gì? Hãy viết cho ", "."],
       text3: "Mục yêu thích và cài đặt chỉ lưu trên thiết bị này. Chúng tôi chỉ đếm lượt truy cập: không cookie, không biết bạn là ai.",
       person: (year, name) => `${name} (${year})`,
       languageNames: { en: "tiếng Anh", lzh: "Hán văn", la: "tiếng Latinh", de: "tiếng Đức", fr: "tiếng Pháp", grc: "tiếng Hy Lạp cổ", ko: "tiếng Hàn", zh: "tiếng Trung", nl: "tiếng Hà Lan", es: "tiếng Tây Ban Nha", it: "tiếng Ý", da: "tiếng Đan Mạch" },
@@ -202,6 +209,8 @@ const UI = {
       context: "Câu nói này đến từ đâu",
       translator: (name) => `Bản dịch tiếng Anh: ${name}`,
       cited: "Đã đối chiếu qua tài liệu có trích dẫn nguyên văn và vị trí của nó.",
+      feedback: "Góp ý về nguồn này",
+      feedbackTag: "Câu",
     },
     aria: {
       openFavorites: "Mở danh sách yêu thích",
@@ -1120,6 +1129,24 @@ function fillNote(quote) {
   document.getElementById("note-link-label").textContent =
     `${quote.cited ? ui.links.cited : ui.links[quote.kind] || ui.links.work} →`;
   document.getElementById("note-host").textContent = hostOf(url);
+
+  const feedback = document.getElementById("note-feedback");
+  feedback.textContent = ui.feedback;
+  feedback.href = feedbackMailto(quote, ui);
+}
+
+/* 의견 창구(2026-10-28) — hello@motimoti.page 는 Cloudflare Email Routing 이 Max 의
+   메일로 넘겨 주는 전달 주소다. 쪽지에서 보내면 제목에 명언 번호가 미리 들어가,
+   「이 출처가 틀렸어요」가 어느 명언 이야기인지 바로 안다. 주소는 HTML 에 그대로
+   두지 않고 여기서 만든다(스팸 수집 봇을 조금이라도 피하게). */
+const FEEDBACK_EMAIL = ["hello", "motimoti.page"].join("@");
+
+function feedbackMailto(quote, ui) {
+  const author = localized(quote.author);
+  const source = localized(quote.source || { en: "" }).replace(/\*/g, "");
+  const subject = `[${ui.feedbackTag} ${quote.id}] ${author}`;
+  const body = `${author}${source ? ` — ${source}` : ""}\n\n`;
+  return `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 /* 쪽지와 판권면은 같은 종이다 — 아래에서 올라오고, 한 번에 하나만 뜬다.
@@ -1322,6 +1349,11 @@ function fillColophon() {
   setItalicText(document.getElementById("colophon-motto-src"), ui.mottoSource);
   document.getElementById("colophon-text-1").textContent = ui.text1(s.total);
   document.getElementById("colophon-text-2").textContent = ui.text2;
+  const fb = document.getElementById("colophon-feedback");
+  const mail = document.createElement("a");
+  mail.href = `mailto:${FEEDBACK_EMAIL}`;
+  mail.textContent = FEEDBACK_EMAIL;
+  fb.replaceChildren(ui.feedback[0], mail, ui.feedback[1]);
   document.getElementById("colophon-text-3").textContent = ui.text3;
 
   const year = (q) => t().note.year(q.year, q.circa === true);
