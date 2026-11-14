@@ -1,0 +1,50 @@
+motimoti — 라이선스 / License
+
+이 저장소에는 두 가지가 있고, 라이선스가 다르다.
+This repository holds two kinds of work under two licenses.
+
+1. 코드 / Code — MIT License (아래 전문)
+   앱과 도구의 코드: *.js(아래 2의 데이터 파일 제외), *.html, *.css, tools/, .github/
+   The app and tool code: *.js (except the data files listed in 2), *.html, *.css, tools/, .github/
+
+2. 콘텐츠 / Content — CC BY-NC 4.0
+   https://creativecommons.org/licenses/by-nc/4.0/
+   - 명언의 선별과 배열, 이 책을 위한 번역(한국어·영어·베트남어), 출처 정리 —
+     quotes.js · quotes-vi.js 의 그런 부분
+   - 문맥 해설 — quotes-context.js
+   - 명언 카드와 미리보기 그림의 디자인 — og.png, tools/cards.js 가 그리는 카드
+   - 기준과 기획 문서 — QUOTE_STANDARDS.md, PLANNING.md, LAUNCH_CHECKLIST.md, README.md
+   출처를 밝히면 비상업적으로 자유롭게 쓸 수 있다. 상업적으로 쓰려면 먼저 물어 주기 바란다
+   (hello@motimoti.page).
+   Free to share and adapt for non-commercial purposes with attribution. Ask first for
+   commercial use (hello@motimoti.page).
+   출처 표시 예 / Attribution: 「motimoti (motimoti.page), 엮은이 Max K.」
+
+   이 라이선스는 이 책이 더한 것에만 해당한다. 명언의 원문은 대부분 저작권이 끝난
+   고전이고, 공개된 정본 영역(예: James Legge 의 『논어』)은 각 번역의 권리를 따른다.
+   This applies only to what this book adds. Most original texts are in the public domain;
+   published translations credited in the data keep their own status.
+
+────────────────────────────────────────────────────────────────────────
+
+MIT License
+
+Copyright (c) 2026 Max K.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
