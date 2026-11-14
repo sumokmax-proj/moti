@@ -35,4 +35,14 @@ const SOURCE_KINDS = new Set([
 const MAX_CONTEXT_KO = 230;
 const MAX_CONTEXT_EN = 480;
 
-module.exports = { MAX_CONTEXT_KO, MAX_CONTEXT_EN, MAX_KO, MAX_EN, AUTHOR_CAP_RATIO, AUTHOR_CAP_MIN, authorCap, TAG_KEYS, SOURCE_KINDS };
+/* 명언 주소(/ko/42/ 등)가 생기기 전에 지운 id — 2026-11-14 에 묶었다.
+   이 명언들은 주소가 퍼진 적이 없어 남길 페이지도 없다. 이 목록은 늘리지 않는다:
+   이제부터 지우는 명언은 quotes-retired.js 에 이유와 함께 적어, 퍼진 주소가
+   계속 열리게 한다. npm run check 가 quotes.js 의 「삭제된 id」 가 둘 중 하나에
+   있는지 본다. */
+const IDS_DELETED_BEFORE_ADDRESSES = new Set([
+  1, 2, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26,
+  27, 28, 29, 31, 32, 33, 34, 35, 36, 38, 39, 40, 49, 62,
+]);
+
+module.exports = { IDS_DELETED_BEFORE_ADDRESSES, MAX_CONTEXT_KO, MAX_CONTEXT_EN, MAX_KO, MAX_EN, AUTHOR_CAP_RATIO, AUTHOR_CAP_MIN, authorCap, TAG_KEYS, SOURCE_KINDS };

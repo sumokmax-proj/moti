@@ -309,9 +309,44 @@ function buildGoalSheet(goal) {
   return el;
 }
 
+/* ── 펼쳐서 건네기 — 명언 주소 (/ko/42/ 등, 2026-11-14) ───────────────
+   명언별 페이지(tools/build-pages.js)는 <html> 에 data-start-quote · data-start-lang 을
+   달고 <base href="../../"> 로 이 앱을 그대로 쓴다. 그 명언이 첫 쪽이고, 「다음」부터는
+   다시 책이 고른다. 링크의 언어로 열지만 받은 사람의 저장된 언어 설정은 덮어쓰지
+   않는다(직접 바꾸면 그때 저장된다). */
+const APP_BASE = new URL(".", document.baseURI); // 앱의 첫 주소: / 또는 /staging/
+const START_PAGE = readStartPage();
+
+function readStartPage() {
+  const d = document.documentElement.dataset;
+  const quote = QUOTES.find((q) => q.id === Number(d.startQuote));
+  const code = d.startLang;
+  if (!quote || !LANGS.includes(code) || !(quote.text && quote.text[code])) return null;
+  return { quote, lang: code };
+}
+
+// 그 명언의 주소. 공유할 때도 쓴다 — 보낸 사람이 보던 언어로.
+function quoteAddress(quote, code = lang) {
+  return new URL(`${code}/${quote.id}/`, APP_BASE).href;
+}
+
+/* 주소창을 지금 보는 쪽에 맞춘다. 명언 주소로 들어와 그 쪽을 보는 동안은 그 명언의
+   주소(언어를 바꾸면 그 언어의 주소), 다른 쪽으로 넘어가면 앱의 첫 주소 — 주소창을
+   복사해 건네도 보이는 쪽과 어긋나지 않게. 앱의 첫 주소로 들어온 사람은 건드리지 않는다. */
+function syncAddress(quote) {
+  if (!START_PAGE) return;
+  const target = quote && quote.id === START_PAGE.quote.id ? quoteAddress(quote) : APP_BASE.href;
+  if (target === location.href) return;
+  try {
+    history.replaceState(null, "", target);
+  } catch {
+    // 주소를 못 바꿔도 앱은 그대로
+  }
+}
+
 let currentQuote = null;
 let toastTimer = null;
-let lang = resolveInitialLang();
+let lang = START_PAGE ? START_PAGE.lang : resolveInitialLang();
 
 /* ── 언어 ─────────────────────────────────────────────── */
 
@@ -615,6 +650,7 @@ function renderQuote(quote) {
   quoteTextEl.textContent = localized(quote.text);
   quoteAuthorEl.textContent = localized(quote.author);
   quoteAuthorEl.setAttribute("aria-label", `${localized(quote.author)} — ${t().aria.source}`);
+  syncAddress(quote);
   updateFavoriteButton();
   fitQuoteText();
 }
@@ -1425,19 +1461,27 @@ function showToast(message, ms = 2000) {
   }, ms);
 }
 
+// 공유에는 그 명언의 주소를 붙인다(펼쳐서 건네기) — 받은 사람은 같은 쪽, 같은 언어로 연다.
+function shareMessage(quote) {
+  return {
+    text: `"${localized(quote.text)}" - ${localized(quote.author)}`,
+    url: quoteAddress(quote),
+  };
+}
+
 async function shareCurrentQuote() {
-  const shareText = `"${localized(currentQuote.text)}" - ${localized(currentQuote.author)}`;
+  const { text: shareText, url } = shareMessage(currentQuote);
   track("share", { id: currentQuote.id });
   if (navigator.share) {
     try {
-      await navigator.share({ text: shareText });
+      await navigator.share({ text: shareText, url });
     } catch {
       // user cancelled share sheet; no action needed
     }
     return;
   }
   try {
-    await navigator.clipboard.writeText(shareText);
+    await navigator.clipboard.writeText(`${shareText}\n${url}`);
     showToast(t().copied);
   } catch {
     showToast(t().shareUnsupported);
@@ -1537,5 +1581,12 @@ window.addEventListener("resize", () => {
 
 applyLang();
 updateWeightButton();
-currentQuote = turnPage(null);
+currentQuote = START_PAGE ? openStartPage() : turnPage(null);
 renderQuote(currentQuote);
+
+// 명언 주소로 들어왔을 때의 첫 쪽 — 최근 목록에 넣어 「다음」에 곧바로 다시 나오지 않게.
+function openStartPage() {
+  rememberShown(START_PAGE.quote.id);
+  countPage();
+  return START_PAGE.quote;
+}

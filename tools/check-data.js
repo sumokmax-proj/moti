@@ -22,7 +22,8 @@
 
 const fs = require("fs");
 const path = require("path");
-const { ROOT, loadQuotes, loadVietnamese, loadContext, loadGoal, readRules, createReport } = require("./lib");
+const { ROOT, loadQuotes, loadVietnamese, loadContext, loadGoal, loadRetired, readRules, createReport } = require("./lib");
+const { checkTemplate } = require("./build-pages");
 const ruleValues = require("./rules");
 
 const { quotes, source } = loadQuotes();
@@ -45,6 +46,31 @@ report.check("삭제된 id 를 다시 쓰지 않음", deletedBlock && reused.len
 const next = Number((source.match(/^\/\/ 다음 id: (\d+)$/m) || [])[1]);
 const maxId = Math.max(...ids);
 report.check("「// 다음 id」 가 최대 id 보다 큼", next > maxId && !deleted.includes(next), `다음 id ${next}, 최대 id ${maxId}`);
+
+/* ── 명언 주소(펼쳐서 건네기) ─────────────────────────
+   /ko/42/ 같은 주소는 한 번 퍼지면 영원히 열려야 한다. 그래서 1 부터 「다음 id」 앞까지의
+   번호는 모두 지금 실린 명언이거나, 지운 명언이어야 한다. 지운 명언은 주소가 생기기
+   전에 지운 것(tools/rules.js)이거나, 그 뒤에 지워 이유와 함께 남긴 것(quotes-retired.js). */
+const retired = loadRetired();
+const retiredIds = Object.keys(retired).map(Number);
+const beforeAddresses = ruleValues.IDS_DELETED_BEFORE_ADDRESSES;
+const addrProblems = [];
+for (let id = 1; id < next; id++) {
+  if (!ids.includes(id) && !deleted.includes(id)) addrProblems.push(`${id}: 실린 명언도, 「삭제된 id」 도 아님`);
+}
+for (const id of deleted) {
+  if (!beforeAddresses.has(id) && !retired[id]) addrProblems.push(`${id}: 지웠지만 quotes-retired.js 에 이유가 없음 — 퍼진 주소가 깨진다`);
+}
+for (const id of retiredIds) {
+  if (ids.includes(id)) addrProblems.push(`${id}: 실린 명언인데 quotes-retired.js 에도 있음`);
+  if (!deleted.includes(id)) addrProblems.push(`${id}: quotes-retired.js 에 있지만 「삭제된 id」 에 없음`);
+  const r = retired[id] || {};
+  if (!r.date || !(r.reason && r.reason.ko && r.reason.en)) addrProblems.push(`${id}: date 와 reason.ko·en 이 있어야 함`);
+}
+const templateProblems = checkTemplate(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"));
+addrProblems.push(...templateProblems.map((p) => `index.html ${p}`));
+report.check("명언 주소 — 빈 번호 없음 · 지운 명언은 이유와 함께 · 페이지 본(index.html)", addrProblems.length === 0,
+  addrProblems.length ? addrProblems.join(" | ") : `주소가 생기기 전에 지운 id ${beforeAddresses.size}개 · 그 뒤에 지운 id ${retiredIds.length}개`);
 
 /* ── 항목마다 ─────────────────────────────────────── */
 const problems = [];

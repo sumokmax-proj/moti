@@ -24,12 +24,16 @@
  *   방문 집계 시험·스테이징에서는 Umami 를 부르지 않음 · 스테이징은 쪽지·원전·공유·5쪽을 미리보기에만
  *             · 본 앱이었다면 붙일 스크립트의 속성 · 판권면 개인정보 한 줄
  *   의견 창구 쪽지의 메일 링크(번호·세 언어) · 판권면 한 줄 · HTML 에 주소 없음
+ *   명언 주소 페이지 수·sitemap · /ko/3/ 의 글 · 그 명언이 첫 쪽(설정은 그대로) · 언어 바꾸면 주소도
+ *             · 「다음」 뒤 첫 주소 · 공유 주소 · 스테이징 · 뺀 쪽 · og.png
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const fs = require("fs");
 const http = require("http");
 const path = require("path");
+const os = require("os");
 const { ROOT, loadQuotes, createReport } = require("./lib");
+const { build } = require("./build-pages");
 
 let chromium;
 try {
@@ -43,15 +47,22 @@ const report = createReport("앱 동작 시험");
 const QUOTE_COUNT = loadQuotes().quotes.length;
 
 /* ── 서버 ─────────────────────────────────────────
-   앱은 정적 파일뿐이다(GitHub Pages 와 같다). 저장소 폴더를 그대로 내준다. */
-const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".json": "application/json" };
+   앱은 정적 파일뿐이다(GitHub Pages 와 같다). 저장소 폴더를 그대로 내준다.
+   명언별 페이지(/ko/42/ 등)는 배포 때처럼 tools/build-pages.js 로 임시 폴더에 만들어
+   그 폴더를 먼저 찾는다. 시험용 「뺀 쪽」 하나(id 9999)도 함께 만든다. */
+const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".json": "application/json", ".xml": "application/xml", ".txt": "text/plain" };
+const PAGES = fs.mkdtempSync(path.join(os.tmpdir(), "moti-pages-"));
+const RETIRED_SAMPLE = { 9999: { date: "2026-11-14", reason: { ko: "시험용으로 뺀 쪽입니다.", en: "A page taken out for the test." } } };
+const BUILT = build({ out: PAGES, site: "https://motimoti.page/", retired: RETIRED_SAMPLE });
 
 function startServer() {
   const server = http.createServer((req, res) => {
     // /staging/ 도 같은 폴더를 내준다 — 앱은 주소로 스테이징인지 안다(STG 배지·목표 종이).
     const pathname = decodeURIComponent(new URL(req.url, "http://x").pathname).replace(/^\/staging\//, "/");
-    const file = path.join(ROOT, pathname.endsWith("/") ? `${pathname}index.html` : pathname);
-    if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+    const rel = pathname.endsWith("/") ? `${pathname}index.html` : pathname;
+    const built = path.join(PAGES, rel);
+    const file = fs.existsSync(built) && fs.statSync(built).isFile() ? built : path.join(ROOT, rel);
+    if (!(file.startsWith(ROOT) || file.startsWith(PAGES)) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
       res.writeHead(404).end();
       return;
     }
@@ -956,6 +967,58 @@ async function suiteAnalytics(browser) {
   report.check("시험 중 Umami 로 나간 요청 없음", umamiCalls.length === 0, umamiCalls.slice(0, 2).join(" | "));
 }
 
+async function suiteAddress(browser) {
+  // 만든 페이지 — 명언 × 언어마다 하나, sitemap 에는 그 전부와 첫 주소, 뺀 쪽은 sitemap 밖.
+  const sitemap = fs.readFileSync(path.join(PAGES, "sitemap.xml"), "utf8");
+  const locs = sitemap.match(/<loc>/g).length;
+  report.check("명언별 페이지 — 명언 × 언어마다 하나, sitemap 에 모두", BUILT.pages >= QUOTE_COUNT * 2 && locs === BUILT.pages + 1 && !sitemap.includes("/9999/"),
+    `${BUILT.pages}쪽 · sitemap ${locs}`);
+
+  // 페이지의 글 — 자바스크립트를 돌리지 않는 미리보기·검색이 읽는 것.
+  const raw = fs.readFileSync(path.join(PAGES, "ko", "3", "index.html"), "utf8");
+  const q3 = loadQuotes().quotes.find((q) => q.id === 3);
+  const has = (s) => raw.includes(s);
+  report.check("/ko/3/ 의 글 — 언어·첫 쪽 표시·base·미리보기·주소·번역 주소·명언 미리 적기",
+    has('<html lang="ko" data-start-quote="3" data-start-lang="ko">') && has('<base href="../../" />') &&
+    has(`<meta property="og:title" content="${q3.text.ko}" />`) && has('<link rel="canonical" href="https://motimoti.page/ko/3/" />') &&
+    has('hreflang="en" href="https://motimoti.page/en/3/"') && has('hreflang="x-default"') &&
+    has('<meta property="og:image" content="https://motimoti.page/og.png" />') && has(`id="quote-text">${q3.text.ko}</p>`) && !has("noindex"));
+
+  // 브라우저로 열기 — 그 명언이 첫 쪽, 링크의 언어, 저장된 언어 설정은 그대로.
+  const p = await freshPage(browser, {}, "ko/3/");
+  const first = await p.evaluate(() => ({ id: currentQuote.id, lang, saved: localStorage.getItem(LANG_KEY), text: document.getElementById("quote-text").textContent, recent: JSON.parse(localStorage.getItem(RECENT_KEY) || "[]"), path: location.pathname }));
+  report.check("/ko/3/ 로 열면 3번이 첫 쪽, 한국어 — 저장된 언어 설정은 건드리지 않음",
+    first.id === 3 && first.lang === "ko" && first.saved === null && first.text === q3.text.ko && first.recent.includes(3) && first.path === "/ko/3/");
+  await p.evaluate(() => setLang("en"));
+  const switched = await p.evaluate(() => ({ path: location.pathname, saved: localStorage.getItem(LANG_KEY) }));
+  report.check("그 쪽에서 언어를 바꾸면 주소도 그 언어로(직접 바꾼 설정은 저장)", switched.path === "/en/3/" && switched.saved === "en");
+  await tapNext(p);
+  const moved = await p.evaluate(() => ({ id: currentQuote.id, path: location.pathname, share: shareMessage(currentQuote) }));
+  report.check("「다음」부터는 책이 고르고 주소창은 앱의 첫 주소로", moved.id !== 3 && moved.path === "/");
+  report.check("공유에 그 명언의 주소가 붙음", moved.share.url === `${appUrl}en/${moved.id}/` && moved.share.text.length > 0, moved.share.url);
+  await p.context().close();
+
+  // 스테이징에서도 같은 길 — 앱의 첫 주소는 /staging/.
+  const s = await freshPage(browser, {}, "staging/vi/3/");
+  const stg = await s.evaluate(() => ({ id: currentQuote.id, lang, staging: IS_STAGING, base: APP_BASE.pathname, share: shareMessage(currentQuote).url }));
+  report.check("스테이징 /staging/vi/3/ — 3번, 베트남어, 공유 주소도 스테이징", stg.id === 3 && stg.lang === "vi" && stg.staging && stg.base === "/staging/" && stg.share.endsWith("/staging/vi/3/"));
+  await s.context().close();
+
+  // 앱의 첫 주소로 들어온 사람은 주소가 바뀌지 않는다. 미리보기 글도 있다.
+  const r = await freshPage(browser);
+  await tapNext(r);
+  const root = await r.evaluate(() => ({ path: location.pathname, og: document.querySelector('meta[property="og:image"]').content, desc: !!document.querySelector('meta[name="description"]') }));
+  report.check("첫 주소로 들어오면 주소는 그대로 · 첫 화면 미리보기 글과 그림", root.path === "/" && root.og === "https://motimoti.page/og.png" && root.desc);
+  await r.context().close();
+
+  // 뺀 쪽 — 이유와 함께 열리고 검색에서는 빠진다.
+  const t = await freshPage(browser, {}, "ko/9999/");
+  const gone = await t.evaluate(() => ({ text: document.body.textContent, robots: document.querySelector('meta[name="robots"]').content, back: document.querySelector("a").href }));
+  report.check("뺀 쪽 /ko/9999/ — 이유와 앱으로 가는 길, 검색 제외", gone.text.includes("시험용으로 뺀 쪽") && gone.robots === "noindex" && gone.back === appUrl);
+  await t.context().close();
+  report.check("og.png 가 있음(1200×630 미리보기 그림)", fs.existsSync(path.join(ROOT, "og.png")));
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { server, url } = await startServer();
@@ -964,7 +1027,7 @@ async function suiteAnalytics(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics], ["명언 주소", suiteAddress]]) {
       try {
         await suite(browser);
       } catch (err) {
@@ -975,6 +1038,7 @@ async function suiteAnalytics(browser) {
   } finally {
     if (browser) await browser.close();
     server.close();
+    fs.rmSync(PAGES, { recursive: true, force: true });
   }
   process.exitCode = report.print() > 0 ? 1 : 0;
 })();

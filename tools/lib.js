@@ -10,6 +10,7 @@ const QUOTES_FILE = process.env.MOTI_QUOTES_FILE || path.join(ROOT, "quotes.js")
 const VI_FILE = process.env.MOTI_VI_FILE || path.join(ROOT, "quotes-vi.js");
 const CONTEXT_FILE = path.join(ROOT, "quotes-context.js");
 const GOAL_FILE = path.join(ROOT, "goal.js");
+const RETIRED_FILE = path.join(ROOT, "quotes-retired.js");
 
 /* quotes.js 는 브라우저용 `const QUOTES = [...]` 다. 모듈이 아니므로
    브라우저와 같은 방식으로 한 번 실행해서 배열을 꺼낸다. */
@@ -86,4 +87,12 @@ function createReport(title) {
   };
 }
 
-module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, loadContext, loadGoal, readRules, createReport };
+/* quotes-retired.js(주소가 생긴 뒤 지운 명언)도 같은 방식으로 읽는다. 파일이 없으면 빈 것. */
+function loadRetired(file = RETIRED_FILE) {
+  if (!fs.existsSync(file)) return {};
+  const mod = { exports: null };
+  new Function("module", `${fs.readFileSync(file, "utf8")}\n;module.exports = QUOTES_RETIRED;`)(mod);
+  return mod.exports;
+}
+
+module.exports = { ROOT, QUOTES_FILE, loadQuotes, loadVietnamese, loadContext, loadGoal, loadRetired, readRules, createReport };

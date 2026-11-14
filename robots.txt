@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://motimoti.page/sitemap.xml

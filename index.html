@@ -3,23 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- page-meta — 링크 미리보기(카카오톡·메신저)와 검색 결과에 쓰이는 글.
+       명언별 페이지(/ko/42/ 등, tools/build-pages.js)는 이 사이를 그 명언의 것으로 바꾼다. -->
   <title>motimoti</title>
+  <meta name="description" content="One line that moves you now, and the book it came from. 명언 한 줄이 지금의 나를 움직이고, 그 문장이 나온 책으로 이어진다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="motimoti" />
+  <meta property="og:title" content="motimoti" />
+  <meta property="og:description" content="One line that moves you now, and the book it came from. 명언 한 줄에서, 그 문장이 나온 책으로." />
+  <meta property="og:url" content="https://motimoti.page/" />
+  <meta property="og:image" content="https://motimoti.page/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- /page-meta -->
   <!-- 파비콘 — 확정안의 룰에서 나온 마크. 원본은 favicon.svg 다.
        svg 를 먼저 두어 지원하는 브라우저는 벡터를 쓰고, png 는 폴백이다.
        apple-touch-icon 만 모서리 없이 꽉 채운다 — iOS 가 자기 마스크를 씌우고
        투명한 모서리는 검게 칠해버린다. -->
-  <link rel="icon" href="favicon.svg?v=20261028a" type="image/svg+xml" />
-  <link rel="icon" href="favicon-32.png?v=20261028a" sizes="32x32" type="image/png" />
-  <link rel="icon" href="favicon-16.png?v=20261028a" sizes="16x16" type="image/png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261028a" />
+  <link rel="icon" href="favicon.svg?v=20261114a" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png?v=20261114a" sizes="32x32" type="image/png" />
+  <link rel="icon" href="favicon-16.png?v=20261114a" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261114a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
   <!-- ?v= 는 캐시 무력화용이다. GitHub Pages 는 css/js 를 10분간 캐시하므로
        파일만 바꾸면 돌아온 사람이 옛 파일을 계속 쓴다 — 새 HTML 과 옛 js 가
        섞이면 화면이 조용히 망가진다. 이 파일들을 고칠 때마다 v 를 올린다. -->
-  <link rel="stylesheet" href="tokens.css?v=20261028a" />
-  <link rel="stylesheet" href="style.css?v=20261028a" />
+  <link rel="stylesheet" href="tokens.css?v=20261114a" />
+  <link rel="stylesheet" href="style.css?v=20261114a" />
 </head>
 <body>
   <div class="app">
@@ -133,13 +146,13 @@
     <dl class="colophon-table" id="colophon-table"></dl>
   </section>
 
-  <script src="quotes.js?v=20261028a"></script>
+  <script src="quotes.js?v=20261114a"></script>
   <!-- 베트남어(베타). 정식 데이터와 섞지 않으려고 따로 둔다. -->
-  <script src="quotes-vi.js?v=20261028a"></script>
+  <script src="quotes-vi.js?v=20261114a"></script>
   <!-- 문맥 해설. 출처 쪽지의 「이 문장이 나온 자리」. -->
-  <script src="quotes-context.js?v=20261028a"></script>
+  <script src="quotes-context.js?v=20261114a"></script>
   <!-- 앱의 목표(개발용). 스테이징에서만 STG 배지를 누르면 보인다. -->
-  <script src="goal.js?v=20261028a"></script>
-  <script src="app.js?v=20261028a"></script>
+  <script src="goal.js?v=20261114a"></script>
+  <script src="app.js?v=20261114a"></script>
 </body>
 </html>
