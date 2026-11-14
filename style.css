@@ -986,6 +986,92 @@ button.favorite-item-author:focus-visible {
   color: var(--ink-soft);
 }
 
+/* 책 한 권 값 보태기 — 판권면 맨 아래. 조용한 한 칸: 권하지 않고, 원하는 사람에게 길만 둔다. */
+.colophon-support {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+}
+
+.support-title {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.support-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+
+.support-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+}
+
+.support-qr {
+  width: 132px;
+  height: 132px;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: #fff;
+}
+
+.support-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.support-link,
+.support-copy {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.support-link:focus-visible,
+.support-copy:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.support-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  word-break: keep-all;
+}
+
+.support-account {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* 손가락으로 쓰는 기기에서 카카오페이는 버튼으로 바로 연다 — 그 화면의 QR 은 그 기기로 찍을 수 없다. */
+@media (hover: none) and (pointer: coarse) {
+  .support-kakaopay .support-qr { display: none; }
+}
+
 /* ── 좁은 화면 ────────────────────────────────────────── */
 
 @media (max-width: 359px) {

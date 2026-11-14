@@ -137,6 +137,12 @@ const UI = {
       text2: "작가 이름을 누르면 그 문장이 나온 곳이 펼쳐집니다.",
       feedback: ["틀린 곳이나 하고 싶은 말이 있다면 ", "로 보내 주세요."],
       text3: "즐겨찾기와 설정은 이 기기에만 저장됩니다. 쿠키 없이, 누구인지 알 수 없는 방문 수만 셉니다.",
+      support: {
+        title: "책 한 권 값 보태기",
+        text: "이 책의 한 줄이 마음에 닿았다면, 책 한 권 값을 보태 주세요. 이 책을 이어 가는 데 씁니다.",
+        kakaopay: "카카오페이로 보태기 →",
+        kakaopayNote: "컴퓨터에서는 휴대폰 카메라로 QR 을 찍어 주세요.",
+      },
       person: (year, name) => `${year} ${name}`,
       languageNames: { en: "영어", lzh: "한문", la: "라틴어", de: "독일어", fr: "프랑스어", grc: "고대 그리스어", ko: "한국어", zh: "중국어", nl: "네덜란드어", es: "스페인어", it: "이탈리아어", da: "덴마크어" },
       rows: {
@@ -188,6 +194,14 @@ const UI = {
       text2: "Chạm vào tên tác giả để mở nơi câu ấy xuất hiện.",
       feedback: ["Thấy chỗ sai hoặc muốn nhắn gì? Hãy viết cho ", "."],
       text3: "Mục yêu thích và cài đặt chỉ lưu trên thiết bị này. Chúng tôi chỉ đếm lượt truy cập: không cookie, không biết bạn là ai.",
+      support: {
+        title: "Góp giá một cuốn sách",
+        text: "Nếu có một dòng trong cuốn sách này chạm đến bạn, hãy góp giá một cuốn sách để cuốn sách này được tiếp tục.",
+        vietqrNote: "Quét mã bằng ứng dụng ngân hàng. Trên điện thoại: lưu ảnh mã rồi mở ảnh đó trong ứng dụng ngân hàng.",
+        save: "Lưu ảnh mã QR",
+        copy: "Sao chép số tài khoản",
+        copied: "Đã sao chép số tài khoản",
+      },
       person: (year, name) => `${name} (${year})`,
       languageNames: { en: "tiếng Anh", lzh: "Hán văn", la: "tiếng Latinh", de: "tiếng Đức", fr: "tiếng Pháp", grc: "tiếng Hy Lạp cổ", ko: "tiếng Hàn", zh: "tiếng Trung", nl: "tiếng Hà Lan", es: "tiếng Tây Ban Nha", it: "tiếng Ý", da: "tiếng Đan Mạch" },
       rows: {
@@ -1391,6 +1405,7 @@ function fillColophon() {
   mail.textContent = FEEDBACK_EMAIL;
   fb.replaceChildren(ui.feedback[0], mail, ui.feedback[1]);
   document.getElementById("colophon-text-3").textContent = ui.text3;
+  fillSupport(ui.support);
 
   const year = (q) => t().note.year(q.year, q.circa === true);
   const rows = [
@@ -1419,6 +1434,58 @@ function fillColophon() {
     }
     table.append(dt, dd);
   });
+}
+
+/* 책 한 권 값 보태기 — 판권면 맨 아래(support.js). 앱의 언어에 그 나라 송금이 없으면 숨는다.
+   받는 사람의 이름은 적지 않는다(송금 앱이 확인용으로 보여 주는 이름은 그쪽의 몫). */
+function fillSupport(ui) {
+  const box = document.getElementById("colophon-support");
+  const entry = typeof SUPPORT !== "undefined" ? SUPPORT[lang] : null;
+  box.hidden = !entry || !ui;
+  if (box.hidden) return;
+  document.getElementById("support-title").textContent = ui.title;
+  document.getElementById("support-text").textContent = ui.text;
+  const body = document.getElementById("support-body");
+  body.className = `support-body support-${entry.via}`;
+  const make = (tag, cls, text) => {
+    const el = document.createElement(tag);
+    el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  };
+  const qr = make("img", "support-qr");
+  qr.src = entry.qr;
+  qr.alt = "QR";
+  qr.width = 132;
+  qr.height = 132;
+  const actions = make("div", "support-actions");
+  if (entry.via === "kakaopay") {
+    const link = make("a", "support-link", ui.kakaopay);
+    link.href = entry.url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.addEventListener("click", () => track("support", { via: entry.via }));
+    actions.append(link, make("p", "support-note", ui.kakaopayNote));
+  } else if (entry.via === "vietqr") {
+    const save = make("a", "support-link", ui.save);
+    save.href = entry.qr.replace(/\.svg$/, ".png");
+    save.download = "motimoti-vietqr.png";
+    save.addEventListener("click", () => track("support", { via: entry.via }));
+    const copy = make("button", "support-copy", ui.copy);
+    copy.type = "button";
+    copy.addEventListener("click", async () => {
+      track("support", { via: entry.via });
+      try {
+        await navigator.clipboard.writeText(entry.account);
+        showToast(ui.copied);
+      } catch {
+        showToast(entry.account, 4000); // 복사를 못 하면 번호라도 크게 보여 준다
+      }
+    });
+    const account = make("p", "support-note support-account", `${entry.bank} · ${entry.account.replace(/(\d{4})(?=\d)/g, "$1 ")}`);
+    actions.append(save, copy, account, make("p", "support-note", ui.vietqrNote));
+  }
+  body.replaceChildren(qr, actions);
 }
 
 function openColophon() {

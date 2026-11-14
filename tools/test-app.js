@@ -27,6 +27,7 @@
  *   명언 주소 페이지 수·sitemap · /ko/3/ 의 글 · 그 명언이 첫 쪽(설정은 그대로) · 언어 바꾸면 주소도
  *             · 「다음」 뒤 첫 주소 · 공유 주소 · 스테이징 · 뺀 쪽 · og.png
  *   명언 카드 모든 명언이 카드에 들어감 · 이름의 지문 · 1200×630 · 캐시 · 페이지가 카드를(없으면 공용 그림)
+ *   보태기    한국어 카카오페이·베트남어 VietQR(저장·복사)·영어 없음 · 받는 사람 이름 없음
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const fs = require("fs");
@@ -1020,6 +1021,36 @@ async function suiteAddress(browser) {
   report.check("og.png 가 있음(1200×630 미리보기 그림)", fs.existsSync(path.join(ROOT, "og.png")));
 }
 
+async function suiteSupport(browser) {
+  const p = await freshPage(browser);
+  const r = await p.evaluate(async () => {
+    openFavoritesView();
+    const out = {};
+    for (const L of ["ko", "vi", "en"]) {
+      setLang(L);
+      closePaper(true);
+      openColophon();
+      const box = document.getElementById("colophon-support");
+      const img = box.querySelector(".support-qr");
+      if (img && !img.complete) await new Promise((ok) => { img.onload = ok; img.onerror = ok; });
+      out[L] = {
+        hidden: box.hidden,
+        link: box.querySelector(".support-link") && box.querySelector(".support-link").getAttribute("href"),
+        qrLoaded: !!img && img.naturalWidth > 0,
+        copy: !!box.querySelector(".support-copy"),
+        text: box.textContent,
+      };
+    }
+    return out;
+  });
+  report.check("한국어 판권면 — 카카오페이로 보태기(링크·QR)", !r.ko.hidden && r.ko.link === "https://qr.kakaopay.com/Ej7mmPMLm" && r.ko.qrLoaded);
+  report.check("베트남어 판권면 — VietQR · 그림 저장 · 계좌번호 복사", !r.vi.hidden && r.vi.link === "support/vietqr.png" && r.vi.qrLoaded && r.vi.copy && r.vi.text.includes("Techcombank"));
+  report.check("영어 판권면에는 아직 없음", r.en.hidden);
+  const anywhere = ["index.html", "app.js", "support.js"].map((f) => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n") + JSON.stringify(r);
+  report.check("받는 사람 이름은 앱 어디에도 적지 않음", !/KANG|SUMOK|강수목/i.test(anywhere));
+  await p.context().close();
+}
+
 async function suiteCards(browser) {
   const { renderCards, allSpecs } = require("./render-cards");
   const { cardSpec } = require("./cards");
@@ -1067,7 +1098,7 @@ async function suiteCards(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics], ["명언 주소", suiteAddress], ["명언 카드", suiteCards]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics], ["명언 주소", suiteAddress], ["명언 카드", suiteCards], ["책 한 권 값 보태기", suiteSupport]]) {
       try {
         await suite(browser);
       } catch (err) {

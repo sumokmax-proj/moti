@@ -233,6 +233,24 @@ if (goal) {
     goalProblems.length ? goalProblems.join(" | ") : goal.sentence);
 }
 
+/* ── 책 한 권 값 보태기 (support.js ↔ support/*.svg·png) ─────
+   QR 그림은 support.js 의 값으로 tools/make-support-qr.js 가 만든다. 값을 바꾸고 그림을
+   다시 만들지 않으면, 화면의 링크와 QR 이 서로 다른 곳으로 보낸다. */
+{
+  const { loadSupport, fingerprint, pngPath } = require("./make-support-qr");
+  const support = loadSupport();
+  const sp = [];
+  for (const [lang, e] of Object.entries(support)) {
+    const svgFile = path.join(ROOT, e.qr);
+    if (!fs.existsSync(svgFile)) sp.push(`${lang}: ${e.qr} 없음`);
+    else if (!fs.readFileSync(svgFile, "utf8").includes(fingerprint(e))) sp.push(`${lang}: ${e.qr} 가 지금 값과 다름 — node tools/make-support-qr.js`);
+    if (!fs.existsSync(path.join(ROOT, pngPath(e)))) sp.push(`${lang}: ${pngPath(e)} 없음`);
+    if (e.via === "kakaopay" && !/^https:\/\/qr\.kakaopay\.com\/\w+$/.test(e.url || "")) sp.push(`${lang}: 카카오페이 링크 모양이 아님`);
+    if (e.via === "vietqr" && !(e.payload && e.account && e.payload.includes(e.account))) sp.push(`${lang}: VietQR 값에 계좌번호가 없음`);
+  }
+  report.check("책 한 권 값 보태기 — QR 그림이 support.js 의 값과 같음", sp.length === 0, sp.length ? sp.join(" | ") : Object.keys(support).join(" · "));
+}
+
 /* ── 참고: 출처 종류별 편수 — 책·시 같은 저작은 kind 가 없다 ── */
 const kindCount = {};
 quotes.forEach((q) => q.kind && (kindCount[q.kind] = (kindCount[q.kind] || 0) + 1));
