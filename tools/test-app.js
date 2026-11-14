@@ -26,6 +26,7 @@
  *   의견 창구 쪽지의 메일 링크(번호·세 언어) · 판권면 한 줄 · HTML 에 주소 없음
  *   명언 주소 페이지 수·sitemap · /ko/3/ 의 글 · 그 명언이 첫 쪽(설정은 그대로) · 언어 바꾸면 주소도
  *             · 「다음」 뒤 첫 주소 · 공유 주소 · 스테이징 · 뺀 쪽 · og.png
+ *   명언 카드 모든 명언이 카드에 들어감 · 이름의 지문 · 1200×630 · 캐시 · 페이지가 카드를(없으면 공용 그림)
  *   공통      페이지 에러 없음, 가로 스크롤 없음 */
 
 const fs = require("fs");
@@ -1019,6 +1020,45 @@ async function suiteAddress(browser) {
   report.check("og.png 가 있음(1200×630 미리보기 그림)", fs.existsSync(path.join(ROOT, "og.png")));
 }
 
+async function suiteCards(browser) {
+  const { renderCards, allSpecs } = require("./render-cards");
+  const { cardSpec } = require("./cards");
+
+  // 모든 명언 × 언어가 바닥 크기 위에서 들어가는지(찍지 않고 재기만).
+  const fit = await renderCards({ browser, measureOnly: true });
+  report.check("명언 카드 — 모든 명언 × 언어가 카드에 들어감", fit.overflow.length === 0 && fit.total === BUILT.pages,
+    fit.overflow.length ? fit.overflow.join(", ") : `${fit.total}장 · 가장 작은 글자 ${fit.smallest}px`);
+
+  // 지문 — 같은 내용이면 같은 이름, 명언이 바뀌면 다른 이름(메신저가 옛 그림을 붙들지 않게).
+  const q = loadQuotes().quotes.find((x) => x.id === 3);
+  const a = cardSpec(q, "ko"), b = cardSpec(q, "ko");
+  const c = cardSpec({ ...q, text: { ...q.text, ko: `${q.text.ko}!` } }, "ko");
+  report.check("카드 이름의 지문 — 같으면 같고, 바뀌면 다르다", a.file === b.file && a.file !== c.file && /^og\/ko\/3-[0-9a-f]{10}\.png$/.test(a.file), a.file);
+
+  // 한 장을 실제로 그려 크기를 보고, 페이지가 그 카드를 쓰는지 · 없는 카드는 공용 그림인지.
+  const cache = fs.mkdtempSync(path.join(os.tmpdir(), "moti-cards-"));
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), "moti-pages-cards-"));
+  try {
+    const spec = allSpecs("og").find((s) => s.lang === "ko" && s.id === 3);
+    const r = await renderCards({ cache, browser, specs: [spec] });
+    const png = fs.readFileSync(path.join(cache, spec.file));
+    const size = [png.readUInt32BE(16), png.readUInt32BE(20)];
+    report.check("카드 그림 1200×630", r.rendered === 1 && size[0] === 1200 && size[1] === 630, size.join("×"));
+    const again = await renderCards({ cache, browser, specs: [spec] });
+    report.check("이미 그린 카드는 다시 그리지 않음(캐시)", again.rendered === 0 && again.skipped === 1);
+
+    const built = build({ out, site: "https://motimoti.page/", cards: cache });
+    const ko = fs.readFileSync(path.join(out, "ko", "3", "index.html"), "utf8");
+    const en = fs.readFileSync(path.join(out, "en", "3", "index.html"), "utf8");
+    report.check("페이지는 그 명언의 카드를, 카드가 없으면 공용 그림을",
+      built.cards === 1 && ko.includes(`content="https://motimoti.page/${spec.file}"`) && fs.existsSync(path.join(out, spec.file)) &&
+      en.includes('content="https://motimoti.page/og.png"'));
+  } finally {
+    fs.rmSync(cache, { recursive: true, force: true });
+    fs.rmSync(out, { recursive: true, force: true });
+  }
+}
+
 /* ── 실행 ─────────────────────────────────────────── */
 (async () => {
   const { server, url } = await startServer();
@@ -1027,7 +1067,7 @@ async function suiteAddress(browser) {
   let browser;
   try {
     browser = await chromium.launch(launchOpts);
-    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics], ["명언 주소", suiteAddress]]) {
+    for (const [name, suite] of [["화면", suiteRender], ["최근 20%", suiteRecent], ["주르륵", suiteRiffle], ["되돌아가기", suiteBack], ["즐겨찾기", suiteFavorites], ["더 자주 펼치기", suiteWeight], ["화면 안정", suiteStable], ["베트남어", suiteVietnamese], ["출처 쪽지", suiteNote], ["즐겨찾기 쪽지", suiteFavoriteNote], ["판권면", suiteColophon], ["앱의 목표", suiteGoal], ["의견 창구", suiteFeedback], ["방문 집계", suiteAnalytics], ["명언 주소", suiteAddress], ["명언 카드", suiteCards]]) {
       try {
         await suite(browser);
       } catch (err) {

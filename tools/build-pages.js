@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* 명언별 페이지 만들기 — 「펼쳐서 건네기」 (LAUNCH_CHECKLIST.md A6·B8)
  *
- *   node tools/build-pages.js --out <폴더> --site https://motimoti.page/ [--noindex]
+ *   node tools/build-pages.js --out <폴더> --site https://motimoti.page/ [--noindex] [--cards <카드 폴더>]
  *
  * 명언마다, 언어마다 /{언어}/{번호}/index.html 을 만든다(예: /ko/42/). 페이지는
  * 앱 그 자체다 — index.html 을 본으로 삼아
@@ -18,6 +18,7 @@
 const fs = require("fs");
 const path = require("path");
 const { ROOT, loadQuotes, loadVietnamese, loadContext, loadRetired } = require("./lib");
+const { cardSpec } = require("./cards");
 
 const LANGS = ["ko", "en", "vi"];
 const LOCALE = { ko: "ko_KR", en: "en_US", vi: "vi_VN" };
@@ -77,7 +78,7 @@ function loadData() {
   return { quotes, context, retired: loadRetired() };
 }
 
-function quotePage(template, q, L, ctx, site, noindex) {
+function quotePage(template, q, L, ctx, site, noindex, image) {
   const text = q.text[L];
   const author = pick(q.author, L);
   const source = plain(pick(q.source, L));
@@ -99,7 +100,7 @@ function quotePage(template, q, L, ctx, site, noindex) {
     `<meta property="og:title" content="${esc(text)}" />`,
     `<meta property="og:description" content="${esc(clip(`— ${author}${source ? `, ${source}` : ""}. ${story}`, 160))}" />`,
     `<meta property="og:url" content="${url}" />`,
-    `<meta property="og:image" content="${site}og.png" />`,
+    `<meta property="og:image" content="${site}${image || "og.png"}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
@@ -150,7 +151,9 @@ function retiredPage(template, id, entry, L) {
 `;
 }
 
-function build({ out, site, noindex = false, retired: retiredOverride } = {}) {
+/* cards: tools/render-cards.js 가 그린 카드가 있는 폴더(배포의 카드 캐시). 그 명언의 카드가
+   있으면 out 으로 옮겨 미리보기 그림으로 쓰고, 없으면(그리기가 실패했거나 처음이면) 공용 og.png. */
+function build({ out, site, noindex = false, retired: retiredOverride, cards } = {}) {
   if (!out || !site || !/^https?:\/\/.+\/$/.test(site)) throw new Error("--out 과 / 로 끝나는 --site 가 필요하다");
   const template = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
   const problems = checkTemplate(template);
@@ -165,10 +168,19 @@ function build({ out, site, noindex = false, retired: retiredOverride } = {}) {
   };
 
   const urls = [];
+  let withCard = 0;
   for (const q of quotes) {
     for (const L of LANGS) {
       if (!q.text[L]) continue;
-      write(`${L}/${q.id}/index.html`, quotePage(template, q, L, context[q.id], site, noindex));
+      const card = cardSpec(q, L, "og");
+      let image = null;
+      if (cards && fs.existsSync(path.join(cards, card.file))) {
+        fs.mkdirSync(path.dirname(path.join(out, card.file)), { recursive: true });
+        fs.copyFileSync(path.join(cards, card.file), path.join(out, card.file));
+        image = card.file;
+        withCard += 1;
+      }
+      write(`${L}/${q.id}/index.html`, quotePage(template, q, L, context[q.id], site, noindex, image));
       urls.push(`${site}${L}/${q.id}/`);
     }
   }
@@ -180,17 +192,17 @@ function build({ out, site, noindex = false, retired: retiredOverride } = {}) {
     const body = [site, ...urls].map((u) => `  <url><loc>${u}</loc></url>`).join("\n");
     write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`);
   }
-  return { pages: urls.length, retired: retiredIds.length * LANGS.length };
+  return { pages: urls.length, cards: withCard, retired: retiredIds.length * LANGS.length };
 }
 
-module.exports = { build, checkTemplate, LANGS };
+module.exports = { build, checkTemplate, loadData, LANGS };
 
 if (require.main === module) {
   const args = process.argv.slice(2);
   const arg = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
   try {
-    const r = build({ out: arg("--out"), site: arg("--site"), noindex: args.includes("--noindex") });
-    console.log(`명언별 페이지 ${r.pages}개, 뺀 쪽 ${r.retired}개 → ${arg("--out")}`);
+    const r = build({ out: arg("--out"), site: arg("--site"), noindex: args.includes("--noindex"), cards: arg("--cards") });
+    console.log(`명언별 페이지 ${r.pages}개(명언 카드 ${r.cards}장, 나머지는 공용 그림), 뺀 쪽 ${r.retired}개 → ${arg("--out")}`);
   } catch (err) {
     console.error(`\n✗ 명언별 페이지를 만들지 못했습니다 — ${err.message}\n`);
     process.exit(1);
