@@ -65,6 +65,18 @@ jobs:
           fi
           touch _site/.nojekyll
 
+      # 명언별 페이지(「펼쳐서 건네기」, /ko/42/ 등)는 저장소에 두지 않고 배포할 때
+      # 데이터에서 만든다 — 명언을 더하거나 고치면 페이지도 저절로 따라온다.
+      # 그 브랜치에 만드는 도구가 있을 때만 돈다(두 브랜치가 잠시 어긋나도 배포가 깨지지 않게).
+      - name: 명언별 페이지 만들기
+        run: |
+          if [ -f main-src/tools/build-pages.js ]; then
+            node main-src/tools/build-pages.js --out _site --site https://motimoti.page/
+          fi
+          if [ -f staging-src/tools/build-pages.js ]; then
+            node staging-src/tools/build-pages.js --out _site/staging --site https://motimoti.page/staging/ --noindex
+          fi
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
