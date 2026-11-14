@@ -28,7 +28,9 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest 는 이제 26.04 인데 Playwright 1.56 이 아직 지원하지 않는다(명언 카드를
+    # 못 그린다). 지원하는 24.04 에 묶어 둔다 — Playwright 를 올릴 때 함께 풀어 본다.
+    runs-on: ubuntu-24.04
     steps:
       - name: main 가져오기
         uses: actions/checkout@v4
@@ -83,7 +85,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-1.56.1
+          key: playwright-chromium-1.56.1-ubuntu-24.04
 
       - name: 명언 카드 캐시
         if: steps.cards.outputs.needed == 'true'
