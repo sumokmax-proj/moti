@@ -241,6 +241,10 @@ if (goal) {
   const support = loadSupport();
   const sp = [];
   for (const [lang, e] of Object.entries(support)) {
+    if (e.show) { // 다른 언어의 길을 함께 보이는 언어(영어)
+      for (const k of e.show) if (!support[k] || !support[k].qr) sp.push(`${lang}: 보일 길 ${k} 가 없음`);
+      continue;
+    }
     const svgFile = path.join(ROOT, e.qr);
     if (!fs.existsSync(svgFile)) sp.push(`${lang}: ${e.qr} 없음`);
     else if (!fs.readFileSync(svgFile, "utf8").includes(fingerprint(e))) sp.push(`${lang}: ${e.qr} 가 지금 값과 다름 — node tools/make-support-qr.js`);

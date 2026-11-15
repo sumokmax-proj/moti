@@ -41,6 +41,7 @@ if (require.main === module) {
   (async () => {
     const support = loadSupport();
     for (const [lang, entry] of Object.entries(support)) {
+      if (!entry.qr) continue; // 다른 언어의 길을 빌려 쓰는 언어(영어)
       const svg = await QRCode.toString(qrValue(entry), SVG_OPTS);
       const out = path.join(ROOT, entry.qr);
       fs.mkdirSync(path.dirname(out), { recursive: true });

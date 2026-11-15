@@ -85,6 +85,18 @@ const UI = {
       text1: (n) => `This book holds ${n} quotes. Every one was checked against the text it comes from; a line with no source we could point to was left out.`,
       text2: "Tap an author's name to open the page the line comes from.",
       feedback: ["Found a mistake, or want to say something? Write to ", "."],
+      support: {
+        title: "Add the price of a book",
+        text: "If a line in this book reached you, add the price of a book. It keeps this book going.",
+        kakaopayLabel: "In Korea",
+        kakaopay: "Send with KakaoPay →",
+        kakaopayNote: "On a computer, scan the QR with your phone.",
+        vietqrLabel: "In Vietnam",
+        save: "Save the QR image",
+        copy: "Copy the account number",
+        copied: "Account number copied",
+        vietqrNote: "Scan with any banking app. On a phone: save the image, then open it in your banking app.",
+      },
       text3: "Favorites and settings stay on this device. We count visits only: no cookies, nothing that tells us who you are.",
       person: (year, name) => `${name}, ${year}`,
       languageNames: { en: "English", lzh: "Classical Chinese", la: "Latin", de: "German", fr: "French", grc: "Ancient Greek", ko: "Korean", zh: "Chinese", nl: "Dutch", es: "Spanish", it: "Italian", da: "Danish" },
@@ -1445,20 +1457,26 @@ function fillSupport(ui) {
   if (box.hidden) return;
   document.getElementById("support-title").textContent = ui.title;
   document.getElementById("support-text").textContent = ui.text;
-  const body = document.getElementById("support-body");
-  body.className = `support-body support-${entry.via}`;
+  // 영어 화면은 어느 나라에서 읽는지 몰라 한국·베트남 두 길을 함께 보인다(show).
+  const ways = entry.show ? entry.show.map((k) => SUPPORT[k]).filter(Boolean) : [entry];
+  document.getElementById("support-body").replaceChildren(...ways.map((e) => supportWay(e, ui, ways.length > 1)));
+}
+
+function supportWay(entry, ui, labelled) {
   const make = (tag, cls, text) => {
     const el = document.createElement(tag);
     el.className = cls;
     if (text) el.textContent = text;
     return el;
   };
+  const way = make("div", `support-way support-${entry.via}`);
   const qr = make("img", "support-qr");
   qr.src = entry.qr;
   qr.alt = "QR";
   qr.width = 132;
   qr.height = 132;
   const actions = make("div", "support-actions");
+  if (labelled && ui[`${entry.via}Label`]) actions.append(make("p", "support-label", ui[`${entry.via}Label`]));
   if (entry.via === "kakaopay") {
     const link = make("a", "support-link", ui.kakaopay);
     link.href = entry.url;
@@ -1485,7 +1503,8 @@ function fillSupport(ui) {
     const account = make("p", "support-note support-account", `${entry.bank} · ${entry.account.replace(/(\d{4})(?=\d)/g, "$1 ")}`);
     actions.append(save, copy, account, make("p", "support-note", ui.vietqrNote));
   }
-  body.replaceChildren(qr, actions);
+  way.append(qr, actions);
+  return way;
 }
 
 function openColophon() {

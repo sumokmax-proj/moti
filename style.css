@@ -1013,9 +1013,22 @@ button.favorite-item-author:focus-visible {
 
 .support-body {
   display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.support-way {
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 14px 22px;
+}
+
+.support-label {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
 }
 
 .support-qr {
@@ -1069,7 +1082,7 @@ button.favorite-item-author:focus-visible {
 
 /* 손가락으로 쓰는 기기에서 카카오페이는 버튼으로 바로 연다 — 그 화면의 QR 은 그 기기로 찍을 수 없다. */
 @media (hover: none) and (pointer: coarse) {
-  .support-kakaopay .support-qr { display: none; }
+  .support-way.support-kakaopay .support-qr { display: none; }
 }
 
 /* ── 좁은 화면 ────────────────────────────────────────── */
