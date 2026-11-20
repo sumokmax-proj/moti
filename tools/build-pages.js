@@ -188,6 +188,14 @@ function build({ out, site, noindex = false, retired: retiredOverride, cards } =
   for (const id of retiredIds) {
     for (const L of LANGS) write(`${L}/${id}/index.html`, retiredPage(template, id, retired[id], L));
   }
+  // 스테이징을 홈 화면에 함께 두면 본 앱과 헷갈리지 않게 이름을 바꾼다.
+  const manifest = path.join(out, "manifest.webmanifest");
+  if (noindex && fs.existsSync(manifest)) {
+    const m = JSON.parse(fs.readFileSync(manifest, "utf8"));
+    m.name = `${m.name} STG`;
+    m.short_name = `${m.short_name} STG`;
+    fs.writeFileSync(manifest, `${JSON.stringify(m, null, 2)}\n`);
+  }
   if (!noindex) {
     const body = [site, ...urls].map((u) => `  <url><loc>${u}</loc></url>`).join("\n");
     write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`);

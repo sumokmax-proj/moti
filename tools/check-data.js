@@ -255,6 +255,36 @@ if (goal) {
   report.check("책 한 권 값 보태기 — QR 그림이 support.js 의 값과 같음", sp.length === 0, sp.length ? sp.join(" | ") : Object.keys(support).join(" · "));
 }
 
+/* ── 홈 화면 추가 (manifest.webmanifest ↔ 아이콘 그림) ─────
+ * 아이콘은 tools/make-icons.js 가 favicon.svg 로 그린다. */
+{
+  const mp = [];
+  let m = null;
+  try {
+    m = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.webmanifest"), "utf8"));
+  } catch (err) {
+    mp.push(`manifest.webmanifest 를 읽지 못함 — ${err.message}`);
+  }
+  if (m) {
+    for (const k of ["name", "short_name", "start_url", "scope", "display", "background_color", "theme_color"]) if (!m[k]) mp.push(`${k} 없음`);
+    if (/^\//.test(m.start_url || "") || /^\//.test(m.scope || "")) mp.push("start_url·scope 는 상대 주소여야 스테이징(/staging/)에서도 맞다");
+    const icons = m.icons || [];
+    for (const want of ["192x192 any", "512x512 any", "512x512 maskable"]) {
+      if (!icons.some((i) => `${i.sizes} ${i.purpose || "any"}` === want)) mp.push(`아이콘 ${want} 없음`);
+    }
+    for (const i of icons) {
+      const file = path.join(ROOT, i.src);
+      if (!fs.existsSync(file)) { mp.push(`${i.src} 없음 — node tools/make-icons.js`); continue; }
+      const b = fs.readFileSync(file); // PNG 머리의 IHDR 에서 폭·높이
+      const size = `${b.readUInt32BE(16)}x${b.readUInt32BE(20)}`;
+      if (size !== i.sizes) mp.push(`${i.src} 는 ${size} (manifest 는 ${i.sizes})`);
+    }
+  }
+  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  if (!/<link rel="manifest" href="manifest\.webmanifest/.test(html)) mp.push("index.html 에 manifest 링크 없음");
+  report.check("홈 화면 추가 — manifest 와 아이콘", mp.length === 0, mp.length ? mp.join(" | ") : m && m.icons.map((i) => i.src).join(" · "));
+}
+
 /* ── 참고: 출처 종류별 편수 — 책·시 같은 저작은 kind 가 없다 ── */
 const kindCount = {};
 quotes.forEach((q) => q.kind && (kindCount[q.kind] = (kindCount[q.kind] || 0) + 1));
