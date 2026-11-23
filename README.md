@@ -42,6 +42,7 @@ motimoti 는 잠깐 힘을 얻고 사라지는 동기부여가 아니라, **오�
 - `quotes-retired.js` — 주소가 생긴 뒤 지운 명언과 그 이유. 그 주소에 「이 쪽은 책에서 뺐다」가 남는다
 - `tools/build-pages.js` — 명언별 페이지(`/ko/42/` 등)와 `sitemap.xml` 을 만든다. 배포할 때 GitHub Actions 가 돌린다. 저장소에는 두지 않는다
 - `tools/cards.js` · `tools/render-cards.js` — 명언 카드(링크 미리보기 1200×630, 인스타그램 1080×1350)의 모양과 그리기. 배포 때 바뀐 카드만 그린다(이름에 내용의 지문)
+- `extension/` — 크롬 익스텐션 「새 탭에 명언 한 줄」의 원본. `npm run build:extension` 이 앱의 명언 데이터를 복사해 넣고 아이콘을 그려 `dist/` 에 묶는다(웹 스토어에 올릴 zip). `npm run test:extension` 은 실제 Chromium 에 올려 본다. 글꼴은 익스텐션 안의 Hahmlet(OFL) — 밖으로 나가는 요청도, 집계도 없다
 - `manifest.webmanifest` · `icon-*.png` — 홈 화면에 추가하면 앱처럼 열린다. 아이콘은 `tools/make-icons.js` 가 `favicon.svg` 로 그린다(스테이징은 이름이 「motimoti STG」)
 - `og.png` — 링크 미리보기 그림(1200×630). `tools/render-og.js` 로 다시 만든다 · `robots.txt` — 검색 엔진에 sitemap 위치를 알린다
 - `style.css` / `tokens.css` — 확정 디자인(시안 E). 색과 간격은 전부 `tokens.css` 의 토큰이다(보관 중인 수집기도 이 파일을 읽는다)

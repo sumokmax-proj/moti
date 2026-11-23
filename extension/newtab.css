@@ -1,0 +1,137 @@
+/* 새 탭 — 앱(style.css)의 결을 따르되 넓은 화면에 맞춘다. 색은 tokens.css(앱과 같은 값).
+   글꼴은 익스텐션 안의 Hahmlet(OFL) — 새 탭마다 구글로 요청이 나가지 않게. */
+
+@font-face {
+  font-family: "Hahmlet";
+  src: url("fonts/Hahmlet.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: block;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-kr);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  box-sizing: border-box;
+  width: min(760px, 100%);
+  /* 위에서 일정한 자리에 둔다 — 쪽지를 펼쳐도 명언이 밀려 올라가지 않게. */
+  padding: max(96px, 24vh) 48px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.rule {
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  margin-bottom: 36px;
+}
+
+.quote {
+  margin: 0 0 30px;
+  font-size: clamp(22px, 2.3vw, 30px);
+  font-weight: 400;
+  line-height: 1.8;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+.quote.long { font-size: clamp(19px, 1.8vw, 24px); }
+
+.author {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: var(--tracking-meta);
+  background: none;
+  border: none;
+  padding: 10px 0;
+  margin: -10px 0;
+  cursor: pointer;
+}
+.author:hover { color: var(--accent-text); }
+.author:focus-visible,
+.lang button:focus-visible,
+.note-link:focus-visible,
+.home:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+/* 출처 쪽지 — 앱에서는 아래에서 올라오는 종이지만, 넓은 화면에서는 명언 아래에 펼친다. */
+.note {
+  margin-top: 34px;
+  padding: 24px 28px 22px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.note p { margin: 0; }
+.note-kind { font-size: 12px; color: var(--ink-soft); letter-spacing: var(--tracking-meta); }
+.note-title { font-weight: 600; margin-top: 4px !important; }
+.note-label { font-size: 12px; color: var(--ink-soft); letter-spacing: var(--tracking-meta); margin-top: 18px !important; }
+.note-text { margin-top: 4px !important; word-break: keep-all; }
+.note-small { font-size: 12px; color: var(--ink-soft); margin-top: 14px !important; }
+.note-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--accent-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.note-link:hover { text-decoration: underline; }
+.note-host { font-weight: 400; color: var(--ink-soft); font-size: 12px; margin-left: 4px; }
+
+.lang {
+  position: fixed;
+  top: 22px;
+  right: 28px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-soft);
+}
+.lang button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  cursor: pointer;
+}
+.lang button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+.lang button[hidden] { display: none; }
+.lang .dot { padding: 0 4px; opacity: 0.6; }
+
+.home {
+  position: fixed;
+  left: 28px;
+  bottom: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.home:hover { color: var(--accent-text); }
+
+@media (max-width: 600px) {
+  .page { padding: 80px 24px 100px; }
+}

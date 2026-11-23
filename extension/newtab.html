@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- 새 탭 — motimoti 크롬 익스텐션 (LAUNCH_CHECKLIST C2).
+     새 탭을 열 때마다 명언 한 줄. 작가 이름을 누르면 출처 쪽지(그 문장이 나온 자리·원전).
+     아래의 motimoti 는 같은 명언을 motimoti.page 에서 연다 — 휴대폰으로 건네거나 이어 읽게.
+     밖으로 아무것도 보내지 않는다: 글꼴·데이터 모두 익스텐션 안에 있고, 집계도 없다.
+     명언 데이터(quotes*.js)와 tokens.css 는 tools/build-extension.js 가 앱에서 복사해 넣는다. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Tab</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="newtab.css" />
+</head>
+<body>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en">EN</button><span class="dot" aria-hidden="true">·</span><button type="button" data-lang="ko">KO</button><span class="dot" aria-hidden="true">·</span><button type="button" data-lang="vi">VN<sup>β</sup></button>
+  </div>
+
+  <main class="page">
+    <div class="rule" aria-hidden="true"></div>
+    <p class="quote" id="quote"></p>
+    <button type="button" class="author" id="author" aria-expanded="false" aria-controls="note"></button>
+
+    <section class="note" id="note" hidden>
+      <p class="note-kind" id="note-kind"></p>
+      <p class="note-title" id="note-title"></p>
+      <div id="note-context" hidden>
+        <p class="note-label" id="note-context-label"></p>
+        <p class="note-text" id="note-context-text"></p>
+      </div>
+      <div id="note-orig" hidden>
+        <p class="note-label" id="note-orig-label"></p>
+        <p class="note-text note-orig" id="note-orig-text"></p>
+      </div>
+      <p class="note-small" id="note-tr" hidden></p>
+      <p class="note-small" id="note-cited" hidden></p>
+      <a class="note-link" id="note-link" rel="noopener"><span id="note-link-label"></span> <span class="note-host" id="note-host"></span></a>
+    </section>
+  </main>
+
+  <a class="home" id="home" rel="noopener">motimoti</a>
+
+  <script src="quotes.js"></script>
+  <script src="quotes-vi.js"></script>
+  <script src="quotes-context.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>

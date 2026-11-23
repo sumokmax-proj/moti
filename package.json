@@ -9,7 +9,9 @@
     "check": "node tools/check-data.js",
     "verify:sources": "node tools/verify-sources.js",
     "test:app": "node tools/test-app.js",
-    "test": "node tools/check-data.js && node tools/test-app.js"
+    "test": "node tools/check-data.js && node tools/test-app.js",
+    "test:extension": "node tools/test-extension.js",
+    "build:extension": "node tools/build-extension.js"
   },
   "devDependencies": {
     "playwright": "1.56.1",

@@ -29,6 +29,11 @@ This repository holds two kinds of work under two licenses.
    (e.g. James Legge, the Van Gogh Museum letters edition) are short, attributed quotations;
    they keep their own rights and are not relicensed here.
 
+3. 글꼴 / Font — SIL Open Font License 1.1
+   extension/fonts/Hahmlet.ttf — Copyright 2020 The Hahmlet Project Authors. 전문은
+   extension/fonts/OFL.txt. 크롬 익스텐션에 함께 담는다.
+   Hahmlet, bundled with the Chrome extension, under the OFL (full text in extension/fonts/OFL.txt).
+
 ────────────────────────────────────────────────────────────────────────
 
 MIT License

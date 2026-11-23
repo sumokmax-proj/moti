@@ -58,11 +58,12 @@ jobs:
         run: |
           mkdir _site
           cp -a main-src/. _site/
-          rm -rf _site/.git _site/.github _site/node_modules
+          # extension/ 은 크롬 익스텐션의 원본이다(웹 스토어로 간다) — 사이트에는 내지 않는다.
+          rm -rf _site/.git _site/.github _site/node_modules _site/extension
           if [ -d staging-src ]; then
             mkdir -p _site/staging
             cp -a staging-src/. _site/staging/
-            rm -rf _site/staging/.git _site/staging/.github _site/staging/node_modules _site/staging/collector
+            rm -rf _site/staging/.git _site/staging/.github _site/staging/node_modules _site/staging/collector _site/staging/extension
             sed -i 's|<head>|<head>\n  <meta name="robots" content="noindex, nofollow" />|' _site/staging/index.html
           fi
           touch _site/.nojekyll
