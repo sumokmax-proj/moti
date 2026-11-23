@@ -17,7 +17,49 @@ if (IS_STAGING) document.documentElement.classList.add("staging");
    한다 — 도구를 바꿔도 여기만 고친다. 막혀도(광고 차단기 등) 앱은 그대로 돈다.
    숫자는 보되, 늘리는 것을 목표로 삼지 않는다(PLANNING 1장). */
 const ANALYTICS_ID = "24dd5e2b-477b-4e99-97ee-21c85adf0867";
-const ANALYTICS_ON = location.hostname === "motimoti.page" && !IS_STAGING;
+
+/* 엮은이의 기기는 세지 않는다 — 주소 끝에 ?me 를 붙여 한 번 열면 그 브라우저는 그 뒤로
+   집계를 보내지 않는다(?me=off 로 되돌린다). 기기·브라우저마다 한 번씩. 엮은이가 확인하느라
+   연 방문이 진짜 방문자 숫자에 섞이지 않게(2026-11-23). Umami 가 스스로 읽는 umami.disabled
+   도 함께 둔다. 저장소가 막힌 브라우저에서는 그 방문 한 번만 세지 않는다. */
+const ME_KEY = "motimoti-me";
+const ME_ASKED = readMeSwitch();
+const IS_ME = ME_ASKED === "on" || readStored(ME_KEY) === "1";
+
+function readStored(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function readMeSwitch() {
+  const params = new URLSearchParams(location.search);
+  if (!params.has("me")) return null;
+  const value = params.get("me") === "off" ? "off" : "on";
+  try {
+    if (value === "on") {
+      localStorage.setItem(ME_KEY, "1");
+      localStorage.setItem("umami.disabled", "1");
+    } else {
+      localStorage.removeItem(ME_KEY);
+      localStorage.removeItem("umami.disabled");
+    }
+  } catch {
+    // 저장소가 막혀도 이번 방문은 아래 IS_ME 로 세지 않는다
+  }
+  params.delete("me");
+  const rest = params.toString();
+  try {
+    history.replaceState(null, "", location.pathname + (rest ? `?${rest}` : "") + location.hash);
+  } catch {
+    // 주소를 못 바꿔도 그대로
+  }
+  return value;
+}
+
+const ANALYTICS_ON = location.hostname === "motimoti.page" && !IS_STAGING && !IS_ME;
 const trackLog = []; // 스테이징: 보냈을 것들
 const PAGE_MARKS = [5, 20, 50, 100];
 let pagesThisVisit = 0;
@@ -1537,6 +1579,13 @@ function fillTrackPreview() {
 }
 
 if (goalBtn) goalBtn.addEventListener("click", openGoal);
+
+// ?me 를 연 그 자리에서 알려 준다 — 세 언어를 함께(언어가 정해지기 전에도 읽히게).
+if (ME_ASKED) {
+  showToast(ME_ASKED === "on"
+    ? "이 기기의 방문은 세지 않습니다 · Not counting this device · Không tính lượt xem trên máy này"
+    : "이 기기의 방문을 다시 셉니다 · Counting this device again · Tính lại lượt xem trên máy này", 4000);
+}
 
 function showToast(message, ms = 2000) {
   toastEl.textContent = message;

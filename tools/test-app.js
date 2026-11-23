@@ -966,6 +966,27 @@ async function suiteAnalytics(browser) {
   report.check("STG 종이의 집계 미리보기에 보임", preview[0] === `share · 명언 ${stg.id}` && preview.includes("pages-5"), preview.join(" / "));
   await s.context().close();
 
+  // ?me — 엮은이의 기기는 세지 않는다. 한 번 열면 기억하고, 주소에서는 지운다.
+  const me = await freshPage(browser, {}, "ko/42/?me");
+  watch(me);
+  const on = await me.evaluate(() => ({
+    isMe: IS_ME,
+    key: localStorage.getItem("motimoti-me"),
+    umami: localStorage.getItem("umami.disabled"),
+    search: location.search,
+    path: location.pathname,
+    toast: document.getElementById("toast").textContent,
+  }));
+  report.check("?me — 이 기기를 기억(umami.disabled 도) · 주소에서 지움 · 알림",
+    on.isMe && on.key === "1" && on.umami === "1" && on.search === "" && /\/ko\/42\/$/.test(on.path) && on.toast.includes("세지 않습니다"),
+    JSON.stringify(on));
+  await me.goto(appUrl, { waitUntil: "networkidle" });
+  const again = await me.evaluate(() => ({ isMe: IS_ME, asked: ME_ASKED }));
+  await me.goto(`${appUrl}?me=off`, { waitUntil: "networkidle" });
+  const off = await me.evaluate(() => ({ isMe: IS_ME, key: localStorage.getItem("motimoti-me"), umami: localStorage.getItem("umami.disabled") }));
+  report.check("?me — 다음 방문에도 세지 않고, ?me=off 로 되돌림", again.isMe && again.asked === null && !off.isMe && off.key === null && off.umami === null);
+  await me.context().close();
+
   report.check("시험 중 Umami 로 나간 요청 없음", umamiCalls.length === 0, umamiCalls.slice(0, 2).join(" | "));
 }
 
