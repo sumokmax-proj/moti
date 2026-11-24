@@ -71,4 +71,4 @@ function pageShell() {
   return `<!doctype html><html><head><meta charset="UTF-8" /><link rel="stylesheet" href="${FONT_URL}" /><style>${STYLE}</style></head><body><div id="slot"></div></body></html>`;
 }
 
-module.exports = { FORMATS, SIZES, cardSpec, cardBody, pageShell };
+module.exports = { FORMATS, SIZES, STYLE, cardSpec, cardBody, pageShell };
