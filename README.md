@@ -47,7 +47,7 @@ motimoti 는 잠깐 힘을 얻고 사라지는 동기부여가 아니라, **오�
 - `og.png` — 링크 미리보기 그림(1200×630). `tools/render-og.js` 로 다시 만든다 · `robots.txt` — 검색 엔진에 sitemap 위치를 알린다
 - `style.css` / `tokens.css` — 확정 디자인(시안 E). 색과 간격은 전부 `tokens.css` 의 토큰이다(보관 중인 수집기도 이 파일을 읽는다)
 - `.design/` — 확정안 5화면과 시안 A~G
-- [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) — 명언 기준 · [PLANNING.md](PLANNING.md) — 기획과 결정 기록 · [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) — 출시 점검표
+- [QUOTE_STANDARDS.md](QUOTE_STANDARDS.md) — 명언 기준 · [PLANNING.md](PLANNING.md) — 기획과 결정 기록 · [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) — 출시 점검표 · [PROMOTION_PLAN.md](PROMOTION_PLAN.md) — 홍보 기준(인스타그램 등)
 
 ## 명언 — 141편, 기준은 까다롭게
 
