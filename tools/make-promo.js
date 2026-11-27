@@ -105,7 +105,7 @@ function slidesFor(q, ctx, appShot) {
     const tr = q.translator && q.translator.en ? `영역(英譯) ${q.translator.en}: "${q.text.en}"` : "";
     slides.push({
       kind: "original",
-      html: (n, t) => frame(`<p class="label">${UI.original}${lang ? ` · ${lang}` : ""}</p><p class="body" lang="${q.lang === "lzh" ? "zh-Hant" : q.lang}">${esc(q.original)}</p>${tr ? `<p class="note">${esc(tr)}</p>` : ""}`, n, t),
+      html: (n, t) => frame(`<p class="label">${UI.original}${lang ? ` · ${lang}` : ""}</p><p class="body" lang="${q.lang === "lzh" ? "zh-Hant" : q.lang}">${esc(q.original).split(" / ").join("<br />")}</p>${tr ? `<p class="note">${esc(tr)}</p>` : ""}`, n, t),
       fit: { sel: ".body", start: 48, min: 30 },
       alt: `${UI.original}: ${q.original}`,
     });
