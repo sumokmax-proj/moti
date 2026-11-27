@@ -25,7 +25,7 @@ motimoti 를 바깥에 알리는 일의 기준. 인스타그램 `@motimoti_page`
 ### Max 의 체크리스트
 
 **한 번만**
-- [ ] 프로필 링크를 `https://motimoti.page/ig/?utm_source=instagram` 으로 바꾸기(제목 `motimoti.page` 는 그대로) — 본 앱에 /ig/ 가 올라간 뒤
+- [x] 프로필 링크를 `https://motimoti.page/ig` 로 바꾸기(2026-11-28)
 - [ ] 모든 기기·브라우저에서 `https://motimoti.page/?me` 한 번씩(내 방문은 세지 않게)
 
 **게시물을 올릴 때**
@@ -231,7 +231,7 @@ motimoti 는 한 권의 책이다. 인스타그램 글도 **책이 독자에게 
   명언 한 줄에서, 그 문장이 나온 책으로. 원문까지 확인한 문장만.
   One line, and the book it came from.
   ```
-- [x] **링크**: 처음엔 `https://motimoti.page/?utm_source=instagram`(2026-11-24) → **`https://motimoti.page/ig/?utm_source=instagram`** 로 바꾼다(제목은 `motimoti.page`). 인스타그램 앱 안에서 열리면 어디서 왔는지가 비어 Umami 에 잡히지 않아, 주소에 「인스타그램에서」를 붙여 둔다
+- [x] **링크**: **`https://motimoti.page/ig`**(2026-11-28). 인스타그램은 링크가 하나면 제목 대신 주소를 그대로 보여 주므로 주소를 짧게 둔다. /ig/ 는 프로필 링크로만 들어오는 쪽이라, 그 방문이 곧 인스타그램에서 온 방문이다 — 꼬리표(utm)가 필요 없다
 - [ ] **프로페셔널 계정(크리에이터)** — 인사이트를 보고, 공개 게시물이 구글 검색에 걸린다(설정 → 계정 공개 범위 → 「검색 엔진 결과에 공개 사진과 동영상 표시」 켜짐)
 - [ ] **연락처**: hello@motimoti.page
 - [ ] **계정 센터 → 프로필 간 공유 끄기** — 개인 계정에 함께 올라가지 않게
@@ -247,7 +247,7 @@ motimoti 는 한 권의 책이다. 인스타그램 글도 **책이 독자에게 
 
 Claude 가 보는 것:
 - 게시물마다 **공유 ÷ 도달**, **저장 ÷ 도달** — 어떤 기둥, 어떤 저자, 어떤 첫 줄이 보내지고 저장됐나
-- Umami: `utm_source=instagram` 으로 온 방문, 그중 출처 쪽지를 연 수, 원전 링크를 누른 수 — **책 쪽으로 건너왔나**
+- Umami: `/ig/` 방문, 거기서 명언으로 건너간 수(`/ko/<id>/` 의 이전 쪽이 /ig/), 그중 출처 쪽지를 연 수, 원전 링크를 누른 수 — **책 쪽으로 건너왔나**
 - 업계 평균(참여율 1~5%)과 견주지 않는다. 우리 숫자의 지난달과 견준다
 
 그리고 정하는 것: 다음 달 기둥 비율, 첫 줄을 쓰는 방식, 게시 시간. 정한 것은 「바뀐 기록」에.
@@ -297,6 +297,7 @@ Claude 가 보는 것:
 | 2026-11-27 | 첫 게시물을 보고(Max): 무엇을 알리는지 안 보인다 → 5장 「이 명언을 앱에서」(실제 앱 화면). 캡션 링크는 눌리지 않는다 → 프로필 링크를 /ig/(올린 명언 모음)로, 캡션 끝은 「이 명언은 프로필 링크 → 맨 위」 |
 | 2026-11-27 | 5장은 소개 문구 없이 앱 화면과 「이어서 — 프로필 링크」 한 줄만. 「무료·가입 없이·광고 없이」 같은 파는 말은 쓰지 않는다(Max) |
 | 2026-11-27 | 5장 문구는 「이어서 — **프로필 링크**」(링크만 강조). 이미 올린 게시물에는 장을 더할 수 없어 파스퇴르는 4장 그대로, 다음 게시물부터 5장. /ig/ 는 제목과 목록만 — 설명 문구 없이(Max) |
+| 2026-11-28 | 프로필 링크는 `motimoti.page/ig` — 링크가 하나면 인스타그램이 주소를 그대로 보여 주어, 꼬리표 없이 짧게 |
 
 ## 참고한 자료
 - 보내기·캐러셀·독창성: [Search Engine Journal](https://www.searchenginejournal.com/instagram-algorithm-shift-why-sends-matter-more-than-ever/521389/) · [Social Media Today](https://www.socialmediatoday.com/news/instagram-chief-post-share-rates-key-driver-reach/716540/) · [TechCrunch](https://techcrunch.com/2022/04/20/instagram-ranking-system-recommend-original-content/) · [Buffer](https://buffer.com/resources//instagram-algorithms/)
