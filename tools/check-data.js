@@ -285,6 +285,36 @@ if (goal) {
   report.check("홈 화면 추가 — manifest 와 아이콘", mp.length === 0, mp.length ? mp.join(" | ") : m && m.icons.map((i) => i.src).join(" · "));
 }
 
+/* ── 인스타그램 게시물 기록 (promo/<연-월>/posts.js, PROMOTION_PLAN 13장) ─────
+ * 카드는 앱의 데이터로 그리므로 명언 id 가 살아 있어야 한다. 올린 것(url)은 /ig/ 에 실린다. */
+{
+  const { loadPromo } = require("./build-pages");
+  const pp = [];
+  const dir = path.join(ROOT, "promo");
+  const all = [];
+  if (fs.existsSync(dir)) {
+    for (const month of fs.readdirSync(dir).filter((m) => /^\d{4}-\d{2}$/.test(m))) {
+      const file = path.join(dir, month, "posts.js");
+      if (!fs.existsSync(file)) { pp.push(`${month}: posts.js 없음`); continue; }
+      for (const p of require(file)) all.push({ ...p, month });
+    }
+  }
+  const ids = new Set(quotes.map((q) => q.id));
+  const seen = new Set();
+  for (const p of all) {
+    const tag = `${p.month}#${p.no}`;
+    if (seen.has(tag)) pp.push(`${tag} 번호 중복`);
+    seen.add(tag);
+    if (!ids.has(p.id)) pp.push(`${tag}: 명언 ${p.id} 가 없음`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(p.when || "")) pp.push(`${tag}: when 이 날짜가 아님`);
+    if (p.url && !/^https:\/\/www\.instagram\.com\/p\/[\w-]+\/$/.test(p.url)) pp.push(`${tag}: url 이 인스타그램 게시물 주소가 아님`);
+    if (!String(p.caption || "").trim()) pp.push(`${tag}: 캡션 없음`);
+    if ((String(p.caption).match(/#[^\s#]+/g) || []).length > 5) pp.push(`${tag}: 해시태그 5개 초과`);
+  }
+  report.check("인스타그램 게시물 기록 — 명언 id · 날짜 · 주소 · 해시태그 5개까지", pp.length === 0,
+    pp.length ? pp.join(" | ") : `${all.length}건 · 올린 것 ${loadPromo().length}건`);
+}
+
 /* ── 참고: 출처 종류별 편수 — 책·시 같은 저작은 kind 가 없다 ── */
 const kindCount = {};
 quotes.forEach((q) => q.kind && (kindCount[q.kind] = (kindCount[q.kind] || 0) + 1));

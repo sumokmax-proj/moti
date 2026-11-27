@@ -997,6 +997,19 @@ async function suiteAddress(browser) {
   report.check("명언별 페이지 — 명언 × 언어마다 하나, sitemap 에 모두", BUILT.pages >= QUOTE_COUNT * 2 && locs === BUILT.pages + 1 && !sitemap.includes("/9999/"),
     `${BUILT.pages}쪽 · sitemap ${locs}`);
 
+  // /ig/ — 인스타그램에 올린 명언들(프로필 링크). 누르면 그 명언의 주소로.
+  const ig = await freshPage(browser, {}, "ig/");
+  const igInfo = await ig.evaluate(() => ({ items: document.querySelectorAll("ol li a").length, first: document.querySelector("ol li a") && document.querySelector("ol li a").href, umami: !!document.querySelector('script[src*="umami"]') }));
+  if (igInfo.items) {
+    await ig.click("ol li a");
+    await ig.waitForFunction(() => typeof currentQuote !== "undefined" && currentQuote);
+  }
+  const landed = igInfo.items ? await ig.evaluate(() => ({ id: currentQuote.id, path: location.pathname })) : null;
+  report.check("/ig/ — 올린 게시물 수만큼 · 누르면 그 명언이 첫 쪽 · 시험 주소에서는 집계 없음",
+    igInfo.items === BUILT.ig && !igInfo.umami && (!landed || /\/ko\/\d+\/$/.test(landed.path) && igInfo.first.endsWith(landed.path)),
+    `${igInfo.items}건 ${landed ? `→ ${landed.path}` : ""}`);
+  await ig.context().close();
+
   // 페이지의 글 — 자바스크립트를 돌리지 않는 미리보기·검색이 읽는 것.
   const raw = fs.readFileSync(path.join(PAGES, "ko", "3", "index.html"), "utf8");
   const q3 = loadQuotes().quotes.find((q) => q.id === 3);

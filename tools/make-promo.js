@@ -9,14 +9,19 @@
  *   2. 이 문장이 나온 자리 — 앱의 해설(quotes-context.js) 그대로
  *   3. 원문            — 원문이 화면의 문장과 다를 때만(한국어 원문이면 이 장이 빠진다)
  *   4. 그 책으로        — 출처, 연도, 원전이 있는 곳, motimoti.page 의 그 명언 주소
+ *   5. 이 명언을 앱에서  — 실제 앱 화면(그 명언의 주소를 휴대폰 크기로 연 것)과 앱 소개 몇 줄, 프로필 링크 안내.
+ *                        무엇을 알리는 계정인지 모든 게시물의 끝에서 같은 모양으로 보인다
  * 명언·해설·원문·출처는 앱의 데이터에서 가져온다 — 카드에 새로 쓰는 글은 없다. 캡션만 posts.js 에 쓴다.
  * 글꼴은 익스텐션에 담아 둔 Hahmlet(extension/fonts) — 그리는 데 인터넷이 필요 없다. */
 
 const fs = require("fs");
+const http = require("http");
+const os = require("os");
 const path = require("path");
 const { execFileSync } = require("child_process");
 const { ROOT, loadQuotes, loadContext } = require("./lib");
 const { STYLE, cardSpec, cardBody } = require("./cards");
+const { build } = require("./build-pages");
 
 const W = 1080;
 const H = 1350;
@@ -30,6 +35,11 @@ const UI = {
   links: { work: "원전 읽기", speech: "연설문 읽기", letter: "편지 읽기", diary: "일기 읽기", interview: "인터뷰 읽기", calligraphy: "유묵 보기", inscription: "원문 읽기", testimony: "증언 읽기", cited: "출처 확인 자료" },
   year: (y, circa) => `${y < 0 ? `기원전 ${-y}` : y}년${circa ? "경" : ""}`,
   verified: (cited) => (cited ? "원문 대신, 원문과 그 위치를 밝혀 인용한 자료로 확인했다" : "원문과 한 글자씩 대조했다"),
+  app: "이 명언을 앱에서",
+  appWhat: "원문까지 확인한 명언을 한 줄씩 펼쳐 보는 작은 책.",
+  appHow: "작가 이름을 누르면 그 문장이 나온 자리와 원전이 펼쳐진다.",
+  appFree: "무료 · 가입 없이 · 광고 없이",
+  appBio: "프로필 링크 → 맨 위",
   langs: { en: "영어", fr: "프랑스어", de: "독일어", la: "라틴어", it: "이탈리아어", es: "스페인어", nl: "네덜란드어", zh: "중국어", lzh: "한문", grc: "고대 그리스어", ru: "러시아어", ja: "일본어" },
 };
 
@@ -64,6 +74,15 @@ const SLIDE_STYLE = `
 .slide .addr { margin: 22px 0 0; font-size: 30px; color: #33302b; }
 .slide .addr b { font-weight: 600; }
 .page { font-size: 22px; letter-spacing: 0.06em; color: #6f604f; }
+.app { display: flex; gap: 52px; align-items: center; }
+.app img { flex: none; width: 380px; border-radius: 40px; border: 10px solid #33302b; box-shadow: 0 18px 40px rgba(51, 48, 43, 0.18); }
+.app .side { display: flex; flex-direction: column; }
+.app .name2 { margin: 0; font-size: 44px; font-weight: 600; letter-spacing: 0.04em; }
+.app .what { margin: 22px 0 0; font-size: 30px; line-height: 1.6; word-break: keep-all; }
+.app .how { margin: 26px 0 0; font-size: 26px; line-height: 1.6; color: #6f604f; word-break: keep-all; }
+.app .free { margin: 26px 0 0; font-size: 24px; letter-spacing: 0.04em; color: #6f604f; }
+.app .addr2 { margin: 40px 0 0; font-size: 30px; font-weight: 600; color: #9c4529; word-break: break-all; }
+.app .bio { margin: 10px 0 0; font-size: 24px; color: #6f604f; }
 `;
 
 function frame(inner, pageNo, total) {
@@ -75,7 +94,7 @@ function frame(inner, pageNo, total) {
 }
 
 // 한 게시물의 장들. fit 은 줄여 가며 맞출 글(.text 또는 .body · .big)의 시작 크기와 바닥.
-function slidesFor(q, ctx) {
+function slidesFor(q, ctx, appShot) {
   const slides = [];
   const spec = cardSpec(q, "ko", "instagram");
   slides.push({ kind: "quote", html: () => cardBody(spec), fit: { sel: ".text", start: 72, min: 34 }, alt: `명언 카드: ${q.text.ko} — ${q.author.ko}` });
@@ -113,10 +132,75 @@ function slidesFor(q, ctx) {
     fit: { sel: ".big", start: 52, min: 34 },
     alt: `${UI.source}: ${plain(q.source.ko)}, ${year}. ${link}: ${hostOf(url)}`,
   });
+  if (appShot) {
+    slides.push({
+      kind: "app",
+      html: (n, t) => frame(
+        `<p class="label">${UI.app}</p>
+         <div class="app">
+           <img src="${appShot}" alt="" />
+           <div class="side">
+             <p class="name2">motimoti</p>
+             <p class="what">${UI.appWhat}</p>
+             <p class="how">${UI.appHow}</p>
+             <p class="free">${UI.appFree}</p>
+             <p class="addr2">motimoti.page/ko/${q.id}</p>
+             <p class="bio">${UI.appBio}</p>
+           </div>
+         </div>`, n, t),
+      fit: { sel: ".what", start: 30, min: 24 },
+      alt: `${UI.app}: motimoti 앱 화면에 같은 명언. ${UI.appWhat} 프로필 링크에서 motimoti.page/ko/${q.id}`,
+    });
+  }
   return slides;
 }
 
 const clip = (s, n) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
+
+/* 앱 화면 찍기 — 명언별 페이지를 임시 폴더에 만들고(tools/build-pages.js) 그 자리에서 내어 준다.
+   글꼴은 구글 대신 익스텐션의 Hahmlet 으로 바꿔 준다(인터넷 없이, 앱과 같은 모양). 주소가
+   127.0.0.1 이라 집계는 나가지 않는다. 휴대폰 크기(390×844)를 두 배로 찍는다. */
+async function startApp() {
+  const pages = fs.mkdtempSync(path.join(os.tmpdir(), "moti-promo-pages-"));
+  build({ out: pages, site: "https://motimoti.page/" });
+  const font = path.join(ROOT, "extension", "fonts", "Hahmlet.ttf");
+  const server = http.createServer((req, res) => {
+    const pathname = decodeURIComponent(new URL(req.url, "http://x").pathname);
+    if (pathname === "/__font/Hahmlet.ttf") {
+      res.writeHead(200, { "content-type": "font/ttf" });
+      fs.createReadStream(font).pipe(res);
+      return;
+    }
+    const rel = pathname.endsWith("/") ? `${pathname}index.html` : pathname;
+    const built = path.join(pages, rel);
+    const file = fs.existsSync(built) && fs.statSync(built).isFile() ? built : path.join(ROOT, rel);
+    if (!(file.startsWith(ROOT) || file.startsWith(pages)) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+      res.writeHead(404).end();
+      return;
+    }
+    const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".json": "application/json" };
+    res.writeHead(200, { "content-type": types[path.extname(file)] || "application/octet-stream" });
+    fs.createReadStream(file).pipe(res);
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const url = `http://127.0.0.1:${server.address().port}/`;
+  return { url, close: () => { server.close(); fs.rmSync(pages, { recursive: true, force: true }); } };
+}
+
+async function shootApp(browser, app, id, file) {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, colorScheme: "light", locale: "ko-KR" });
+  await ctx.route(/fonts\.googleapis\.com/, (route) => route.fulfill({
+    contentType: "text/css",
+    body: `@font-face { font-family: "Hahmlet"; src: url("${app.url}__font/Hahmlet.ttf") format("truetype"); font-weight: 100 900; }`,
+  }));
+  await ctx.route(/fonts\.gstatic\.com|cloud\.umami\.is/, (route) => route.abort());
+  const page = await ctx.newPage();
+  await page.goto(`${app.url}ko/${id}/`, { waitUntil: "networkidle" });
+  await page.evaluate(async () => { await document.fonts.ready; });
+  await page.waitForTimeout(600); // 첫 쪽이 펼쳐지는 움직임이 끝나게
+  await page.screenshot({ path: file });
+  await ctx.close();
+}
 
 async function makePromo(month, { only } = {}) {
   const file = path.join(ROOT, "promo", month, "posts.js");
@@ -134,6 +218,7 @@ async function makePromo(month, { only } = {}) {
 
   const { chromium } = require("playwright");
   const browser = await chromium.launch();
+  const app = await startApp();
   const made = [];
   try {
     const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
@@ -144,7 +229,9 @@ async function makePromo(month, { only } = {}) {
       const dir = path.join(out, `${String(post.no).padStart(2, "0")}-${post.id}`);
       fs.rmSync(dir, { recursive: true, force: true });
       fs.mkdirSync(dir, { recursive: true });
-      const slides = slidesFor(q, context[q.id]);
+      const shot = path.join(out, `.app-${q.id}.png`);
+      await shootApp(browser, app, q.id, shot);
+      const slides = slidesFor(q, context[q.id], `file://${shot}`);
       const alts = [];
       for (const [i, s] of slides.entries()) {
         const fit = await page.evaluate(async ({ body, fit }) => {
@@ -157,6 +244,7 @@ async function makePromo(month, { only } = {}) {
           await document.fonts.load(`400 40px "Hahmlet"`, card.textContent);
           await document.fonts.load(`600 40px "Hahmlet"`, card.textContent);
           await document.fonts.ready;
+          await Promise.all([...card.querySelectorAll("img")].map((im) => (im.complete ? null : new Promise((r) => { im.onload = r; im.onerror = r; }))));
           const room = () => box.clientHeight - parseFloat(getComputedStyle(box).paddingTop);
           const over = () => inner.offsetHeight > room() + 1;
           let px = fit.start;
@@ -169,12 +257,14 @@ async function makePromo(month, { only } = {}) {
         await page.locator(".card").screenshot({ path: path.join(dir, `${i + 1}.png`) });
         alts.push(`${i + 1}. ${clip(s.alt, ALT_MAX)}`);
       }
+      fs.rmSync(shot, { force: true });
       fs.writeFileSync(path.join(dir, "caption.txt"), `${post.caption.trim()}\n`);
       fs.writeFileSync(path.join(dir, "alt.txt"), `${alts.join("\n")}\n`);
       made.push({ post, dir, slides: slides.length });
     }
   } finally {
     await browser.close();
+    app.close();
     fs.rmSync(shell, { force: true });
   }
   const zip = path.join(path.dirname(out), `motimoti-promo-${month}.zip`);

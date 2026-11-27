@@ -151,9 +151,89 @@ function retiredPage(template, id, entry, L) {
 `;
 }
 
+/* 인스타그램에 올린 명언들 — 프로필 링크가 가리키는 쪽(/ig/, PROMOTION_PLAN 9장).
+   promo/<연-월>/posts.js 중 url 이 있는 것(실제로 올린 것)을 최근 것부터. 인스타그램의 캡션 링크는
+   눌리지 않아서, 프로필 링크 하나로 「그 게시물의 명언」에 닿게 한다. 집계는 앱과 같은 조건으로. */
+function loadPromo() {
+  const dir = path.join(ROOT, "promo");
+  if (!fs.existsSync(dir)) return [];
+  const posts = [];
+  for (const month of fs.readdirSync(dir).filter((m) => /^\d{4}-\d{2}$/.test(m)).sort()) {
+    const file = path.join(dir, month, "posts.js");
+    if (!fs.existsSync(file)) continue;
+    delete require.cache[require.resolve(file)];
+    for (const p of require(file)) if (p.url) posts.push({ ...p, month });
+  }
+  return posts.sort((a, b) => String(b.when).localeCompare(String(a.when)) || b.no - a.no);
+}
+
+const IG_ANALYTICS = `(function () {
+    if (location.hostname !== "motimoti.page" || location.pathname.indexOf("/staging/") >= 0) return;
+    try { if (localStorage.getItem("motimoti-me") === "1") return; } catch (e) {}
+    var s = document.createElement("script");
+    s.defer = true;
+    s.src = "https://cloud.umami.is/script.js";
+    s.dataset.websiteId = "24dd5e2b-477b-4e99-97ee-21c85adf0867";
+    s.dataset.domains = "motimoti.page";
+    s.dataset.doNotTrack = "true";
+    document.head.appendChild(s);
+  })();`;
+
+function igPage(template, posts, byId) {
+  const v = (template.match(/tokens\.css\?v=([\w-]+)/) || [])[1] || "";
+  const items = posts.map((p) => {
+    const q = byId.get(p.id);
+    const date = String(p.when).replace(/-/g, ".");
+    return `    <li><a href="ko/${q.id}/"><span class="q">${esc(q.text.ko)}</span><span class="who">— ${esc(q.author.ko)}</span><span class="when">${esc(date)}</span></a></li>`;
+  }).join("\n");
+  return `<!doctype html>
+<html lang="ko">
+<head>
+  <base href="../" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex" />
+  <title>인스타그램에 올린 문장 · motimoti</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;600&display=swap" />
+  <link rel="stylesheet" href="tokens.css?v=${v}" />
+  <style>
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-kr); -webkit-font-smoothing: antialiased; }
+    main { box-sizing: border-box; max-width: 560px; margin: 0 auto; padding: calc(56px + env(safe-area-inset-top)) var(--pad) calc(56px + env(safe-area-inset-bottom)); }
+    .rule { width: 36px; height: 2px; background: var(--accent); }
+    h1 { margin: 28px 0 8px; font-size: 19px; font-weight: 600; letter-spacing: 0.02em; }
+    .lead { margin: 0 0 32px; font-size: 13px; line-height: 1.8; color: var(--ink-soft); word-break: keep-all; }
+    ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
+    li { border-bottom: 1px solid var(--hairline); }
+    li a { display: flex; flex-direction: column; gap: 8px; padding: 22px 0; color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+    .q { font-size: 18px; line-height: 1.75; word-break: keep-all; }
+    .who { font-size: 13px; font-weight: 600; letter-spacing: var(--tracking-meta); color: var(--ink-soft); }
+    .when { font-size: 12px; color: var(--ink-soft); }
+    li a:hover .q, li a:focus-visible .q { color: var(--accent-text); }
+    .empty { margin: 24px 0; font-size: 14px; color: var(--ink-soft); }
+    .open { display: inline-block; margin-top: 36px; font-size: 14px; font-weight: 600; color: var(--accent-text); text-decoration: none; }
+  </style>
+  <script>${IG_ANALYTICS}</script>
+</head>
+<body>
+  <main>
+    <div class="rule" aria-hidden="true"></div>
+    <h1>인스타그램에 올린 문장</h1>
+    <p class="lead">@motimoti_page 의 게시물을 최근 것부터. 누르면 그 명언이 motimoti 에서 열리고, 작가 이름을 누르면 그 문장이 나온 자리가 펼쳐진다.</p>
+${posts.length ? `    <ol>\n${items}\n    </ol>` : `    <p class="empty">아직 올린 게시물이 없다.</p>`}
+    <a class="open" href="./">motimoti 처음부터 펼치기 →</a>
+  </main>
+</body>
+</html>
+`;
+}
+
 /* cards: tools/render-cards.js 가 그린 카드가 있는 폴더(배포의 카드 캐시). 그 명언의 카드가
    있으면 out 으로 옮겨 미리보기 그림으로 쓰고, 없으면(그리기가 실패했거나 처음이면) 공용 og.png. */
-function build({ out, site, noindex = false, retired: retiredOverride, cards } = {}) {
+function build({ out, site, noindex = false, retired: retiredOverride, promo: promoOverride, cards } = {}) {
   if (!out || !site || !/^https?:\/\/.+\/$/.test(site)) throw new Error("--out 과 / 로 끝나는 --site 가 필요하다");
   const template = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
   const problems = checkTemplate(template);
@@ -188,6 +268,8 @@ function build({ out, site, noindex = false, retired: retiredOverride, cards } =
   for (const id of retiredIds) {
     for (const L of LANGS) write(`${L}/${id}/index.html`, retiredPage(template, id, retired[id], L));
   }
+  const promo = (promoOverride || loadPromo()).filter((p) => quotes.some((q) => q.id === p.id && q.text.ko));
+  write("ig/index.html", igPage(template, promo, new Map(quotes.map((q) => [q.id, q]))));
   // 스테이징을 홈 화면에 함께 두면 본 앱과 헷갈리지 않게 이름을 바꾼다.
   const manifest = path.join(out, "manifest.webmanifest");
   if (noindex && fs.existsSync(manifest)) {
@@ -200,10 +282,10 @@ function build({ out, site, noindex = false, retired: retiredOverride, cards } =
     const body = [site, ...urls].map((u) => `  <url><loc>${u}</loc></url>`).join("\n");
     write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`);
   }
-  return { pages: urls.length, cards: withCard, retired: retiredIds.length * LANGS.length };
+  return { pages: urls.length, cards: withCard, retired: retiredIds.length * LANGS.length, ig: promo.length };
 }
 
-module.exports = { build, checkTemplate, loadData, LANGS };
+module.exports = { build, checkTemplate, loadData, loadPromo, LANGS };
 
 if (require.main === module) {
   const args = process.argv.slice(2);
