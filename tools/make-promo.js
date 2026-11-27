@@ -9,7 +9,7 @@
  *   2. 이 문장이 나온 자리 — 앱의 해설(quotes-context.js) 그대로
  *   3. 원문            — 원문이 화면의 문장과 다를 때만(한국어 원문이면 이 장이 빠진다)
  *   4. 그 책으로        — 출처, 연도, 원전이 있는 곳, motimoti.page 의 그 명언 주소
- *   5. 이 명언을 앱에서  — 실제 앱 화면(그 명언의 주소를 휴대폰 크기로 연 것)과 앱 소개 몇 줄, 프로필 링크 안내.
+ *   5. 앱 화면          — 실제 앱 화면(그 명언의 주소를 휴대폰 크기로 연 것)과 「앱 열기 — 프로필 링크」 한 줄.
  *                        무엇을 알리는 계정인지 모든 게시물의 끝에서 같은 모양으로 보인다
  * 명언·해설·원문·출처는 앱의 데이터에서 가져온다 — 카드에 새로 쓰는 글은 없다. 캡션만 posts.js 에 쓴다.
  * 글꼴은 익스텐션에 담아 둔 Hahmlet(extension/fonts) — 그리는 데 인터넷이 필요 없다. */
@@ -35,11 +35,9 @@ const UI = {
   links: { work: "원전 읽기", speech: "연설문 읽기", letter: "편지 읽기", diary: "일기 읽기", interview: "인터뷰 읽기", calligraphy: "유묵 보기", inscription: "원문 읽기", testimony: "증언 읽기", cited: "출처 확인 자료" },
   year: (y, circa) => `${y < 0 ? `기원전 ${-y}` : y}년${circa ? "경" : ""}`,
   verified: (cited) => (cited ? "원문 대신, 원문과 그 위치를 밝혀 인용한 자료로 확인했다" : "원문과 한 글자씩 대조했다"),
-  app: "이 명언을 앱에서",
-  appWhat: "원문까지 확인한 명언을 한 줄씩 펼쳐 보는 작은 책.",
-  appHow: "작가 이름을 누르면 그 문장이 나온 자리와 원전이 펼쳐진다.",
-  appFree: "무료 · 가입 없이 · 광고 없이",
-  appBio: "프로필 링크 → 맨 위",
+  // 5장은 앱 화면과 한 줄뿐이다. 「무료」「가입 없이」 같은 파는 말은 쓰지 않는다(Max, 2026-11-27).
+  appOpen: "앱 열기",
+  appWhere: "프로필 링크",
   langs: { en: "영어", fr: "프랑스어", de: "독일어", la: "라틴어", it: "이탈리아어", es: "스페인어", nl: "네덜란드어", zh: "중국어", lzh: "한문", grc: "고대 그리스어", ru: "러시아어", ja: "일본어" },
 };
 
@@ -74,15 +72,11 @@ const SLIDE_STYLE = `
 .slide .addr { margin: 22px 0 0; font-size: 30px; color: #33302b; }
 .slide .addr b { font-weight: 600; }
 .page { font-size: 22px; letter-spacing: 0.06em; color: #6f604f; }
-.app { display: flex; gap: 52px; align-items: center; }
-.app img { flex: none; width: 380px; border-radius: 40px; border: 10px solid #33302b; box-shadow: 0 18px 40px rgba(51, 48, 43, 0.18); }
-.app .side { display: flex; flex-direction: column; }
-.app .name2 { margin: 0; font-size: 44px; font-weight: 600; letter-spacing: 0.04em; }
-.app .what { margin: 22px 0 0; font-size: 30px; line-height: 1.6; word-break: keep-all; }
-.app .how { margin: 26px 0 0; font-size: 26px; line-height: 1.6; color: #6f604f; word-break: keep-all; }
-.app .free { margin: 26px 0 0; font-size: 24px; letter-spacing: 0.04em; color: #6f604f; }
-.app .addr2 { margin: 40px 0 0; font-size: 30px; font-weight: 600; color: #9c4529; word-break: break-all; }
-.app .bio { margin: 10px 0 0; font-size: 24px; color: #6f604f; }
+.slide .inner { width: 100%; }
+.app { display: flex; flex-direction: column; align-items: center; }
+.app img { width: 372px; border-radius: 42px; border: 10px solid #33302b; box-shadow: 0 18px 40px rgba(51, 48, 43, 0.18); }
+.app .open { margin: 44px 0 0; font-size: 32px; letter-spacing: 0.04em; color: #6f604f; }
+.app .open b { font-weight: 600; color: #9c4529; }
 `;
 
 function frame(inner, pageNo, total) {
@@ -136,20 +130,12 @@ function slidesFor(q, ctx, appShot) {
     slides.push({
       kind: "app",
       html: (n, t) => frame(
-        `<p class="label">${UI.app}</p>
-         <div class="app">
+        `<div class="app">
            <img src="${appShot}" alt="" />
-           <div class="side">
-             <p class="name2">motimoti</p>
-             <p class="what">${UI.appWhat}</p>
-             <p class="how">${UI.appHow}</p>
-             <p class="free">${UI.appFree}</p>
-             <p class="addr2">motimoti.page/ko/${q.id}</p>
-             <p class="bio">${UI.appBio}</p>
-           </div>
+           <p class="open"><b>${UI.appOpen}</b> — ${UI.appWhere}</p>
          </div>`, n, t),
-      fit: { sel: ".what", start: 30, min: 24 },
-      alt: `${UI.app}: motimoti 앱 화면에 같은 명언. ${UI.appWhat} 프로필 링크에서 motimoti.page/ko/${q.id}`,
+      fit: { sel: ".open", start: 32, min: 26 },
+      alt: `motimoti 앱 화면에 같은 명언. ${UI.appOpen} — ${UI.appWhere}`,
     });
   }
   return slides;
