@@ -9,7 +9,7 @@
  *   2. 이 문장이 나온 자리 — 앱의 해설(quotes-context.js) 그대로
  *   3. 원문            — 원문이 화면의 문장과 다를 때만(한국어 원문이면 이 장이 빠진다)
  *   4. 그 책으로        — 출처, 연도, 원전이 있는 곳, motimoti.page 의 그 명언 주소
- *   5. 앱 화면          — 실제 앱 화면(그 명언의 주소를 휴대폰 크기로 연 것)과 「앱 열기 — 프로필 링크」 한 줄.
+ *   5. 앱 화면          — 실제 앱 화면(그 명언의 주소를 휴대폰 크기로 연 것)과 「이어서 — 프로필 링크」 한 줄.
  *                        무엇을 알리는 계정인지 모든 게시물의 끝에서 같은 모양으로 보인다
  * 명언·해설·원문·출처는 앱의 데이터에서 가져온다 — 카드에 새로 쓰는 글은 없다. 캡션만 posts.js 에 쓴다.
  * 글꼴은 익스텐션에 담아 둔 Hahmlet(extension/fonts) — 그리는 데 인터넷이 필요 없다. */
@@ -36,7 +36,7 @@ const UI = {
   year: (y, circa) => `${y < 0 ? `기원전 ${-y}` : y}년${circa ? "경" : ""}`,
   verified: (cited) => (cited ? "원문 대신, 원문과 그 위치를 밝혀 인용한 자료로 확인했다" : "원문과 한 글자씩 대조했다"),
   // 5장은 앱 화면과 한 줄뿐이다. 「무료」「가입 없이」 같은 파는 말은 쓰지 않는다(Max, 2026-11-27).
-  appOpen: "앱 열기",
+  appOpen: "이어서",
   appWhere: "프로필 링크",
   langs: { en: "영어", fr: "프랑스어", de: "독일어", la: "라틴어", it: "이탈리아어", es: "스페인어", nl: "네덜란드어", zh: "중국어", lzh: "한문", grc: "고대 그리스어", ru: "러시아어", ja: "일본어" },
 };
@@ -132,7 +132,7 @@ function slidesFor(q, ctx, appShot) {
       html: (n, t) => frame(
         `<div class="app">
            <img src="${appShot}" alt="" />
-           <p class="open"><b>${UI.appOpen}</b> — ${UI.appWhere}</p>
+           <p class="open">${UI.appOpen} — <b>${UI.appWhere}</b></p>
          </div>`, n, t),
       fit: { sel: ".open", start: 32, min: 26 },
       alt: `motimoti 앱 화면에 같은 명언. ${UI.appOpen} — ${UI.appWhere}`,
