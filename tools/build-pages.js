@@ -204,8 +204,7 @@ function igPage(template, posts, byId) {
     body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-kr); -webkit-font-smoothing: antialiased; }
     main { box-sizing: border-box; max-width: 560px; margin: 0 auto; padding: calc(56px + env(safe-area-inset-top)) var(--pad) calc(56px + env(safe-area-inset-bottom)); }
     .rule { width: 36px; height: 2px; background: var(--accent); }
-    h1 { margin: 28px 0 8px; font-size: 19px; font-weight: 600; letter-spacing: 0.02em; }
-    .lead { margin: 0 0 32px; font-size: 13px; line-height: 1.8; color: var(--ink-soft); word-break: keep-all; }
+    h1 { margin: 28px 0 32px; font-size: 19px; font-weight: 600; letter-spacing: 0.02em; }
     ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
     li { border-bottom: 1px solid var(--hairline); }
     li a { display: flex; flex-direction: column; gap: 8px; padding: 22px 0; color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
@@ -222,7 +221,6 @@ function igPage(template, posts, byId) {
   <main>
     <div class="rule" aria-hidden="true"></div>
     <h1>인스타그램에 올린 문장</h1>
-    <p class="lead">@motimoti_page 의 게시물을 최근 것부터. 누르면 그 명언이 motimoti 에서 열리고, 작가 이름을 누르면 그 문장이 나온 자리가 펼쳐진다.</p>
 ${posts.length ? `    <ol>\n${items}\n    </ol>` : `    <p class="empty">아직 올린 게시물이 없다.</p>`}
     <a class="open" href="./">motimoti 처음부터 펼치기 →</a>
   </main>

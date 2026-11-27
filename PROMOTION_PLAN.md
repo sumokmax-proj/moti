@@ -296,6 +296,7 @@ Claude 가 보는 것:
 | 2026-11-24 | 처음 정함 — 책의 목소리, 한국어 + 영어 한 줄, 한 달치 예약, 캐러셀 먼저(릴스는 나중) |
 | 2026-11-27 | 첫 게시물을 보고(Max): 무엇을 알리는지 안 보인다 → 5장 「이 명언을 앱에서」(실제 앱 화면). 캡션 링크는 눌리지 않는다 → 프로필 링크를 /ig/(올린 명언 모음)로, 캡션 끝은 「이 명언은 프로필 링크 → 맨 위」 |
 | 2026-11-27 | 5장은 소개 문구 없이 앱 화면과 「이어서 — 프로필 링크」 한 줄만. 「무료·가입 없이·광고 없이」 같은 파는 말은 쓰지 않는다(Max) |
+| 2026-11-27 | 5장 문구는 「이어서 — **프로필 링크**」(링크만 강조). 이미 올린 게시물에는 장을 더할 수 없어 파스퇴르는 4장 그대로, 다음 게시물부터 5장. /ig/ 는 제목과 목록만 — 설명 문구 없이(Max) |
 
 ## 참고한 자료
 - 보내기·캐러셀·독창성: [Search Engine Journal](https://www.searchenginejournal.com/instagram-algorithm-shift-why-sends-matter-more-than-ever/521389/) · [Social Media Today](https://www.socialmediatoday.com/news/instagram-chief-post-share-rates-key-driver-reach/716540/) · [TechCrunch](https://techcrunch.com/2022/04/20/instagram-ranking-system-recommend-original-content/) · [Buffer](https://buffer.com/resources//instagram-algorithms/)
